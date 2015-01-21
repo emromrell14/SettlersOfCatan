@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="student_01_03_15/java/src"/>
+	<classpathentry kind="lib" path="student_01_03_15/demo/client.jar"/>
+	<classpathentry kind="lib" path="student_01_03_15/demo/lib/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="student_01_03_15/demo/lib/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="student_01_03_15/demo/lib/xstream-1.4.7.jar"/>
+	<classpathentry kind="lib" path="student_01_03_15/demo/server.jar"/>
+	<classpathentry kind="lib" path="student_01_03_15/java/lib/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="student_01_03_15/java/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="student_01_03_15/java/lib/junit-4.11.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
