@@ -1,11 +1,7 @@
 package server.handlers;
 
-public class LoginHandler extends IHandler
+public class LoadGamesHandler extends IHandler
 {
-	public LoginHandler()
-	{
-		
-	}
 
 	@Override
 	public Response processRequest(Request req) 
