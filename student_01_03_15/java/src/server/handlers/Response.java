@@ -1,5 +1,16 @@
 package server.handlers;
 
-public class Response {
+import com.sun.net.httpserver.HttpExchange;
 
+public class Response 
+{
+	public Response()
+	{
+		
+	}
+	
+	public void sendResponse(HttpExchange exchange)
+	{
+		
+	}
 }
