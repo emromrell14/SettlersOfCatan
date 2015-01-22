@@ -26,7 +26,8 @@ public class Server implements IServer
 		new Server().run();
 	}
 	
-	protected void run()
+	@Override
+	public void run()
 	{
 		try 
 		{

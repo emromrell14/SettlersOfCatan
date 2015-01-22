@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import cookie.Cookie;
 import server.IServer;
 
 public class Proxy implements IProxy
@@ -17,7 +18,7 @@ public class Proxy implements IProxy
 		this.server = server;
 	}
 	
-	public void post(String requestPath, String json)
+	public String post(String requestPath, String json, Cookie cookie)
 	{
 		String url ="http://"+server.getHost()+":"+server.getPortNumber() + requestPath;
 		URL obj;
@@ -39,10 +40,11 @@ public class Proxy implements IProxy
 		{
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void get()
+	public String get(Cookie cookie)
 	{
-		
+		return null;
 	}
 }

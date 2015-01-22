@@ -11,7 +11,8 @@ public class Request
 	private String requestURI;
 	private Headers headers;
 	private Cookie cookie;
-	
+	private String body;
+
 	public Request(HttpExchange req)
 	{
 		method = req.getRequestMethod();
@@ -19,5 +20,40 @@ public class Request
 		headers = req.getRequestHeaders();
 		
 		
+	}
+	
+	/**
+	 * @return the method
+	 */
+	public String getMethod() {
+		return method;
+	}
+
+	/**
+	 * @return the requestURI
+	 */
+	public String getRequestURI() {
+		return requestURI;
+	}
+
+	/**
+	 * @return the headers
+	 */
+	public Headers getHeaders() {
+		return headers;
+	}
+
+	/**
+	 * @return the cookie
+	 */
+	public Cookie getCookie() {
+		return cookie;
+	}
+
+	/**
+	 * @return the body
+	 */
+	public String getBody() {
+		return body;
 	}
 }
