@@ -1,8 +1,5 @@
 package models;
 
-import classes.Hex;
-import classes.Port;
-
 /** Board class that contains a list of the hexes and a list of the harbors (ports)
 *
 * @author Team 2
