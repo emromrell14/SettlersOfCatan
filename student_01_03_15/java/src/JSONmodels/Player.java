@@ -20,6 +20,26 @@ public class Player
 	private int mSoldiers;
 	private int mVictoryPoints;
 	
+	/**
+	 * Creates a player from all the variables
+	 * 
+	 * @param color
+	 * @param discarded
+	 * @param monuments
+	 * @param name
+	 * @param newDevCards
+	 * @param oldDevCards
+	 * @param playerIndex
+	 * @param playerDevCard
+	 * @param playerID
+	 * @param resources
+	 * @param roads
+	 * @param settlements
+	 * @param cities
+	 * @param soldiers
+	 * @param victoryPoints
+	 * @return New Player object
+	 */
 	public Player(CatanColor color, boolean discarded, Number monuments, String name, DevCardList newDevCards, DevCardList oldDevCards, Index playerIndex, boolean playerDevCard, int playerID, ResourceList resources, int roads, int settlements, int cities, int soldiers, int victoryPoints)
 	{
 		this.mColor = color;
@@ -39,64 +59,23 @@ public class Player
 		this.mVictoryPoints = victoryPoints;
 	}
 	
-	public CatanColor color()
+	/**
+	 * Creates a Player object from a JSON string
+	 * 
+	 * @param Valid JSON string
+	 * @return New Player object
+	 */
+	public Player(String JSON)
 	{
-		return mColor;
+		
 	}
-	public boolean discarded()
+	/**
+	 * Creates the JSON code from this object
+	 * 
+	 * @return JSON string representation of this object
+	 */
+	public String toJSON()
 	{
-		return mDiscarded;
-	}
-	public Number monuments()
-	{
-		return mMonuments;
-	}
-	public String name()
-	{
-		return mName;
-	}
-	public DevCardList newDevCards()
-	{
-		return mNewDevCards;
-	}
-	public DevCardList oldDevCards()
-	{
-		return mOldDevCards;
-	}
-	public Index playerIndex()
-	{
-		return mPlayerIndex;
-	}
-	public boolean playerDevCard()
-	{
-		return mPlayerDevCard;
-	}
-	public int playerID()
-	{
-		return mPlayerID;
-	}
-	public ResourceList resources()
-	{
-		return mResources;
-	}
-	public int roads()
-	{
-		return mRoads;
-	}
-	public int settlements()
-	{
-		return mSettlements;
-	}
-	public Number cities()
-	{
-		return mCities;
-	}
-	public int soldiers()
-	{
-		return mSoldiers;
-	}
-	public int victoryPoints()
-	{
-		return mVictoryPoints;
+		
 	}
 }

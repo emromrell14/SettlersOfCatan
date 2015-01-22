@@ -12,53 +12,43 @@ public class ClientModel
 	private int mVersion; //The version of the model. This is incremented whenever anyone makes a move.
 	private Index mWinner; //This is -1 when nobody's won yet. When they have, it's their order index [0-3].
 	
+	/**
+	 * Creates a ClientModel object from all the variables
+	 * 
+	 * @param bank
+	 * @param chat
+	 * @param log
+	 * @param map
+	 * @param players
+	 * @param tradeOffer
+	 * @param turnTracker
+	 * @param version
+	 * @param winner
+	 * @return New ClientModel object
+	 */
 	public ClientModel(ResourceList bank, MessageList chat, MessageList log, Map map, Player[] players, TradeOffer tradeOffer, TurnTracker turnTracker, int version, Index winner)
 	{
-		this.mBank = bank;
-		this.mChat = chat;
-		this.mLog = log;
-		this.mMap = map;
-		this.mPlayers = players;
-		this.mTradeOffer = tradeOffer;
-		this.mTurnTracker = turnTracker;
-		this.mVersion = version;
-		this.mWinner = winner;
+		
 	}
 	
-	public ResourceList bank()
+	/**
+	 * Creates a ClientModel object from a JSON string
+	 * 
+	 * @param Valid JSON string
+	 * @return New ClientModel object
+	 */
+	public ClientModel(String JSON)
 	{
-		return mBank;
+		
 	}
-	public MessageList chat()
+	
+	/**
+	 * Creates the JSON code from this object
+	 * 
+	 * @return JSON string representation of this object
+	 */
+	public String toJSON()
 	{
-		return mChat;
-	}
-	public MessageList log()
-	{
-		return mLog;
-	}
-	public Map map()
-	{
-		return mMap;
-	}
-	public Player[] players()
-	{
-		return mPlayers;
-	}
-	public TradeOffer tradeOffer()
-	{
-		return mTradeOffer;
-	}
-	public TurnTracker turnTracker()
-	{
-		return mTurnTracker;
-	}
-	public int version() 
-	{
-		return mVersion;
-	}
-	public Index winner()
-	{
-		return mWinner;
+		
 	}
 }

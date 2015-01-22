@@ -6,6 +6,14 @@ public class TradeOffer
 	private Index mReceiver; //The index of the person the trade was offered to.
 	private ResourceList mOffer; //Positive numbers are resources being offered. Negative are resources being asked for.
 	
+	/**
+	 * Creates a TradeOffer object from all the variables
+	 * 
+	 * @param sender
+	 * @param receiver
+	 * @param offer
+	 * @return New TradeOffer object
+	 */
 	public TradeOffer(Index sender, Index receiver, ResourceList offer)
 	{
 		this.mSender = sender;
@@ -13,16 +21,24 @@ public class TradeOffer
 		this.mOffer = offer;
 	}
 	
-	public Index sender()
+	/**
+	 * Creates a TradeOffer object from a JSON string
+	 * 
+	 * @param Valid JSON string
+	 * @return New TradeOffer object
+	 */
+	public TradeOffer(String JSON)
 	{
-		return mSender;
+		
 	}
-	public Index receiver()
+	
+	/**
+	 * Creates the JSON code from this object
+	 * 
+	 * @return JSON string representation of this object
+	 */
+	public String toJSON()
 	{
-		return mReceiver;
-	}
-	public ResourceList offer()
-	{
-		return mOffer;
+		
 	}
 }

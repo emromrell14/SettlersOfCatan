@@ -11,6 +11,15 @@ public class Port
 	private VertexDirection mDirection; //Which edge this port is on.
 	private int mRatio; //The ratio for trade in (ie., if this is 2, then it's a 2:1 port)
 	
+	/**
+	 * Creates a new Port object from all the variables
+	 * 
+	 * @param resource
+	 * @param location
+	 * @param direction
+	 * @param ratio
+	 * @return New Port object
+	 */
 	public Port(PortType resource, HexLocation location, VertexDirection direction, int ratio)
 	{
 		this.mResource = resource;
@@ -19,20 +28,24 @@ public class Port
 		this.mRatio = ratio;
 	}
 	
-	public PortType resource()
+	/**
+	 * Creates a Port object from a JSON string
+	 * 
+	 * @param Valid JSON string
+	 * @return New Port object
+	 */
+	public Port(String JSON)
 	{
-		return mResource;
+		
 	}
-	public HexLocation location()
+	
+	/**
+	 * Creates the JSON code from this object
+	 * 
+	 * @return JSON string representation of this object
+	 */
+	public String toJSON()
 	{
-		return mLocation;
-	}
-	public VertexDirection direction()
-	{
-		return mDirection;
-	}
-	public int ratio()
-	{
-		return mRatio;
+		
 	}
 }
