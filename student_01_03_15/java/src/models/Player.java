@@ -1,5 +1,8 @@
 package models;
 
+import java.util.List;
+
+import classes.Index;
 import shared.definitions.CatanColor;
 
 public class Player implements IPlayer
@@ -15,14 +18,18 @@ public class Player implements IPlayer
 	private int mNumCities; //How many cities this player has left to play.
 	private int mSoldiers;
 	private int mVictoryPoints;
+	private boolean mDiscarded = true;
+	private boolean mHasPlayedDevCard = true;
+	private int mMonuments = 0;
 	
-	private List mRoads;
-	private List mSettlements;
-	private List mCities;
-	private List DevCards;
+	private List<Road> mRoads;
+	private List<Building> mSettlements;
+	private List<Building> mCities;
+	private List<DevCard> mOldDevCards;
+	private List<DevCard> mNewDevCards;
 	
 	
-	public Player(CatanColor color, boolean discarded, Number monuments, String name, DevCardList newDevCards, DevCardList oldDevCards, Index playerIndex, boolean playerDevCard, int playerID, ResourceList resources, int roads, int settlements, int cities, int soldiers, int victoryPoints)
+	public Player(CatanColor color, boolean discarded, Number monuments, String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, boolean playerDevCard, int playerID, ResourceList resources, List<Road> roads, List<Building> settlements, List<Building> cities, int soldiers, int victoryPoints)
 	{
 		this.mColor = color;
 		this.mName = name;
@@ -34,14 +41,17 @@ public class Player implements IPlayer
 		this.mCities = cities;
 		this.mSoldiers = soldiers;
 		this.mVictoryPoints = victoryPoints;
+		this.mNumRoads = 15;
+		this.mNumSettlements = 5;
+		this.mNumCities = 4;
 	}
 	public boolean discard()
 	{
-		
+		return true;
 	}
 	public int getSoldierCount()
 	{
-		
+		return mSoldiers;
 	}
 	public int getVictoryPoints()
 	{
@@ -67,11 +77,11 @@ public class Player implements IPlayer
 	{
 		return mName;
 	}
-	public DevCardList newDevCards()
+	public List<DevCard> newDevCards()
 	{
 		return mNewDevCards;
 	}
-	public DevCardList oldDevCards()
+	public List<DevCard> oldDevCards()
 	{
 		return mOldDevCards;
 	}
@@ -81,7 +91,7 @@ public class Player implements IPlayer
 	}
 	public boolean playerDevCard()
 	{
-		return mPlayerDevCard;
+		return mHasPlayedDevCard;
 	}
 	public int playerID()
 	{
@@ -93,15 +103,15 @@ public class Player implements IPlayer
 	}
 	public int roads()
 	{
-		return mRoads;
+		return mNumRoads;
 	}
 	public int settlements()
 	{
-		return mSettlements;
+		return mNumSettlements;
 	}
 	public Number cities()
 	{
-		return mCities;
+		return mNumCities;
 	}
 	public int soldiers()
 	{
