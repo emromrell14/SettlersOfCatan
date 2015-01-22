@@ -12,7 +12,8 @@ public class Board
 	/** A list of all the ports (harbors) on the grid */
 	private Port[] mPorts;
 	
-	/** Board Constructor
+	/** 
+	 * Creates a Board model object
 	 * 
 	 * @return a new Board object
 	 */
@@ -21,7 +22,8 @@ public class Board
 		
 	}
 	
-	/** Getter for hexes
+	/** 
+	 * Getter for hexes
 	 * 
 	 * @return a list of all the hexes on the grid
 	 */
@@ -30,7 +32,8 @@ public class Board
 		return mHexes;
 	}
 	
-	/** Getter for ports
+	/** 
+	 * Getter for ports
 	 * 
 	 * @return a list of all the ports on the grid
 	 */

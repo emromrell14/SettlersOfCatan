@@ -17,7 +17,8 @@ public class Building
 	/** Tells whether this is a settlement or a city */
 	private BuildingType mBuildingType;
 	
-	/** Building Constructor
+	/** 
+	 * Creates a Building model object
 	 * 
 	 * @param owner 	index of player who owns this piece
 	 * @param location	the location of this piece
@@ -30,7 +31,8 @@ public class Building
 		this.mLocation = location;
 	}
 	
-	/** Getter for owner index
+	/** 
+	 * Getter for owner index
 	 * 
 	 * @return an integer id corresponding to the player that owns this piece
 	 */
@@ -39,7 +41,8 @@ public class Building
 		return mOwner;
 	}
 	
-	/** Getter for building location
+	/** 
+	 * Getter for building location
 	 * 
 	 * @return the location of this building on the grid
 	 */

@@ -16,7 +16,8 @@ public class Hex
 	/** The dice roll number associated with this hex.  It has no value if this hex is the desert hex */
 	private TokenValue mNumber; //OPTIONAL. What number is on this tile. It's omitted if this is a desert hex.
 	
-	/** Hex Constructor
+	/** 
+	 * Creates a Hex model object
 	 * 
 	 * @param location	the location of this piece.
 	 * @param resource	the type of resource this hex gives when corresponding number is rolled.
@@ -31,7 +32,8 @@ public class Hex
 		this.mNumber = number;
 	}
 	
-	/** Getter for hex location
+	/** 
+	 * Getter for hex location
 	 * 
 	 * @return the location of this hex on the grid
 	 */
@@ -39,7 +41,8 @@ public class Hex
 	{
 		return mLocation;
 	}
-	/** Getter for hex resource type
+	/** 
+	 * Getter for hex resource type
 	 * 
 	 * @return the type of resource this hex gives.
 	 */
@@ -47,7 +50,8 @@ public class Hex
 	{
 		return mResource;
 	}
-	/** Getter for hex token number
+	/** 
+	 * Getter for hex token number
 	 * 
 	 * @return the number associated with this hex
 	 */
