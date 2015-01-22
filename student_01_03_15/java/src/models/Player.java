@@ -2,17 +2,12 @@ package models;
 
 import shared.definitions.CatanColor;
 
-public class Player 
+public class Player implements IPlayer
 {
 		
 	private CatanColor mColor; //The color of this player
-//	private boolean mDiscarded; //Whether this player has discarded or not already this discard phase
-//	private Number mMonuments; //How many monuments this player has played.
 	private String mName;
-//	private DevCardList mNewDevCards; //The dev cards the player bought this turn
-//	private DevCardList mOldDevCards; //The dev cards the player had when the turn started
 	private Index mPlayerIndex; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
-//	private boolean mPlayerDevCard; //Whether the player has played a dev card this turn
 	private int mPlayerID; //The unique playerID. This is used to pick the client player apart from the others. This is only used here and in your cookie.
 	private ResourceList mResources; //The resource cards this player has.
 	private int mNumRoads;
