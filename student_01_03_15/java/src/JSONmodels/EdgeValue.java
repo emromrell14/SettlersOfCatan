@@ -1,5 +1,6 @@
-package classes;
+package JSONmodels;
 
+import models.Index;
 import shared.locations.EdgeLocation;
 
 public class EdgeValue 
@@ -37,6 +38,6 @@ public class EdgeValue
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

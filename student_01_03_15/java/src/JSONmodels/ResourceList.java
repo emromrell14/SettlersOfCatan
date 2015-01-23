@@ -1,4 +1,4 @@
-package classes;
+package JSONmodels;
 
 public class ResourceList 
 {
@@ -44,6 +44,6 @@ public class ResourceList
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }
