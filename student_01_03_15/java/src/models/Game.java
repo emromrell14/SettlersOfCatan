@@ -1,10 +1,15 @@
 package models;
 
+import java.util.List;
+
 import proxy.IProxy;
 
 public class Game implements IGame
 {
 	private IProxy mIProxy;
+	private Board mBoard;
+	private List<Player> mPlayers;
+	private TurnTracker mTurnTracker;
 	
 	@Override
 	public int rollDice()
