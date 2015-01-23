@@ -1,4 +1,6 @@
-package classes;
+package JSONmodels;
+
+import models.Index;
 
 public class ClientModel 
 {
@@ -49,6 +51,6 @@ public class ClientModel
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

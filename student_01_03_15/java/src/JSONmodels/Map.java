@@ -1,6 +1,7 @@
-package classes;
+package JSONmodels;
 
 import shared.locations.*;
+import models.Road;
 
 public class Map 
 {
@@ -46,6 +47,6 @@ public class Map
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

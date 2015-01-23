@@ -1,5 +1,6 @@
-package classes;
+package JSONmodels;
 
+import models.Index;
 import shared.locations.VertexLocation;
 
 public class VertexObject 
@@ -38,6 +39,6 @@ public class VertexObject
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

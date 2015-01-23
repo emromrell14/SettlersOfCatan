@@ -1,6 +1,7 @@
-package classes;
+package JSONmodels;
 
 import shared.definitions.CatanColor;
+import models.Index;
 
 public class Player 
 {
@@ -76,6 +77,6 @@ public class Player
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

@@ -1,4 +1,4 @@
-package classes;
+package JSONmodels;
 
 public enum Status 
 {

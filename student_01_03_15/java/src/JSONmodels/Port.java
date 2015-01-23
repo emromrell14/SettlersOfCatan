@@ -1,4 +1,4 @@
-package classes;
+package JSONmodels;
 
 import shared.definitions.PortType;
 import shared.locations.HexLocation;
@@ -46,6 +46,6 @@ public class Port
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

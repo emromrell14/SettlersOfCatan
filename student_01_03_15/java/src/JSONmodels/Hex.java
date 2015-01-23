@@ -1,4 +1,4 @@
-package classes;
+package JSONmodels;
 
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
@@ -40,6 +40,6 @@ public class Hex
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

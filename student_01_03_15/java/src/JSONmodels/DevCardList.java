@@ -1,4 +1,4 @@
-package classes;
+package JSONmodels;
 
 public class DevCardList 
 {
@@ -20,7 +20,11 @@ public class DevCardList
 	 */
 	public DevCardList(int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty)
 	{
-		
+		this.mMonopoly = monopoly;
+		this.mMonument = monument;
+		this.mRoadBuilding = roadBuilding;
+		this.mSoldier = soldier;
+		this.mYearOfPlenty = yearOfPlenty;
 	}
 	
 	/**
@@ -31,11 +35,7 @@ public class DevCardList
 	 */
 	public DevCardList(String JSON)
 	{
-		this.mMonopoly = monopoly;
-		this.mMonument = monument;
-		this.mRoadBuilding = roadBuilding;
-		this.mSoldier = soldier;
-		this.mYearOfPlenty = yearOfPlenty;
+		
 	}
 	
 	/**
@@ -43,8 +43,8 @@ public class DevCardList
 	 * 
 	 * @return JSON string representation of this object
 	 */
-	public toJSON()
+	public String toJSON()
 	{
-		
+		return "";
 	}
 }

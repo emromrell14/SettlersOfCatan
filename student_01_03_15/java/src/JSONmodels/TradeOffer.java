@@ -1,4 +1,6 @@
-package classes;
+package JSONmodels;
+
+import models.Index;
 
 public class TradeOffer 
 {
@@ -39,6 +41,6 @@ public class TradeOffer
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }

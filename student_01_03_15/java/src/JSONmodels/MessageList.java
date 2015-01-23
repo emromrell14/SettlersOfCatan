@@ -1,4 +1,4 @@
-package classes;
+package JSONmodels;
 
 public class MessageList {
 	private MessageLine[] mLines;
@@ -31,6 +31,6 @@ public class MessageList {
 	 */
 	public String toJSON()
 	{
-		
+		return "";
 	}
 }
