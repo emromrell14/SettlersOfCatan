@@ -2,198 +2,230 @@ package facade;
 
 public class MasterManager
 {
-	boolean canLogin()
+	public boolean canLogin() 
 	{
-		
+		return true;
 	}
-	boolean canRegister()
+
+	public boolean canRegister() 
 	{
-		
+		return true;
 	}
+
 	/**
 	 * Validates the Cookie.
+	 * 
 	 * @return If the current user is logged in.
 	 */
-	boolean isLoggedIn()
+	public boolean isLoggedIn()
 	{
-		
+		return true;
 	}
-	boolean canBuildRoad()
+
+	public boolean canBuildRoad()
 	{
-		
-	} 
-	boolean canBuildSettlement()
-	{
-		
+		return true;
 	}
-	boolean canBuildCity()
+
+	public boolean canBuildSettlement() 
 	{
-		
+		return true;
 	}
-	boolean canBuyDevCard()
+
+	public boolean canBuildCity() 
 	{
-		
+		return true;
 	}
-	boolean canPlayDevCard()
+
+	public boolean canBuyDevCard()
 	{
-		
+		return true;
 	}
-	boolean canOfferTrade()
+
+	public boolean canPlayDevCard() 
 	{
-		
+		return true;
 	}
-	boolean canAcceptTrade()
+
+	public boolean canOfferTrade() 
 	{
-		
+		return true;
 	}
-	boolean canMaritimeTrade()
+
+	public boolean canAcceptTrade() 
 	{
-		
+		return true;
 	}
-	boolean canRollDice()
+
+	public boolean canMaritimeTrade() 
 	{
-		
+		return true;
 	}
-	boolean canDiscard()
+
+	public boolean canRollDice() 
 	{
-		
+		return true;
 	}
-	
-//FROM THERE DOWN IS STRAIGHT FROM SWAGGER
+
+	public boolean canDiscard()
+	{
+		return true;
+	}
+
+	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager
-	String login()
+	public String login()
 	{
-		
+		return null;
 	}
-	String register()
+
+	public String register() 
 	{
-		
+		return null;
 	}
+
 	// Games Manager
-	String getGameList()
+	public String getGameList()
 	{
-		
+		return null;
 	}
-	String createGame()
+
+	public String createGame()
 	{
-		
+		return null;
 	}
-	String joinGame()
+
+	public String joinGame()
 	{
-		
+		return null;
 	}
-	String saveGame()
+
+	public String saveGame()
 	{
-		
+		return null;
 	}
-	String loadGame()
+
+	public String loadGame() 
 	{
-		
+		return null;
 	}
+
 	// Game Manager
-	String getGameModel()
+	public String getGameModel()
 	{
-		
+		return null;
 	}
-	String resetGame()
+
+	public String resetGame()
 	{
-		
+		return null;
 	}
-	String executeCommandList()
+
+	public String executeCommandList()
 	{
-		
+		return null;
 	}
-	String addAIPlayer()
+
+	public String addAIPlayer() 
 	{
-		
+		return null;
 	}
-	String getAIPlayers()
+
+	public String getAIPlayers()
 	{
-		
+		return null;
 	}
+
 	// Moves Manager
-	String sendChatMessage()
+	public String sendChatMessage() 
 	{
-		
+		return null;
 	}
-	String rollDice()
+
+	public String rollDice()
 	{
-		
+		return null;
 	}
-	String robPlayer()
+
+	public String robPlayer() 
 	{
-		
+		return null;
 	}
-	String finishTurn()
+
+	public String finishTurn() 
 	{
-		
+		return null;
 	}
-	String buyDevCard()
+
+	public String buyDevCard() 
 	{
-		
+		return null;
 	}
-	String playYearOfPlenty()
+
+	public String playYearOfPlenty()
 	{
-		
+		return null;
 	}
-	String playRoadBuilding()
+
+	public String playRoadBuilding() 
 	{
-		
+		return null;
 	}
-	String playSoldier()
+
+	public String playSoldier()
 	{
-		
+		return null;
 	}
-	String playMonopoly()
+
+	public String playMonopoly() 
 	{
-		
+		return null;
 	}
-	String playMonument()
+
+	public String playMonument() 
 	{
-		
+		return null;
 	}
-	String buildRoad()
+
+	public String buildRoad() 
 	{
-		
+		return null;
 	}
-	String buildSettlement()
+
+	public String buildSettlement() 
 	{
-		
+		return null;
 	}
-	String buildCity()
+
+	public String buildCity() 
 	{
-		
+		return null;
 	}
-	String offerTrade()
+
+	public String offerTrade() 
 	{
-		
+		return null;
 	}
-	String acceptTrade()
+
+	public String acceptTrade() 
 	{
-		
+		return null;
 	}
-	String executeMaritimeTrade()
+
+	public String executeMaritimeTrade()
 	{
-		
+		return null;
 	}
-	String discardCards()
+
+	public String discardCards() 
 	{
-		
+		return null;
 	}
+
 	// Util Manager
-	String changeLogLevel()
+	public String changeLogLevel() 
 	{
-		
+		return null;
 	}
-	String ()
-	{
-		
-	}
-	String ()
-	{
-		
-	}
-	
-	
 
 }
