@@ -1,7 +1,13 @@
 package facade;
 
-public class MasterManager
+public class MasterManager implements IMasterManager
 {
+	private GameManager mGameManager;
+	private GamesManager mGamesManager;
+	private MovesManager mMovesManager;
+	private UserManager mUserManager;
+	private UtilManager mUtilManager;
+	
 	public boolean canLogin() 
 	{
 		return true;
