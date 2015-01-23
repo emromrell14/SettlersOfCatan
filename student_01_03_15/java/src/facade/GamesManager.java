@@ -13,7 +13,7 @@ public class GamesManager
 	}
 	
 	/**
-	 * Gets the list of games in a JSON String
+	 * gets a list of all games in the progress
 	 * 
 	 * @return a String of JSON
 	 */
@@ -23,7 +23,7 @@ public class GamesManager
 	}
 
 	/**
-	 * Gets the create game info in a JSON String
+	 * Creates a new game
 	 * 
 	 * @return a String of JSON
 	 */
@@ -33,7 +33,7 @@ public class GamesManager
 	}
 
 	/**
-	 * Gets the join game info in a JSON String
+	 * Adds (or re-adds) the player to the specified game, and sets their catan.game HTTP cookie
 	 * 
 	 * @return a String of JSON
 	 */
@@ -43,7 +43,7 @@ public class GamesManager
 	}
 
 	/**
-	 * Gets the save game info in a JSON String
+	 * Saves the current state of the specified game to a file
 	 * 
 	 * @return a String of JSON
 	 */
@@ -53,7 +53,7 @@ public class GamesManager
 	}
 
 	/**
-	 * Gets the load game info in a JSON String
+	 * Loads a previously saved game file to restore the state of the game
 	 * 
 	 * @return a String of JSON
 	 */
