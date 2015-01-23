@@ -2,6 +2,7 @@ package facade;
 
 public class MasterManager
 {
+	
 	boolean canLogin()
 	{
 		

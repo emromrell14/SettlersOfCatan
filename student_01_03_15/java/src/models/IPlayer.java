@@ -67,8 +67,12 @@ public interface IPlayer
 	 */
 	public String getName();
 	
-	public List<DevCard> getNewDevCards();
-	public List<DevCard> getOldDevCards();
+	/**
+	 * Gets the list of the Player's Development cards
+	 * 
+	 * @return the list of DevCards
+	 */
+	public List<DevCard> getDevCards();
 	/** 
 	 * Gets the index associated with this player
 	 * This is used to determine the player's turn order.

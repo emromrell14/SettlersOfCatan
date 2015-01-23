@@ -24,8 +24,7 @@ public class Player implements IPlayer
 	private List<Road> mRoads;
 	private List<Building> mSettlements;
 	private List<Building> mCities;
-	private List<DevCard> mOldDevCards;
-	private List<DevCard> mNewDevCards;
+	private List<DevCard> mDevCards;
 	
 	
 	public Player(CatanColor color, boolean discarded, Number monuments, String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, boolean playerDevCard, int playerID, ResourceList resources, List<Road> roads, List<Building> settlements, List<Building> cities, int soldiers, int victoryPoints)
@@ -102,13 +101,9 @@ public class Player implements IPlayer
 	{
 		return mName;
 	}
-	public List<DevCard> getNewDevCards()
+	public List<DevCard> getDevCards()
 	{
-		return mNewDevCards;
-	}
-	public List<DevCard> getOldDevCards()
-	{
-		return mOldDevCards;
+		return mDevCards;
 	}
 	public Index getPlayerIndex()
 	{
