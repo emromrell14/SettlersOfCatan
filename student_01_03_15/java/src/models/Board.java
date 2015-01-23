@@ -23,7 +23,7 @@ public class Board
 	}
 	
 	/** 
-	 * Getter for hexes
+	 * Gets hexes of grid
 	 * 
 	 * @return a list of all the hexes on the grid
 	 */
@@ -33,7 +33,7 @@ public class Board
 	}
 	
 	/** 
-	 * Getter for ports
+	 * Gets ports (harbors) of grid
 	 * 
 	 * @return a list of all the ports on the grid
 	 */

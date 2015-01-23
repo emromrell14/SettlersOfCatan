@@ -1,6 +1,9 @@
 package models;
 
+/**
+ *  Status types
+ */
 public enum Status 
 {
-	Rolling, Robbing, Playing, Discarding, FirstRound, SecondRound
+	ROLLING, ROBBING, PLAYING, DISCARDING, FIRSTROUND, SECONDROUND
 }

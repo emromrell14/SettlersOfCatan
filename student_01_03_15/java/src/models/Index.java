@@ -19,7 +19,7 @@ public class Index
 	}
 	
 	/** 
-	 * Getter for Index value
+	 * Gets the Index value
 	 * 
 	 * @return an integer value between 0 and 3 inclusive
 	 */

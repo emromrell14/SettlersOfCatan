@@ -1,8 +1,5 @@
 package models;
 
-import classes.Index;
-import classes.Status;
-
 public class TurnTracker implements ITurnTracker
 {
 
@@ -19,19 +16,19 @@ public class TurnTracker implements ITurnTracker
 		this.mLargestArmy = largestArmy;
 	}
 	
-	public Index currentTurn()
+	public Index getCurrentTurn()
 	{
 		return mCurrentTurn;
 	}
-	public Status status()
+	public Status getStatus()
 	{
 		return mStatus;
 	}
-	public Index longestRoad()
+	public Index getLongestRoad()
 	{
 		return mLongestRoad;
 	}
-	public Index largestArmy()
+	public Index getLargestArmy()
 	{
 		return mLargestArmy;
 	}
