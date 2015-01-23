@@ -1,6 +1,6 @@
 package facade;
 
-public class MasterManager
+public class MasterManager implements IMasterManager
 {
 	/**
 	 * Facade to manage all other managers. 
@@ -15,6 +15,12 @@ public class MasterManager
 	 * 
 	 * @return true if the user can login, false if they cannot
 	 */
+	private GameManager mGameManager;
+	private GamesManager mGamesManager;
+	private MovesManager mMovesManager;
+	private UserManager mUserManager;
+	private UtilManager mUtilManager;
+	
 	public boolean canLogin() 
 	{
 		return true;
