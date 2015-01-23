@@ -2,7 +2,6 @@ package client.login;
 
 import client.base.*;
 import client.misc.*;
-
 import java.net.*;
 import java.io.*;
 import java.util.*;
