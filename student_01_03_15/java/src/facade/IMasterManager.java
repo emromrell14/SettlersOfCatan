@@ -57,7 +57,7 @@ public interface IMasterManager
 
 	public String executeCommandList();
 
-	public String addAIPlayer();
+	public void addAIPlayer();
 
 	public String getAIPlayers();
 

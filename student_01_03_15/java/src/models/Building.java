@@ -32,7 +32,7 @@ public class Building
 	}
 	
 	/** 
-	 * Gets index of player that owns this piece
+	 * Gets index of player that owns this piece.
 	 * 
 	 * @return an integer id corresponding to the player that owns this piece
 	 */
@@ -42,7 +42,7 @@ public class Building
 	}
 	
 	/** 
-	 * Gets building location
+	 * Gets building location.
 	 * 
 	 * @return the location of this building on the grid
 	 */
