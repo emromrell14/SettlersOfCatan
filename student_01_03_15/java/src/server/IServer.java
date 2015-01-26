@@ -16,7 +16,8 @@ public interface IServer
 	String getHost();
 	
 	/**
-	 * Runs the server on a specific port.
+	 * @pre none
+	 * @post Runs the server on a specific port.
 	 */
 	void run();
 }

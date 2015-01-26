@@ -8,7 +8,9 @@ import com.sun.net.httpserver.HttpHandler;
 public abstract class Handler implements HttpHandler
 {
 	/**
-	 * Handles the HTTP request sent from the Proxy.
+	 * @pre none
+	 * @post Handles the HTTP request sent from the Proxy.
+	 * @post Send a response back via the HttpExchange
 	 * 
 	 * @param exchange	The request sent from the Proxy.
 	 */
@@ -24,7 +26,9 @@ public abstract class Handler implements HttpHandler
 	}
 	
 	/**
-	 * Processes the given Request.
+	 * @pre Request != null
+	 * @post Processes the given Request.
+	 * @post Creates an appropriate Response from the given Request.
 	 * 
 	 * @param req	The Request object created from the Proxy's request.
 	 * @return 		The Response created as a result of the given Request.

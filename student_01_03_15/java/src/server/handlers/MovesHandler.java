@@ -3,7 +3,8 @@ package server.handlers;
 public class MovesHandler extends Handler
 {
 	/**
-	 * Depending on the requested move, the move will be executed. All of the moves are handled by one class because
+	 * @pre Request != null
+	 * @post Depending on the requested move, the move will be executed. All of the moves are handled by one class because
 	 * they all require the same response in return.
 	 * 
 	 * @param req	The Request object created from the Proxy's request.

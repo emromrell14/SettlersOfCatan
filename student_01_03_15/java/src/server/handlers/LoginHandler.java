@@ -8,7 +8,9 @@ public class LoginHandler extends Handler
 	}
 
 	/**
-	 * Validates the player's credentials, and logs them in to the server.
+	 * @pre Request != null
+	 * @post Validates the player's credentials.
+	 * @post Logs player in to the server.
 	 * 
 	 * @param req	The Request object from the Proxy's request.
 	 * @return 		The Response created as a result of the given Request.
