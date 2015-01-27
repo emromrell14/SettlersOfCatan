@@ -32,7 +32,7 @@ public abstract class MasterManager implements IMasterManager
 	
 	/**
 	 * Checks all preconditions for logging in.
-	 * @pre User is already registered
+	 * @pre Username and password not null.
 	 * @post User logs in iff login parameters are valid.
 	 * 
 	 * @return true if the user can login, false if they cannot
@@ -44,7 +44,7 @@ public abstract class MasterManager implements IMasterManager
 
 	/** 
 	 * Checks all preconditions for user registration
-	 *  @pre none
+	 *  @pre Username and password not null
 	 *  @post User is registered and logged in
 	 *  
 	 * @return true if they can register, false if the user cannot
@@ -186,7 +186,8 @@ public abstract class MasterManager implements IMasterManager
 	// User Manager
 	/**
 	 * Validates the player's credentials, and logs them into the server. (i.e., sets their catan.user HTTP cookie)
-	 * 
+	 * @pre Username and password != null, canLogin returns true
+	 * @post Cookie will be set.
 	 * @return a String of JSON
 	 */
 	public String login()
@@ -196,7 +197,8 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Creates a new player account, and logs them into the server. (i.e., sets up their catan.user HTTP cookie)
-	 * 
+	 * @pre Username and password not null. 
+	 * @post Player is logged in and cookie set.
 	 * @return a String of JSON
 	 */
 	public String register() 
