@@ -1,6 +1,8 @@
 package facade;
 
-public class MasterManager implements IMasterManager
+import proxy.IProxy;
+
+public abstract class MasterManager implements IMasterManager
 {
 	
 	private GameManager mGameManager;
@@ -8,6 +10,7 @@ public class MasterManager implements IMasterManager
 	private MovesManager mMovesManager;
 	private UserManager mUserManager;
 	private UtilManager mUtilManager;
+	protected IProxy mIProxy;
 	
 	/**
 	 * Facade to manage all other managers. 
@@ -19,6 +22,8 @@ public class MasterManager implements IMasterManager
 	
 	/**
 	 * Checks all preconditions for logging in.
+	 * @pre User is already registered
+	 * @post User logs in iff login parameters are valid.
 	 * 
 	 * @return true if the user can login, false if they cannot
 	 */
@@ -29,6 +34,8 @@ public class MasterManager implements IMasterManager
 
 	/** 
 	 * Checks all preconditions for user registration
+	 *  @pre none
+	 *  @post User is registered and logged in
 	 *  
 	 * @return true if they can register, false if the user cannot
 	 */
@@ -39,7 +46,8 @@ public class MasterManager implements IMasterManager
 
 	/**
 	 * Validates the Cookie.
-	 * 
+	 * @pre 
+	 * @post 
 	 * @return true if the user is logged in, false otherwise
 	 */
 	public boolean isLoggedIn()

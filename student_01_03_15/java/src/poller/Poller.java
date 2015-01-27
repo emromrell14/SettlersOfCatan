@@ -1,5 +1,7 @@
 package poller;
 
+import models.Game;
+
 /** Poller class
 *
 * @author Team 2
@@ -7,6 +9,9 @@ package poller;
 
 public class Poller 
 {
+	private Game mGame;
+	
+	
     /**
      * Creates the Poller object
      *
