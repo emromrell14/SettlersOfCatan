@@ -56,8 +56,8 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Validates the Cookie.
-	 * @pre 
-	 * @post 
+	 * @pre The cookie exists. Player has registered.
+	 * @post none
 	 * @return true if the user is logged in, false otherwise
 	 */
 	public boolean isLoggedIn()
@@ -67,6 +67,9 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for road building
+	 * @pre Player is logged in, has joined a game, has a road, has 1 wood 1 brick, and it is their turn. 
+	 * 		Dice have also already been rolled.
+	 * @post none
 	 * @return true if a road can be built, false otherwise
 	 */
 	public boolean canBuildRoad()
@@ -76,6 +79,9 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for building a new settlement
+	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1 brick 1 wheat 1 sheep, a valid place to build, and it is their turn. 
+	 * 		Dice have also already been rolled.
+	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
 	public boolean canBuildSettlement() 
@@ -85,6 +91,9 @@ public abstract class MasterManager implements IMasterManager
 	
 	/**
 	 * Checks all preconditions for building a city.
+	 * @pre Player is logged in, has joined a game, has a city, 3 ore 2 wheat, a settlement to build on, and it is their turn. 
+	 * 		Dice have also already been rolled.
+	 * @post none
 	 * @return	true if a city can be built, false otherwise
 	 */
 	public boolean canBuildCity() 
@@ -94,6 +103,9 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for buying a development card.
+	 * @pre Player is logged in, joined a game, has 1 sheep 1 wheat 1 ore, it is their turn, and there are development cards in bank. 
+	 * 		Dice have also already been rolled.
+	 * @post none 
 	 * @return true if a card can be bought, false otherwise
 	 */
 	public boolean canBuyDevCard()
@@ -103,6 +115,9 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for playing a development card.
+	 * @pre Player is logged in, in a game, it is their turn, they own a dev card, they have not played a dev card this turn
+	 * 		other than victory points, they didn't buy the dev card this turn. Dice have also already been rolled.
+	 * @post none
 	 * @return true if a card can be played, false otherwise
 	 */
 	public boolean canPlayDevCard() 
@@ -112,6 +127,9 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for offering a resource card trade.
+	 * @pre Player is logged in, playing a game, it is their turn, they have resource cards, other players have resource cards.  
+	 * 		Dice have also already been rolled.
+	 * @post none
 	 * @return true if a trade can be offered, false otherwise
 	 */
 	public boolean canOfferTrade() 
@@ -121,6 +139,9 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for accepting a trade.
+	 * @pre Player is logged in, playing a game, it is not their turn, they have requested resource cards. 
+	 * 		Dice have also already been rolled.
+	 * @post none
 	 * @return true if the trade can be accepted, false otherwise
 	 */
 	public boolean canAcceptTrade() 
@@ -130,6 +151,8 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for making a maritime trade.
+	 * @pre Player is logged in, playing a game, it is their turn, they own enough cards for the maritime rate.
+	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
 	public boolean canMaritimeTrade() 
@@ -139,6 +162,8 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for rolling the dice.
+	 * @pre Player is logged in, playing a game, it is their turn, they haven't already rolled. 
+	 * @post none
 	 * @return true if the dice can be rolled, false otherwise
 	 */
 	public boolean canRollDice() 
@@ -148,6 +173,8 @@ public abstract class MasterManager implements IMasterManager
 
 	/**
 	 * Checks all preconditions for discarding a card (when a 7 is rolled)
+	 * @pre Player owns the resource card.
+	 * @post none
 	 * @return true if the card can be discarded, false otherwise
 	 */
 	public boolean canDiscard()
