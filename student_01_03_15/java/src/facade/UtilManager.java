@@ -13,7 +13,8 @@ public class UtilManager
 	}
 	/**
 	 * Sets the server's log level (ALL, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, OFF)
-	 * 
+	 * @pre must be one of the levels enumerated above
+	 * @post sets the server's log level
 	 * @return JSON string
 	 */
 	public String changeLogLevel() 
