@@ -3,7 +3,9 @@ package server.handlers;
 public class RegisterHandler  extends Handler
 {
 	/**
-	 * Creates a new player account, and logs them in to the server.
+	 * @pre Request != null
+	 * @post Creates a new player account.
+	 * @post Logs player in to the server.
 	 * 
 	 * @param req	The Request object created from the Proxy's request.
 	 * @return 		The Response created as a result of the given Request.

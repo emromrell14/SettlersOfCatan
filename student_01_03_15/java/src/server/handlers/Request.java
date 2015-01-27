@@ -25,35 +25,40 @@ public class Request
 	/**
 	 * @return the method
 	 */
-	public String getMethod() {
+	public String getMethod() 
+	{
 		return method;
 	}
 
 	/**
 	 * @return the requestURI
 	 */
-	public String getRequestURI() {
+	public String getRequestURI() 
+	{
 		return requestURI;
 	}
 
 	/**
 	 * @return the headers
 	 */
-	public Headers getHeaders() {
+	public Headers getHeaders() 
+	{
 		return headers;
 	}
 
 	/**
 	 * @return the cookie
 	 */
-	public Cookie getCookie() {
+	public Cookie getCookie() 
+	{
 		return cookie;
 	}
 
 	/**
 	 * @return the body
 	 */
-	public String getBody() {
+	public String getBody() 
+	{
 		return body;
 	}
 }

@@ -13,7 +13,9 @@ public class Response
 		this.body = body;
 	}
 	
-	/**This function sends a response back to the Proxy.
+	/**
+	 * @pre exchange != null
+	 * @post This function sends a response back to the Proxy.
 	 * 
 	 * @param exchange
 	 */

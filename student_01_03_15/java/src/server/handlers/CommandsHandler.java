@@ -13,7 +13,8 @@ public class CommandsHandler extends Handler
 	}
 	
 	/**
-	 * Executes the specified command list in the current game.
+	 * @pre Request != null
+	 * @post Executes the specified command list in the current game.
 	 * 
 	 * @param req	The Request object created from the Proxy's request.
 	 * @return	The Response for the given Request.
@@ -25,7 +26,8 @@ public class CommandsHandler extends Handler
 	}
 	
 	/**
-	 * Returns a list of commands that have been executed in the current game.
+	 * @pre Request != null
+	 * @post Returns a list of commands that have been executed in the current game.
 	 * 
 	 * @param req	The Request object created from the Proxy's request.
 	 * @return	The Response for the given Request.

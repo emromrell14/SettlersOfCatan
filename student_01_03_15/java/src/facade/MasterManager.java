@@ -11,14 +11,24 @@ public abstract class MasterManager implements IMasterManager
 	private UserManager mUserManager;
 	private UtilManager mUtilManager;
 	protected IProxy mIProxy;
+//	private static MasterManager mInstance;
 	
 	/**
 	 * Facade to manage all other managers. 
 	 */
-	public MasterManager()
+	private MasterManager()
 	{
 		
 	}
+
+//	public static MasterManager getInstance() 
+//	{
+//		if(mInstance == null)
+//		{
+//			mInstance = new MasterManager();
+//		}
+//		return mInstance;
+//	}
 	
 	/**
 	 * Checks all preconditions for logging in.
@@ -444,5 +454,4 @@ public abstract class MasterManager implements IMasterManager
 	{
 		return null;
 	}
-
 }
