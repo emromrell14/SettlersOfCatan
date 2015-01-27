@@ -1,7 +1,7 @@
 package facade;
 
 public interface IMasterManager 
-{
+{	
 	public boolean canLogin();
 
 	public boolean canRegister();

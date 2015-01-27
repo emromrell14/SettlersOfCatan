@@ -8,13 +8,23 @@ public class MasterManager implements IMasterManager
 	private MovesManager mMovesManager;
 	private UserManager mUserManager;
 	private UtilManager mUtilManager;
+	private static MasterManager mInstance;
 	
 	/**
 	 * Facade to manage all other managers. 
 	 */
-	public MasterManager()
+	private MasterManager()
 	{
 		
+	}
+
+	public static MasterManager getInstance() 
+	{
+		if(mInstance == null)
+		{
+			mInstance = new MasterManager();
+		}
+		return mInstance;
 	}
 	
 	/**
@@ -436,5 +446,4 @@ public class MasterManager implements IMasterManager
 	{
 		return null;
 	}
-
 }
