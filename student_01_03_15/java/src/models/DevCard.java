@@ -4,8 +4,10 @@ import shared.definitions.DevCardType;
 
 public abstract class DevCard implements IDevCard
 {
-	boolean mPlayed;
-	DevCardType mType;
+	private boolean mPlayed;
+	private DevCardType mType;
+	
+	
 	public boolean getmPlayed()
 	{
 		return mPlayed;
