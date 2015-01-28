@@ -1,6 +1,6 @@
 package facade;
 
-public class GameManager extends MasterManager
+public class GameManager
 {
 	
 	/**

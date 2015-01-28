@@ -1,16 +1,13 @@
 package facade;
 
 public interface IMasterManager 
-{	
+{		
+	public void updateModel();
+	
 	public boolean canLogin();
 
 	public boolean canRegister();
 
-	/**
-	 * Validates the Cookie.
-	 * 
-	 * @return If the current user is logged in.
-	 */
 	public boolean isLoggedIn();
 
 	public boolean canBuildRoad();
@@ -32,6 +29,20 @@ public interface IMasterManager
 	public boolean canRollDice();
 
 	public boolean canDiscard();
+	
+	public boolean canFinishTurn();
+	
+	public boolean canUseYearOfPlenty();
+	
+	public boolean canUseRoadBuilder();
+
+	public boolean canUseSoldier();
+
+	public boolean canUseMonopoly();
+
+	public boolean canUseMonument();
+
+	public boolean canPlaceRobber();
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager

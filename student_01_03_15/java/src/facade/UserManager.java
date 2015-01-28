@@ -1,6 +1,6 @@
 package facade;
 
-public class UserManager extends MasterManager
+public class UserManager 
 {
 	/**
 	 * Creates UserManager object

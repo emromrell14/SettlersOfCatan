@@ -31,6 +31,11 @@ public class MasterManager implements IMasterManager
 		return mInstance;
 	}
 	
+	public void updateModel()
+	{
+		mModelManager.updateModel();
+	}
+	
 	/**
 	 * Checks all preconditions for logging in.
 	 * @pre Username and password not null.

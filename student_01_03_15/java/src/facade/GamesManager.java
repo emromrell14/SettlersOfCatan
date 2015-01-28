@@ -1,6 +1,6 @@
 package facade;
 
-public class GamesManager extends MasterManager
+public class GamesManager
 {
 	/**
 	 * Creates a GamesManager object
