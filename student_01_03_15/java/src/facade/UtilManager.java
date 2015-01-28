@@ -1,6 +1,6 @@
 package facade;
 
-public class UtilManager
+public class UtilManager extends MasterManager
 {
 	/**
 	 * Creates a new UtilManager facade that connects the Client to the Proxy

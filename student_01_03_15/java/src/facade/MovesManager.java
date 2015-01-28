@@ -1,6 +1,6 @@
 package facade;
 
-public class MovesManager 
+public class MovesManager extends MasterManager
 {
 	/**
 	 * Creates a MovesManager facade that connects the client to the proxy

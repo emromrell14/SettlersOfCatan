@@ -209,7 +209,8 @@ public abstract class MasterManager implements IMasterManager
 	// Games Manager
 	/**
 	 * gets a list of all games in the progress
-	 * 
+	 * @pre
+	 * @post
 	 * @return a String of JSON
 	 */
 	public String getGameList()
