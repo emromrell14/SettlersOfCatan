@@ -16,6 +16,7 @@ public class Game implements IGame
 	private Index mWinner;
 	private MessageList mChat; //All the chat messages.
 	private MessageList mLog; //All the log messages.
+	private Robber mRobber;
 	
 	@Override
 	public int rollDice()
