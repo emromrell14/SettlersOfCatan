@@ -2,7 +2,7 @@ package facade;
 
 import proxy.IProxy;
 
-public abstract class MasterManager implements IMasterManager
+public class MasterManager implements IMasterManager
 {
 	
 	private GameManager mGameManager;
@@ -10,8 +10,9 @@ public abstract class MasterManager implements IMasterManager
 	private MovesManager mMovesManager;
 	private UserManager mUserManager;
 	private UtilManager mUtilManager;
+	private ModelManager mModelManager;
 	protected IProxy mIProxy;
-//	private static MasterManager mInstance;
+	private static MasterManager mInstance;
 	
 	/**
 	 * Facade to manage all other managers. 
@@ -21,14 +22,14 @@ public abstract class MasterManager implements IMasterManager
 		
 	}
 
-//	public static MasterManager getInstance() 
-//	{
-//		if(mInstance == null)
-//		{
-//			mInstance = new MasterManager();
-//		}
-//		return mInstance;
-//	}
+	public static MasterManager getInstance() 
+	{
+		if(mInstance == null)
+		{
+			mInstance = new MasterManager();
+		}
+		return mInstance;
+	}
 	
 	/**
 	 * Checks all preconditions for logging in.
@@ -39,7 +40,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canLogin() 
 	{
-		return true;
+		return mModelManager.canLogin();
 	}
 
 	/** 
@@ -51,7 +52,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canRegister() 
 	{
-		return true;
+		return mModelManager.canRegister();
 	}
 
 	/**
@@ -62,7 +63,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean isLoggedIn()
 	{
-		return true;
+		return mModelManager.isLoggedIn();
 	}
 
 	/**
@@ -74,7 +75,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canBuildRoad()
 	{
-		return true;
+		return mModelManager.canBuildRoad();
 	}
 
 	/**
@@ -86,7 +87,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canBuildSettlement() 
 	{
-		return true;
+		return mModelManager.canBuildSettlement();
 	}
 	
 	/**
@@ -98,7 +99,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canBuildCity() 
 	{
-		return true;
+		return mModelManager.canBuildCity();
 	}
 
 	/**
@@ -110,7 +111,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canBuyDevCard()
 	{
-		return true;
+		return mModelManager.canBuyDevCard();
 	}
 
 	/**
@@ -122,7 +123,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canPlayDevCard() 
 	{
-		return true;
+		return mModelManager.canPlayDevCard();
 	}
 
 	/**
@@ -134,7 +135,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canOfferTrade() 
 	{
-		return true;
+		return mModelManager.canOfferTrade();
 	}
 
 	/**
@@ -146,7 +147,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canAcceptTrade() 
 	{
-		return true;
+		return mModelManager.canAcceptTrade();
 	}
 
 	/**
@@ -157,7 +158,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canMaritimeTrade() 
 	{
-		return true;
+		return mModelManager.canMaritimeTrade();
 	}
 
 	/**
@@ -168,7 +169,7 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canRollDice() 
 	{
-		return true;
+		return mModelManager.canRollDice();
 	}
 
 	/**
@@ -179,7 +180,77 @@ public abstract class MasterManager implements IMasterManager
 	 */
 	public boolean canDiscard()
 	{
-		return true;
+		return mModelManager.canDiscard();
+	}
+
+	/**
+	 * @pre none
+	 * @post none
+	 * @return true if player can finish turn, false otherwise
+	 */
+	public boolean canFinishTurn()
+	{
+		return mModelManager.canFinishTurn();
+	}
+
+	/**
+	 * @pre none
+	 * @post none
+	 * @return true if player can use Year Of Plenty, false otherwise
+	 */
+	public boolean canUseYearOfPlenty()
+	{
+		return mModelManager.canUseYearOfPlenty();
+	}
+
+	/**
+	 * @pre none
+	 * @post none
+	 * @return true if player can use Road Builder, false otherwise
+	 */
+	public boolean canUseRoadBuilder()
+	{
+		return mModelManager.canUseRoadBuilder();
+	}
+
+	/**
+	 * @pre none
+	 * @post none
+	 * @return true if player can use a Soldier, false otherwise
+	 */
+	public boolean canUseSoldier()
+	{
+		return mModelManager.canUseSoldier();
+	}
+
+	/**
+	 * @pre none
+	 * @post none
+	 * @return true if player can use Monopoly, false otherwise
+	 */
+	public boolean canUseMonopoly()
+	{
+		return mModelManager.canUseMonopoly();
+	}
+
+	/**
+	 * @pre none
+	 * @post none
+	 * @return true if player can use Monument, false otherwise
+	 */
+	public boolean canUseMonument()
+	{
+		return mModelManager.canUseMonument();
+	}
+
+	/**
+	 * @pre none
+	 * @post none
+	 * @return true if player can place the Robber, false otherwise
+	 */
+	public boolean canPlaceRobber()
+	{
+		return mModelManager.canPlaceRobber();
 	}
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER

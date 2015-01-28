@@ -7,7 +7,7 @@ public class UserManager extends MasterManager
 	 * 
 	 * @return a new UserManager object
 	 */
-	public UserManager()
+	private UserManager()
 	{
 		
 	}

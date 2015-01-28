@@ -10,29 +10,29 @@ import server.IServer;
 
 public class Proxy implements IProxy
 {
-	private IServer server;
-	private HttpURLConnection con;
+	private IServer mServer;
+	private HttpURLConnection mCon;
 	
 	public Proxy(IServer server)
 	{
-		this.server = server;
+		this.mServer = server;
 	}
 	
 	public String post(String requestPath, String json, Cookie cookie)
 	{
-		String url ="http://"+server.getHost()+":"+server.getPortNumber() + requestPath;
+		String url ="http://"+mServer.getHost()+":"+mServer.getPortNumber() + requestPath;
 		URL obj;
 		try 
 		{
 			obj = new URL(url);
-			con = (HttpURLConnection) obj.openConnection();
-			con.setDoOutput(true);
-			con.setDoInput(true);
-			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestMethod("POST");
+			mCon = (HttpURLConnection) obj.openConnection();
+			mCon.setDoOutput(true);
+			mCon.setDoInput(true);
+			mCon.setRequestProperty("Content-Type", "application/json");
+			mCon.setRequestProperty("Accept", "application/json");
+			mCon.setRequestMethod("POST");
 			
-			OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+			OutputStreamWriter wr = new OutputStreamWriter(mCon.getOutputStream());
 			wr.write(json);
 			wr.flush();
 		} 
