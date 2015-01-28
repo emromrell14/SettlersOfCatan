@@ -1,14 +1,17 @@
 package models;
 
+import shared.locations.HexLocation;
+
 public class Robber 
 {
-	private Hex mLocation;
+	private HexLocation mLocation;
+	
 	public Robber() 
 	{
 		
 	}
 	
-	public Hex getLocation()
+	public HexLocation getLocation()
 	{
 		return mLocation;
 	}

@@ -1,6 +1,7 @@
 package poller;
 
-import models.Game;
+import facade.IMasterManager;
+import facade.MasterManager;
 
 /** Poller class
 *
@@ -9,7 +10,7 @@ import models.Game;
 
 public class Poller 
 {
-	private Game mGame;
+	private IMasterManager mMasterManager;
 	
 	
     /**
@@ -17,8 +18,9 @@ public class Poller
      *
      * @return a new Poller object
      */
-	public Poller() {
-		
+	public Poller()
+	{
+		mMasterManager = MasterManager.getInstance();
 	}
 	
 	
@@ -29,11 +31,6 @@ public class Poller
 	public void run() 
 	{
 		
-		
-		
-		
-		
-		
 	}
 	
 	/**
@@ -43,8 +40,6 @@ public class Poller
      */
 	public boolean compareVersions() 
 	{
-		
-		
 		return true; // this is just a temporary default
 	}
     
@@ -54,7 +49,6 @@ public class Poller
      */
 	public void updateGUI() 
 	{
-		
 		
 	}
 	
@@ -67,5 +61,4 @@ public class Poller
 	{
 		
 	}
-	
 }
