@@ -3,6 +3,7 @@ package poller;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import models.Game;
 import facade.IMasterManager;
 import facade.MasterManager;
 
@@ -16,6 +17,7 @@ public class Poller implements Runnable
 	private IMasterManager mMasterManager;
 	private final int mSecondsBetweenPolls = 2;
 	private int version = 0;
+
 
 	
     /**
@@ -40,7 +42,8 @@ public class Poller implements Runnable
 	    								// RESOLVED ON THE SERVER SIDE
 			if (getGameModel(version) != null)
 	    	{
-				updateGUI();
+				// DEJSONIFY A JSON OBJECT THEN PASS IT INTO updateGUI()
+				updateGUI(new Game());
 			}
 	    }
 	 }
@@ -84,9 +87,9 @@ public class Poller implements Runnable
      *
      */
 	
-	public void updateGUI() 
+	public void updateGUI(Game g) 
 	{
-		mMasterManager.updateModel();
+		mMasterManager.updateModel(g);
 	}
 	
 }
