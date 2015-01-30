@@ -1,5 +1,6 @@
 package facade;
 
+import models.Game;
 import proxy.IProxy;
 import proxy.Proxy;
 
@@ -12,7 +13,7 @@ public class MasterManager implements IMasterManager
 	private UserManager mUserManager;
 	private UtilManager mUtilManager;
 	private ModelManager mModelManager;
-	protected IProxy mIProxy;
+	protected IProxy mProxy;
 	private static MasterManager mInstance;
 	
 	/**
@@ -20,8 +21,12 @@ public class MasterManager implements IMasterManager
 	 */
 	private MasterManager()
 	{
-		mIProxy = new Proxy();
-		mUserManager = new UserManager(mIProxy);
+		mProxy = new Proxy();
+		mUserManager = new UserManager(mProxy);
+		mGameManager = new GameManager(mProxy);
+		mMovesManager = new MovesManager(mProxy);
+		mUtilManager = new UtilManager(mProxy);
+		mModelManager = new ModelManager(mProxy);
 	}
 
 	public static MasterManager getInstance() 
@@ -33,9 +38,9 @@ public class MasterManager implements IMasterManager
 		return mInstance;
 	}
 	
-	public void updateModel()
+	public void updateModel(Game newGameModel)
 	{
-		mModelManager.updateModel();
+		mModelManager.updateModel(newGameModel);
 	}
 	
 	/**

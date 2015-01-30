@@ -1,8 +1,10 @@
 package facade;
 
+import models.Game;
+
 public interface IMasterManager 
 {		
-	public void updateModel();
+	public void updateModel(Game newGameModel);
 	
 	public boolean canLogin();
 
