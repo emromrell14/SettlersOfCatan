@@ -16,9 +16,9 @@ public class Proxy implements IProxy
 	private HttpURLConnection mCon;
 	private Cookie mCookie;
 	
-	public Proxy(IServer server)
+
+	public Proxy()
 	{
-		this.mServer = server;
 		mCookie = new Cookie();
 	}
 	

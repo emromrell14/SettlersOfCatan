@@ -1,15 +1,18 @@
 package facade;
 
+import proxy.IProxy;
+
 public class UserManager 
 {
+	protected IProxy mProxy;
 	/**
 	 * Creates UserManager object
 	 * 
 	 * @return a new UserManager object
 	 */
-	private UserManager()
+	public UserManager(IProxy proxy)
 	{
-		
+		mProxy = proxy;
 	}
 	
 	/**

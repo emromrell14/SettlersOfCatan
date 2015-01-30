@@ -1,6 +1,7 @@
 package facade;
 
 import proxy.IProxy;
+import proxy.Proxy;
 
 public class MasterManager implements IMasterManager
 {
@@ -19,7 +20,8 @@ public class MasterManager implements IMasterManager
 	 */
 	private MasterManager()
 	{
-		
+		mIProxy = new Proxy();
+		mUserManager = new UserManager(mIProxy);
 	}
 
 	public static MasterManager getInstance() 
