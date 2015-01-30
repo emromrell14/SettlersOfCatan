@@ -62,7 +62,7 @@ public interface IMasterManager
 	public String loadGame();
 
 	// Game Manager
-	public String getGameModel();
+	public String getGameModel(int version);
 
 	public String resetGame();
 

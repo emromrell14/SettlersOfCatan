@@ -345,7 +345,7 @@ public class MasterManager implements IMasterManager
 	 * @pre none
 	 * @return json String with game model in it
 	 */
-	public String getGameModel()
+	public String getGameModel(int version)
 	{
 		return null;
 	}

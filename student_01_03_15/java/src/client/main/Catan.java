@@ -2,6 +2,7 @@ package client.main;
 
 import javax.swing.*;
 
+import poller.Poller;
 import client.catan.*;
 import client.login.*;
 import client.join.*;
@@ -29,6 +30,10 @@ public class Catan extends JFrame
 		this.setContentPane(catanPanel);
 		
 		display();
+		
+		// SETTING UP AND STARTING THREAD FOR POLLING
+		Thread t = new Thread(new Poller());
+		t.start();
 	}
 	
 	private void display()
