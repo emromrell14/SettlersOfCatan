@@ -1,14 +1,21 @@
 package facade;
 
+import proxy.IProxy;
 import models.Game;
 
 public class ModelManager 
 {
 	private Game mGameModel;
+	private IProxy mProxy;
 	
-	public void updateModel()
+	public ModelManager(IProxy proxy) 
 	{
-		
+		mProxy = proxy;
+	}
+
+	public void updateModel(Game newGameModel)
+	{
+		mGameModel = newGameModel;
 	}
 	
 	/**

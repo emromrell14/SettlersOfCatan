@@ -1,15 +1,20 @@
 package facade;
 
+import proxy.IProxy;
+
 public class MovesManager
 {
+	private IProxy mProxy;
+	
 	/**
 	 * Creates a MovesManager facade that connects the client to the proxy
+	 * @param proxy 
 	 * 
 	 * @return New MovesManager object
 	 */
-	public MovesManager()
+	public MovesManager(IProxy proxy)
 	{
-		
+		mProxy = proxy;
 	}
 	/**
 	 * Sends a chat message

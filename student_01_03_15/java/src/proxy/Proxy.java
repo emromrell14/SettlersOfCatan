@@ -21,7 +21,7 @@ public class Proxy implements IProxy
 	
 	public String post(String requestPath, String json)
 	{
-		String url ="http://localhost:8080" + requestPath;
+		String url ="http://localhost:8898" + requestPath;
 		URL obj;
 		try 
 		{
@@ -75,7 +75,7 @@ public class Proxy implements IProxy
 	
 	public String get(String requestPath)
 	{
-		String url ="http://localhost:8080" + requestPath;
+		String url ="http://localhost:8898" + requestPath;
 		URL obj;
 		try 
 		{
