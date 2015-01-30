@@ -8,23 +8,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import cookie.Cookie;
-import server.IServer;
 
 public class Proxy implements IProxy
 {
-	private IServer mServer;
 	private HttpURLConnection mCon;
 	private Cookie mCookie;
 	
-	public Proxy(IServer server)
+	public Proxy()
 	{
-		this.mServer = server;
 		mCookie = new Cookie();
 	}
 	
 	public String post(String requestPath, String json)
 	{
-		String url ="http://"+mServer.getHost()+":"+mServer.getPortNumber() + requestPath;
+		String url ="http://localhost:8080" + requestPath;
 		URL obj;
 		try 
 		{
@@ -42,7 +39,7 @@ public class Proxy implements IProxy
 			wr.flush();
 			wr.close();
 			
-			int responseCode = mCon.getResponseCode();
+			//int responseCode = mCon.getResponseCode();
 			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -78,7 +75,7 @@ public class Proxy implements IProxy
 	
 	public String get(String requestPath)
 	{
-		String url ="http://"+mServer.getHost()+":"+mServer.getPortNumber() + requestPath;
+		String url ="http://localhost:8080" + requestPath;
 		URL obj;
 		try 
 		{
@@ -89,7 +86,7 @@ public class Proxy implements IProxy
 			mCon.setRequestProperty("Cookie", mCookie.getCookie());
 			mCon.setRequestMethod("GET");
 			
-			int responseCode = mCon.getResponseCode();
+			//int responseCode = mCon.getResponseCode();
 			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
