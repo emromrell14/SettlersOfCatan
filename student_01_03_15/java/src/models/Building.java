@@ -50,4 +50,13 @@ public class Building
 	{
 		return mLocation;
 	}
+	
+	public Hex[] getNeighborsHexes() 
+	{
+		return neighborHexes;
+	}
+	public BuildingType getBuildingType()
+	{
+		return mBuildingType;
+	}
 }
