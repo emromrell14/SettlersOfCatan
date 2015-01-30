@@ -1,6 +1,8 @@
 package proxy;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,13 +14,15 @@ public class Proxy implements IProxy
 {
 	private IServer mServer;
 	private HttpURLConnection mCon;
+	private Cookie mCookie;
 	
 	public Proxy(IServer server)
 	{
 		this.mServer = server;
+		mCookie = new Cookie();
 	}
 	
-	public String post(String requestPath, String json, Cookie cookie)
+	public String post(String requestPath, String json)
 	{
 		String url ="http://"+mServer.getHost()+":"+mServer.getPortNumber() + requestPath;
 		URL obj;
@@ -30,21 +34,77 @@ public class Proxy implements IProxy
 			mCon.setDoInput(true);
 			mCon.setRequestProperty("Content-Type", "application/json");
 			mCon.setRequestProperty("Accept", "application/json");
+			mCon.setRequestProperty("Cookie", mCookie.getCookie());
 			mCon.setRequestMethod("POST");
 			
 			OutputStreamWriter wr = new OutputStreamWriter(mCon.getOutputStream());
 			wr.write(json);
 			wr.flush();
+			wr.close();
+			
+			int responseCode = mCon.getResponseCode();
+			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			
+			while((inputLine = in.readLine()) != null)
+			{
+				response.append(inputLine);
+			}
+			
+			in.close();
+			if(requestPath.equalsIgnoreCase("/user/login"))
+			{
+				String cookieResponse = mCon.getHeaderField("Set-cookie");
+				cookieResponse = cookieResponse.replace("catan.user=","");
+				cookieResponse = cookieResponse.replace(";Path=/;", "");
+				mCookie.setCatanUser(cookieResponse);
+			}
+			else if(requestPath.equalsIgnoreCase("/games/join"))
+			{
+				String cookieResponse = mCon.getHeaderField("Set-cookie");
+				cookieResponse = cookieResponse.replace("catan.game=","");
+				cookieResponse = cookieResponse.replace(";Path=/;", "");
+				mCookie.setCatanGame(cookieResponse);
+			}
+			return response.toString();
 		} 
 		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return "Shouldn't get here";
 	}
 	
-	public String get(Cookie cookie)
+	public String get(String requestPath)
 	{
-		return null;
+		String url ="http://"+mServer.getHost()+":"+mServer.getPortNumber() + requestPath;
+		URL obj;
+		try 
+		{
+			obj = new URL(url);
+			mCon = (HttpURLConnection) obj.openConnection();
+			mCon.setRequestProperty("Content-Type", "application/json");
+			mCon.setRequestProperty("Accept", "application/json");
+			mCon.setRequestProperty("Cookie", mCookie.getCookie());
+			mCon.setRequestMethod("GET");
+			
+			int responseCode = mCon.getResponseCode();
+			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			
+			while((inputLine = in.readLine()) != null)
+			{
+				response.append(inputLine);
+			}
+			in.close();
+			return response.toString();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		return "Shouldn't get here";
 	}
 }

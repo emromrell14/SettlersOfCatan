@@ -12,7 +12,6 @@ public class Poller
 {
 	private IMasterManager mMasterManager;
 	
-	
     /**
      * Creates the Poller object
      *
@@ -22,7 +21,6 @@ public class Poller
 	{
 		mMasterManager = MasterManager.getInstance();
 	}
-	
 	
 	/**
      * Run function to test the version and then update if needed
@@ -51,7 +49,6 @@ public class Poller
 	{
 		
 	}
-	
 	
 	/**
      * main function to be able to run this as a thread on a timer
