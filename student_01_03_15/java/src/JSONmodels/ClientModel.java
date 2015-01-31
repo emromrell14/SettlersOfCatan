@@ -1,37 +1,18 @@
 package JSONmodels;
 
-import models.Index;
+import com.google.gson.Gson;
 
 public class ClientModel 
 {
-	private ResourceList mBank; //The cards available to be distributed to the players.
-	private MessageList mChat; //All the chat messages.
-	private MessageList mLog; //All the log messages.
-	private Map mMap;
-	private Player[] mPlayers;
-	private TradeOffer mTradeOffer; //OPTIONAL. Current trade offer, if there is one.
-	private TurnTracker mTurnTracker; //This tracks whose turn it is and what action's being done.
-	private int mVersion; //The version of the model. This is incremented whenever anyone makes a move.
-	private Index mWinner; //This is -1 when nobody's won yet. When they have, it's their order index [0-3].
-	
-	/**
-	 * Creates a ClientModel object from all the variables
-	 * 
-	 * @param bank
-	 * @param chat
-	 * @param log
-	 * @param map
-	 * @param players
-	 * @param tradeOffer
-	 * @param turnTracker
-	 * @param version
-	 * @param winner
-	 * @return New ClientModel object
-	 */
-	public ClientModel(ResourceList bank, MessageList chat, MessageList log, Map map, Player[] players, TradeOffer tradeOffer, TurnTracker turnTracker, int version, Index winner)
-	{
-		
-	}
+	private ResourceList bank; //The cards available to be distributed to the players.
+	private MessageList chat; //All the chat messages.
+	private MessageList log; //All the log messages.
+	private Map map;
+	private Player[] players;
+	private TradeOffer tradeOffer; //OPTIONAL. Current trade offer, if there is one.
+	private TurnTracker turnTracker; //This tracks whose turn it is and what action's being done.
+	private int version; //The version of the model. This is incremented whenever anyone makes a move.
+	private int winner; //This is -1 when nobody's won yet. When they have, it's their order index [0-3].
 	
 	/**
 	 * Creates a ClientModel object from a JSON string
@@ -39,9 +20,10 @@ public class ClientModel
 	 * @param Valid JSON string
 	 * @return New ClientModel object
 	 */
-	public ClientModel(String JSON)
+	public static ClientModel fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, ClientModel.class);
 	}
 	
 	/**
@@ -51,6 +33,70 @@ public class ClientModel
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
+	/**
+	 * @return the bank
+	 */
+	public ResourceList getBank() {
+		return bank;
+	}
+
+	/**
+	 * @return the chat
+	 */
+	public MessageList getChat() {
+		return chat;
+	}
+
+	/**
+	 * @return the log
+	 */
+	public MessageList getLog() {
+		return log;
+	}
+
+	/**
+	 * @return the map
+	 */
+	public Map getMap() {
+		return map;
+	}
+
+	/**
+	 * @return the players
+	 */
+	public Player[] getPlayers() {
+		return players;
+	}
+
+	/**
+	 * @return the tradeOffer
+	 */
+	public TradeOffer getTradeOffer() {
+		return tradeOffer;
+	}
+
+	/**
+	 * @return the turnTracker
+	 */
+	public TurnTracker getTurnTracker() {
+		return turnTracker;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * @return the winner
+	 */
+	public int getWinner() {
+		return winner;
 	}
 }

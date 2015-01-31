@@ -1,34 +1,16 @@
 package JSONmodels;
 
-import shared.locations.*;
-import models.Road;
+import com.google.gson.Gson;
 
 public class Map 
 {
-	private Hex[] mHexes; //A list of all the hexes on the grid - it's only land tiles.
-	private Port[] mPorts;
-	private Road[] mRoads;
-	private VertexObject[] mSettlements;
-	private VertexObject[] mCities;
-	private int mRadius; //The radius of the map (it includes the center hex, and the ocean hexes; pass this into the hex grid constructor)
-	private HexLocation mRobber; //The current location of the robber
-	
-	/**
-	 * Creates a Map object from all the variables
-	 * 
-	 * @param hexes
-	 * @param ports
-	 * @param roads
-	 * @param settlements
-	 * @param cities
-	 * @param radius
-	 * @param robber
-	 * @return New Map object
-	 */
-	public Map(Hex[] hexes, Port[] ports, Road[] roads, VertexObject[] settlements, VertexObject[] cities, int radius, HexLocation robber)
-	{
-		
-	}
+	private Hex[] hexes; //A list of all the hexes on the grid - it's only land tiles.
+	private Port[] ports;
+	private EdgeValue[] roads;
+	private VertexObject[] settlements;
+	private VertexObject[] cities;
+	private int radius; //The radius of the map (it includes the center hex, and the ocean hexes; pass this into the hex grid constructor)
+	private HexLocation robber; //The current location of the robber
 	
 	/**
 	 * Creates a Map object from a JSON string
@@ -36,9 +18,10 @@ public class Map
 	 * @param Valid JSON string
 	 * @return New Map object
 	 */
-	public Map(String JSON)
+	public static Map fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, Map.class);
 	}
 	/**
 	 * Creates the JSON code from this object
@@ -47,6 +30,49 @@ public class Map
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+	/**
+	 * @return the hexes
+	 */
+	public Hex[] getHexes() {
+		return hexes;
+	}
+	/**
+	 * @return the ports
+	 */
+	public Port[] getPorts() {
+		return ports;
+	}
+	/**
+	 * @return the roads
+	 */
+	public EdgeValue[] getRoads() {
+		return roads;
+	}
+	/**
+	 * @return the settlements
+	 */
+	public VertexObject[] getSettlements() {
+		return settlements;
+	}
+	/**
+	 * @return the cities
+	 */
+	public VertexObject[] getCities() {
+		return cities;
+	}
+	/**
+	 * @return the radius
+	 */
+	public int getRadius() {
+		return radius;
+	}
+	/**
+	 * @return the robber
+	 */
+	public HexLocation getRobber() {
+		return robber;
 	}
 }

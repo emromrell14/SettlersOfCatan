@@ -1,25 +1,11 @@
 package JSONmodels;
 
-import models.Index;
-import shared.locations.VertexLocation;
+import com.google.gson.Gson;
 
 public class VertexObject 
 {
-	private Index mOwner; //The index (not id) of the player who owns the piece (0-3).
-	private VertexLocation mLocation; //The location of this object.
-	
-	/**
-	 * Creates a VertexObject object from all the variables
-	 * 
-	 * @param owner
-	 * @param location
-	 * @return New VertexObject object
-	 */
-	public VertexObject(Index owner, VertexLocation location)
-	{
-		this.mOwner = owner;
-		this.mLocation = location;
-	}
+	private int owner; //The index (not id) of the player who owns the piece (0-3).
+	private EdgeLocation location; //The location of this object.
 	
 	/**
 	 * Creates a VertexObject object from a JSON string
@@ -27,9 +13,10 @@ public class VertexObject
 	 * @param Valid JSON string
 	 * @return New VertexObject object
 	 */
-	public VertexObject(String JSON)
+	public static VertexObject fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, VertexObject.class);
 	}
 	
 	/**
@@ -39,6 +26,21 @@ public class VertexObject
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public int getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public EdgeLocation getLocation() {
+		return location;
 	}
 }

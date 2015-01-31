@@ -1,36 +1,24 @@
 package JSONmodels;
 
-import models.Index;
-import shared.locations.EdgeLocation;
+import com.google.gson.Gson;
 
 public class EdgeValue 
 {
-	private Index mOwner; //The index (not ID) of the player who owns this piece (0-3).
-	private EdgeLocation mLocation; //The location of this road.
+	private int owner; //The index (not ID) of the player who owns this piece (0-3).
+	private EdgeLocation location; //The location of this road.
 	
 	/**
-	 * Creates an EdgeValue object from all the variables
-	 * 
-	 * @param owner
-	 * @param location
-	 * @return New EdgeValue object
-	 */
-	public EdgeValue(Index owner, EdgeLocation location)
-	{
-		this.mOwner = owner;
-		this.mLocation = location;
-	}
-	
-	/**
-	 * Creates an EdgeValue object from a JSON string
+	 * Creates a EdgeValue object from a JSON string
 	 * 
 	 * @param Valid JSON string
 	 * @return New EdgeValue object
 	 */
-	public EdgeValue(String JSON)
+	public static EdgeValue fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, EdgeValue.class);
 	}
+	
 	/**
 	 * Creates the JSON code from this object
 	 * 
@@ -38,6 +26,21 @@ public class EdgeValue
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public int getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public EdgeLocation getLocation() {
+		return location;
 	}
 }
