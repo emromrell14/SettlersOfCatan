@@ -22,7 +22,13 @@ public class GameManager
 	 */
 	public String getGameModel()
 	{
-		return null;
+		String response;
+		String body;
+		
+		body = "{id:" + id + ",color:\"" + color + "\"}";
+		
+		response = mProxy.post("/games/model", body);
+		return response;
 	}
 	
 	/**
