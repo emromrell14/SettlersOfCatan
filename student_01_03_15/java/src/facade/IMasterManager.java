@@ -1,8 +1,10 @@
 package facade;
 
+import models.Game;
+
 public interface IMasterManager 
 {		
-	public void updateModel();
+	public void updateModel(Game newGameModel);
 	
 	public boolean canLogin();
 
@@ -32,15 +34,15 @@ public interface IMasterManager
 	
 	public boolean canFinishTurn();
 	
-	public boolean canUseYearOfPlenty();
+	public boolean canPlayYearOfPlenty();
 	
-	public boolean canUseRoadBuilder();
+	public boolean canPlayRoadBuilder();
 
-	public boolean canUseSoldier();
+	public boolean canPlaySoldier();
 
-	public boolean canUseMonopoly();
+	public boolean canPlayMonopoly();
 
-	public boolean canUseMonument();
+	public boolean canPlayMonument();
 
 	public boolean canPlaceRobber();
 
