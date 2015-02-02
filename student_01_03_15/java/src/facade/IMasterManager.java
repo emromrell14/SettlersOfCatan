@@ -5,7 +5,7 @@ import models.Game;
 public interface IMasterManager 
 {		
 	public void updateModel(Game newGameModel);
-	
+
 	public boolean canLogin();
 
 	public boolean canRegister();

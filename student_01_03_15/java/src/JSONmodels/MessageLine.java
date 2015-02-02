@@ -1,21 +1,11 @@
 package JSONmodels;
 
-public class MessageLine {
-	private String mMessage;
-	private String mSource;
-	
-	/**
-	 * Create a MessageLine object from all the variables
-	 * 
-	 * @param message
-	 * @param source
-	 * @return New MessageLine object
-	 */
-	public MessageLine(String message, String source)
-	{
-		this.mMessage = message;
-		this.mSource = source;
-	}
+import com.google.gson.Gson;
+
+public class MessageLine 
+{
+	private String message;
+	private String source;
 	
 	/**
 	 * Creates a MessageLine object from a JSON string
@@ -23,10 +13,12 @@ public class MessageLine {
 	 * @param Valid JSON string
 	 * @return New MessageLine object
 	 */
-	public MessageLine(String JSON)
+	public static MessageLine fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, MessageLine.class);
 	}
+	
 	/**
 	 * Creates the JSON code from this object
 	 * 
@@ -34,6 +26,21 @@ public class MessageLine {
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * @return the source
+	 */
+	public String getSource() {
+		return source;
 	}
 }

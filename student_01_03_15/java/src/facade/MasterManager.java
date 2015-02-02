@@ -41,6 +41,7 @@ public class MasterManager implements IMasterManager
 	public void updateModel(Game newGameModel)
 	{
 		mModelManager.updateModel(newGameModel);
+
 	}
 	
 	/**

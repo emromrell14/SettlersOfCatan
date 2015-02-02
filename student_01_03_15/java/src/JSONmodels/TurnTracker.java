@@ -1,30 +1,13 @@
 package JSONmodels;
 
-import models.Index;
+import com.google.gson.Gson;
 
 public class TurnTracker 
 {
-	private Index mCurrentTurn; //Whose turn it is (0-3).
-	private Status mStatus; //What's happening now.
-	private Index mLongestRoad; //The index of who has the longest road.
-	private Index mLargestArmy; //The index of who has the largest army. (Has to be 3 or more).
-	
-	/**
-	 * Creates a TurnTracker object from all the variables
-	 * 
-	 * @param currentTurn
-	 * @param status
-	 * @param longestRoad
-	 * @param largestArmy
-	 * @return New TurnTracker object
-	 */
-	public TurnTracker(Index currentTurn, Status status, Index longestRoad, Index largestArmy)
-	{
-		this.mCurrentTurn = currentTurn;
-		this.mStatus = status;
-		this.mLongestRoad = longestRoad;
-		this.mLargestArmy = largestArmy;
-	}
+	private int currentTurn; //Whose turn it is (0-3).
+	private String status; //What's happening now.
+	private int longestRoad; //The index of who has the longest road.
+	private int largestArmy; //The index of who has the largest army. (Has to be 3 or more).
 	
 	/**
 	 * Creates a TurnTracker object from a JSON string
@@ -32,10 +15,12 @@ public class TurnTracker
 	 * @param Valid JSON string
 	 * @return New TurnTracker object
 	 */
-	public TurnTracker(String JSON)
+	public static TurnTracker fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, TurnTracker.class);
 	}
+	
 	/**
 	 * Creates the JSON code from this object
 	 * 
@@ -43,6 +28,35 @@ public class TurnTracker
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
+	/**
+	 * @return the currentTurn
+	 */
+	public int getCurrentTurn() {
+		return currentTurn;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @return the longestRoad
+	 */
+	public int getLongestRoad() {
+		return longestRoad;
+	}
+
+	/**
+	 * @return the largestArmy
+	 */
+	public int getLargestArmy() {
+		return largestArmy;
 	}
 }
