@@ -1,15 +1,18 @@
 package facade;
 
+import proxy.IProxy;
+
 public class GameManager
 {
-	
+	private IProxy mProxy;
 	/**
 	 * Creates a GameManager object
+	 * @param mProxy 
 	 * @return GameManager object
 	 */
-	public GameManager()
+	public GameManager(IProxy proxy)
 	{
-		
+		mProxy = proxy;
 	}
 	
 	/**
