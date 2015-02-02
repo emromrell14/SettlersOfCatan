@@ -15,7 +15,7 @@ public interface IProxy
 	 * @param cookie		The user's cookie that will be sent in the request header.
 	 * @return Response from the server.
 	 */
-	String post(String requestPath, String jsonBody, Cookie cookie);
+	String post(String requestPath, String jsonBody);
 	
 	/**
 	 * Sends a GET request to the IServer
@@ -27,5 +27,5 @@ public interface IProxy
 	 * @param cookie	The user's cookie that will be sent in the request header.
 	 * @return Response from the server.
 	 */
-	String get(String requestPath, Cookie cookie);
+	String get(String requestPath);
 }

@@ -20,7 +20,12 @@ public class MasterManager implements IMasterManager
 	 */
 	private MasterManager()
 	{
-		
+		mProxy = new Proxy();
+		mUserManager = new UserManager(mProxy);
+		mGameManager = new GameManager(mProxy);
+		mMovesManager = new MovesManager(mProxy);
+		mUtilManager = new UtilManager(mProxy);
+		mModelManager = new ModelManager(mProxy);
 	}
 
 	public static MasterManager getInstance() 
@@ -32,9 +37,10 @@ public class MasterManager implements IMasterManager
 		return mInstance;
 	}
 	
-	public void updateModel(Game g)
+	public void updateModel(Game newGameModel)
 	{
-		mModelManager.updateModel(g);
+		mModelManager.updateModel(newGameModel);
+
 	}
 	
 	/**
@@ -204,9 +210,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canUseYearOfPlenty()
+	public boolean canPlayYearOfPlenty()
 	{
-		return mModelManager.canUseYearOfPlenty();
+		return mModelManager.canPlayYearOfPlenty();
 	}
 
 	/**
@@ -214,9 +220,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canUseRoadBuilder()
+	public boolean canPlayRoadBuilder()
 	{
-		return mModelManager.canUseRoadBuilder();
+		return mModelManager.canPlayRoadBuilder();
 	}
 
 	/**
@@ -224,9 +230,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canUseSoldier()
+	public boolean canPlaySoldier()
 	{
-		return mModelManager.canUseSoldier();
+		return mModelManager.canPlaySoldier();
 	}
 
 	/**
@@ -234,9 +240,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canUseMonopoly()
+	public boolean canPlayMonopoly()
 	{
-		return mModelManager.canUseMonopoly();
+		return mModelManager.canPlayMonopoly();
 	}
 
 	/**
@@ -244,9 +250,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canUseMonument()
+	public boolean canPlayMonument()
 	{
-		return mModelManager.canUseMonument();
+		return mModelManager.canPlayMonument();
 	}
 
 	/**

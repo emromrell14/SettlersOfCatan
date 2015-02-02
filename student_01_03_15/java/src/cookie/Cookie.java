@@ -2,45 +2,58 @@ package cookie;
 
 public class Cookie 
 {
-	private String username;
-	private String password;
-	private int userID;
-	private int gameID;
+	private String catanUser;
+	private String catanGame;
 	
-	Cookie()
+	public Cookie()
 	{
-		
+		catanUser = "";
+		catanGame = "";
 	}
 
 	/**
-	 * @return the username
+	 * @return the catanUser
 	 */
-	public String getUsername() 
+	public String getCatanUser() 
 	{
-		return username;
+		return catanUser;
 	}
 
 	/**
-	 * @return the password
+	 * @param catanUser the catanUser to set
 	 */
-	public String getPassword()
+	public void setCatanUser(String catanUser)
 	{
-		return password;
+		this.catanUser = catanUser;
 	}
 
 	/**
-	 * @return the userID
+	 * @return the catanGame
 	 */
-	public int getUserID() 
+	public String getCatanGame() 
 	{
-		return userID;
+		return catanGame;
 	}
 
 	/**
-	 * @return the gameID
+	 * @param catanGame the catanGame to set
 	 */
-	public int getGameID() 
+	public void setCatanGame(String catanGame) 
 	{
-		return gameID;
+		this.catanGame = catanGame;
+	}
+	
+	public String getCookie()
+	{
+		String cookie = "";
+		if(!catanUser.equalsIgnoreCase(""))
+		{
+			cookie = "catan.user="+catanUser;
+			if(!catanGame.equalsIgnoreCase(""))
+			{
+				cookie += "; catan.game="+catanGame;
+			}
+		}
+		return cookie;
 	}
 }
