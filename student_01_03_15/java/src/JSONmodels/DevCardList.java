@@ -1,31 +1,14 @@
 package JSONmodels;
 
+import com.google.gson.Gson;
+
 public class DevCardList 
 {
-	private int mMonopoly;
-	private int mMonument;
-	private int mRoadBuilding;
-	private int mSoldier;
-	private int mYearOfPlenty;
-	
-	/**
-	 * Creates a DevCardList object from all the variables
-	 * 
-	 * @param monopoly
-	 * @param monument
-	 * @param roadBuilding
-	 * @param soldier
-	 * @param yearOfPlenty
-	 * @return New DevCardList object
-	 */
-	public DevCardList(int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty)
-	{
-		this.mMonopoly = monopoly;
-		this.mMonument = monument;
-		this.mRoadBuilding = roadBuilding;
-		this.mSoldier = soldier;
-		this.mYearOfPlenty = yearOfPlenty;
-	}
+	private int monopoly;
+	private int monument;
+	private int roadBuilding;
+	private int soldier;
+	private int yearOfPlenty;
 	
 	/**
 	 * Creates a DevCardList object from a JSON string
@@ -33,9 +16,10 @@ public class DevCardList
 	 * @param Valid JSON string
 	 * @return New DevCardList object
 	 */
-	public DevCardList(String JSON)
+	public static DevCardList fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, DevCardList.class);
 	}
 	
 	/**
@@ -45,6 +29,42 @@ public class DevCardList
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
+	/**
+	 * @return the monopoly
+	 */
+	public int getMonopoly() {
+		return monopoly;
+	}
+
+	/**
+	 * @return the monument
+	 */
+	public int getMonument() {
+		return monument;
+	}
+
+	/**
+	 * @return the roadBuilding
+	 */
+	public int getRoadBuilding() {
+		return roadBuilding;
+	}
+
+	/**
+	 * @return the soldier
+	 */
+	public int getSoldier() {
+		return soldier;
+	}
+
+	/**
+	 * @return the yearOfPlenty
+	 */
+	public int getYearOfPlenty() {
+		return yearOfPlenty;
 	}
 }

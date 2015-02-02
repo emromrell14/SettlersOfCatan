@@ -1,31 +1,14 @@
 package JSONmodels;
 
+import com.google.gson.Gson;
+
 public class ResourceList 
 {
-	private int mBrick;
-	private int mOre;
-	private int mSheep;
-	private int mWheat;
-	private int mWood;
-	
-	/**
-	 * Creates a ResourceList object from all the variables
-	 * 
-	 * @param brick
-	 * @param ore
-	 * @param sheep
-	 * @param wheat
-	 * @param wood
-	 * @return New ResourceList object
-	 */
-	public ResourceList(int brick, int ore, int sheep, int wheat, int wood)
-	{
-		this.mBrick = brick;
-		this.mOre = ore;
-		this.mSheep = sheep;
-		this.mWheat = wheat;
-		this.mWood = wood;
-	}
+	private int brick;
+	private int ore;
+	private int sheep;
+	private int wheat;
+	private int wood;
 	
 	/**
 	 * Creates a ResourceList object from a JSON string
@@ -33,10 +16,12 @@ public class ResourceList
 	 * @param Valid JSON string
 	 * @return New ResourceList object
 	 */
-	public ResourceList(String JSON)
+	public static ResourceList fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, ResourceList.class);
 	}
+	
 	/**
 	 * Creates the JSON code from this object
 	 * 
@@ -44,6 +29,40 @@ public class ResourceList
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
+
+	public int getBrick() {
+		return brick;
+	}
+
+	/**
+	 * @return the ore
+	 */
+	public int getOre() {
+		return ore;
+	}
+
+	/**
+	 * @return the sheep
+	 */
+	public int getSheep() {
+		return sheep;
+	}
+
+	/**
+	 * @return the wheat
+	 */
+	public int getWheat() {
+		return wheat;
+	}
+
+	/**
+	 * @return the wood
+	 */
+	public int getWood() {
+		return wood;
+	}
+
 }

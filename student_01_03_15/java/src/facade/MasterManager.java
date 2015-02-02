@@ -2,7 +2,6 @@ package facade;
 
 import models.Game;
 import proxy.IProxy;
-import proxy.Proxy;
 
 public class MasterManager implements IMasterManager
 {
@@ -13,7 +12,7 @@ public class MasterManager implements IMasterManager
 	private UserManager mUserManager;
 	private UtilManager mUtilManager;
 	private ModelManager mModelManager;
-	protected IProxy mProxy;
+	protected IProxy mIProxy;
 	private static MasterManager mInstance;
 	
 	/**
@@ -21,12 +20,7 @@ public class MasterManager implements IMasterManager
 	 */
 	private MasterManager()
 	{
-		mProxy = new Proxy();
-		mUserManager = new UserManager(mProxy);
-		mGameManager = new GameManager(mProxy);
-		mMovesManager = new MovesManager(mProxy);
-		mUtilManager = new UtilManager(mProxy);
-		mModelManager = new ModelManager(mProxy);
+		
 	}
 
 	public static MasterManager getInstance() 
@@ -38,9 +32,9 @@ public class MasterManager implements IMasterManager
 		return mInstance;
 	}
 	
-	public void updateModel(Game newGameModel)
+	public void updateModel(Game g)
 	{
-		mModelManager.updateModel(newGameModel);
+		mModelManager.updateModel(g);
 	}
 	
 	/**
@@ -210,9 +204,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canPlayYearOfPlenty()
+	public boolean canUseYearOfPlenty()
 	{
-		return mModelManager.canPlayYearOfPlenty();
+		return mModelManager.canUseYearOfPlenty();
 	}
 
 	/**
@@ -220,9 +214,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canPlayRoadBuilder()
+	public boolean canUseRoadBuilder()
 	{
-		return mModelManager.canPlayRoadBuilder();
+		return mModelManager.canUseRoadBuilder();
 	}
 
 	/**
@@ -230,9 +224,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canPlaySoldier()
+	public boolean canUseSoldier()
 	{
-		return mModelManager.canPlaySoldier();
+		return mModelManager.canUseSoldier();
 	}
 
 	/**
@@ -240,9 +234,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canPlayMonopoly()
+	public boolean canUseMonopoly()
 	{
-		return mModelManager.canPlayMonopoly();
+		return mModelManager.canUseMonopoly();
 	}
 
 	/**
@@ -250,9 +244,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument()
+	public boolean canUseMonument()
 	{
-		return mModelManager.canPlayMonument();
+		return mModelManager.canUseMonument();
 	}
 
 	/**
@@ -352,7 +346,7 @@ public class MasterManager implements IMasterManager
 	 * @pre none
 	 * @return json String with game model in it
 	 */
-	public String getGameModel()
+	public String getGameModel(int version)
 	{
 		return null;
 	}

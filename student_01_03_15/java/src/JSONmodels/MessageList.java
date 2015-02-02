@@ -1,18 +1,10 @@
 package JSONmodels;
 
-public class MessageList {
-	private MessageLine[] mLines;
-	
-	/**
-	 * Creates a MessageList object from all the variables
-	 * 
-	 * @param lines
-	 * @return New MessageList
-	 */
-	public MessageList(MessageLine[] lines)
-	{
-		this.mLines = lines;
-	}
+import com.google.gson.Gson;
+
+public class MessageList 
+{
+	private MessageLine[] lines;
 	
 	/**
 	 * Creates a MessageList object from a JSON string
@@ -20,10 +12,12 @@ public class MessageList {
 	 * @param Valid JSON string
 	 * @return New MessageList object
 	 */
-	public MessageList(String JSON)
+	public static MessageList fromJSON(String JSON)
 	{
-		
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, MessageList.class);
 	}
+	
 	/**
 	 * Creates the JSON code from this object
 	 * 
@@ -31,6 +25,14 @@ public class MessageList {
 	 */
 	public String toJSON()
 	{
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
+	/**
+	 * @return the lines
+	 */
+	public MessageLine[] getLines() {
+		return lines;
 	}
 }

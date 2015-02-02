@@ -1,21 +1,14 @@
 package facade;
 
-import proxy.IProxy;
 import models.Game;
 
 public class ModelManager 
 {
 	private Game mGameModel;
-	private IProxy mProxy;
 	
-	public ModelManager(IProxy proxy) 
+	public void updateModel(Game g)
 	{
-		mProxy = proxy;
-	}
-
-	public void updateModel(Game newGameModel)
-	{
-		mGameModel = newGameModel;
+		mGameModel = g;
 	}
 	
 	/**
@@ -185,7 +178,7 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canPlayYearOfPlenty()
+	public boolean canUseYearOfPlenty()
 	{
 		return true;
 	}
@@ -195,7 +188,7 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canPlayRoadBuilder()
+	public boolean canUseRoadBuilder()
 	{
 		return true;
 	}
@@ -205,7 +198,7 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canPlaySoldier()
+	public boolean canUseSoldier()
 	{
 		return true;
 	}
@@ -215,7 +208,7 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canPlayMonopoly()
+	public boolean canUseMonopoly()
 	{
 		return true;
 	}
@@ -225,7 +218,7 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument()
+	public boolean canUseMonument()
 	{
 		return true;
 	}

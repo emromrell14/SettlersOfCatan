@@ -4,7 +4,7 @@ import models.Game;
 
 public interface IMasterManager 
 {		
-	public void updateModel(Game newGameModel);
+	public void updateModel(Game g);
 	
 	public boolean canLogin();
 
@@ -34,15 +34,15 @@ public interface IMasterManager
 	
 	public boolean canFinishTurn();
 	
-	public boolean canPlayYearOfPlenty();
+	public boolean canUseYearOfPlenty();
 	
-	public boolean canPlayRoadBuilder();
+	public boolean canUseRoadBuilder();
 
-	public boolean canPlaySoldier();
+	public boolean canUseSoldier();
 
-	public boolean canPlayMonopoly();
+	public boolean canUseMonopoly();
 
-	public boolean canPlayMonument();
+	public boolean canUseMonument();
 
 	public boolean canPlaceRobber();
 
@@ -64,7 +64,7 @@ public interface IMasterManager
 	public String loadGame();
 
 	// Game Manager
-	public String getGameModel();
+	public String getGameModel(int version);
 
 	public String resetGame();
 

@@ -1,20 +1,15 @@
 package facade;
 
-import proxy.IProxy;
-
 public class UtilManager
 {
-	private IProxy mProxy;
-	
 	/**
 	 * Creates a new UtilManager facade that connects the Client to the Proxy
-	 * @param proxy 
 	 * 
 	 * @return New UtilManager object
 	 */
-	public UtilManager(IProxy proxy)
+	public UtilManager()
 	{
-		mProxy = proxy;
+		
 	}
 	/**
 	 * Sets the server's log level (ALL, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, OFF)

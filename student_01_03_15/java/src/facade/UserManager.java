@@ -1,18 +1,15 @@
 package facade;
 
-import proxy.IProxy;
-
 public class UserManager 
 {
-	protected IProxy mProxy;
 	/**
 	 * Creates UserManager object
 	 * 
 	 * @return a new UserManager object
 	 */
-	public UserManager(IProxy proxy)
+	private UserManager()
 	{
-		mProxy = proxy;
+		
 	}
 	
 	/**
@@ -21,15 +18,9 @@ public class UserManager
 	 * @post Cookie will be set.
 	 * @return a String of JSON
 	 */
-	public String login(String username, String password)
+	public String login()
 	{
-		String response;
-		String body;
-		
-		body = "{username:\"" + username + "\",password:\"" + password + "\"}";
-		response = mProxy.post("/user/login", body);
-		
-		return response;
+		return null;
 	}
 
 	/**
@@ -38,14 +29,8 @@ public class UserManager
 	 * @post Player is logged in and cookie set.
 	 * @return a String of JSON
 	 */
-	public String register(String username, String password) 
+	public String register() 
 	{
-		String response;
-		String body;
-		
-		body = "{username:\"" + username + "\",password:\"" + password + "\"}";
-		response = mProxy.post("/user/register", body);
-		
-		return response;
+		return null;
 	}
 }

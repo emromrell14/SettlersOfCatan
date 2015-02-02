@@ -1,19 +1,15 @@
 package facade;
 
-import proxy.IProxy;
-
 public class GamesManager
 {
-	protected IProxy mProxy;
-	
 	/**
 	 * Creates a GamesManager object
 	 * 
 	 * @return a new GamesManager object
 	 */
-	public GamesManager(IProxy proxy)
+	public GamesManager()
 	{
-		mProxy = proxy;
+		
 	}
 	
 	/**
@@ -23,10 +19,7 @@ public class GamesManager
 	 */
 	public String getGameList()
 	{
-		String response;
-		response = mProxy.get("/games/list");
-		
-		return response;
+		return null;
 	}
 
 	/**
@@ -34,16 +27,9 @@ public class GamesManager
 	 * @pre none
 	 * @return a String of JSON
 	 */
-	public String createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+	public String createGame()
 	{
-		String response;
-		String body;
-		
-		body = "{randomTiles:" + randomTiles + ",randomNumbers:" + randomNumbers +
-				",randomPorts:" + randomPorts + ",name:\"" + name + "\"}";
-		
-		response = mProxy.post("/games/create", body);
-		return response;
+		return null;
 	}
 
 	/**
@@ -52,15 +38,9 @@ public class GamesManager
 	 * @post Player is added to the game
 	 * @return a String of JSON
 	 */
-	public String joinGame(int id, String color)
-	{	
-		String response;
-		String body;
-		
-		body = "{id:" + id + ",color:\"" + color + "\"}";
-		
-		response = mProxy.post("/games/join", body);
-		return response;
+	public String joinGame()
+	{
+		return null;
 	}
 
 	/**
@@ -68,15 +48,9 @@ public class GamesManager
 	 * @pre none
 	 * @return a String of JSON
 	 */
-	public String saveGame(int gameId, String fileName)
+	public String saveGame()
 	{
-		String response;
-		String body;
-		
-		body = "{id:" + gameId + ",name:\"" + fileName + "\"}";
-		
-		response = mProxy.post("/games/save", body);
-		return response;
+		return null;
 	}
 
 	/**
@@ -84,14 +58,8 @@ public class GamesManager
 	 * pre saved game file must be in parsable JSON format
 	 * @return a String of JSON
 	 */
-	public String loadGame(String fileName) 
+	public String loadGame() 
 	{
-		String response;
-		String body;
-		
-		body = "{name:\"" + fileName + "\"}";
-		
-		response = mProxy.post("/games/load", body);
-		return response;
+		return null;
 	}
 }
