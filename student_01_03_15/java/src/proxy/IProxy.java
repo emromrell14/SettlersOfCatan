@@ -23,8 +23,9 @@ public interface IProxy
 	 * @pre Cookie != null
 	 * @post sends request to server 
 	 * @post returns response from server
+	 * @param requestPath 	The request's path being sent to the server.
 	 * @param cookie	The user's cookie that will be sent in the request header.
 	 * @return Response from the server.
 	 */
-	String get(Cookie cookie);
+	String get(String requestPath, Cookie cookie);
 }

@@ -1,7 +1,7 @@
 package facade;
 
 import models.Game;
-import proxy.IProxy;
+import proxy.*;
 
 public class MasterManager implements IMasterManager
 {
@@ -12,7 +12,7 @@ public class MasterManager implements IMasterManager
 	private UserManager mUserManager;
 	private UtilManager mUtilManager;
 	private ModelManager mModelManager;
-	protected IProxy mIProxy;
+	protected IProxy mProxy;
 	private static MasterManager mInstance;
 	
 	/**

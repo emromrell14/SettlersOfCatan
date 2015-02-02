@@ -6,21 +6,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import cookie.Cookie;
-import server.IServer;
 
 public class Proxy implements IProxy
 {
-	private IServer mServer;
 	private HttpURLConnection mCon;
 	
-	public Proxy(IServer server)
+	public Proxy()
 	{
-		this.mServer = server;
 	}
 	
 	public String post(String requestPath, String json, Cookie cookie)
 	{
-		String url ="http://"+mServer.getHost()+":"+mServer.getPortNumber() + requestPath;
+		String url ="http://localhost:8080" + requestPath;
 		URL obj;
 		try 
 		{
@@ -43,7 +40,7 @@ public class Proxy implements IProxy
 		return null;
 	}
 	
-	public String get(Cookie cookie)
+	public String get(String requestPath, Cookie cookie)
 	{
 		return null;
 	}
