@@ -18,6 +18,8 @@ import server.handlers.RegisterHandler;
 import server.handlers.ResetHandler;
 import server.handlers.SaveGamesHandler;
 
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 

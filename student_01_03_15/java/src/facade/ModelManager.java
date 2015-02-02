@@ -6,9 +6,9 @@ public class ModelManager
 {
 	private Game mGameModel;
 	
-	public void updateModel()
+	public void updateModel(Game g)
 	{
-		
+		mGameModel = g;
 	}
 	
 	/**

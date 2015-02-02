@@ -1,5 +1,6 @@
 package facade;
 
+import models.Game;
 import proxy.IProxy;
 
 public class MasterManager implements IMasterManager
@@ -31,9 +32,9 @@ public class MasterManager implements IMasterManager
 		return mInstance;
 	}
 	
-	public void updateModel()
+	public void updateModel(Game g)
 	{
-		mModelManager.updateModel();
+		mModelManager.updateModel(g);
 	}
 	
 	/**
