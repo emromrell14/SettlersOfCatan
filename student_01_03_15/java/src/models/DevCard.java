@@ -8,7 +8,7 @@ public abstract class DevCard implements IDevCard
 	private DevCardType mType;
 	
 	
-	public boolean hasPlayed()
+	public boolean hasBeenPlayed()
 	{
 		return mPlayed;
 	}

@@ -9,7 +9,7 @@ public interface IDevCard
 	 * 
 	 * @return true if card has been played, false otherwise.
 	 */
-	boolean hasPlayed();
+	boolean hasBeenPlayed();
 	/** 
 	 * Gets development card type
 	 * 
