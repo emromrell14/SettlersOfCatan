@@ -12,10 +12,15 @@ public class MovesManager
 	 * 
 	 * @return New MovesManager object
 	 */
-	public MovesManager(IProxy proxy)
+	public MovesManager()
+	{
+	}
+	
+	public void setProxy(IProxy proxy)
 	{
 		mProxy = proxy;
 	}
+	
 	/**
 	 * Sends a chat message
 	 * 

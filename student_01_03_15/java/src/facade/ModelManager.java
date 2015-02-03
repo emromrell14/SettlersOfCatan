@@ -8,14 +8,18 @@ public class ModelManager
 	private Game mGameModel;
 	private IProxy mProxy;
 	
-	public ModelManager(IProxy proxy) 
+	public ModelManager() 
 	{
-		mProxy = proxy;
 	}
 
 	public void updateModel(Game newGameModel)
 	{
 		mGameModel = newGameModel;
+	}
+	
+	public void setProxy(IProxy proxy)
+	{
+		mProxy = proxy;
 	}
 	
 	/**

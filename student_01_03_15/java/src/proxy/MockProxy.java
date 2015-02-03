@@ -1,12 +1,10 @@
 package proxy;
 
-import cookie.Cookie;
-
 public class MockProxy implements IProxy
 {
 
 	@Override
-	public String post(String requestPath, String jsonBody, Cookie cookie) 
+	public String post(String requestPath, String jsonBody) 
 	{
 		String toReturn = null;
 		if(requestPath.equalsIgnoreCase("/user/login"))
@@ -121,7 +119,7 @@ public class MockProxy implements IProxy
 	}
 
 	@Override
-	public String get(String requestPath, Cookie cookie) 
+	public String get(String requestPath) 
 	{
 		String toReturn = null;
 		if(requestPath.equalsIgnoreCase("/games/list"))

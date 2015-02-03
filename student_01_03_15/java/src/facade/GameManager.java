@@ -7,10 +7,13 @@ public class GameManager
 	private IProxy mProxy;
 	/**
 	 * Creates a GameManager object
-	 * @param mProxy 
 	 * @return GameManager object
 	 */
-	public GameManager(IProxy proxy)
+	public GameManager()
+	{
+	}
+	
+	public void setProxy(IProxy proxy)
 	{
 		mProxy = proxy;
 	}

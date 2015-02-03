@@ -12,10 +12,15 @@ public class UtilManager
 	 * 
 	 * @return New UtilManager object
 	 */
-	public UtilManager(IProxy proxy)
+	public UtilManager()
+	{
+	}
+	
+	public void setProxy(IProxy proxy)
 	{
 		mProxy = proxy;
 	}
+	
 	/**
 	 * Sets the server's log level (ALL, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, OFF)
 	 * @pre must be one of the levels enumerated above

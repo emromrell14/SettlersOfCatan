@@ -5,6 +5,10 @@ import models.Game;
 public interface IMasterManager 
 {		
 	public void updateModel(Game newGameModel);
+	
+	public void communicateWithMockProxy();
+	
+	public void communicateWithRealProxy();
 
 	public boolean canLogin();
 

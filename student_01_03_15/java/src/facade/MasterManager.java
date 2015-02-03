@@ -20,12 +20,13 @@ public class MasterManager implements IMasterManager
 	 */
 	private MasterManager()
 	{
-		mProxy = new Proxy();
-		mUserManager = new UserManager(mProxy);
-		mGameManager = new GameManager(mProxy);
-		mMovesManager = new MovesManager(mProxy);
-		mUtilManager = new UtilManager(mProxy);
-		mModelManager = new ModelManager(mProxy);
+		mUserManager = new UserManager();
+		mGameManager = new GameManager();
+		mGamesManager = new GamesManager();
+		mMovesManager = new MovesManager();
+		mUtilManager = new UtilManager();
+		mModelManager = new ModelManager();
+		communicateWithRealProxy();
 	}
 
 	public static MasterManager getInstance() 
@@ -41,6 +42,28 @@ public class MasterManager implements IMasterManager
 	{
 		mModelManager.updateModel(newGameModel);
 
+	}
+
+	public void communicateWithMockProxy()
+	{
+		mProxy = new MockProxy();
+		mUserManager.setProxy(mProxy);
+		mGameManager.setProxy(mProxy);
+		mGamesManager.setProxy(mProxy);
+		mMovesManager.setProxy(mProxy);
+		mUtilManager.setProxy(mProxy);
+		mModelManager.setProxy(mProxy);
+	}
+	
+	public void communicateWithRealProxy()
+	{
+		mProxy = new Proxy();
+		mUserManager.setProxy(mProxy);
+		mGameManager.setProxy(mProxy);
+		mGamesManager.setProxy(mProxy);
+		mMovesManager.setProxy(mProxy);
+		mUtilManager.setProxy(mProxy);
+		mModelManager.setProxy(mProxy);
 	}
 	
 	/**
