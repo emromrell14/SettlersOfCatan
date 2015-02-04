@@ -6,6 +6,8 @@ import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
+import shared.locations.VertexLocation;
 
 public class Player implements IPlayer
 {	
@@ -120,13 +122,37 @@ public class Player implements IPlayer
 	
 	//Functions
 	/**
+	 * Checks all preconditions for road building
+	 * @pre Player is logged in, has joined a game, has a road, has 1 wood 1 brick, and it is their turn. 
+	 * 		Dice have also already been rolled.
+	 * @post none
+	 * @return true if a road can be built, false otherwise
+	 */
+	public boolean canAffordRoad() 
+	{
+		ResourceList r = this.resources();
+		if (
+				this.roadCount() < 1 || // Checks that the player has roads left to build
+				r.brick() < 1 || r.wood() < 1) // Checks that player has sufficient resources
+		{
+			return false;
+		}
+		return true;
+	}
+
+	public boolean canPlaceRoad(EdgeLocation loc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	/**
 	 * Checks all preconditions for building a new settlement
 	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1 brick 1 wheat 1 sheep, a valid place to build, and it is their turn. 
 	 * 		Dice have also already been rolled.
 	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
-	public boolean canBuildSettlement() 
+	public boolean canAffordSettlement() 
 	{
 		ResourceList r = this.resources();
 		if (
@@ -138,6 +164,11 @@ public class Player implements IPlayer
 		return true;
 	}
 	
+	public boolean canPlaceSettlement(VertexLocation loc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	/**
 	 * Checks all preconditions for building a city.
 	 * @pre Player is logged in, has joined a game, has a city, 3 ore 2 wheat, a settlement to build on, and it is their turn. 
@@ -145,7 +176,7 @@ public class Player implements IPlayer
 	 * @post none
 	 * @return	true if a city can be built, false otherwise
 	 */
-	public boolean canBuildCity() 
+	public boolean canAffordCity() 
 	{
 		ResourceList r = this.resources();
 		if (
@@ -156,6 +187,11 @@ public class Player implements IPlayer
 			return false;
 		}
 		return true;
+	}
+
+	public boolean canPlaceCity(VertexLocation loc) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**
