@@ -53,7 +53,6 @@ public class MasterManager implements IMasterManager
 		mGamesManager.setProxy(mProxy);
 		mMovesManager.setProxy(mProxy);
 		mUtilManager.setProxy(mProxy);
-		mModelManager.setProxy(mProxy);
 	}
 	
 	public void communicateWithRealProxy()
@@ -64,7 +63,6 @@ public class MasterManager implements IMasterManager
 		mGamesManager.setProxy(mProxy);
 		mMovesManager.setProxy(mProxy);
 		mUtilManager.setProxy(mProxy);
-		mModelManager.setProxy(mProxy);
 	}
 	
 	/**
@@ -201,11 +199,12 @@ public class MasterManager implements IMasterManager
 	 * Checks all preconditions for rolling the dice.
 	 * @pre Player is logged in, playing a game, it is their turn, they haven't already rolled. 
 	 * @post none
+	 * @params playerID ID of the player
 	 * @return true if the dice can be rolled, false otherwise
 	 */
-	public boolean canRollDice() 
+	public boolean canRollDice(int playerID) 
 	{
-		return mModelManager.canRollDice();
+		return mModelManager.canRollDice(playerID);
 	}
 
 	/**

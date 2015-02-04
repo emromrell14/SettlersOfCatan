@@ -1,9 +1,19 @@
 package models;
 
+import shared.definitions.DevCardType;
+
 //import facade.MasterManager;
 
 public class Monopoly extends DevCard
 {
+	
+	public Monopoly() 
+	{
+		this.setType(DevCardType.MONOPOLY);
+	}
+	
+	
+	
 
 	/**
 	 * 

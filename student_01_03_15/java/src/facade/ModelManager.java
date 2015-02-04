@@ -4,24 +4,20 @@ import proxy.IProxy;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import models.Game;
+import models.Index;
 
 public class ModelManager 
 {
 	private Game mGameModel;
-	private IProxy mProxy;
 	
 	public ModelManager() 
 	{
+		
 	}
 
 	public void updateModel(Game newGameModel)
 	{
 		mGameModel = newGameModel;
-	}
-	
-	public void setProxy(IProxy proxy)
-	{
-		mProxy = proxy;
 	}
 	
 	/**
@@ -158,11 +154,13 @@ public class ModelManager
 	 * Checks all preconditions for rolling the dice.
 	 * @pre Player is logged in, playing a game, it is their turn, they haven't already rolled. 
 	 * @post none
+	 * @params playerID ID of the player
 	 * @return true if the dice can be rolled, false otherwise
 	 */
-	public boolean canRollDice() 
+	public boolean canRollDice(int playerID) 
 	{
-		return true;
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		return mGameModel.turnTracker().canRollDice(playerIndex);
 	}
 
 	/**
@@ -244,7 +242,7 @@ public class ModelManager
 	 */
 	public boolean canPlaceRobber(HexLocation newRobberLocation)
 	{
-		HexLocation currentRobberLocation = mGameModel.getmRobber().getLocation();
+		HexLocation currentRobberLocation = mGameModel.robber().getLocation();
 		return !(currentRobberLocation.getX() == newRobberLocation.getX()
 				&& currentRobberLocation.getY() == newRobberLocation.getY());
 	}
