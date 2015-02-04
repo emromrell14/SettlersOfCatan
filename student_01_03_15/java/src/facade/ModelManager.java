@@ -164,7 +164,7 @@ public class ModelManager
 	public boolean canRollDice(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		return mGameModel.getTurnTracker().canRollDice(playerIndex);
+		return mGameModel.turnTracker().canRollDice(playerIndex);
 	}
 
 	/**
@@ -246,7 +246,7 @@ public class ModelManager
 	 */
 	public boolean canPlaceRobber(HexLocation newRobberLocation)
 	{
-		HexLocation currentRobberLocation = mGameModel.getmRobber().getLocation();
+		HexLocation currentRobberLocation = mGameModel.robber().getLocation();
 		return !(currentRobberLocation.getX() == newRobberLocation.getX()
 				&& currentRobberLocation.getY() == newRobberLocation.getY());
 	}
