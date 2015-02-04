@@ -1,5 +1,6 @@
 package models;
 
+import shared.definitions.BuildingType;
 import shared.locations.VertexLocation;
 
 /** Building class (for settlements or cities)
@@ -15,7 +16,7 @@ public class Building
 	/** Holds the three hexes that will give it resources */
 	private Hex[] neighborHexes;	//Holds the three hexes that will give it resources
 	/** Tells whether this is a settlement or a city */
-	private BuildingType mBuildingType;
+	private BuildingType mBuildingType = BuildingType.SETTLEMENT;
 	
 	/** 
 	 * Creates a Building model object
@@ -54,6 +55,11 @@ public class Building
 	public Hex[] getNeighborsHexes() 
 	{
 		return neighborHexes;
+	}
+	
+	public void setBuildingTypeToCity() //they should start as type settlement, can be changed to city only
+	{
+		this.mBuildingType = BuildingType.CITY;
 	}
 	public BuildingType getBuildingType()
 	{
