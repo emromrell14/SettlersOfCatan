@@ -75,9 +75,18 @@ public class ModelManager
 	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
-	public boolean canBuildSettlement() 
+	public boolean canBuildSettlement(int playerID) 
 	{
-		return true;
+		if (
+				!isLoggedIn() || // Checks that player is logged in
+				!mGameModel.players().contains(this) || // Checks that this player is in this game
+				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) // Checks that the dice has been rolled
+		)
+		{
+			return false;
+		}
+		return this.mGameModel.getPlayer(playerID).canBuildSettlement();
 	}
 	
 	/**
@@ -87,9 +96,18 @@ public class ModelManager
 	 * @post none
 	 * @return	true if a city can be built, false otherwise
 	 */
-	public boolean canBuildCity() 
+	public boolean canBuildCity(int playerID) 
 	{
-		return true;
+		if (
+				!isLoggedIn() || // Checks that player is logged in
+				!mGameModel.players().contains(this) || // Checks that this player is in this game
+				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) // Checks that the dice has been rolled
+		)
+		{
+			return false;
+		}
+		return this.mGameModel.getPlayer(playerID).canBuildCity();
 	}
 
 	/**
@@ -99,9 +117,19 @@ public class ModelManager
 	 * @post none 
 	 * @return true if a card can be bought, false otherwise
 	 */
-	public boolean canBuyDevCard()
+	public boolean canBuyDevCard(int playerID)
 	{
-		return true;
+		if (
+				!isLoggedIn() || // Checks that player is logged in
+				!mGameModel.players().contains(this) || // Checks that this player is in this game
+				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) || // Checks that the dice has been rolled
+				mGameModel.devCards().isEmpty() // Checks that there are still Dev Cards to buy
+		)
+		{
+			return false;
+		}
+		return this.mGameModel.getPlayer(playerID).canBuyDevCard();
 	}
 
 	/**
@@ -111,9 +139,18 @@ public class ModelManager
 	 * @post none
 	 * @return true if a card can be played, false otherwise
 	 */
-	public boolean canPlayDevCard() 
+	public boolean canPlayDevCard(int playerID) 
 	{
-		return true;
+		if (
+				!isLoggedIn() || // Checks that player is logged in
+				!mGameModel.players().contains(this) || // Checks that this player is in this game
+				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) // Checks that the dice has been rolled
+		)
+		{
+			return false;
+		}
+		return this.mGameModel.getPlayer(playerID).canPlayDevCard();
 	}
 
 	/**

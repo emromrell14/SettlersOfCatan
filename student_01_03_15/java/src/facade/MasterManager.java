@@ -119,9 +119,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
-	public boolean canBuildSettlement() 
+	public boolean canBuildSettlement(int playerID) 
 	{
-		return mModelManager.canBuildSettlement();
+		return mModelManager.canBuildSettlement(playerID);
 	}
 	
 	/**
@@ -131,9 +131,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return	true if a city can be built, false otherwise
 	 */
-	public boolean canBuildCity() 
+	public boolean canBuildCity(int playerID) 
 	{
-		return mModelManager.canBuildCity();
+		return mModelManager.canBuildCity(playerID);
 	}
 
 	/**
@@ -143,9 +143,9 @@ public class MasterManager implements IMasterManager
 	 * @post none 
 	 * @return true if a card can be bought, false otherwise
 	 */
-	public boolean canBuyDevCard()
+	public boolean canBuyDevCard(int playerID)
 	{
-		return mModelManager.canBuyDevCard();
+		return mModelManager.canBuyDevCard(playerID);
 	}
 
 	/**
@@ -155,9 +155,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a card can be played, false otherwise
 	 */
-	public boolean canPlayDevCard() 
+	public boolean canPlayDevCard(int playerID) 
 	{
-		return mModelManager.canPlayDevCard();
+		return mModelManager.canPlayDevCard(playerID);
 	}
 
 	/**
