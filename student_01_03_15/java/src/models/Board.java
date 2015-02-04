@@ -27,7 +27,7 @@ public class Board
 	 * 
 	 * @return a list of all the hexes on the grid
 	 */
-	public Hex[] getHexes()
+	public Hex[] hexes()
 	{
 		return mHexes;
 	}
@@ -37,7 +37,7 @@ public class Board
 	 * 
 	 * @return a list of all the ports on the grid
 	 */
-	public Port[] getPorts()
+	public Port[] ports()
 	{
 		return mPorts;
 	}

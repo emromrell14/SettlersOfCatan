@@ -15,7 +15,7 @@ public interface IDevCard
 	 * 
 	 * @return one of the following development card type enum values: SOLDIER, YEAR_OF_PLENTY, MONOPOLY, ROAD_BUILD, MONUMENT
 	 */
-	DevCardType getType();
+	DevCardType type();
 	/** 
 	 * Initiates playing of this card
 	 * 

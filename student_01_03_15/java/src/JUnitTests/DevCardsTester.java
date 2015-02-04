@@ -66,11 +66,11 @@ public class DevCardsTester {
 	@Test
 	public void testType() 
 	{
-		assertTrue(monop.getType().equals(DevCardType.MONOPOLY));
-		assertTrue(monu.getType().equals(DevCardType.MONUMENT));
-		assertTrue(rBuilder.getType().equals(DevCardType.ROAD_BUILD));
-		assertTrue(soldier.getType().equals(DevCardType.SOLDIER));
-		assertTrue(yearOfPlenty.getType().equals(DevCardType.YEAR_OF_PLENTY));
+		assertTrue(monop.type().equals(DevCardType.MONOPOLY));
+		assertTrue(monu.type().equals(DevCardType.MONUMENT));
+		assertTrue(rBuilder.type().equals(DevCardType.ROAD_BUILD));
+		assertTrue(soldier.type().equals(DevCardType.SOLDIER));
+		assertTrue(yearOfPlenty.type().equals(DevCardType.YEAR_OF_PLENTY));
 		
 	}
 

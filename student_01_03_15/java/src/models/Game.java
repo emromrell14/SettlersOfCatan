@@ -36,7 +36,7 @@ public class Game implements IGame
 	{
 		for(Player player : players())
 		{
-			if(player.getPlayerID() == playerID)
+			if(player.playerID() == playerID)
 			{
 				return player;
 			}
@@ -48,9 +48,9 @@ public class Game implements IGame
 		Index playerIndex = null;
 		for(Player p:mPlayers)
 		{
-			if(p.getPlayerID() == playerID)
+			if(p.playerID() == playerID)
 			{
-				playerIndex = p.getPlayerIndex();
+				playerIndex = p.playerIndex();
 				break;
 			}
 		}

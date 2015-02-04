@@ -37,7 +37,7 @@ public class Hex
 	 * 
 	 * @return the location of this hex on the grid
 	 */
-	public HexLocation getLocation()
+	public HexLocation location()
 	{
 		return mLocation;
 	}
@@ -46,7 +46,7 @@ public class Hex
 	 * 
 	 * @return the type of resource this hex gives.
 	 */
-	public HexType getResource()
+	public HexType resource()
 	{
 		return mResource;
 	}
@@ -55,7 +55,7 @@ public class Hex
 	 * 
 	 * @return the number associated with this hex
 	 */
-	public TokenValue getNumber()
+	public TokenValue number()
 	{
 		return mNumber;
 	}

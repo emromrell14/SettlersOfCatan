@@ -30,7 +30,7 @@ public class Port
 	 * 
 	 * @return one of the following PortType enum types: WOOD, BRICK, SHEEP, WHEAT, ORE, THREE
 	 */
-	public PortType getResource()
+	public PortType resource()
 	{
 		return mResource;
 	}
@@ -39,7 +39,7 @@ public class Port
 	 * 
 	 * @return a HexLocation object
 	 */
-	public HexLocation getLocation()
+	public HexLocation location()
 	{
 		return mLocation;
 	}
@@ -48,7 +48,7 @@ public class Port
 	 * 
 	 * @return one of the following VertexDirection enum types: West, NorthWest, NorthEast, East, SouthEast, SouthWest
 	 */
-	public VertexDirection getDirection()
+	public VertexDirection direction()
 	{
 		return mDirection;
 	}

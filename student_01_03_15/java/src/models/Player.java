@@ -44,28 +44,28 @@ public class Player implements IPlayer
 		this.mNumCities = 4;
 	}
 
-	public Number getSoldierCount()
+	public int soldierCount()
 	{
 		return mSoldiers;
 	}
 	
-	public Number getVictoryPoints()
+	public int victoryPointCount()
 	{
 		return mVictoryPoints;
 	}
-	public Number getRoadCount()
+	public int roadCount()
 	{
 		return mNumRoads;
 	}
-	public Number getSettlementCount()
+	public int settlementCount()
 	{
 		return mNumSettlements;
 	}
-	public Number getCityCount()
+	public int cityCount()
 	{
 		return mNumCities;
 	}
-	public CatanColor getColor()
+	public CatanColor color()
 	{
 		return mColor;
 	}
@@ -73,19 +73,19 @@ public class Player implements IPlayer
 	{
 		return mDiscarded;
 	}
-	public Number getMonuments()
+	public int monumentCount()
 	{
 		return mMonuments;
 	}
-	public String getName()
+	public String name()
 	{
 		return mName;
 	}
-	public List<DevCard> getDevCards()
+	public List<DevCard> devCards()
 	{
 		return mDevCards;
 	}
-	public Index getPlayerIndex()
+	public Index playerIndex()
 	{
 		return mPlayerIndex;
 	}
@@ -93,23 +93,23 @@ public class Player implements IPlayer
 	{
 		return mHasPlayedDevCard;
 	}
-	public int getPlayerID()
+	public int playerID()
 	{
 		return mPlayerID;
 	}
-	public ResourceList getResources()
+	public ResourceList resources()
 	{
 		return mResources;
 	}
-	public List<Road> getRoads()
+	public List<Road> roads()
 	{
 		return mRoads;
 	}
-	public List<Building> getSettlements()
+	public List<Building> settlements()
 	{
 		return mSettlements;
 	}
-	public List<Building> getCities()
+	public List<Building> cities()
 	{
 		return mCities;
 	}
@@ -216,7 +216,7 @@ public class Player implements IPlayer
 	 */
 	public boolean canDiscard()
 	{
-		if(this.hasDiscarded() || this.getResources().getTotal() < 7)
+		if(this.hasDiscarded() || this.resources().getTotal() < 7)
 		{
 			return false;
 		}
@@ -238,9 +238,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
+			if(devCard.type() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
 			{
 				return true;
 			}
@@ -263,9 +263,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.ROAD_BUILD && !devCard.isNew())
+			if(devCard.type() == DevCardType.ROAD_BUILD && !devCard.isNew())
 			{
 				return true;
 			}
@@ -288,9 +288,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.SOLDIER && !devCard.isNew())
+			if(devCard.type() == DevCardType.SOLDIER && !devCard.isNew())
 			{
 				return true;
 			}
@@ -313,9 +313,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.MONOPOLY && !devCard.isNew())
+			if(devCard.type() == DevCardType.MONOPOLY && !devCard.isNew())
 			{
 				return true;
 			}
@@ -338,9 +338,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.MONUMENT && !devCard.isNew());
+			if(devCard.type() == DevCardType.MONUMENT && !devCard.isNew());
 			{
 				return true;
 			}

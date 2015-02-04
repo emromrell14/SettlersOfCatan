@@ -61,17 +61,17 @@ public class BuildingTester {
 	public void testBuildings() 
 	{
 		//testings buildingType
-		assertTrue(buildingZero.getBuildingType().equals(BuildingType.SETTLEMENT));
-		assertTrue(buildingSettle.getBuildingType().equals(BuildingType.SETTLEMENT));
-		assertTrue(buildingCity.getBuildingType().equals(BuildingType.CITY));
+		assertTrue(buildingZero.buildingType().equals(BuildingType.SETTLEMENT));
+		assertTrue(buildingSettle.buildingType().equals(BuildingType.SETTLEMENT));
+		assertTrue(buildingCity.buildingType().equals(BuildingType.CITY));
 		//testing buildingLocation
-		assertTrue(buildingZero.getLocation().equals(locationZero));
-		assertFalse(buildingCity.getLocation().equals(locationZero));
-		assertTrue(buildingSettle.getLocation().equals(locationTwo));
+		assertTrue(buildingZero.location().equals(locationZero));
+		assertFalse(buildingCity.location().equals(locationZero));
+		assertTrue(buildingSettle.location().equals(locationTwo));
 		//testing building owner
-		assertTrue(buildingZero.getOwner().equals(indexZero));
-		assertFalse(buildingCity.getOwner().equals(indexOne));
-		assertTrue(buildingSettle.getOwner().equals(indexOne));
+		assertTrue(buildingZero.owner().equals(indexZero));
+		assertFalse(buildingCity.owner().equals(indexOne));
+		assertTrue(buildingSettle.owner().equals(indexOne));
 		
 		
 	}
