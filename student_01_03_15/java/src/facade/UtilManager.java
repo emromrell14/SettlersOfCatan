@@ -22,8 +22,14 @@ public class UtilManager
 	 * @post sets the server's log level
 	 * @return JSON string
 	 */
-	public String changeLogLevel() 
+	public String changeLogLevel(String level) 
 	{
-		return null;
+		String response;
+		String body;
+		
+		body = "{logLevel:\"" + level + "\"}";
+		
+		response = mProxy.post("/util/changeLogLevel", body);
+		return response;
 	}
 }
