@@ -53,7 +53,6 @@ public class MasterManager implements IMasterManager
 		mGamesManager.setProxy(mProxy);
 		mMovesManager.setProxy(mProxy);
 		mUtilManager.setProxy(mProxy);
-		mModelManager.setProxy(mProxy);
 	}
 	
 	public void communicateWithRealProxy()
@@ -64,7 +63,6 @@ public class MasterManager implements IMasterManager
 		mGamesManager.setProxy(mProxy);
 		mMovesManager.setProxy(mProxy);
 		mUtilManager.setProxy(mProxy);
-		mModelManager.setProxy(mProxy);
 	}
 	
 	/**

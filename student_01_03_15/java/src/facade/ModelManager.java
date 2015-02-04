@@ -1,6 +1,5 @@
 package facade;
 
-import proxy.IProxy;
 import shared.locations.HexLocation;
 import models.Game;
 import models.Index;
@@ -8,20 +7,15 @@ import models.Index;
 public class ModelManager 
 {
 	private Game mGameModel;
-	private IProxy mProxy;
 	
 	public ModelManager() 
 	{
+		
 	}
 
 	public void updateModel(Game newGameModel)
 	{
 		mGameModel = newGameModel;
-	}
-	
-	public void setProxy(IProxy proxy)
-	{
-		mProxy = proxy;
 	}
 	
 	/**
