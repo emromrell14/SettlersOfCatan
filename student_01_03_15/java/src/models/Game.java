@@ -21,47 +21,56 @@ public class Game implements IGame
 	@Override
 	public int rollDice()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public Board getmBoard() {
+	public Board getmBoard() 
+	{
 		return mBoard;
 	}
 
-	public List<Player> getmPlayers() {
+	public List<Player> getmPlayers() 
+	{
 		return mPlayers;
 	}
 
-	public TurnTracker getmTurnTracker() {
+	public TurnTracker getmTurnTracker() 
+	{
 		return mTurnTracker;
 	}
 
-	public ResourceList getmBank() {
+	public ResourceList getmBank() 
+	{
 		return mBank;
 	}
 
-	public List<DevCard> getmDevCards() {
+	public List<DevCard> getmDevCards() 
+	{
 		return mDevCards;
 	}
 
-	public int getmVersion() {
+	public int getmVersion() 
+	{
 		return mVersion;
 	}
 
-	public Index getmWinner() {
+	public Index getmWinner() 
+	{
 		return mWinner;
 	}
 
-	public MessageList getmChat() {
+	public MessageList getmChat()
+	{
 		return mChat;
 	}
 
-	public MessageList getmLog() {
+	public MessageList getmLog() 
+	{
 		return mLog;
 	}
 
-	public Robber getmRobber() {
+	public Robber getmRobber() 
+	{
 		return mRobber;
 	}
 

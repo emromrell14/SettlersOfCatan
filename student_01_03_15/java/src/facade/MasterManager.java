@@ -2,6 +2,7 @@ package facade;
 
 import models.Game;
 import proxy.*;
+import shared.locations.HexLocation;
 
 public class MasterManager implements IMasterManager
 {
@@ -281,11 +282,12 @@ public class MasterManager implements IMasterManager
 	/**
 	 * @pre none
 	 * @post none
+	 * @param newRobberLocation The location of where the player wants to play the robber on the board. 
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber()
+	public boolean canPlaceRobber(HexLocation newRobberLocation)
 	{
-		return mModelManager.canPlaceRobber();
+		return mModelManager.canPlaceRobber(newRobberLocation);
 	}
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
