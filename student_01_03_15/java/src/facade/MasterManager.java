@@ -3,7 +3,9 @@ package facade;
 import models.Game;
 import models.ResourceList;
 import proxy.*;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 public class MasterManager implements IMasterManager
 {
@@ -108,9 +110,14 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a road can be built, false otherwise
 	 */
-	public boolean canBuildRoad()
+	public boolean canAffordRoad(int playerID)
 	{
-		return mModelManager.canBuildRoad();
+		return mModelManager.canAffordRoad(playerID);
+	}
+	
+	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
+	{
+		return mModelManager.canPlaceRoad(playerID, loc);
 	}
 
 	/**
@@ -120,9 +127,14 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
-	public boolean canBuildSettlement(int playerID) 
+	public boolean canAffordSettlement(int playerID) 
 	{
-		return mModelManager.canBuildSettlement(playerID);
+		return mModelManager.canAffordSettlement(playerID);
+	}
+	
+	public boolean canPlaceSettlement(int playerID, VertexLocation loc)
+	{
+		return mModelManager.canPlaceSettlement(playerID, loc);
 	}
 	
 	/**
@@ -132,11 +144,16 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return	true if a city can be built, false otherwise
 	 */
-	public boolean canBuildCity(int playerID) 
+	public boolean canAffordCity(int playerID) 
 	{
-		return mModelManager.canBuildCity(playerID);
+		return mModelManager.canAffordCity(playerID);
 	}
-
+	
+	public boolean canPlaceCity(int playerID, VertexLocation loc)
+	{
+		return mModelManager.canPlaceCity(playerID, loc);
+	}
+	
 	/**
 	 * Checks all preconditions for buying a development card.
 	 * @pre Player is logged in, joined a game, has 1 sheep 1 wheat 1 ore, it is their turn, and there are development cards in bank. 
