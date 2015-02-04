@@ -3,10 +3,10 @@ package models;
 import java.util.List;
 
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 
 public class Player implements IPlayer
-{
-		
+{	
 	private CatanColor mColor; //The color of this player
 	private String mName;
 	private Index mPlayerIndex; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
@@ -43,27 +43,7 @@ public class Player implements IPlayer
 		this.mNumSettlements = 5;
 		this.mNumCities = 4;
 	}
-	
-	/*
-	public Number getVictoryPoints();
-	public Number getMonuments();
-	public boolean isDiscarded();
-	public String getName();
-	public List<DevCard> getNewDevCards();
-	public List<DevCard> getOldDevCards();
-	public Index getPlayerIndex();
-	public boolean getPlayerDevCard();
-	public int getPlayerID();
-	public ResourceList getResources();
-	public List<Road> getRoads();
-	public List<Building> getSettlements();
-	public List<Building> getCities();
-	*/
-	
-	public boolean discard()
-	{
-		return true;
-	}
+
 	public Number getSoldierCount()
 	{
 		return mSoldiers;
@@ -133,5 +113,150 @@ public class Player implements IPlayer
 	{
 		return mCities;
 	}
-
+	
+	
+	
+	//Functions
+	/**
+	 * Returns whether this player needs to discard when a 7 is rolled
+	 * 
+	 * @return false if they already have discarded or if they don't have more than 7 cards
+	 */
+	public boolean canDiscard()
+	{
+		if(this.hasDiscarded() || this.getResources().getTotal() < 7)
+		{
+			return false;
+		}
+		return true;
+	}
+	public boolean discard()
+	{
+		return true;
+	}
+	
+	/**
+	 * Checks if the player is eligible to play a Year of Plenty Card
+	 * 
+	 * @return False if they have already played a dev card this turn or do not have an old Year of Plenty Card
+	 */
+	public boolean canPlayYearOfPlenty()
+	{
+		if(this.hasPlayedDevCard())
+		{
+			return false;
+		}
+		for(DevCard devCard : this.getDevCards())
+		{
+			if(devCard.getType() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public void playYearOfPlenty()
+	{
+		
+	}
+	
+	/**
+	 * Returns whether a player can play a road builder card
+	 * 
+	 * @return false if they have already played a dev card this turn, or if they do not have a road builder card
+	 */
+	public boolean canPlayRoadBuilder()
+	{
+		if(this.hasPlayedDevCard())
+		{
+			return false;
+		}
+		for(DevCard devCard : this.getDevCards())
+		{
+			if(devCard.getType() == DevCardType.ROAD_BUILD && !devCard.isNew())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public void playRoadBuilder()
+	{
+		
+	}
+	
+	/**
+	 * Returns whether a player can play a soldier card
+	 * 
+	 * @return false if they have already played a dev card this turn, or if they do not have a soldier card
+	 */
+	public boolean canPlaySoldier()
+	{
+		if(this.hasPlayedDevCard())
+		{
+			return false;
+		}
+		for(DevCard devCard : this.getDevCards())
+		{
+			if(devCard.getType() == DevCardType.SOLDIER && !devCard.isNew())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public void playSoldier()
+	{
+		
+	}
+	
+	/**
+	 * Returns whether a player can play a monopoly card
+	 * 
+	 * @return false if they have already played a dev card this turn, or if they do not have a monopoly card
+	 */
+	public boolean canPlayMonopoly()
+	{
+		if(this.hasPlayedDevCard())
+		{
+			return false;
+		}
+		for(DevCard devCard : this.getDevCards())
+		{
+			if(devCard.getType() == DevCardType.MONOPOLY && !devCard.isNew())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public void playMonopoly()
+	{
+		
+	}
+	
+	/**
+	 * Returns whether a player can play a Monument card
+	 * 
+	 * @return false if they have already played a dev card this turn, or if they do not have a monument card
+	 */
+	public boolean canPlayMonument()
+	{
+		if(this.hasPlayedDevCard())
+		{
+			return false;
+		}
+		for(DevCard devCard : this.getDevCards())
+		{
+			if(devCard.getType() == DevCardType.MONUMENT && !devCard.isNew());
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public void playMonument()
+	{
+		
+	}
 }

@@ -1,5 +1,6 @@
 package facade;
 
+import shared.locations.HexLocation;
 import models.Game;
 
 public interface IMasterManager 
@@ -32,7 +33,7 @@ public interface IMasterManager
 
 	public boolean canMaritimeTrade();
 
-	public boolean canRollDice();
+	public boolean canRollDice(int playerID);
 
 	public boolean canDiscard();
 	
@@ -48,7 +49,7 @@ public interface IMasterManager
 
 	public boolean canPlayMonument();
 
-	public boolean canPlaceRobber();
+	public boolean canPlaceRobber(HexLocation newRobberLocation);
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager

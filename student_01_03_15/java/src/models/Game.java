@@ -3,7 +3,6 @@ package models;
 import java.util.List;
 
 import JSONmodels.MessageList;
-import proxy.IProxy;
 
 public class Game implements IGame
 {
@@ -21,53 +20,80 @@ public class Game implements IGame
 	@Override
 	public int rollDice()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public Board getmBoard() {
+	public Board board() 
+	{
 		return mBoard;
 	}
 
-	public List<Player> getmPlayers() {
+	public List<Player> players() 
+	{
 		return mPlayers;
 	}
+	public Player getPlayer(int playerID)
+	{
+		for(Player player : players())
+		{
+			if(player.getPlayerID() == playerID)
+			{
+				return player;
+			}
+		}
+		return null;
+	}
+	public Index getPlayerIndex(int playerID)
+	{
+		Index playerIndex = null;
+		for(Player p:mPlayers)
+		{
+			if(p.getPlayerID() == playerID)
+			{
+				playerIndex = p.getPlayerIndex();
+				break;
+			}
+		}
+		return playerIndex;
+	}
 
-	public TurnTracker getmTurnTracker() {
+	public TurnTracker turnTracker() 
+	{
 		return mTurnTracker;
 	}
 
-	public ResourceList getmBank() {
+	public ResourceList bank() 
+	{
 		return mBank;
 	}
 
-	public List<DevCard> getmDevCards() {
+	public List<DevCard> devCards() 
+	{
 		return mDevCards;
 	}
 
-	public int getmVersion() {
+	public int version() 
+	{
 		return mVersion;
 	}
 
-	public Index getmWinner() {
+	public Index winner() 
+	{
 		return mWinner;
 	}
 
-	public MessageList getmChat() {
+	public MessageList chat()
+	{
 		return mChat;
 	}
 
-	public MessageList getmLog() {
+	public MessageList log() 
+	{
 		return mLog;
 	}
 
-	public Robber getmRobber() {
+	public Robber robber() 
+	{
 		return mRobber;
-	}
-
-	
-	
-	
-	
-	
+	}	
 }

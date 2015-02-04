@@ -2,6 +2,7 @@ package facade;
 
 import models.Game;
 import proxy.*;
+import shared.locations.HexLocation;
 
 public class MasterManager implements IMasterManager
 {
@@ -52,7 +53,6 @@ public class MasterManager implements IMasterManager
 		mGamesManager.setProxy(mProxy);
 		mMovesManager.setProxy(mProxy);
 		mUtilManager.setProxy(mProxy);
-		mModelManager.setProxy(mProxy);
 	}
 	
 	public void communicateWithRealProxy()
@@ -63,7 +63,6 @@ public class MasterManager implements IMasterManager
 		mGamesManager.setProxy(mProxy);
 		mMovesManager.setProxy(mProxy);
 		mUtilManager.setProxy(mProxy);
-		mModelManager.setProxy(mProxy);
 	}
 	
 	/**
@@ -200,11 +199,12 @@ public class MasterManager implements IMasterManager
 	 * Checks all preconditions for rolling the dice.
 	 * @pre Player is logged in, playing a game, it is their turn, they haven't already rolled. 
 	 * @post none
+	 * @params playerID ID of the player
 	 * @return true if the dice can be rolled, false otherwise
 	 */
-	public boolean canRollDice() 
+	public boolean canRollDice(int playerID) 
 	{
-		return mModelManager.canRollDice();
+		return mModelManager.canRollDice(playerID);
 	}
 
 	/**
@@ -281,11 +281,12 @@ public class MasterManager implements IMasterManager
 	/**
 	 * @pre none
 	 * @post none
+	 * @param newRobberLocation The location of where the player wants to play the robber on the board. 
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber()
+	public boolean canPlaceRobber(HexLocation newRobberLocation)
 	{
-		return mModelManager.canPlaceRobber();
+		return mModelManager.canPlaceRobber(newRobberLocation);
 	}
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
