@@ -7,6 +7,7 @@ public class TurnTracker implements ITurnTracker
 	private Status mStatus; //What's happening now.
 	private Index mLongestRoad; //The index of who has the longest road.
 	private Index mLargestArmy; //The index of who has the largest army. (Has to be 3 or more).
+	private boolean mHasRolled = false;
 	
 	public TurnTracker(Index currentTurn, Status status, Index longestRoad, Index largestArmy)
 	{
@@ -31,5 +32,10 @@ public class TurnTracker implements ITurnTracker
 	public Index getLargestArmy()
 	{
 		return mLargestArmy;
+	}
+	
+	public boolean canRollDice(Index playerIndex)
+	{
+		return (playerIndex.getIndex() == mCurrentTurn.getIndex()) && !mHasRolled;
 	}
 }
