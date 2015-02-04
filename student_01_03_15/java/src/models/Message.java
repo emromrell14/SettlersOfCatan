@@ -10,21 +10,11 @@ public class Message
 		
 	}
 
-	public String getmMessage() {
+	public String message() {
 		return mMessage;
 	}
 
-	public void setmMessage(String mMessage) {
-		this.mMessage = mMessage;
-	}
-
-	public Index getmPlayerIndex() {
+	public Index playerIndex() {
 		return mPlayerIndex;
-	}
-
-	public void setmPlayerIndex(Index mPlayerIndex) {
-		this.mPlayerIndex = mPlayerIndex;
-	}
-
-	
+	}	
 }

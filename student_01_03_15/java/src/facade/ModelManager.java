@@ -181,7 +181,7 @@ public class ModelManager
 	 */
 	public boolean canFinishTurn(int playerID)
 	{
-		if(this.mGameModel.turnTracker().getStatus() == Status.PLAYING)
+		if(this.mGameModel.turnTracker().status() == Status.PLAYING)
 		{
 			return true;
 		}
@@ -246,7 +246,7 @@ public class ModelManager
 	 */
 	public boolean canPlaceRobber(HexLocation newRobberLocation)
 	{
-		HexLocation currentRobberLocation = mGameModel.robber().getLocation();
+		HexLocation currentRobberLocation = mGameModel.robber().location();
 		return !(currentRobberLocation.getX() == newRobberLocation.getX()
 				&& currentRobberLocation.getY() == newRobberLocation.getY());
 	}

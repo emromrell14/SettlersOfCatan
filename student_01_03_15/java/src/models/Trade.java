@@ -13,34 +13,18 @@ public class Trade
 		
 	}
 
-	public Index getmSender() 
+	public Index sender() 
 	{
 		return mSender;
 	}
 
-	public void setmSender(Index sender) 
-	{
-		this.mSender = sender;
-	}
-
-	public Index getmReceiver() 
+	public Index receiver() 
 	{
 		return mReceiver;
 	}
 
-	public void setmReceiver(Index receiver) 
-	{
-		this.mReceiver = receiver;
-	}
-
-	public ResourceList getmOffer() 
+	public ResourceList offer() 
 	{
 		return mOffer;
 	}
-
-	public void setmOffer(ResourceList offer)
-	{
-		this.mOffer = offer;
-	}
-
 }
