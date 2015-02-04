@@ -22,7 +22,7 @@ public abstract class DevCard implements IDevCard
 	{
 		mType = type;
 	}
-	public DevCardType getType()
+	public DevCardType type()
 	{
 		return mType;
 	}

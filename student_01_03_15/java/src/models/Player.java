@@ -148,7 +148,7 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.getDevCards())
 		{
-			if(devCard.getType() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
+			if(devCard.type() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
 			{
 				return true;
 			}
@@ -173,7 +173,7 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.getDevCards())
 		{
-			if(devCard.getType() == DevCardType.ROAD_BUILD && !devCard.isNew())
+			if(devCard.type() == DevCardType.ROAD_BUILD && !devCard.isNew())
 			{
 				return true;
 			}
@@ -198,7 +198,7 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.getDevCards())
 		{
-			if(devCard.getType() == DevCardType.SOLDIER && !devCard.isNew())
+			if(devCard.type() == DevCardType.SOLDIER && !devCard.isNew())
 			{
 				return true;
 			}
@@ -223,7 +223,7 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.getDevCards())
 		{
-			if(devCard.getType() == DevCardType.MONOPOLY && !devCard.isNew())
+			if(devCard.type() == DevCardType.MONOPOLY && !devCard.isNew())
 			{
 				return true;
 			}
@@ -248,7 +248,7 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.getDevCards())
 		{
-			if(devCard.getType() == DevCardType.MONUMENT && !devCard.isNew());
+			if(devCard.type() == DevCardType.MONUMENT && !devCard.isNew());
 			{
 				return true;
 			}
