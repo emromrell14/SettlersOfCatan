@@ -1,9 +1,14 @@
 package facade;
 
+import java.util.List;
+
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import models.DevCard;
 import models.Game;
 import models.Index;
+import models.Player;
+import models.ResourceList;
 import models.Status;
 
 public class ModelManager 
@@ -159,9 +164,16 @@ public class ModelManager
 	 * @post none
 	 * @return true if a trade can be offered, false otherwise
 	 */
-	public boolean canOfferTrade() 
+	public boolean canOfferTrade(int playerID) 
 	{
-		return true;
+		boolean toReturn = false;
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		{
+			toReturn = mGameModel.canOfferTrade(playerID);
+		}
+		
+		return toReturn;
 	}
 
 	/**
@@ -169,11 +181,19 @@ public class ModelManager
 	 * @pre Player is logged in, playing a game, it is not their turn, they have requested resource cards. 
 	 * 		Dice have also already been rolled.
 	 * @post none
+	 * @param playerID ID of the player
+	 * @param tradeOffer List of cards that another player wants to trade for.
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade() 
+	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer) 
 	{
-		return true;
+		boolean toReturn = false;
+		Player player = mGameModel.getPlayer(playerID);
+		if(!mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) && mGameModel.turnTracker().hasRolled())
+		{
+			toReturn = player.canAcceptTrade(tradeOffer);
+		}
+		return toReturn;
 	}
 
 	/**
@@ -182,9 +202,16 @@ public class ModelManager
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade() 
+	public boolean canMaritimeTrade(int playerID) 
 	{
-		return true;
+		boolean toReturn = false;
+		Player player = mGameModel.getPlayer(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(player.playerIndex()))
+		{
+			toReturn = player.canMaritimeTrade();
+		}
+		
+		return toReturn;
 	}
 
 	/**

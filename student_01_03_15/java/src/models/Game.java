@@ -95,5 +95,31 @@ public class Game implements IGame
 	public Robber robber() 
 	{
 		return mRobber;
+	}
+
+	public boolean canOfferTrade(int playerID) 
+	{
+		boolean playerHasCards = false;
+		boolean othersHaveCards = false;
+		for(Player p: mPlayers)
+		{
+			ResourceList temp = p.resources();
+			if(p.playerID() == playerID) 
+			{
+				if(temp.brick() >= 0 || temp.ore() >= 0 || temp.wheat() >= 0 || temp.wood() >= 0 || temp.sheep() >= 0)
+				{
+					playerHasCards = true;
+				}
+			}
+			else
+			{
+				if(temp.brick() >= 0 || temp.ore() >= 0 || temp.wheat() >= 0 || temp.wood() >= 0 || temp.sheep() >= 0)
+				{
+					othersHaveCards = true;
+				}
+			}
+		}
+		
+		return playerHasCards && othersHaveCards;
 	}	
 }

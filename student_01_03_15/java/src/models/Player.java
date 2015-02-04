@@ -347,8 +347,27 @@ public class Player implements IPlayer
 		}
 		return false;
 	}
+	
+	public boolean canAcceptTrade(ResourceList tradeOffer)
+	{
+		return mResources.brick() >= tradeOffer.brick()
+				&& mResources.ore() >= tradeOffer.ore()
+				&& mResources.sheep() >= tradeOffer.sheep()
+				&& mResources.wheat() >= tradeOffer.wheat()
+				&& mResources.wood() >= tradeOffer.wood();
+	}
+	
 	public void playMonument()
 	{
 		
+	}
+
+	public boolean canMaritimeTrade()
+	{
+		return mResources.brick() >= 4
+				|| mResources.ore() >= 4
+				|| mResources.sheep() >= 4
+				|| mResources.wheat() >= 4
+				|| mResources.wood() >= 4;
 	}
 }

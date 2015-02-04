@@ -1,6 +1,7 @@
 package facade;
 
 import models.Game;
+import models.ResourceList;
 import proxy.*;
 import shared.locations.HexLocation;
 
@@ -167,9 +168,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a trade can be offered, false otherwise
 	 */
-	public boolean canOfferTrade() 
+	public boolean canOfferTrade(int playerID) 
 	{
-		return mModelManager.canOfferTrade();
+		return mModelManager.canOfferTrade(playerID);
 	}
 
 	/**
@@ -179,9 +180,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade() 
+	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer) 
 	{
-		return mModelManager.canAcceptTrade();
+		return mModelManager.canAcceptTrade(playerID,tradeOffer);
 	}
 
 	/**
@@ -190,9 +191,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade() 
+	public boolean canMaritimeTrade(int playerID) 
 	{
-		return mModelManager.canMaritimeTrade();
+		return mModelManager.canMaritimeTrade(playerID);
 	}
 
 	/**

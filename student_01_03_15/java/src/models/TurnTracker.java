@@ -34,8 +34,18 @@ public class TurnTracker implements ITurnTracker
 		return mLargestArmy;
 	}
 	
+	public boolean isPlayersTurn(Index playerIndex)
+	{
+		return playerIndex.index() == mCurrentTurn.index();
+	}
+	
 	public boolean canRollDice(Index playerIndex)
 	{
-		return (playerIndex.index() == mCurrentTurn.index()) && !mHasRolled;
+		return isPlayersTurn(playerIndex) && !mHasRolled;
+	}
+	
+	public boolean hasRolled()
+	{
+		return mHasRolled;
 	}
 }
