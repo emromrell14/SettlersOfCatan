@@ -126,10 +126,10 @@ public class Player implements IPlayer
 	 */
 	public boolean canBuildSettlement() 
 	{
-		ResourceList r = this.getResources();
+		ResourceList r = this.resources();
 		if (
-				this.getSettlementCount().intValue() < 1 || // Checks that the player has settlements left to build
-				r.getBrick() < 1 || r.getWood() < 1 || r.getSheep() < 1 || r.getWheat() < 1) // Checks that player has sufficient resources
+				this.settlementCount() < 1 || // Checks that the player has settlements left to build
+				r.brick() < 1 || r.wood() < 1 || r.sheep() < 1 || r.wheat() < 1) // Checks that player has sufficient resources
 		{
 			return false;
 		}
@@ -145,11 +145,11 @@ public class Player implements IPlayer
 	 */
 	public boolean canBuildCity() 
 	{
-		ResourceList r = this.getResources();
+		ResourceList r = this.resources();
 		if (
-				this.getCityCount().intValue() < 1 || // Checks that you have cities left to build
-				this.getSettlements().isEmpty() || // Checks that there is a settlement to build on
-				r.getOre() < 3 || r.getWheat() < 2) // Checks that there are enough resources
+				this.cityCount() < 1 || // Checks that you have cities left to build
+				this.settlements().isEmpty() || // Checks that there is a settlement to build on
+				r.ore() < 3 || r.wheat() < 2) // Checks that there are enough resources
 		{
 			return false;
 		}
@@ -165,9 +165,9 @@ public class Player implements IPlayer
 	 */
 	public boolean canBuyDevCard()
 	{
-		ResourceList r = this.getResources();
+		ResourceList r = this.resources();
 		if (
-				r.getSheep() < 1 || r.getWheat() < 1 || r.getOre() < 1) // Checks that there are enough resources
+				r.sheep() < 1 || r.wheat() < 1 || r.ore() < 1) // Checks that there are enough resources
 		{
 			return false;
 		}
@@ -184,16 +184,16 @@ public class Player implements IPlayer
 	
 	public boolean canPlayDevCard() 
 	{
-		ResourceList r = this.getResources();
+		ResourceList r = this.resources();
 		if (
-				this.getDevCards().isEmpty() || // Checks that this player has a dev card
+				this.devCards().isEmpty() || // Checks that this player has a dev card
 				this.hasPlayedDevCard() || // Checks that player hasn't already played a dev card
-				r.getSheep() < 1 || r.getWheat() < 1 || r.getOre() < 1) // Checks that there are enough resources
+				r.sheep() < 1 || r.wheat() < 1 || r.ore() < 1) // Checks that there are enough resources
 		{
 			return false;
 		}
 		boolean hasPlayableCard = false;
-		for (DevCard d : this.getDevCards())
+		for (DevCard d : this.devCards())
 		{
 			if (!d.isNew())
 			{

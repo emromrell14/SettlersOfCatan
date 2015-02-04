@@ -79,8 +79,8 @@ public class ModelManager
 		if (
 				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
-				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) // Checks that the dice has been rolled
+				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
@@ -100,8 +100,8 @@ public class ModelManager
 		if (
 				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
-				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) // Checks that the dice has been rolled
+				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
@@ -121,8 +121,8 @@ public class ModelManager
 		if (
 				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
-				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) || // Checks that the dice has been rolled
+				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().status().equals(Status.PLAYING) || // Checks that the dice has been rolled
 				mGameModel.devCards().isEmpty() // Checks that there are still Dev Cards to buy
 		)
 		{
@@ -143,8 +143,8 @@ public class ModelManager
 		if (
 				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().getCurrentTurn().getIndex() != playerID || // Checks that it is this player's turn
-				!mGameModel.turnTracker().getStatus().equals(Status.PLAYING) // Checks that the dice has been rolled
+				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
