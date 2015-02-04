@@ -18,7 +18,7 @@ public abstract class DevCard implements IDevCard
 		mPlayed = played;
 	}
 	
-	public void setDevCardType(DevCardType type) 
+	public void setType(DevCardType type) 
 	{
 		mType = type;
 	}
@@ -41,8 +41,8 @@ public abstract class DevCard implements IDevCard
 	 * 
 	 * @param isNew
 	 */
-	public void setNew(boolean isNew)
+	public void setNew()
 	{
-		this.mNew = isNew;
+		this.mNew = false;
 	}
 }
