@@ -4,6 +4,7 @@ import java.util.List;
 
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import models.DevCard;
 import models.Game;
 import models.Index;
@@ -69,7 +70,14 @@ public class ModelManager
 	 */
 	public boolean canAffordRoad(int playerID)
 	{
-		if (
+		if (	mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
+				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or 
+				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) //   second round (special cases)
+		)
+		{
+			return true;
+		}
+		else if (
 				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
@@ -95,7 +103,14 @@ public class ModelManager
 	 */
 	public boolean canAffordSettlement(int playerID) 
 	{
-		if (
+		if (	mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
+				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or 
+				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) //   second round (special cases)
+		)
+		{
+			return true;
+		}
+		else if (
 				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
