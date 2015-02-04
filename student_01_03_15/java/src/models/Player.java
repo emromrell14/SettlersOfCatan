@@ -44,28 +44,28 @@ public class Player implements IPlayer
 		this.mNumCities = 4;
 	}
 
-	public Number getSoldierCount()
+	public int soldierCount()
 	{
 		return mSoldiers;
 	}
 	
-	public Number getVictoryPoints()
+	public int victoryPointCount()
 	{
 		return mVictoryPoints;
 	}
-	public Number getRoadCount()
+	public int roadCount()
 	{
 		return mNumRoads;
 	}
-	public Number getSettlementCount()
+	public int settlementCount()
 	{
 		return mNumSettlements;
 	}
-	public Number getCityCount()
+	public int cityCount()
 	{
 		return mNumCities;
 	}
-	public CatanColor getColor()
+	public CatanColor color()
 	{
 		return mColor;
 	}
@@ -73,19 +73,19 @@ public class Player implements IPlayer
 	{
 		return mDiscarded;
 	}
-	public Number getMonuments()
+	public int monumentCount()
 	{
 		return mMonuments;
 	}
-	public String getName()
+	public String name()
 	{
 		return mName;
 	}
-	public List<DevCard> getDevCards()
+	public List<DevCard> devCards()
 	{
 		return mDevCards;
 	}
-	public Index getPlayerIndex()
+	public Index playerIndex()
 	{
 		return mPlayerIndex;
 	}
@@ -93,23 +93,23 @@ public class Player implements IPlayer
 	{
 		return mHasPlayedDevCard;
 	}
-	public int getPlayerID()
+	public int playerID()
 	{
 		return mPlayerID;
 	}
-	public ResourceList getResources()
+	public ResourceList resources()
 	{
 		return mResources;
 	}
-	public List<Road> getRoads()
+	public List<Road> roads()
 	{
 		return mRoads;
 	}
-	public List<Building> getSettlements()
+	public List<Building> settlements()
 	{
 		return mSettlements;
 	}
-	public List<Building> getCities()
+	public List<Building> cities()
 	{
 		return mCities;
 	}
@@ -118,13 +118,105 @@ public class Player implements IPlayer
 	
 	//Functions
 	/**
+	 * Checks all preconditions for building a new settlement
+	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1 brick 1 wheat 1 sheep, a valid place to build, and it is their turn. 
+	 * 		Dice have also already been rolled.
+	 * @post none
+	 * @return true if a settlement can be built, false otherwise
+	 */
+	public boolean canBuildSettlement() 
+	{
+		ResourceList r = this.resources();
+		if (
+				this.settlementCount() < 1 || // Checks that the player has settlements left to build
+				r.brick() < 1 || r.wood() < 1 || r.sheep() < 1 || r.wheat() < 1) // Checks that player has sufficient resources
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Checks all preconditions for building a city.
+	 * @pre Player is logged in, has joined a game, has a city, 3 ore 2 wheat, a settlement to build on, and it is their turn. 
+	 * 		Dice have also already been rolled.
+	 * @post none
+	 * @return	true if a city can be built, false otherwise
+	 */
+	public boolean canBuildCity() 
+	{
+		ResourceList r = this.resources();
+		if (
+				this.cityCount() < 1 || // Checks that you have cities left to build
+				this.settlements().isEmpty() || // Checks that there is a settlement to build on
+				r.ore() < 3 || r.wheat() < 2) // Checks that there are enough resources
+		{
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Checks all preconditions for buying a development card.
+	 * @pre Player is logged in, joined a game, has 1 sheep 1 wheat 1 ore, it is their turn, and there are development cards in bank. 
+	 * 		Dice have also already been rolled.
+	 * @post none 
+	 * @return true if a card can be bought, false otherwise
+	 */
+	public boolean canBuyDevCard()
+	{
+		ResourceList r = this.resources();
+		if (
+				r.sheep() < 1 || r.wheat() < 1 || r.ore() < 1) // Checks that there are enough resources
+		{
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Checks all preconditions for playing a development card.
+	 * @pre Player is logged in, in a game, it is their turn, they own a dev card, they have not played a dev card this turn
+	 * 		other than victory points, they didn't buy the dev card this turn. Dice have also already been rolled.
+	 * @post none
+	 * @return true if a card can be played, false otherwise
+	 */
+	
+	public boolean canPlayDevCard() 
+	{
+		ResourceList r = this.resources();
+		if (
+				this.devCards().isEmpty() || // Checks that this player has a dev card
+				this.hasPlayedDevCard() || // Checks that player hasn't already played a dev card
+				r.sheep() < 1 || r.wheat() < 1 || r.ore() < 1) // Checks that there are enough resources
+		{
+			return false;
+		}
+		boolean hasPlayableCard = false;
+		for (DevCard d : this.devCards())
+		{
+			if (!d.isNew())
+			{
+				hasPlayableCard = true;
+			}
+		}
+		if (!hasPlayableCard)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	
+	
+	/**
 	 * Returns whether this player needs to discard when a 7 is rolled
 	 * 
 	 * @return false if they already have discarded or if they don't have more than 7 cards
 	 */
 	public boolean canDiscard()
 	{
-		if(this.hasDiscarded() || this.getResources().getTotal() < 7)
+		if(this.hasDiscarded() || this.resources().getTotal() < 7)
 		{
 			return false;
 		}
@@ -146,9 +238,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
+			if(devCard.type() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
 			{
 				return true;
 			}
@@ -171,9 +263,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.ROAD_BUILD && !devCard.isNew())
+			if(devCard.type() == DevCardType.ROAD_BUILD && !devCard.isNew())
 			{
 				return true;
 			}
@@ -196,9 +288,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.SOLDIER && !devCard.isNew())
+			if(devCard.type() == DevCardType.SOLDIER && !devCard.isNew())
 			{
 				return true;
 			}
@@ -221,9 +313,9 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.MONOPOLY && !devCard.isNew())
+			if(devCard.type() == DevCardType.MONOPOLY && !devCard.isNew())
 			{
 				return true;
 			}
@@ -246,17 +338,36 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		for(DevCard devCard : this.getDevCards())
+		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.getType() == DevCardType.MONUMENT && !devCard.isNew());
+			if(devCard.type() == DevCardType.MONUMENT && !devCard.isNew());
 			{
 				return true;
 			}
 		}
 		return false;
 	}
+	
+	public boolean canAcceptTrade(ResourceList tradeOffer)
+	{
+		return mResources.brick() >= tradeOffer.brick()
+				&& mResources.ore() >= tradeOffer.ore()
+				&& mResources.sheep() >= tradeOffer.sheep()
+				&& mResources.wheat() >= tradeOffer.wheat()
+				&& mResources.wood() >= tradeOffer.wood();
+	}
+	
 	public void playMonument()
 	{
 		
+	}
+
+	public boolean canMaritimeTrade()
+	{
+		return mResources.brick() >= 4
+				|| mResources.ore() >= 4
+				|| mResources.sheep() >= 4
+				|| mResources.wheat() >= 4
+				|| mResources.wood() >= 4;
 	}
 }

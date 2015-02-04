@@ -19,7 +19,7 @@ public class TokenValue
 	 * Gets an integer representing the number to be associated with a hexagon
 	 * @return an integer 2-12
 	 */
-	public int getValue()
+	public int value()
 	{
 		return mValue;
 	}

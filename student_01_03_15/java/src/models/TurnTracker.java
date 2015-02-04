@@ -17,25 +17,35 @@ public class TurnTracker implements ITurnTracker
 		this.mLargestArmy = largestArmy;
 	}
 	
-	public Index getCurrentTurn()
+	public Index currentTurn()
 	{
 		return mCurrentTurn;
 	}
-	public Status getStatus()
+	public Status status()
 	{
 		return mStatus;
 	}
-	public Index getLongestRoad()
+	public Index longestRoad()
 	{
 		return mLongestRoad;
 	}
-	public Index getLargestArmy()
+	public Index largestArmy()
 	{
 		return mLargestArmy;
 	}
 	
+	public boolean isPlayersTurn(Index playerIndex)
+	{
+		return playerIndex.index() == mCurrentTurn.index();
+	}
+	
 	public boolean canRollDice(Index playerIndex)
 	{
-		return (playerIndex.getIndex() == mCurrentTurn.getIndex()) && !mHasRolled;
+		return isPlayersTurn(playerIndex) && !mHasRolled;
+	}
+	
+	public boolean hasRolled()
+	{
+		return mHasRolled;
 	}
 }

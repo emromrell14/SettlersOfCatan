@@ -7,24 +7,24 @@ public interface ITurnTracker
 	 * 
 	 * @return the Index object (with a value between 0 and 3 inclusive) of the player whose turn it is
 	 */
-	public Index getCurrentTurn();
+	public Index currentTurn();
 	/** 
 	 * Gets the status of current player
 	 * 
 	 * @return one of the following Status enum types: ROLLING, ROBBING, PLAYING, DISCARDING, FIRSTROUND, SECONDROUND
 	 */
-	public Status getStatus();
+	public Status status();
 	/**
 	 * Gets Index of player who has the longest road
 	 * 
 	 * @return the Index object (with a value between 0 and 3 inclusive) of the player with the longest road
 	 */
-	public Index getLongestRoad();
+	public Index longestRoad();
 	/**
 	 * Gets Index of player who has the largest army
 	 * 
 	 * @return the Index object (with a value between 0 and 3 inclusive) of the player with the largest army
 	 */
-	public Index getLargestArmy();
+	public Index largestArmy();
 
 }

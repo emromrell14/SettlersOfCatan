@@ -37,7 +37,7 @@ public class Building
 	 * 
 	 * @return an integer id corresponding to the player that owns this piece
 	 */
-	public Index getOwner()
+	public Index owner()
 	{
 		return mOwner;
 	}
@@ -47,12 +47,12 @@ public class Building
 	 * 
 	 * @return the location of this building on the grid
 	 */
-	public VertexLocation getLocation()
+	public VertexLocation location()
 	{
 		return mLocation;
 	}
 	
-	public Hex[] getNeighborsHexes() 
+	public Hex[] neighborsHexes() 
 	{
 		return neighborHexes;
 	}
@@ -61,7 +61,7 @@ public class Building
 	{
 		this.mBuildingType = BuildingType.CITY;
 	}
-	public BuildingType getBuildingType()
+	public BuildingType buildingType()
 	{
 		return mBuildingType;
 	}

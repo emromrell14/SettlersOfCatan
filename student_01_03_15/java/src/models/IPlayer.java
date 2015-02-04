@@ -17,43 +17,43 @@ public interface IPlayer
 	 * 
 	 * @return the number of soldiers this player has
 	 */
-	public Number getSoldierCount();
+	public int soldierCount();
 	/** 
 	 * Gets the number of roads this player has left to build
 	 * 
 	 * @return a number between 0 and 15 inclusive
 	 */
-	public Number getRoadCount();
+	public int roadCount();
 	/** 
 	 * Gets the number of settlements this player has left to build
 	 * 
 	 * @return a number between 0 and 5 inclusive
 	 */
-	public Number getSettlementCount();
+	public int settlementCount();
 	/** 
 	 * Gets the number of cities this player has left to build
 	 * 
 	 * @return a number between 0 and 4 inclusive
 	 */
-	public Number getCityCount();
+	public int cityCount();
 	/** 
 	 * Gets the number of points this player has earned so far
 	 * 
 	 * @return a number between 0 and 10 inclusive
 	 */
-	public Number getVictoryPoints();
+	public int victoryPointCount();
 	/** 
 	 * Gets the number of points this player has earned so far
 	 * 
 	 * @return a number between 0 and 10 inclusive
 	 */
-	public Number getMonuments();
+	public int monumentCount();
 	/** 
 	 * Gets the color associated with this player
 	 * 
 	 * @return one of the following CatanColor enum types: RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN
 	 */
-	public CatanColor getColor();
+	public CatanColor color();
 	/** 
 	 * Checks to see if a player has discarded
 	 * 
@@ -65,21 +65,21 @@ public interface IPlayer
 	 * 
 	 * @return a string representing the name of the player
 	 */
-	public String getName();
+	public String name();
 	
 	/**
 	 * Gets the list of the Player's Development cards
 	 * 
 	 * @return the list of DevCards
 	 */
-	public List<DevCard> getDevCards();
+	public List<DevCard> devCards();
 	/** 
 	 * Gets the index associated with this player
 	 * This is used to determine the player's turn order.
 	 * 
 	 * @return an Index object with a value between 0 and 3 inclusive
 	 */
-	public Index getPlayerIndex();
+	public Index playerIndex();
 	/** 
 	 * Checks to see if a player has played a development card
 	 * 
@@ -93,29 +93,29 @@ public interface IPlayer
 	 * 
 	 * @return an Index object with a value between 0 and 3 inclusive
 	 */
-	public int getPlayerID();
+	public int playerID();
 	/** 
 	 * Gets the total amounts of each type of Resource Cards this player has
 	 * 
 	 * @return a ResourceList object containing quantities of each resource type
 	 */
-	public ResourceList getResources();
+	public ResourceList resources();
 	/** 
 	 * Gets a list of all Road objects this player has built
 	 * 
 	 * @return a List<Road> containing all the Road objects built by this player
 	 */
-	public List<Road> getRoads();
+	public List<Road> roads();
 	/** 
 	 * Gets a list of all Settlement objects this player has built
 	 * 
 	 * @return a List<Building> containing all the Settlement objects built by this player
 	 */
-	public List<Building> getSettlements();
+	public List<Building> settlements();
 	/** 
 	 * Gets a list of all City objects this player has built
 	 * 
 	 * @return a List<Building> containing all the City objects built by this player
 	 */
-	public List<Building> getCities();
+	public List<Building> cities();
 }

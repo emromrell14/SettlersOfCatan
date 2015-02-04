@@ -23,7 +23,7 @@ public class Index
 	 * 
 	 * @return an integer value between 0 and 3 inclusive
 	 */
-	public int getIndex()
+	public int index()
 	{
 		return mIndex;
 	}

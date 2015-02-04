@@ -23,7 +23,7 @@ public class Road
 	 * Gets the index corresponding to the player that owns this road
 	 * @return an Index object with a value between 0 and 3 inclusive
 	 */
-	public Index getOwner()
+	public Index owner()
 	{
 		return mOwner;
 	}
@@ -32,7 +32,7 @@ public class Road
 	 * Gets the location of the road on the grid
 	 * @return an EdgeLocation object that tells the location of this road
 	 */
-	public EdgeLocation getLocation()
+	public EdgeLocation location()
 	{
 		return mLocation;
 	}

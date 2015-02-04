@@ -2,6 +2,7 @@ package facade;
 
 import shared.locations.HexLocation;
 import models.Game;
+import models.ResourceList;
 
 public interface IMasterManager 
 {		
@@ -27,11 +28,11 @@ public interface IMasterManager
 
 	public boolean canPlayDevCard();
 
-	public boolean canOfferTrade();
+	public boolean canOfferTrade(int playerID);
 
-	public boolean canAcceptTrade();
+	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer);
 
-	public boolean canMaritimeTrade();
+	public boolean canMaritimeTrade(int playerID);
 
 	public boolean canRollDice(int playerID);
 

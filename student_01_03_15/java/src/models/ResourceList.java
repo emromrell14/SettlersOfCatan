@@ -7,7 +7,6 @@ public class ResourceList
 	private int mSheep;
 	private int mWheat;
 	private int mWood;
-	private int total;
 	
 	/**
 	 * Creates a ResourceList object
@@ -35,15 +34,14 @@ public class ResourceList
 	 */
 	public int getTotal()
 	{
-		//calculate total here
-		return total;
+		return this.mBrick + this.mOre + this.mSheep + this.mWheat + this.mWood;
 	}
 	/**
 	 * Gets the amount of brick in the resource pile (resource cards)
 	 * 
 	 * @return an integer representing the amount of brick in the resource pile
 	 */
-	public int getBrick()
+	public int brick()
 	{
 		return mBrick;
 	}
@@ -52,7 +50,7 @@ public class ResourceList
 	 * 
 	 * @return an integer representing the amount of ore in the resource pile
 	 */
-	public int getOre()
+	public int ore()
 	{
 		return mOre;
 	}
@@ -61,7 +59,7 @@ public class ResourceList
 	 * 
 	 * @return an integer representing the amount of sheep in the resource pile
 	 */
-	public int getSheep()
+	public int sheep()
 	{
 		return mSheep;
 	}
@@ -70,7 +68,7 @@ public class ResourceList
 	 * 
 	 * @return an integer representing the amount of wheat in the resource pile
 	 */
-	public int getWheat()
+	public int wheat()
 	{
 		return mWheat;
 	}
@@ -79,7 +77,7 @@ public class ResourceList
 	 * 
 	 * @return an integer representing the amount of wood in the resource pile
 	 */
-	public int getWood()
+	public int wood()
 	{
 		return mWood;
 	}

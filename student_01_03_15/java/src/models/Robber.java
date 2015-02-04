@@ -11,7 +11,7 @@ public class Robber
 		
 	}
 	
-	public HexLocation getLocation()
+	public HexLocation location()
 	{
 		return mLocation;
 	}

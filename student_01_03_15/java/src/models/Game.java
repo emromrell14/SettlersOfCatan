@@ -36,7 +36,7 @@ public class Game implements IGame
 	{
 		for(Player player : players())
 		{
-			if(player.getPlayerID() == playerID)
+			if(player.playerID() == playerID)
 			{
 				return player;
 			}
@@ -48,9 +48,9 @@ public class Game implements IGame
 		Index playerIndex = null;
 		for(Player p:mPlayers)
 		{
-			if(p.getPlayerID() == playerID)
+			if(p.playerID() == playerID)
 			{
-				playerIndex = p.getPlayerIndex();
+				playerIndex = p.playerIndex();
 				break;
 			}
 		}
@@ -95,5 +95,31 @@ public class Game implements IGame
 	public Robber robber() 
 	{
 		return mRobber;
+	}
+
+	public boolean canOfferTrade(int playerID) 
+	{
+		boolean playerHasCards = false;
+		boolean othersHaveCards = false;
+		for(Player p: mPlayers)
+		{
+			ResourceList temp = p.resources();
+			if(p.playerID() == playerID) 
+			{
+				if(temp.brick() >= 0 || temp.ore() >= 0 || temp.wheat() >= 0 || temp.wood() >= 0 || temp.sheep() >= 0)
+				{
+					playerHasCards = true;
+				}
+			}
+			else
+			{
+				if(temp.brick() >= 0 || temp.ore() >= 0 || temp.wheat() >= 0 || temp.wood() >= 0 || temp.sheep() >= 0)
+				{
+					othersHaveCards = true;
+				}
+			}
+		}
+		
+		return playerHasCards && othersHaveCards;
 	}	
 }
