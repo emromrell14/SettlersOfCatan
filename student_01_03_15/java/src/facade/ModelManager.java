@@ -4,6 +4,7 @@ import java.util.List;
 
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import models.DevCard;
 import models.Game;
 import models.Index;
@@ -67,21 +68,16 @@ public class ModelManager
 	 * @post none
 	 * @return true if a road can be built, false otherwise
 	 */
-	public boolean canBuildRoad(EdgeLocation edgeLocation)
+	public boolean canAffordRoad(int playerID)
 	{
-		return true;
-	}
-
-	/**
-	 * Checks all preconditions for building a new settlement
-	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1 brick 1 wheat 1 sheep, a valid place to build, and it is their turn. 
-	 * 		Dice have also already been rolled.
-	 * @post none
-	 * @return true if a settlement can be built, false otherwise
-	 */
-	public boolean canBuildSettlement(int playerID) 
-	{
-		if (
+		if (	mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
+				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or 
+				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) //   second round (special cases)
+		)
+		{
+			return true;
+		}
+		else if (
 				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
@@ -90,7 +86,45 @@ public class ModelManager
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canBuildSettlement();
+		return this.mGameModel.getPlayer(playerID).canAffordRoad();
+	}
+	
+	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
+	{
+		return this.mGameModel.getPlayer(playerID).canPlaceRoad(loc);
+	}
+	
+	/**
+	 * Checks all preconditions for building a new settlement
+	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1 brick 1 wheat 1 sheep, a valid place to build, and it is their turn. 
+	 * 		Dice have also already been rolled.
+	 * @post none
+	 * @return true if a settlement can be built, false otherwise
+	 */
+	public boolean canAffordSettlement(int playerID) 
+	{
+		if (	mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
+				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or 
+				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) //   second round (special cases)
+		)
+		{
+			return true;
+		}
+		else if (
+				!isLoggedIn() || // Checks that player is logged in
+				!mGameModel.players().contains(this) || // Checks that this player is in this game
+				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
+		)
+		{
+			return false;
+		}
+		return this.mGameModel.getPlayer(playerID).canAffordSettlement();
+	}
+	
+	public boolean canPlaceSettlement(int playerID, VertexLocation loc) 
+	{
+		return this.mGameModel.getPlayer(playerID).canPlaceSettlement(loc);
 	}
 	
 	/**
@@ -100,7 +134,7 @@ public class ModelManager
 	 * @post none
 	 * @return	true if a city can be built, false otherwise
 	 */
-	public boolean canBuildCity(int playerID) 
+	public boolean canAffordCity(int playerID) 
 	{
 		if (
 				!isLoggedIn() || // Checks that player is logged in
@@ -111,9 +145,13 @@ public class ModelManager
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canBuildCity();
+		return this.mGameModel.getPlayer(playerID).canAffordCity();
 	}
 
+	public boolean canPlaceCity(int playerID, VertexLocation loc) 
+	{
+		return this.mGameModel.getPlayer(playerID).canPlaceCity(loc);
+	}
 	/**
 	 * Checks all preconditions for buying a development card.
 	 * @pre Player is logged in, joined a game, has 1 sheep 1 wheat 1 ore, it is their turn, and there are development cards in bank. 
