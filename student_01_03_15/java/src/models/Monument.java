@@ -1,10 +1,19 @@
 package models;
 
+import shared.definitions.DevCardType;
+
 //import facade.MasterManager;
 
 public class Monument extends DevCard
 {
 
+	public Monument() 
+	{
+		this.setType(DevCardType.MONUMENT);
+	}
+	
+	
+	
 	@Override
 	public void execute()
 	{
