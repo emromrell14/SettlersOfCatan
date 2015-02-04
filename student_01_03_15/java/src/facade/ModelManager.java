@@ -1,6 +1,5 @@
 package facade;
 
-import proxy.IProxy;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import models.Game;
@@ -194,9 +193,9 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canPlayYearOfPlenty()
+	public boolean canPlayYearOfPlenty(int playerID)
 	{
-		return true;
+		return this.mGameModel.getPlayer(playerID).canPlayYearOfPlenty();
 	}
 
 	/**
@@ -204,9 +203,9 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canPlayRoadBuilder()
+	public boolean canPlayRoadBuilder(int playerID)
 	{
-		return true;
+		return this.mGameModel.getPlayer(playerID).canPlayRoadBuilder();
 	}
 
 	/**
@@ -214,9 +213,9 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canPlaySoldier()
+	public boolean canPlaySoldier(int playerID)
 	{
-		return true;
+		return this.mGameModel.getPlayer(playerID).canPlaySoldier();
 	}
 
 	/**
@@ -224,9 +223,9 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canPlayMonopoly()
+	public boolean canPlayMonopoly(int playerID)
 	{
-		return true;
+		return this.mGameModel.getPlayer(playerID).canPlayMonopoly();
 	}
 
 	/**
@@ -234,9 +233,9 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument()
+	public boolean canPlayMonument(int playerID)
 	{
-		return true;
+		return this.mGameModel.getPlayer(playerID).canPlayMonument();
 	}
 
 	/**
