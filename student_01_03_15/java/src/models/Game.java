@@ -32,6 +32,17 @@ public class Game implements IGame
 	{
 		return mPlayers;
 	}
+	public Player getPlayer(int playerID)
+	{
+		for(Player player : players())
+		{
+			if(player.getPlayerID() == playerID)
+			{
+				return player;
+			}
+		}
+		return null;
+	}
 
 	public TurnTracker turnTracker() 
 	{
