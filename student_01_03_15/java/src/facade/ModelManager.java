@@ -3,6 +3,7 @@ package facade;
 import shared.locations.HexLocation;
 import models.Game;
 import models.Index;
+import models.Status;
 
 public class ModelManager 
 {
@@ -167,9 +168,9 @@ public class ModelManager
 	 * @post none
 	 * @return true if the card can be discarded, false otherwise
 	 */
-	public boolean canDiscard()
+	public boolean canDiscard(int playerID)
 	{
-		return true;
+		return this.mGameModel.getPlayer(playerID).canDiscard();
 	}
 
 	/**
@@ -177,9 +178,13 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can finish turn, false otherwise
 	 */
-	public boolean canFinishTurn()
+	public boolean canFinishTurn(int playerID)
 	{
-		return true;
+		if(this.mGameModel.turnTracker().getStatus() == Status.PLAYING)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	/**
