@@ -13,9 +13,9 @@ public abstract class DevCard implements IDevCard
 	{
 		return mPlayed;
 	}
-	public void setPlayed(boolean played)
+	public void setPlayed()
 	{
-		mPlayed = played;
+		mPlayed = true;
 	}
 	
 	public void setType(DevCardType type) 

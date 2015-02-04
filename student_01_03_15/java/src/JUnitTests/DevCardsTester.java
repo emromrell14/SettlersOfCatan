@@ -46,11 +46,11 @@ public class DevCardsTester {
 		assertFalse(yearOfPlenty.hasBeenPlayed());
 		
 		
-		monop.setPlayed(true);
-		monu.setPlayed(true);
-		rBuilder.setPlayed(true);
-		soldier.setPlayed(true);
-		yearOfPlenty.setPlayed(true);
+		monop.setPlayed();
+		monu.setPlayed();
+		rBuilder.setPlayed();
+		soldier.setPlayed();
+		yearOfPlenty.setPlayed();
 		
 		//should now assert true after trigger change
 		assertTrue(monop.hasBeenPlayed());
@@ -74,6 +74,20 @@ public class DevCardsTester {
 		
 	}
 
+	@Test
+	public void testNew()
+	{
+		monop.setNew();
+		monu.setNew();
+		rBuilder.setNew();
+		
+		assertFalse(monop.isNew());
+		assertFalse(monu.isNew());
+		assertFalse(rBuilder.isNew());
+		assertTrue(soldier.isNew());
+		assertTrue(yearOfPlenty.isNew());
+		
+	}
 	
 	
 	@After

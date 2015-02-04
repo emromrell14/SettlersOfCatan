@@ -25,7 +25,10 @@ public class GameManager
 	 */
 	public String getGameModel()
 	{
-		return null;
+		String response;
+		
+		response = mProxy.get("/game/model");
+		return response;
 	}
 	
 	/**
@@ -36,7 +39,13 @@ public class GameManager
 	 */
 	public String resetGame()
 	{
-		return null;
+		String response;
+		String body;
+		
+		body = "";
+		
+		response = mProxy.post("/game/reset", body);
+		return response;
 	}
 	
 	/**
@@ -62,13 +71,19 @@ public class GameManager
 	}
 	
 	/**
-	 * Adds an AI player to the game
+	 * Adds an AI player to the game, only LARGEST_ARMY is supported at this time
 	 * @pre must not have more than 3 total players already
 	 * @post an AI player is added to the game
 	 */
-	public void addAIPlayer() 
+	public String addAIPlayer() 
 	{
+		String response;
+		String body;
 		
+		body = "{AIType:\"LARGEST_ARMY\"}";
+		
+		response = mProxy.post("/game/addAI", body);
+		return response;
 	}
 
 	/**
@@ -79,6 +94,9 @@ public class GameManager
 	 */
 	public String getAIPlayers()
 	{
-		return null;
+		String response;
+		
+		response = mProxy.get("/game/listAI");
+		return response;
 	}
 }

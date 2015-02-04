@@ -1,5 +1,7 @@
 package facade;
 
+import proxy.IProxy;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import models.Game;
 import models.Index;
@@ -61,7 +63,7 @@ public class ModelManager
 	 * @post none
 	 * @return true if a road can be built, false otherwise
 	 */
-	public boolean canBuildRoad()
+	public boolean canBuildRoad(EdgeLocation edgeLocation)
 	{
 		return true;
 	}
