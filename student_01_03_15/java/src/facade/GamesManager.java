@@ -11,7 +11,11 @@ public class GamesManager
 	 * 
 	 * @return a new GamesManager object
 	 */
-	public GamesManager(IProxy proxy)
+	public GamesManager()
+	{
+	}
+	
+	public void setProxy(IProxy proxy)
 	{
 		mProxy = proxy;
 	}

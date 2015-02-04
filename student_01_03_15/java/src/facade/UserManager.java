@@ -10,7 +10,11 @@ public class UserManager
 	 * 
 	 * @return a new UserManager object
 	 */
-	public UserManager(IProxy proxy)
+	public UserManager()
+	{
+	}
+	
+	public void setProxy(IProxy proxy)
 	{
 		mProxy = proxy;
 	}

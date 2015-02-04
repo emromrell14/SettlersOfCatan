@@ -1,8 +1,8 @@
 package facade;
 
 import models.Game;
-import proxy.IProxy;
-import proxy.Proxy;
+import proxy.*;
+import shared.locations.HexLocation;
 
 public class MasterManager implements IMasterManager
 {
@@ -21,12 +21,13 @@ public class MasterManager implements IMasterManager
 	 */
 	private MasterManager()
 	{
-		mProxy = new Proxy();
-		mUserManager = new UserManager(mProxy);
-		mGameManager = new GameManager(mProxy);
-		mMovesManager = new MovesManager(mProxy);
-		mUtilManager = new UtilManager(mProxy);
-		mModelManager = new ModelManager(mProxy);
+		mUserManager = new UserManager();
+		mGameManager = new GameManager();
+		mGamesManager = new GamesManager();
+		mMovesManager = new MovesManager();
+		mUtilManager = new UtilManager();
+		mModelManager = new ModelManager();
+		communicateWithRealProxy();
 	}
 
 	public static MasterManager getInstance() 
@@ -42,6 +43,28 @@ public class MasterManager implements IMasterManager
 	{
 		mModelManager.updateModel(newGameModel);
 
+	}
+
+	public void communicateWithMockProxy()
+	{
+		mProxy = new MockProxy();
+		mUserManager.setProxy(mProxy);
+		mGameManager.setProxy(mProxy);
+		mGamesManager.setProxy(mProxy);
+		mMovesManager.setProxy(mProxy);
+		mUtilManager.setProxy(mProxy);
+		mModelManager.setProxy(mProxy);
+	}
+	
+	public void communicateWithRealProxy()
+	{
+		mProxy = new Proxy();
+		mUserManager.setProxy(mProxy);
+		mGameManager.setProxy(mProxy);
+		mGamesManager.setProxy(mProxy);
+		mMovesManager.setProxy(mProxy);
+		mUtilManager.setProxy(mProxy);
+		mModelManager.setProxy(mProxy);
 	}
 	
 	/**
@@ -259,11 +282,12 @@ public class MasterManager implements IMasterManager
 	/**
 	 * @pre none
 	 * @post none
+	 * @param newRobberLocation The location of where the player wants to play the robber on the board. 
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber()
+	public boolean canPlaceRobber(HexLocation newRobberLocation)
 	{
-		return mModelManager.canPlaceRobber();
+		return mModelManager.canPlaceRobber(newRobberLocation);
 	}
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER

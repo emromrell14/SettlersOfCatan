@@ -1,10 +1,15 @@
 package facade;
 
+import shared.locations.HexLocation;
 import models.Game;
 
 public interface IMasterManager 
 {		
 	public void updateModel(Game newGameModel);
+	
+	public void communicateWithMockProxy();
+	
+	public void communicateWithRealProxy();
 
 	public boolean canLogin();
 
@@ -44,7 +49,7 @@ public interface IMasterManager
 
 	public boolean canPlayMonument();
 
-	public boolean canPlaceRobber();
+	public boolean canPlaceRobber(HexLocation newRobberLocation);
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager

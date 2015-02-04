@@ -2,6 +2,7 @@ package facade;
 
 import proxy.IProxy;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import models.Game;
 
 public class ModelManager 
@@ -9,14 +10,18 @@ public class ModelManager
 	private Game mGameModel;
 	private IProxy mProxy;
 	
-	public ModelManager(IProxy proxy) 
+	public ModelManager() 
 	{
-		mProxy = proxy;
 	}
 
 	public void updateModel(Game newGameModel)
 	{
 		mGameModel = newGameModel;
+	}
+	
+	public void setProxy(IProxy proxy)
+	{
+		mProxy = proxy;
 	}
 	
 	/**
@@ -234,10 +239,13 @@ public class ModelManager
 	/**
 	 * @pre none
 	 * @post none
+	 * @param newRobberLocation The location of where the player wants to play the robber on the board. 
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber()
+	public boolean canPlaceRobber(HexLocation newRobberLocation)
 	{
-		return true;
+		HexLocation currentRobberLocation = mGameModel.getmRobber().getLocation();
+		return !(currentRobberLocation.getX() == newRobberLocation.getX()
+				&& currentRobberLocation.getY() == newRobberLocation.getY());
 	}
 }
