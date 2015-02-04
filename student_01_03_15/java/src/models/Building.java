@@ -18,6 +18,8 @@ public class Building
 	/** Tells whether this is a settlement or a city */
 	private BuildingType mBuildingType = BuildingType.SETTLEMENT;
 	
+	private Port mPort;
+	
 	/** 
 	 * Creates a Building model object
 	 * 
@@ -30,6 +32,16 @@ public class Building
 	{
 		this.mOwner = owner;
 		this.mLocation = location;
+	}
+	
+	public Port port()
+	{
+		return mPort;
+	}
+	
+	public void setPort(Port port)
+	{
+		mPort = port;
 	}
 	
 	/** 

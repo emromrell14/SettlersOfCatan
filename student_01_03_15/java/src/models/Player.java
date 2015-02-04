@@ -4,6 +4,8 @@ import java.util.List;
 
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
@@ -397,13 +399,80 @@ public class Player implements IPlayer
 	{
 		
 	}
+	
+	public boolean haveResourceAmount(PortType type)
+	{
+		boolean toReturn = false;
+		if(type != null)
+		{
+			switch (type)
+			{
+			case BRICK:
+				toReturn = mResources.brick() >= 2;
+				break;
+			case ORE:
+				toReturn = mResources.ore() >= 2;
+				break;
+			case WOOD:
+				toReturn = mResources.wood() >= 2;
+				break;
+			case SHEEP:
+				toReturn = mResources.sheep() >= 2;
+				break;
+			case WHEAT:
+				toReturn = mResources.wheat() >= 2;
+				break;
+			case THREE:
+				toReturn = mResources.brick() >= 3
+						|| mResources.ore() >= 3
+						|| mResources.sheep() >= 3
+						|| mResources.wheat() >= 3
+						|| mResources.wood() >= 3;
+				break;
+			}
+		}
+		return toReturn;
+	}
 
 	public boolean canMaritimeTrade()
-	{
-		return mResources.brick() >= 4
+	{			
+		if(mResources.brick() >= 4
 				|| mResources.ore() >= 4
 				|| mResources.sheep() >= 4
 				|| mResources.wheat() >= 4
-				|| mResources.wood() >= 4;
+				|| mResources.wood() >= 4)
+		{
+			return true;
+		}
+
+		boolean toReturn = false;
+		
+		for(Building b : mCities)
+		{
+			if(b.port() != null)
+			{
+				PortType portType = b.port().resource();
+				toReturn = haveResourceAmount(portType);
+				if(toReturn)
+				{
+					return toReturn;
+				}
+			}
+		}
+		
+		for(Building b : mSettlements)
+		{
+			if(b.port() != null)
+			{
+				PortType portType = b.port().resource();
+				toReturn = haveResourceAmount(portType);
+				if(toReturn)
+				{
+					return toReturn;
+				}
+			}
+		}
+			
+		return toReturn;
 	}
 }
