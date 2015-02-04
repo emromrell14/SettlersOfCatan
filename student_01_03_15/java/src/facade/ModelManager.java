@@ -3,6 +3,7 @@ package facade;
 import proxy.IProxy;
 import shared.locations.HexLocation;
 import models.Game;
+import models.Index;
 
 public class ModelManager 
 {
@@ -157,11 +158,13 @@ public class ModelManager
 	 * Checks all preconditions for rolling the dice.
 	 * @pre Player is logged in, playing a game, it is their turn, they haven't already rolled. 
 	 * @post none
+	 * @params playerID ID of the player
 	 * @return true if the dice can be rolled, false otherwise
 	 */
-	public boolean canRollDice() 
+	public boolean canRollDice(int playerID) 
 	{
-		return true;
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		return mGameModel.getTurnTracker().canRollDice(playerIndex);
 	}
 
 	/**

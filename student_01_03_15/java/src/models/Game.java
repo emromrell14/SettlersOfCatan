@@ -32,6 +32,20 @@ public class Game implements IGame
 	{
 		return mPlayers;
 	}
+	
+	public Index getPlayerIndex(int playerID)
+	{
+		Index playerIndex = null;
+		for(Player p:mPlayers)
+		{
+			if(p.getPlayerID() == playerID)
+			{
+				playerIndex = p.getPlayerIndex();
+				break;
+			}
+		}
+		return playerIndex;
+	}
 
 	public TurnTracker turnTracker() 
 	{

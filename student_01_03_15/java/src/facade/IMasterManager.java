@@ -33,7 +33,7 @@ public interface IMasterManager
 
 	public boolean canMaritimeTrade();
 
-	public boolean canRollDice();
+	public boolean canRollDice(int playerID);
 
 	public boolean canDiscard();
 	
