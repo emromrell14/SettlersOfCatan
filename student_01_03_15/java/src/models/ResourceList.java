@@ -82,4 +82,29 @@ public class ResourceList
 		return mWood;
 	}
 	
+	public void addBrick(int value)
+	{
+		mBrick += value;
+	}
+	
+	public void addOre(int value)
+	{
+		mOre += value;
+	}
+	
+	public void addSheep(int value)
+	{
+		mSheep += value;
+	}
+	
+	public void addWheat(int value)
+	{
+		mWheat += value;
+	}
+	
+	public void addWood(int value)
+	{
+		mWood += value;
+	}
+	
 }

@@ -18,11 +18,11 @@ public class Player implements IPlayer
 	private Index mPlayerIndex; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
 	private int mPlayerID; //The unique playerID. This is used to pick the client player apart from the others. This is only used here and in your cookie.
 	private ResourceList mResources; //The resource cards this player has.
-	private int mNumRoads;
-	private int mNumSettlements; //How many settlements this player has left to play.
-	private int mNumCities; //How many cities this player has left to play.
-	private int mSoldiers;
-	private int mVictoryPoints;
+	private int mRoadCount;
+	private int mSettlementCount; //How many settlements this player has left to play.
+	private int mCityCount; //How many cities this player has left to play.
+	private int mSoldierCount;
+	private int mVictoryPointCount;
 	private boolean mDiscarded = true;
 	private boolean mHasPlayedDevCard = true;
 	private int mMonuments = 0;
@@ -43,33 +43,33 @@ public class Player implements IPlayer
 		this.mRoads = roads;
 		this.mSettlements = settlements;
 		this.mCities = cities;
-		this.mSoldiers = soldiers;
-		this.mVictoryPoints = victoryPoints;
-		this.mNumRoads = 15;
-		this.mNumSettlements = 5;
-		this.mNumCities = 4;
+		this.mSoldierCount = soldiers;
+		this.mVictoryPointCount = victoryPoints;
+		this.mRoadCount = 15;
+		this.mSettlementCount = 5;
+		this.mCityCount = 4;
 	}
 
 	public int soldierCount()
 	{
-		return mSoldiers;
+		return mSoldierCount;
 	}
 	
 	public int victoryPointCount()
 	{
-		return mVictoryPoints;
+		return mVictoryPointCount;
 	}
 	public int roadCount()
 	{
-		return mNumRoads;
+		return mRoadCount;
 	}
 	public int settlementCount()
 	{
-		return mNumSettlements;
+		return mSettlementCount;
 	}
 	public int cityCount()
 	{
-		return mNumCities;
+		return mCityCount;
 	}
 	public CatanColor color()
 	{
@@ -238,6 +238,20 @@ public class Player implements IPlayer
 		}
 			
 		return false;
+	}
+	
+	/**
+	 * Decreases a player's brick and wood by 1 each
+	 * adds a road at specified location to player's list of roads
+	 * @param loc
+	 */
+	public void buildRoad(EdgeLocation loc) 
+	{
+		ResourceList r = this.resources();
+		r.addBrick(-1);
+		r.addWood(-1);
+		this.mRoadCount -= 1;
+		this.mRoads.add(new Road(this.mPlayerIndex, loc));
 	}
 	
 	/**
@@ -568,6 +582,8 @@ public class Player implements IPlayer
 			
 		return toReturn;
 	}
+
+	
 
 	
 }

@@ -87,6 +87,26 @@ public class ModelManager {
 	}
 
 	/**
+	 * Builds a road at the specified location. (Set 'free' to true during initial setup)
+	 * @pre player must have necessary resources to build a road
+	 * @pre location (edge) must be adjacent to existing road or building built by this player
+	 * @pre location (edge) must not already be occupied
+	 * @post road will be built where specified
+	 * @post player's resources will be decreased according to building cost of road
+	 * @return JSON String with the client model
+	 */
+	public String buildRoad(int playerID, EdgeLocation loc) 
+	{
+		Player p = mGameModel.players().get(playerID);
+		p.buildRoad(loc);
+		mGameModel.bank().addBrick(1);
+		mGameModel.bank().addWood(1);
+		mGameModel.board().buildRoad(mGameModel.getPlayerIndex(playerID),loc);
+		return "";
+	}
+	
+	
+	/**
 	 * Checks all preconditions for building a new settlement
 	 * 
 	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1
@@ -346,7 +366,8 @@ public class ModelManager {
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument(int playerID) {
+	public boolean canPlayMonument(int playerID) 
+	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
 		{
@@ -363,9 +384,11 @@ public class ModelManager {
 	 *            the board.
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber(HexLocation newRobberLocation) {
+	public boolean canPlaceRobber(HexLocation newRobberLocation) 
+	{
 		HexLocation currentRobberLocation = mGameModel.robber().location();
 		return !(currentRobberLocation.getX() == newRobberLocation.getX() && currentRobberLocation
 				.getY() == newRobberLocation.getY());
 	}
+	
 }

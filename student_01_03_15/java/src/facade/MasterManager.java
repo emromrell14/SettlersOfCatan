@@ -311,12 +311,7 @@ public class MasterManager implements IMasterManager
 	// Games Manager
 	/**
 	 * gets a list of all games in the progress
-<<<<<<< HEAD
-	 * @pre
-	 * @post
-=======
 	 * @pre none
->>>>>>> 67220bea81364298ef108c7985b773c379e9c8b3
 	 * @return a String of JSON
 	 */
 	public String getGameList()
@@ -540,6 +535,7 @@ public class MasterManager implements IMasterManager
 	{
 		return null;
 	}
+	
 	/**
 	 * Builds a road at the specified location. (Set 'free' to true during initial setup)
 	 * @pre player must have necessary resources to build a road
@@ -549,9 +545,10 @@ public class MasterManager implements IMasterManager
 	 * @post player's resources will be decreased according to building cost of road
 	 * @return JSON String with the client model
 	 */
-	public String buildRoad() 
+	public String buildRoad(int playerID, EdgeLocation loc) 
 	{
-		return null;
+		return mModelManager.buildRoad(playerID, loc);
+		
 	}
 	/**
 	 * Builds a settlement at the specified location. (Set 'free' to true during initial setup)

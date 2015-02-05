@@ -105,7 +105,7 @@ public interface IMasterManager
 
 	public String playMonument();
 
-	public String buildRoad();
+	public String buildRoad(int playerID, EdgeLocation loc);
 
 	public String buildSettlement();
 

@@ -64,5 +64,9 @@ public class Board
 		}
 		return true;
 	}
+
+	public void buildRoad(Index playerIndex, EdgeLocation loc) {
+		this.mRoads.add(new Road(playerIndex, loc));
+	}
 	
 }
