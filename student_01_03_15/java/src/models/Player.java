@@ -5,7 +5,10 @@ import java.util.List;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 public class Player implements IPlayer
@@ -152,7 +155,99 @@ public class Player implements IPlayer
 
 	public boolean canPlaceRoad(EdgeLocation loc) 
 	{
-		// TODO Auto-generated method stub
+		loc = loc.getNormalizedLocation();
+		switch (loc.getDir())
+		{
+		case NorthWest:
+			if (
+					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthWest)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.NorthEast)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.South))
+			)
+			{
+				return true;
+			}
+			break;
+		case North:
+			if (
+					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthWest)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthEast)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthWest)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthEast))
+			)
+			{
+				return true;
+			}
+			break;
+		case NorthEast:
+			if (
+					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthEast)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.NorthWest)) ||
+					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.South))
+			)
+			{
+				return true;
+			}
+			break;
+		default:
+			System.out.println("Invalid Edge Direction");
+		}
+		return false;
+	}
+	
+	public boolean checkRoads(EdgeLocation loc)
+	{
+		loc = loc.getNormalizedLocation();
+		for (Road road : this.roads())
+		{
+			EdgeLocation edge = road.location().getNormalizedLocation();
+			if (loc.equals(edge))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/** 
+	 * This is to be called on the first and second rounds of the game (Special Cases)
+	 * @param loc
+	 * @param settlement
+	 * @return
+	 */
+	public boolean canPlaceRoad(EdgeLocation loc, VertexLocation settlement) 
+	{
+		// STILL NEED TO CHECK FOR SEA TILES AS NEIGHBOR HEXES
+		loc = loc.getNormalizedLocation();
+		settlement = settlement.getNormalizedLocation();
+		switch (settlement.getDir())
+		{
+			case NorthWest:
+				if (
+					loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.North)) ||
+					loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.NorthWest)) ||
+					loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),EdgeDirection.NorthEast))
+				)
+				{
+					return true;
+				}
+				break;
+			case NorthEast:
+				if (
+						loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.North)) ||
+						loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.NorthEast)) ||
+						loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),EdgeDirection.NorthWest))
+				)
+				{
+					return true;
+				}
+				break;
+			default:
+				break;
+		}
+			
 		return false;
 	}
 	
@@ -389,13 +484,9 @@ public class Player implements IPlayer
 	 */
 	public boolean canPlayMonument()
 	{
-		if(this.hasPlayedDevCard())
-		{
-			return false;
-		}
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.MONUMENT && !devCard.isNew());
+			if(devCard.type() == DevCardType.MONUMENT);
 			{
 				return true;
 			}
@@ -495,4 +586,6 @@ public class Player implements IPlayer
 			
 		return toReturn;
 	}
+
+	
 }
