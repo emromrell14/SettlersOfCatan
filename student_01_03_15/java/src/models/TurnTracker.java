@@ -2,7 +2,6 @@ package models;
 
 public class TurnTracker implements ITurnTracker
 {
-
 	private Index mCurrentTurn; //Whose turn it is (0-3).
 	private Status mStatus; //What's happening now.
 	private Index mLongestRoad; //The index of who has the longest road.

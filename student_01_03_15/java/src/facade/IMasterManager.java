@@ -1,6 +1,8 @@
 package facade;
 
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import models.Game;
 import models.ResourceList;
 
@@ -12,21 +14,11 @@ public interface IMasterManager
 	
 	public void communicateWithRealProxy();
 
-	public boolean canLogin();
-
 	public boolean canRegister();
 
-	public boolean isLoggedIn();
+	public boolean canBuyDevCard(int playerID);
 
-	public boolean canBuildRoad();
-
-	public boolean canBuildSettlement();
-
-	public boolean canBuildCity();
-
-	public boolean canBuyDevCard();
-
-	public boolean canPlayDevCard();
+	public boolean canPlayDevCard(int playerID);
 
 	public boolean canOfferTrade(int playerID);
 
@@ -36,21 +28,33 @@ public interface IMasterManager
 
 	public boolean canRollDice(int playerID);
 
-	public boolean canDiscard();
+	public boolean canDiscard(int playerID);
 	
-	public boolean canFinishTurn();
+	public boolean canFinishTurn(int playerID);
 	
-	public boolean canPlayYearOfPlenty();
+	public boolean canPlayYearOfPlenty(int playerID);
 	
-	public boolean canPlayRoadBuilder();
+	public boolean canPlayRoadBuilder(int playerID);
 
-	public boolean canPlaySoldier();
+	public boolean canPlaySoldier(int playerID);
 
-	public boolean canPlayMonopoly();
+	public boolean canPlayMonopoly(int playerID);
 
-	public boolean canPlayMonument();
+	public boolean canPlayMonument(int playerID);
 
 	public boolean canPlaceRobber(HexLocation newRobberLocation);
+	
+	public boolean canAffordRoad(int playerID);
+	
+	public boolean canPlaceRoad(int playerID, EdgeLocation loc);
+	
+	public boolean canAffordSettlement(int playerID);
+	
+	public boolean canPlaceSettlement(int playerID, VertexLocation loc);
+	
+	public boolean canAffordCity(int playerID);
+	
+	public boolean canPlaceCity(int playerID, VertexLocation loc);
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager

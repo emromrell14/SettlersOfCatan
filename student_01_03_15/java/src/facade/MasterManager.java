@@ -67,18 +67,6 @@ public class MasterManager implements IMasterManager
 		mMovesManager.setProxy(mProxy);
 		mUtilManager.setProxy(mProxy);
 	}
-	
-	/**
-	 * Checks all preconditions for logging in.
-	 * @pre Username and password not null.
-	 * @post User logs in iff login parameters are valid.
-	 * 
-	 * @return true if the user can login, false if they cannot
-	 */
-	public boolean canLogin() 
-	{
-		return mModelManager.canLogin();
-	}
 
 	/** 
 	 * Checks all preconditions for user registration
@@ -90,17 +78,6 @@ public class MasterManager implements IMasterManager
 	public boolean canRegister() 
 	{
 		return mModelManager.canRegister();
-	}
-
-	/**
-	 * Validates the Cookie.
-	 * @pre The cookie exists. Player has registered.
-	 * @post none
-	 * @return true if the user is logged in, false otherwise
-	 */
-	public boolean isLoggedIn()
-	{
-		return mModelManager.isLoggedIn();
 	}
 
 	/**
@@ -231,9 +208,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if the card can be discarded, false otherwise
 	 */
-	public boolean canDiscard()
+	public boolean canDiscard(int playerID)
 	{
-		return mModelManager.canDiscard();
+		return mModelManager.canDiscard(playerID);
 	}
 
 	/**
@@ -241,9 +218,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can finish turn, false otherwise
 	 */
-	public boolean canFinishTurn()
+	public boolean canFinishTurn(int playerID)
 	{
-		return mModelManager.canFinishTurn();
+		return mModelManager.canFinishTurn(playerID);
 	}
 
 	/**
@@ -251,9 +228,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canPlayYearOfPlenty()
+	public boolean canPlayYearOfPlenty(int playerID)
 	{
-		return mModelManager.canPlayYearOfPlenty();
+		return mModelManager.canPlayYearOfPlenty(playerID);
 	}
 
 	/**
@@ -261,9 +238,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canPlayRoadBuilder()
+	public boolean canPlayRoadBuilder(int playerID)
 	{
-		return mModelManager.canPlayRoadBuilder();
+		return mModelManager.canPlayRoadBuilder(playerID);
 	}
 
 	/**
@@ -271,9 +248,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canPlaySoldier()
+	public boolean canPlaySoldier(int playerID)
 	{
-		return mModelManager.canPlaySoldier();
+		return mModelManager.canPlaySoldier(playerID);
 	}
 
 	/**
@@ -281,9 +258,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canPlayMonopoly()
+	public boolean canPlayMonopoly(int playerID)
 	{
-		return mModelManager.canPlayMonopoly();
+		return mModelManager.canPlayMonopoly(playerID);
 	}
 
 	/**
@@ -291,9 +268,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument()
+	public boolean canPlayMonument(int playerID)
 	{
-		return mModelManager.canPlayMonument();
+		return mModelManager.canPlayMonument(playerID);
 	}
 
 	/**

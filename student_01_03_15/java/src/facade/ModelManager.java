@@ -25,18 +25,6 @@ public class ModelManager
 	{
 		mGameModel = newGameModel;
 	}
-	
-	/**
-	 * Checks all preconditions for logging in.
-	 * @pre Username and password not null.
-	 * @post User logs in iff login parameters are valid.
-	 * 
-	 * @return true if the user can login, false if they cannot
-	 */
-	public boolean canLogin() 
-	{
-		return true;
-	}
 
 	/** 
 	 * Checks all preconditions for user registration
@@ -46,17 +34,6 @@ public class ModelManager
 	 * @return true if they can register, false if the user cannot
 	 */
 	public boolean canRegister() 
-	{
-		return true;
-	}
-
-	/**
-	 * Validates the Cookie.
-	 * @pre The cookie exists. Player has registered.
-	 * @post none
-	 * @return true if the user is logged in, false otherwise
-	 */
-	public boolean isLoggedIn()
 	{
 		return true;
 	}
@@ -78,7 +55,6 @@ public class ModelManager
 			return true;
 		}
 		else if (
-				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
@@ -111,7 +87,6 @@ public class ModelManager
 			return true;
 		}
 		else if (
-				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
@@ -137,7 +112,6 @@ public class ModelManager
 	public boolean canAffordCity(int playerID) 
 	{
 		if (
-				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
@@ -162,7 +136,6 @@ public class ModelManager
 	public boolean canBuyDevCard(int playerID)
 	{
 		if (
-				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) || // Checks that the dice has been rolled
@@ -184,7 +157,6 @@ public class ModelManager
 	public boolean canPlayDevCard(int playerID) 
 	{
 		if (
-				!isLoggedIn() || // Checks that player is logged in
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
