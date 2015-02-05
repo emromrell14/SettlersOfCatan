@@ -63,10 +63,7 @@ public class ResourceList
 	{
 		return mBrick;
 	}
-	public void addBrick(int brickNum)
-	{
-		this.mBrick+=brickNum;
-	}
+
 	/**
 	 * Gets the amount of ore in the resource pile (resource cards)
 	 * 
@@ -76,10 +73,7 @@ public class ResourceList
 	{
 		return mOre;
 	}
-	public void addOre(int oreNum)
-	{
-		this.mOre+=oreNum;
-	}
+
 	/**
 	 * Gets the amount of sheep in the resource pile (resource cards)
 	 * 
@@ -89,10 +83,7 @@ public class ResourceList
 	{
 		return mSheep;
 	}
-	public void addSheep(int sheepNum)
-	{
-		this.mSheep+=sheepNum;
-	}
+
 	/**
 	 * Gets the amount of wheat in the resource pile (resource cards)
 	 * 
@@ -102,10 +93,7 @@ public class ResourceList
 	{
 		return mWheat;
 	}
-	public void addWheat(int wheatNum)
-	{
-		this.mWheat+=wheatNum;
-	}
+
 	/**
 	 * Gets the amount of wood in the resource pile (resource cards)
 	 * 
@@ -115,11 +103,7 @@ public class ResourceList
 	{
 		return mWood;
 	}
-	public void addWood(int woodNum)
-	{
-		this.mWood+=woodNum;
-	}
-	
+
 	public void addBrick(int value)
 	{
 		mBrick += value;
