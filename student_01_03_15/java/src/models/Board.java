@@ -2,7 +2,10 @@ package models;
 
 import java.util.List;
 
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /** Board class that contains a list of the hexes and a list of the harbors (ports)
 *
@@ -68,5 +71,45 @@ public class Board
 	public void buildRoad(Index playerIndex, EdgeLocation loc) {
 		this.mRoads.add(new Road(playerIndex, loc));
 	}
+
+	public boolean canPlaceSettlement(VertexLocation loc) {
+
+		loc = loc.getNormalizedLocation();
+		switch (loc.getDir())
+		{
+			case NorthWest:
+				if (
+					checkForSettlement(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthEast))||
+					checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),VertexDirection.NorthEast)) ||
+					checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest),VertexDirection.NorthEast))
+				)
+				{
+					return true;
+				}
+				break;
+			case NorthEast:
+				if (
+						checkForSettlement(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthWest))||
+						checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),VertexDirection.NorthWest)) ||
+						checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast),VertexDirection.NorthWest))
+					)
+				{
+					return true;
+				}
+				break;
+			default:
+				break;
+		}
+			
+		return false;	
+	}
 	
+	public boolean checkForSettlement(VertexLocation loc)
+	{
+		return false;
+	}
+	
+	public void buildSettlement(Index playerIndex, VertexLocation loc) {
+		this.mSettlements.add(new Building(playerIndex, loc));
+	}
 }

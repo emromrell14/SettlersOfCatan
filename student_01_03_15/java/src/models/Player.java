@@ -9,6 +9,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class Player implements IPlayer
@@ -160,10 +161,10 @@ public class Player implements IPlayer
 		{
 		case NorthWest:
 			if (
-					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthWest)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.NorthEast)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.South))
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthWest)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.NorthEast)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.South))
 			)
 			{
 				return true;
@@ -171,10 +172,10 @@ public class Player implements IPlayer
 			break;
 		case North:
 			if (
-					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthWest)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthEast)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthWest)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthEast))
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthWest)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthEast)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthWest)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthEast))
 			)
 			{
 				return true;
@@ -182,10 +183,10 @@ public class Player implements IPlayer
 			break;
 		case NorthEast:
 			if (
-					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthEast)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.NorthWest)) ||
-					checkRoads(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.South))
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthEast)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.NorthWest)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.South))
 			)
 			{
 				return true;
@@ -197,7 +198,7 @@ public class Player implements IPlayer
 		return false;
 	}
 	
-	public boolean checkRoads(EdgeLocation loc)
+	public boolean checkForRoad(EdgeLocation loc)
 	{
 		loc = loc.getNormalizedLocation();
 		for (Road road : this.roads())
@@ -286,13 +287,45 @@ public class Player implements IPlayer
 	
 	public boolean canPlaceSettlement(VertexLocation loc) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		loc = loc.getNormalizedLocation();
+		switch (loc.getDir())
+		{
+			case NorthWest:
+				if (
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.North))||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.NorthWest)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),EdgeDirection.NorthEast))
+				)
+				{
+					return true;
+				}
+				break;
+			case NorthEast:
+				if (
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.North))||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.NorthEast)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),EdgeDirection.NorthWest))
+				)
+				{
+					return true;
+				}
+				break;
+			default:
+				break;
+		}
+			
+		return false;	
 	}
 	
-	public void buildSettlement()
+	public void buildSettlement(VertexLocation loc)
 	{
-		
+		ResourceList r = this.resources();
+		r.addBrick(-1);
+		r.addWood(-1);
+		r.addSheep(-1);
+		r.addWheat(-1);
+		this.mSettlementCount -= 1;
+		this.mSettlements.add(new Building(this.mPlayerIndex, loc));
 	}
 	/**
 	 * Checks all preconditions for building a city.

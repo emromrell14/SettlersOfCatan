@@ -134,9 +134,42 @@ public class ModelManager {
 	}
 
 	public boolean canPlaceSettlement(int playerID, VertexLocation loc) {
-		return this.mGameModel.getPlayer(playerID).canPlaceSettlement(loc);
+		if (mGameModel.turnTracker().status() != Status.FIRSTROUND &&
+				mGameModel.turnTracker().status() != Status.SECONDROUND)
+		{
+			if (!this.mGameModel.getPlayer(playerID).canPlaceSettlement(loc))
+			{
+				return false;
+			}
+		}
+		return this.mGameModel.board().canPlaceSettlement(loc);
+
 	}
 
+	/**
+	 * Builds a settlement at the specified location. (Set 'free' to true during initial setup)
+	 * @pre player must have less than 5 settlements built
+	 * @pre location specified must connect to an existing road built by this player
+	 * @pre location (vertex) must not already be occupied
+	 * @pre player must have necessary resources to build settlement
+	 * @pre location must not be within two road distances (edges) from an existing settlement or city
+	 * @post a settlement will be built where specified
+	 * @post resources will be decreased according to building costs
+	 * @return JSON String with the client model
+	 */
+	public String buildSettlement(int playerID, VertexLocation loc) 
+	{
+		Player p = mGameModel.players().get(playerID);
+		p.buildSettlement(loc);
+		mGameModel.bank().addBrick(1);
+		mGameModel.bank().addWood(1);
+		mGameModel.bank().addSheep(1);
+		mGameModel.bank().addWheat(1);
+
+		mGameModel.board().buildSettlement(mGameModel.getPlayerIndex(playerID),loc);
+		return "";
+	}
+	
 	/**
 	 * Checks all preconditions for building a city.
 	 * 
