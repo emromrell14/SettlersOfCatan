@@ -9,7 +9,8 @@ import org.junit.Test;
 import shared.definitions.DevCardType;
 import models.*;
 
-public class DevCardsTester {
+public class DevCardsTester 
+{
 
 	private Monopoly monop;
 	private Monument monu;

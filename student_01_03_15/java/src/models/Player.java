@@ -5,7 +5,6 @@ import java.util.List;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
-import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
@@ -15,14 +14,14 @@ public class Player implements IPlayer
 	private String mName;
 	private Index mPlayerIndex; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
 	private int mPlayerID; //The unique playerID. This is used to pick the client player apart from the others. This is only used here and in your cookie.
-	private ResourceList mResources; //The resource cards this player has.
-	private int mNumRoads;
-	private int mNumSettlements; //How many settlements this player has left to play.
-	private int mNumCities; //How many cities this player has left to play.
-	private int mSoldiers;
-	private int mVictoryPoints;
-	private boolean mDiscarded = true;
-	private boolean mHasPlayedDevCard = true;
+	private ResourceList mResources = new ResourceList(); //The resource cards this player has.
+	private int mNumRoads=15;
+	private int mNumSettlements=5; //How many settlements this player has left to play.
+	private int mNumCities =4; //How many cities this player has left to play.
+	private int mSoldiers = 0;
+	private int mVictoryPoints = 0;
+	private boolean mDiscarded = false;
+	private boolean mHasPlayedDevCard = false;
 	private int mMonuments = 0;
 	
 	private List<Road> mRoads;
@@ -31,7 +30,19 @@ public class Player implements IPlayer
 	private List<DevCard> mDevCards;
 	
 	
-	public Player(CatanColor color, boolean discarded, Number monuments, String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, boolean playerDevCard, int playerID, ResourceList resources, List<Road> roads, List<Building> settlements, List<Building> cities, int soldiers, int victoryPoints)
+	
+	public Player(CatanColor color, String name, Index index, int playerID)
+	{
+		this.mColor = color;
+		this.mName = name;
+		this.mPlayerIndex = index;
+		this.mPlayerID = playerID;
+	}
+	
+	public Player(CatanColor color, boolean discarded, Number monuments, 
+			String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, boolean playerDevCard, 
+			int playerID, ResourceList resources, List<Road> roads, 
+			List<Building> settlements, List<Building> cities, int soldiers, int victoryPoints)
 	{
 		this.mColor = color;
 		this.mName = name;
@@ -52,7 +63,6 @@ public class Player implements IPlayer
 	{
 		return mSoldiers;
 	}
-	
 	public int victoryPointCount()
 	{
 		return mVictoryPoints;
@@ -140,7 +150,8 @@ public class Player implements IPlayer
 		return true;
 	}
 
-	public boolean canPlaceRoad(EdgeLocation loc) {
+	public boolean canPlaceRoad(EdgeLocation loc) 
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -164,11 +175,16 @@ public class Player implements IPlayer
 		return true;
 	}
 	
-	public boolean canPlaceSettlement(VertexLocation loc) {
+	public boolean canPlaceSettlement(VertexLocation loc) 
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
+	public void buildSettlement()
+	{
+		
+	}
 	/**
 	 * Checks all preconditions for building a city.
 	 * @pre Player is logged in, has joined a game, has a city, 3 ore 2 wheat, a settlement to build on, and it is their turn. 
@@ -189,7 +205,8 @@ public class Player implements IPlayer
 		return true;
 	}
 
-	public boolean canPlaceCity(VertexLocation loc) {
+	public boolean canPlaceCity(VertexLocation loc) 
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -385,6 +402,15 @@ public class Player implements IPlayer
 		}
 		return false;
 	}
+	public void playMonument()
+	{
+		
+	}
+	
+	public void addResourcesToList(int brick, int ore, int sheep, int wheat, int wood)
+	{
+		this.mResources = this.resources().updateResourceList(brick, ore, sheep, wheat, wood);
+	}
 	
 	public boolean canAcceptTrade(ResourceList tradeOffer)
 	{
@@ -394,12 +420,6 @@ public class Player implements IPlayer
 				&& mResources.wheat() >= tradeOffer.wheat()
 				&& mResources.wood() >= tradeOffer.wood();
 	}
-	
-	public void playMonument()
-	{
-		
-	}
-	
 	public boolean haveResourceAmount(PortType type)
 	{
 		boolean toReturn = false;

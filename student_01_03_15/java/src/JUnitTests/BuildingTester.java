@@ -13,7 +13,8 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
-public class BuildingTester {
+public class BuildingTester 
+{
 
 	//this tester also includes the index testing.
 	//after all is done, Building, Index, VertexLocation, HexLocation, and Vertex Direction will all be tested
