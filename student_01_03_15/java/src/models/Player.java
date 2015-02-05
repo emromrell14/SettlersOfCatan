@@ -469,13 +469,9 @@ public class Player implements IPlayer
 	 */
 	public boolean canPlayMonument()
 	{
-		if(this.hasPlayedDevCard())
-		{
-			return false;
-		}
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.MONUMENT && !devCard.isNew());
+			if(devCard.type() == DevCardType.MONUMENT);
 			{
 				return true;
 			}
