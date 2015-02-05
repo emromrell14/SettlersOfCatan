@@ -2,11 +2,11 @@ package models;
 
 public class ResourceList 
 {
-	private int mBrick;
-	private int mOre;
-	private int mSheep;
-	private int mWheat;
-	private int mWood;
+	private int mBrick = 0;
+	private int mOre = 0;
+	private int mSheep = 0;
+	private int mWheat = 0;
+	private int mWood = 0;
 	
 	/**
 	 * Creates a ResourceList object
@@ -18,6 +18,11 @@ public class ResourceList
 	 * @param wood the amount of wood in the resource pile
 	 * @return a new ResourceList object
 	 */
+	public ResourceList()
+	{
+		
+	}
+	
 	public ResourceList(int brick, int ore, int sheep, int wheat, int wood)
 	{
 		this.mBrick = brick;
@@ -26,6 +31,19 @@ public class ResourceList
 		this.mWheat = wheat;
 		this.mWood = wood;
 	}
+	
+	public ResourceList updateResourceList(int brick, int ore, int sheep, int wheat, int wood)
+	{
+		this.mBrick+=brick;
+		this.mOre+=ore;
+		this.mSheep+=sheep;
+		this.mWheat+=wheat;
+		this.mWood+=wood;
+		
+		return this;
+	}
+	
+	
 	
 	/**
 	 * Gets the total number of resources (resource cards)
@@ -45,6 +63,10 @@ public class ResourceList
 	{
 		return mBrick;
 	}
+	public void addBrick(int brickNum)
+	{
+		this.mBrick+=brickNum;
+	}
 	/**
 	 * Gets the amount of ore in the resource pile (resource cards)
 	 * 
@@ -53,6 +75,10 @@ public class ResourceList
 	public int ore()
 	{
 		return mOre;
+	}
+	public void addOre(int oreNum)
+	{
+		this.mOre+=oreNum;
 	}
 	/**
 	 * Gets the amount of sheep in the resource pile (resource cards)
@@ -63,6 +89,10 @@ public class ResourceList
 	{
 		return mSheep;
 	}
+	public void addSheep(int sheepNum)
+	{
+		this.mSheep+=sheepNum;
+	}
 	/**
 	 * Gets the amount of wheat in the resource pile (resource cards)
 	 * 
@@ -72,6 +102,10 @@ public class ResourceList
 	{
 		return mWheat;
 	}
+	public void addWheat(int wheatNum)
+	{
+		this.mWheat+=wheatNum;
+	}
 	/**
 	 * Gets the amount of wood in the resource pile (resource cards)
 	 * 
@@ -80,6 +114,10 @@ public class ResourceList
 	public int wood()
 	{
 		return mWood;
+	}
+	public void addWood(int woodNum)
+	{
+		this.mWood+=woodNum;
 	}
 	
 	public void addBrick(int value)
