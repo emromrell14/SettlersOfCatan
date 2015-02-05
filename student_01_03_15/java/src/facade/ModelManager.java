@@ -91,7 +91,25 @@ public class ModelManager
 	
 	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
 	{
-		return this.mGameModel.getPlayer(playerID).canPlaceRoad(loc);
+		Player p = this.mGameModel.getPlayer(playerID);
+		if (mGameModel.turnTracker().status() == Status.FIRSTROUND ||
+				mGameModel.turnTracker().status() == Status.SECONDROUND
+		)
+		{
+			if (p.canPlaceRoad(loc, p.settlements().get(p.settlements().size()-1).location()))
+			{
+				return true;
+			}
+			return false;
+		}
+		else
+		{
+			if (p.canPlaceRoad(loc) && this.mGameModel.board().canPlaceRoad(loc))
+			{
+				return true;
+			}
+			return false;
+		}
 	}
 	
 	/**
