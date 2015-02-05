@@ -29,10 +29,6 @@ public class DevCardsTester
 		rBuilder = new RoadBuild();
 		soldier = new Soldier();
 		yearOfPlenty = new YearOfPlenty();
-		
-		
-		
-		
 	}
 	
 	

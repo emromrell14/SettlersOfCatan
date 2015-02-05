@@ -25,6 +25,12 @@
 	<property name="demo.dir" value="demo"/>
     <property name="server.jar.file" value="${demo.dir}/server.jar"/>
     <property name="client.jar.file" value="${demo.dir}/client.jar"/>
+  	<property name="java.dir" location="java"/>
+	<property name="java.src" location="${java.dir}/src"/>
+	<property name="java.images" location="${java.dir}/images"/>
+	<property name="java.build" location="${java.dir}/build"/>
+	<property name="java.dist" location="${java.dir}/dist"/>
+	<property name="java.lib" location="${java.dir}/lib"/>
   
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -33,6 +39,11 @@
 		<fileset dir="${java.lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
+	</path>
+
+	<path id="all-classpath">
+		<path refid="java.lib.classpath"/>
+		<pathelement location="${java.build}"/>
 	</path>
 
 	<!-- TARGETS -->
@@ -80,12 +91,6 @@
 	</target>
     -->
 
-  	<property name="java.dir" location="java"/>
-	<property name="java.src" location="${java.dir}/src"/>
-	<property name="java.images" location="${java.dir}/images"/>
-	<property name="java.build" location="${java.dir}/build"/>
-	<property name="java.dist" location="${java.dir}/dist"/>
-	<property name="java.lib" location="${java.dir}/lib"/>
  
 	<target name="init" description="create build directories">
 		<tstamp/>
@@ -145,6 +150,17 @@
 	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
 		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<assertions>
+				<enable/>
+			</assertions>
+		</java>
+	</target>
+     
+	<target name="test" depends="compile" description="Runs the JUnit test cases">
+		<java classname="JUnitTests.JUnitMain" fork="true" >
+			<classpath>
+				<path refid="all-classpath"/>
+			</classpath>
 			<assertions>
 				<enable/>
 			</assertions>

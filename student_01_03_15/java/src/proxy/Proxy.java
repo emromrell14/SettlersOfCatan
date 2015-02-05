@@ -21,7 +21,7 @@ public class Proxy implements IProxy
 	
 	public String post(String requestPath, String json)
 	{
-		String url ="http://localhost:8898" + requestPath;
+		String url ="http://localhost:8081" + requestPath;
 		URL obj;
 		try 
 		{
@@ -39,7 +39,11 @@ public class Proxy implements IProxy
 			wr.flush();
 			wr.close();
 			
-			//int responseCode = mCon.getResponseCode();
+			int responseCode = mCon.getResponseCode();
+			if(responseCode != 200)
+			{
+				return "Failed with a " + responseCode + " response from server.";
+			}
 			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -75,7 +79,7 @@ public class Proxy implements IProxy
 	
 	public String get(String requestPath)
 	{
-		String url ="http://localhost:8898" + requestPath;
+		String url ="http://localhost:8081" + requestPath;
 		URL obj;
 		try 
 		{
@@ -86,7 +90,11 @@ public class Proxy implements IProxy
 			mCon.setRequestProperty("Cookie", mCookie.getCookie());
 			mCon.setRequestMethod("GET");
 			
-			//int responseCode = mCon.getResponseCode();
+			int responseCode = mCon.getResponseCode();
+			if(responseCode != 200)
+			{
+				return "Failed with a " + responseCode + " response from server.";
+			}
 			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
