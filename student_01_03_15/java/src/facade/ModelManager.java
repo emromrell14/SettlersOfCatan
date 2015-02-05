@@ -12,47 +12,44 @@ import models.Player;
 import models.ResourceList;
 import models.Status;
 
-public class ModelManager 
-{
+public class ModelManager {
 	private Game mGameModel;
-	
-	public ModelManager() 
-	{
-		
+
+	public ModelManager() {
+
 	}
 
-	public void updateModel(Game newGameModel)
-	{
+	public void updateModel(Game newGameModel) {
 		mGameModel = newGameModel;
 	}
 
-	/** 
+	/**
 	 * Checks all preconditions for user registration
-	 *  @pre Username and password not null
-	 *  @post User is registered and logged in
-	 *  
+	 * 
+	 * @pre Username and password not null
+	 * @post User is registered and logged in
+	 * 
 	 * @return true if they can register, false if the user cannot
 	 */
-	public boolean canRegister() 
-	{
+	public boolean canRegister() {
 		return true;
 	}
 
 	/**
 	 * Checks all preconditions for road building
-	 * @pre Player is logged in, has joined a game, has a road, has 1 wood 1 brick, and it is their turn. 
-	 * 		Dice have also already been rolled.
+	 * 
+	 * @pre Player is logged in, has joined a game, has a road, has 1 wood 1
+	 *      brick, and it is their turn. Dice have also already been rolled.
 	 * @post none
 	 * @return true if a road can be built, false otherwise
 	 */
-	public boolean canAffordRoad(int playerID)
-	{
-		if (	mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
-				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or 
-				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) //   second round (special cases)
-		)
+	public boolean canAffordRoad(int playerID) {
+		if (mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that this player is in the game
+			(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks that it is this player's turn
+			mGameModel.turnTracker().status().equals(Status.SECONDROUND))) 
 		{
 			return true;
+
 		}
 		else if (
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
@@ -60,34 +57,34 @@ public class ModelManager
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
+
 			return false;
 		}
 		return this.mGameModel.getPlayer(playerID).canAffordRoad();
 	}
-	
-	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
-	{
+
+	public boolean canPlaceRoad(int playerID, EdgeLocation loc) {
 		return this.mGameModel.getPlayer(playerID).canPlaceRoad(loc);
 	}
-	
+
 	/**
 	 * Checks all preconditions for building a new settlement
-	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1 brick 1 wheat 1 sheep, a valid place to build, and it is their turn. 
-	 * 		Dice have also already been rolled.
+	 * 
+	 * @pre Player is logged in, has joined a game, has a settlement, 1 wood 1
+	 *      brick 1 wheat 1 sheep, a valid place to build, and it is their turn.
+	 *      Dice have also already been rolled.
 	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
-	public boolean canAffordSettlement(int playerID) 
-	{
-		if (	mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
-				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or 
-				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) //   second round (special cases)
-		)
+	public boolean canAffordSettlement(int playerID) {
+		if (mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
+				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or
+				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) // second round (special cases)
+		) 
 		{
 			return true;
 		}
-		else if (
-				!mGameModel.players().contains(this) || // Checks that this player is in this game
+		else if (!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
@@ -96,18 +93,19 @@ public class ModelManager
 		}
 		return this.mGameModel.getPlayer(playerID).canAffordSettlement();
 	}
-	
-	public boolean canPlaceSettlement(int playerID, VertexLocation loc) 
-	{
+
+	public boolean canPlaceSettlement(int playerID, VertexLocation loc) {
 		return this.mGameModel.getPlayer(playerID).canPlaceSettlement(loc);
 	}
-	
+
 	/**
 	 * Checks all preconditions for building a city.
-	 * @pre Player is logged in, has joined a game, has a city, 3 ore 2 wheat, a settlement to build on, and it is their turn. 
-	 * 		Dice have also already been rolled.
+	 * 
+	 * @pre Player is logged in, has joined a game, has a city, 3 ore 2 wheat, a
+	 *      settlement to build on, and it is their turn. Dice have also already
+	 *      been rolled.
 	 * @post none
-	 * @return	true if a city can be built, false otherwise
+	 * @return true if a city can be built, false otherwise
 	 */
 	public boolean canAffordCity(int playerID) 
 	{
@@ -122,15 +120,17 @@ public class ModelManager
 		return this.mGameModel.getPlayer(playerID).canAffordCity();
 	}
 
-	public boolean canPlaceCity(int playerID, VertexLocation loc) 
-	{
+	public boolean canPlaceCity(int playerID, VertexLocation loc) {
 		return this.mGameModel.getPlayer(playerID).canPlaceCity(loc);
 	}
+
 	/**
 	 * Checks all preconditions for buying a development card.
-	 * @pre Player is logged in, joined a game, has 1 sheep 1 wheat 1 ore, it is their turn, and there are development cards in bank. 
-	 * 		Dice have also already been rolled.
-	 * @post none 
+	 * 
+	 * @pre Player is logged in, joined a game, has 1 sheep 1 wheat 1 ore, it is
+	 *      their turn, and there are development cards in bank. Dice have also
+	 *      already been rolled.
+	 * @post none
 	 * @return true if a card can be bought, false otherwise
 	 */
 	public boolean canBuyDevCard(int playerID)
@@ -149,8 +149,11 @@ public class ModelManager
 
 	/**
 	 * Checks all preconditions for playing a development card.
-	 * @pre Player is logged in, in a game, it is their turn, they own a dev card, they have not played a dev card this turn
-	 * 		other than victory points, they didn't buy the dev card this turn. Dice have also already been rolled.
+	 * 
+	 * @pre Player is logged in, in a game, it is their turn, they own a dev
+	 *      card, they have not played a dev card this turn other than victory
+	 *      points, they didn't buy the dev card this turn. Dice have also
+	 *      already been rolled.
 	 * @post none
 	 * @return true if a card can be played, false otherwise
 	 */
@@ -169,38 +172,40 @@ public class ModelManager
 
 	/**
 	 * Checks all preconditions for offering a resource card trade.
-	 * @pre Player is logged in, playing a game, it is their turn, they have resource cards, other players have resource cards.  
-	 * 		Dice have also already been rolled.
+	 * 
+	 * @pre Player is logged in, playing a game, it is their turn, they have
+	 *      resource cards, other players have resource cards. Dice have also
+	 *      already been rolled.
 	 * @post none
 	 * @return true if a trade can be offered, false otherwise
 	 */
-	public boolean canOfferTrade(int playerID) 
-	{
+	public boolean canOfferTrade(int playerID) {
 		boolean toReturn = false;
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
-		{
+		if (mGameModel.turnTracker().isPlayersTurn(playerIndex)) {
 			toReturn = mGameModel.canOfferTrade(playerID);
 		}
-		
+
 		return toReturn;
 	}
 
 	/**
 	 * Checks all preconditions for accepting a trade.
-	 * @pre Player is logged in, playing a game, it is not their turn, they have requested resource cards. 
-	 * 		Dice have also already been rolled.
+	 * 
+	 * @pre Player is logged in, playing a game, it is not their turn, they have
+	 *      requested resource cards. Dice have also already been rolled.
 	 * @post none
-	 * @param playerID ID of the player
-	 * @param tradeOffer List of cards that another player wants to trade for.
+	 * @param playerID
+	 *            ID of the player
+	 * @param tradeOffer
+	 *            List of cards that another player wants to trade for.
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer) 
-	{
+	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer) {
 		boolean toReturn = false;
 		Player player = mGameModel.getPlayer(playerID);
-		if(!mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) && mGameModel.turnTracker().hasRolled())
-		{
+		if (!mGameModel.turnTracker().isPlayersTurn(player.playerIndex())
+				&& mGameModel.turnTracker().hasRolled()) {
 			toReturn = player.canAcceptTrade(tradeOffer);
 		}
 		return toReturn;
@@ -208,43 +213,44 @@ public class ModelManager
 
 	/**
 	 * Checks all preconditions for making a maritime trade.
-	 * @pre Player is logged in, playing a game, it is their turn, they own enough cards for the maritime rate.
+	 * 
+	 * @pre Player is logged in, playing a game, it is their turn, they own
+	 *      enough cards for the maritime rate.
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade(int playerID) 
-	{
+	public boolean canMaritimeTrade(int playerID) {
 		boolean toReturn = false;
 		Player player = mGameModel.getPlayer(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(player.playerIndex()))
-		{
+		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex())) {
 			toReturn = player.canMaritimeTrade();
 		}
-		
+
 		return toReturn;
 	}
 
 	/**
 	 * Checks all preconditions for rolling the dice.
-	 * @pre Player is logged in, playing a game, it is their turn, they haven't already rolled. 
+	 * 
+	 * @pre Player is logged in, playing a game, it is their turn, they haven't
+	 *      already rolled.
 	 * @post none
 	 * @params playerID ID of the player
 	 * @return true if the dice can be rolled, false otherwise
 	 */
-	public boolean canRollDice(int playerID) 
-	{
+	public boolean canRollDice(int playerID) {
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		return mGameModel.turnTracker().canRollDice(playerIndex);
 	}
 
 	/**
 	 * Checks all preconditions for discarding a card (when a 7 is rolled)
+	 * 
 	 * @pre Player owns the resource card.
 	 * @post none
 	 * @return true if the card can be discarded, false otherwise
 	 */
-	public boolean canDiscard(int playerID)
-	{
+	public boolean canDiscard(int playerID) {
 		return this.mGameModel.getPlayer(playerID).canDiscard();
 	}
 
@@ -253,10 +259,8 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can finish turn, false otherwise
 	 */
-	public boolean canFinishTurn(int playerID)
-	{
-		if(this.mGameModel.turnTracker().status() == Status.PLAYING)
-		{
+	public boolean canFinishTurn(int playerID) {
+		if (this.mGameModel.turnTracker().status() == Status.PLAYING) {
 			return true;
 		}
 		return false;
@@ -267,9 +271,13 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canPlayYearOfPlenty(int playerID)
-	{
-		return this.mGameModel.getPlayer(playerID).canPlayYearOfPlenty();
+	public boolean canPlayYearOfPlenty(int playerID) {
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		{
+			return this.mGameModel.getPlayer(playerID).canPlayYearOfPlenty();
+		}
+		return false;
 	}
 
 	/**
@@ -277,9 +285,13 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canPlayRoadBuilder(int playerID)
-	{
-		return this.mGameModel.getPlayer(playerID).canPlayRoadBuilder();
+	public boolean canPlayRoadBuilder(int playerID) {
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		{
+			return this.mGameModel.getPlayer(playerID).canPlayRoadBuilder();
+		}
+		return false;
 	}
 
 	/**
@@ -287,9 +299,13 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canPlaySoldier(int playerID)
-	{
-		return this.mGameModel.getPlayer(playerID).canPlaySoldier();
+	public boolean canPlaySoldier(int playerID) {
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		{
+			return this.mGameModel.getPlayer(playerID).canPlaySoldier();
+		}
+		return false;
 	}
 
 	/**
@@ -297,9 +313,13 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canPlayMonopoly(int playerID)
-	{
-		return this.mGameModel.getPlayer(playerID).canPlayMonopoly();
+	public boolean canPlayMonopoly(int playerID) {
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		{
+			return this.mGameModel.getPlayer(playerID).canPlayMonopoly();
+		}
+		return false;
 	}
 
 	/**
@@ -307,21 +327,26 @@ public class ModelManager
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument(int playerID)
-	{
-		return this.mGameModel.getPlayer(playerID).canPlayMonument();
+	public boolean canPlayMonument(int playerID) {
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		{
+			return this.mGameModel.getPlayer(playerID).canPlayMonument();
+		}
+		return false;
 	}
 
 	/**
 	 * @pre none
 	 * @post none
-	 * @param newRobberLocation The location of where the player wants to play the robber on the board. 
+	 * @param newRobberLocation
+	 *            The location of where the player wants to play the robber on
+	 *            the board.
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber(HexLocation newRobberLocation)
-	{
+	public boolean canPlaceRobber(HexLocation newRobberLocation) {
 		HexLocation currentRobberLocation = mGameModel.robber().location();
-		return !(currentRobberLocation.getX() == newRobberLocation.getX()
-				&& currentRobberLocation.getY() == newRobberLocation.getY());
+		return !(currentRobberLocation.getX() == newRobberLocation.getX() && currentRobberLocation
+				.getY() == newRobberLocation.getY());
 	}
 }
