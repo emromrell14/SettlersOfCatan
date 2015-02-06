@@ -198,15 +198,16 @@ public class ModelManager {
 	 */
 	public boolean canAffordCity(int playerID) 
 	{
+		Player p = mGameModel.getPlayer(playerID);
 		if (		//this needs to be fixed
-				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canAffordCity();
+		return p.canAffordCity();
 	}
 
 	public boolean canPlaceCity(int playerID, VertexLocation loc) 
