@@ -15,8 +15,9 @@ import models.Status;
 public class ModelManager {
 	private Game mGameModel;
 
-	public ModelManager() {
-
+	public ModelManager() 
+	{
+		mGameModel = null;
 	}
 
 	public void updateModel(Game newGameModel) {

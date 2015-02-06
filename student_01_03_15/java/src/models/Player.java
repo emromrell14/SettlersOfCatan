@@ -16,7 +16,7 @@ public class Player implements IPlayer
 	private String mName;
 	private Index mPlayerIndex; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
 	private int mPlayerID; //The unique playerID. This is used to pick the client player apart from the others. This is only used here and in your cookie.
-	private ResourceList mResources = new ResourceList(); //The resource cards this player has.
+	private ResourceList mResources = new ResourceList(0,0,0,0,0); //The resource cards this player has.
 	private int mRoadCount = 15;
 	private int mSettlementCount = 5; //How many settlements this player has left to play.
 	private int mCityCount = 4; //How many cities this player has left to play.
