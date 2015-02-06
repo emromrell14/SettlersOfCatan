@@ -121,7 +121,10 @@ public class ClientModel
 		g.setBoard(map.getModelBoard());
 		g.setChat(chat);
 		g.setLog(log);
-		System.out.println(players.length);
+		if(tradeOffer != null)
+		{
+			g.setTrade(tradeOffer.getModel());
+		}
 		for(Player p : players)
 		{
 			if(p != null)

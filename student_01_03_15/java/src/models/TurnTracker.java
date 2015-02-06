@@ -7,6 +7,11 @@ public class TurnTracker implements ITurnTracker
 	private Index mLongestRoad; //The index of who has the longest road.
 	private Index mLargestArmy; //The index of who has the largest army. (Has to be 3 or more).
 	
+	public TurnTracker()
+	{
+		
+	}
+	
 	public TurnTracker(Index currentTurn, Status status, Index longestRoad, Index largestArmy)
 	{
 		this.mCurrentTurn = currentTurn;
