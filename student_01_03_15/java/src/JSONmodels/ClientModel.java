@@ -1,5 +1,6 @@
 package JSONmodels;
 
+import models.Game;
 import com.google.gson.Gson;
 
 public class ClientModel 
@@ -40,63 +41,84 @@ public class ClientModel
 	/**
 	 * @return the bank
 	 */
-	public ResourceList getBank() {
+	public ResourceList getBank()
+	{
 		return bank;
 	}
 
 	/**
 	 * @return the chat
 	 */
-	public MessageList getChat() {
+	public MessageList getChat() 
+	{
 		return chat;
 	}
 
 	/**
 	 * @return the log
 	 */
-	public MessageList getLog() {
+	public MessageList getLog() 
+	{
 		return log;
 	}
 
 	/**
 	 * @return the map
 	 */
-	public Map getMap() {
+	public Map getMap()
+	{
 		return map;
 	}
 
 	/**
 	 * @return the players
 	 */
-	public Player[] getPlayers() {
+	public Player[] getPlayers()
+	{
 		return players;
 	}
 
 	/**
 	 * @return the tradeOffer
 	 */
-	public TradeOffer getTradeOffer() {
+	public TradeOffer getTradeOffer()
+	{
 		return tradeOffer;
 	}
 
 	/**
 	 * @return the turnTracker
 	 */
-	public TurnTracker getTurnTracker() {
+	public TurnTracker getTurnTracker()
+	{
 		return turnTracker;
 	}
 
 	/**
 	 * @return the version
 	 */
-	public int getVersion() {
+	public int getVersion() 
+	{
 		return version;
 	}
 
 	/**
 	 * @return the winner
 	 */
-	public int getWinner() {
+	public int getWinner()
+	{
 		return winner;
+	}
+	
+	public Game getGameObject()
+	{
+		Game g = new Game();
+		g.setTurnTracker(turnTracker.getModelTurnTracker());
+		g.setResourceList(bank.getModelResourceList());
+		g.setVersion(version);
+		g.setWinner(winner);
+		g.setRobber(map.getModelRobber());
+		g.setBoard(map.getModelBoard());
+		return g;
 	}
 }

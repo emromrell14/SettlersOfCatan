@@ -38,36 +38,45 @@ public class ResourceList
 		return gson.toJson(this);
 	}
 
-	public int getBrick() {
+	public int getBrick() 
+	{
 		return brick;
 	}
 
 	/**
 	 * @return the ore
 	 */
-	public int getOre() {
+	public int getOre()
+	{
 		return ore;
 	}
 
 	/**
 	 * @return the sheep
 	 */
-	public int getSheep() {
+	public int getSheep()
+	{
 		return sheep;
 	}
 
 	/**
 	 * @return the wheat
 	 */
-	public int getWheat() {
+	public int getWheat()
+	{
 		return wheat;
 	}
 
 	/**
 	 * @return the wood
 	 */
-	public int getWood() {
+	public int getWood() 
+	{
 		return wood;
 	}
 
+	public models.ResourceList getModelResourceList()
+	{
+		return new models.ResourceList(brick, ore, sheep, wheat, wood);
+	}
 }

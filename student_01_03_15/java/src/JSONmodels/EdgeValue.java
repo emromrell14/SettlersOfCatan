@@ -1,5 +1,8 @@
 package JSONmodels;
 
+import models.Index;
+import models.Road;
+
 import com.google.gson.Gson;
 
 public class EdgeValue 
@@ -42,5 +45,19 @@ public class EdgeValue
 	 */
 	public EdgeLocation getLocation() {
 		return location;
+	}
+	
+	public Road getModelRoad()
+	{
+		Road r = null;
+		try 
+		{
+			r = new Road(new Index(owner),location.getModelEdgeLocation());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return r;
 	}
 }
