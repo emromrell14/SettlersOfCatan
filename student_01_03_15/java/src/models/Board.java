@@ -68,20 +68,21 @@ public class Board
 		return true;
 	}
 
-	public void buildRoad(Index playerIndex, EdgeLocation loc) {
+	public void buildRoad(Index playerIndex, EdgeLocation loc) 
+	{
 		this.mRoads.add(new Road(playerIndex, loc));
 	}
 
-	public boolean canPlaceSettlement(VertexLocation loc) {
-
+	public boolean canPlaceSettlement(VertexLocation loc) 
+	{
 		loc = loc.getNormalizedLocation();
 		switch (loc.getDir())
 		{
 			case NorthWest:
 				if (
-					checkForSettlement(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthEast))||
-					checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),VertexDirection.NorthEast)) ||
-					checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest),VertexDirection.NorthEast))
+					!checkForBuilding(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthEast)) &&
+					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),VertexDirection.NorthEast)) &&
+					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest),VertexDirection.NorthEast))
 				)
 				{
 					return true;
@@ -89,10 +90,10 @@ public class Board
 				break;
 			case NorthEast:
 				if (
-						checkForSettlement(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthWest))||
-						checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),VertexDirection.NorthWest)) ||
-						checkForSettlement(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast),VertexDirection.NorthWest))
-					)
+					!checkForBuilding(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthWest)) &&
+					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),VertexDirection.NorthWest)) &&
+					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast),VertexDirection.NorthWest))
+				)
 				{
 					return true;
 				}
@@ -104,12 +105,46 @@ public class Board
 		return false;	
 	}
 	
-	public boolean checkForSettlement(VertexLocation loc)
+	public boolean checkForBuilding(VertexLocation loc)
 	{
+		loc = loc.getNormalizedLocation();
+		for(Building settlement : this.mSettlements)
+		{
+			VertexLocation vertex = settlement.location().getNormalizedLocation();
+			if(loc.equals(vertex))
+			{
+				return true;
+			}
+		}
+		for(Building city : this.mCities)
+		{
+			VertexLocation vertex = city.location().getNormalizedLocation();
+			if(loc.equals(vertex))
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 	
-	public void buildSettlement(Index playerIndex, VertexLocation loc) {
+	public void buildSettlement(Index playerIndex, VertexLocation loc) 
+	{
 		this.mSettlements.add(new Building(playerIndex, loc));
+	}
+	
+	public void buildCity(Index playerIndex, VertexLocation loc)
+	{
+		loc = loc.getNormalizedLocation();
+		for(Building settlement : this.mSettlements)
+		{
+			VertexLocation vertex = settlement.location().getNormalizedLocation();
+			if(loc.equals(vertex))
+			{
+				//Remove settlement, change to a city, and add to cities
+				this.mSettlements.remove(settlement);
+				settlement.setBuildingTypeToCity();
+				this.mCities.add(settlement);
+			}
+		}
 	}
 }

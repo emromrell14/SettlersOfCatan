@@ -1,15 +1,13 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
-import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class Player implements IPlayer
@@ -41,6 +39,11 @@ public class Player implements IPlayer
 		this.mName = name;
 		this.mPlayerIndex = index;
 		this.mPlayerID = playerID;
+		
+		this.mRoads = new ArrayList<Road>();
+		this.mSettlements = new ArrayList<Building>();
+		this.mCities = new ArrayList<Building>();
+		this.mDevCards = new ArrayList<DevCard>();
 	}
 	
 	public Player(CatanColor color, boolean discarded, Number monuments, 
@@ -357,11 +360,41 @@ public class Player implements IPlayer
 		}
 		return true;
 	}
-
 	public boolean canPlaceCity(VertexLocation loc) 
 	{
-		// TODO Auto-generated method stub
+		//Return true for locations where a settlement is already placed
+		loc = loc.getNormalizedLocation();
+		for(Building settlement : this.mSettlements)
+		{
+			VertexLocation vertex = settlement.location().getNormalizedLocation();
+			if(loc.equals(vertex))
+			{
+				return true;
+			}
+		}
 		return false;
+	}
+	
+	public void buildCity(VertexLocation loc)
+	{
+		loc = loc.getNormalizedLocation();
+		
+		ResourceList r = this.resources();
+		r.addWheat(-2);
+		r.addOre(-3);
+		for(Building settlement : this.settlements())
+		{
+			VertexLocation vertex = settlement.location().getNormalizedLocation();
+			if(loc.equals(vertex))
+			{
+				//Remove settlement, change to a city, and add to the cities
+				this.mSettlements.remove(settlement);
+				this.mSettlementCount += 1;
+				settlement.setBuildingTypeToCity();
+				this.mCityCount -= 1;
+				this.mCities.add(settlement);
+			}
+		}		
 	}
 
 	/**
@@ -415,22 +448,34 @@ public class Player implements IPlayer
 		return true;
 	}
 
-	
+	public void buyDevCard()		// needs to be filled correctly
+	{
+		//Takes players resource cards
+		//asks DevCard Bank to return 1 DevCard
+		//adds returned DevCard to players list
+		
+		
+		//this.addDevCard(m);
+	}
+	public void addDevCard(DevCard card)
+	{
+		this.mDevCards.add(card);
+	}
 	
 	/**
 	 * Returns whether this player needs to discard when a 7 is rolled
 	 * 
 	 * @return false if they already have discarded or if they don't have more than 7 cards
 	 */
-	public boolean canDiscard()
+	public boolean canDiscard()		//does this do anything more than check the num of resource cards?
 	{
-		if(this.hasDiscarded() || this.resources().getTotal() < 7)
+		if(this.resources().getTotal() < 7)
 		{
 			return false;
 		}
 		return true;
 	}
-	public boolean discard()
+	public boolean discard()		//what does this dooooooo
 	{
 		return true;
 	}
@@ -544,7 +589,7 @@ public class Player implements IPlayer
 	{
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.MONUMENT);
+			if(devCard.type() == DevCardType.MONUMENT)
 			{
 				return true;
 			}
