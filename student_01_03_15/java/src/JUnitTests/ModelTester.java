@@ -1,17 +1,22 @@
 package JUnitTests;
 
-import static org.junit.Assert.*;
+import models.*;
+import facade.*;
 
+import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ModelTester 
 {
+	private ModelManager mm;
 
 	@Before
 	public void initialize() 
-	{		
+	{
+		mm = new ModelManager();
+		mm.updateModel(new Game());
 	}
 	
 	@Test
