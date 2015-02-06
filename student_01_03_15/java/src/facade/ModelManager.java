@@ -239,9 +239,10 @@ public class ModelManager {
 	 */
 	public boolean canBuyDevCard(int playerID)
 	{
+		Player p = mGameModel.getPlayer(playerID);
 		if (
-				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().value() != playerID || // Checks that it is this player's turn
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) || // Checks that the dice has been rolled
 				mGameModel.devCards().isEmpty() // Checks that there are still Dev Cards to buy
 		)
