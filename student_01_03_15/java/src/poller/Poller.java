@@ -31,6 +31,11 @@ public class Poller implements Runnable
 		mMasterManager = MasterManager.getInstance();
 	}
 	
+	public int getVersion()
+	{
+		return this.version;
+	}
+	
 	/**
 	 * Class to extend TimerTask
 	 * The run method checks if the model has changed and if so updates the client
@@ -40,7 +45,7 @@ public class Poller implements Runnable
 	    @Override
 		public void run()
 	    {
-			 
+			 System.out.println("--- RUNNING ---");
 			//if (!compareVersions()) // THE COMPARING ACTUALLY TAKES PLACE AND IS
 	    								// RESOLVED ON THE SERVER SIDE
 	    	Game gameModel = getGameModel(version);
@@ -83,9 +88,10 @@ public class Poller implements Runnable
 	 */
 	public Game getGameModel(int version)
 	{
-		String gameModel = mMasterManager.getGameModel(version);
 		ClientModel cModel = null;
 		Game game = null;
+		String gameModel = mMasterManager.getGameModel(version);
+		System.out.println("getting game model in Poller" + gameModel);
 		
 		if(gameModel != null)
 		{

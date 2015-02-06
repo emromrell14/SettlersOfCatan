@@ -65,6 +65,8 @@ public class Port
 	
 	public models.Port getModelPort()
 	{
-		return new models.Port(PortType.valueOf(resource), location.getModelHexLocation(), VertexDirection.valueOf(direction), ratio);
+		String portType = (resource == null) ? "THREE" : resource.toUpperCase();
+		return new models.Port(PortType.valueOf(portType), location.getModelHexLocation(), 
+				shared.locations.EdgeDirection.valueOf(direction), ratio);
 	}
 }

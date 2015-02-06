@@ -125,10 +125,10 @@ public class ClientModel
 		{
 			g.setTrade(tradeOffer.getModel());
 		}
-		
 		for(Player p : players)
 		{
-			g.addPlayer(p.getModel(g.board()));
+			if(p != null)
+				g.addPlayer(p.getModel(g.board()));
 		}
 		
 		return g;

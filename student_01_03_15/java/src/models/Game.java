@@ -93,11 +93,12 @@ public class Game implements IGame
 
 	public List<Player> players() 
 	{
+		
 		return mPlayers;
 	}
 	public Player getPlayer(int playerID)
 	{
-		for(Player player : players())
+		for(Player player : this.mPlayers)
 		{
 			if(player.playerID() == playerID)
 			{

@@ -1,11 +1,8 @@
 package facade;
 
-import java.util.List;
-
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import models.DevCard;
 import models.Game;
 import models.Index;
 import models.Player;
@@ -201,7 +198,7 @@ public class ModelManager {
 	 */
 	public boolean canAffordCity(int playerID) 
 	{
-		if (
+		if (		//this needs to be fixed
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
