@@ -37,7 +37,7 @@ public class ModelTester
 	{
 		System.out.println("testCanAffordRoad");
 		mm.gameModel().getPlayer(0).addResourcesToList(0, 0, 0, 0, 0);
-		assertFalse(mm.canAffordRoad(0));
+		assertFalse(mm.canAffordRoad(10));
 	}
 	
 	@Test
@@ -49,8 +49,26 @@ public class ModelTester
 	@Test
 	public void testCanAffordSettlement()
 	{
-		Player p = mm.gameModel().getPlayer(0);
-		p.add
+		System.out.println("Testing canAffordSettlement\n ");
+		
+		System.out.print("Test with too few resources - ");
+		Player p = mm.gameModel().getPlayer(11);
+		assertFalse(p.canAffordSettlement());
+		System.out.println("PASSED");
+		
+		p.addResourcesToList(2, 0, 2, 2, 2);
+		System.out.print("Test with enough resources - ");
+		assertTrue(p.canAffordSettlement());
+		System.out.println("PASSED");
+		
+		System.out.print("Test with enough resources, but no more settlements - ");
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		assertFalse(p.canAffordSettlement());
+		System.out.println("PASSED");
 	}
 	
 	@Test
