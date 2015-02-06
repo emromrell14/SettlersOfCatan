@@ -535,6 +535,7 @@ public class Player implements IPlayer
 	{
 		if(this.hasPlayedDevCard())
 		{
+			System.out.println("hasPlayedDevCard");
 			return false;
 		}
 		for(DevCard devCard : this.devCards())
@@ -711,7 +712,13 @@ public class Player implements IPlayer
 		return toReturn;
 	}
 
-	
+	public void endTurn()
+	{
+		for(DevCard d: mDevCards)
+		{
+			d.setNew(false);
+		}
+	}
 
 	
 }

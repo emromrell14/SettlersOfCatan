@@ -267,7 +267,7 @@ public class ModelManager {
 	public boolean canPlayDevCard(int playerID) 
 	{
 		if (
-				!mGameModel.players().contains(this) || // Checks that this player is in this game
+				//!mGameModel.players().contains(this) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().value() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
@@ -403,7 +403,8 @@ public class ModelManager {
 	public boolean canPlayRoadBuilder(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlayRoadBuilder();
 		}
@@ -433,7 +434,8 @@ public class ModelManager {
 	public boolean canPlayMonopoly(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlayMonopoly();
 		}

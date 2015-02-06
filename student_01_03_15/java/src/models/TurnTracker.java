@@ -73,10 +73,37 @@ public class TurnTracker implements ITurnTracker
 	
 	public void endTurn()
 	{
-		mCurrentTurn.setIndex(mCurrentTurn.value()+1);
-		if(mCurrentTurn.value() > 3)
+		if(mStatus.equals(Status.FIRSTROUND))
 		{
-			mCurrentTurn.setIndex(0);
+			if(mCurrentTurn.value() == 3)
+			{
+				mCurrentTurn.setIndex(2);
+				mStatus = Status.SECONDROUND;
+			}
+			else
+			{
+				mCurrentTurn.setIndex(mCurrentTurn.value()+1);
+			}
+		}
+		else if(mStatus.equals(Status.SECONDROUND))
+		{
+			if(mCurrentTurn.value() == 0)
+			{
+				mStatus = Status.ROLLING;
+			}
+			else
+			{
+				mCurrentTurn.setIndex(mCurrentTurn.value() - 1);
+			}
+		}
+		else
+		{
+			mCurrentTurn.setIndex(mCurrentTurn.value()+1);
+			if(mCurrentTurn.value() > 3)
+			{
+				mCurrentTurn.setIndex(0);
+			}
+			mStatus = Status.ROLLING;
 		}
 	}
 }
