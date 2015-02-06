@@ -1,5 +1,8 @@
 package JSONmodels;
 
+import shared.definitions.PortType;
+import shared.locations.VertexDirection;
+
 import com.google.gson.Gson;
 
 public class Port 
@@ -58,5 +61,10 @@ public class Port
 	 */
 	public int getRatio() {
 		return ratio;
+	}
+	
+	public models.Port getModelPort()
+	{
+		return new models.Port(PortType.valueOf(resource), location.getModelHexLocation(), VertexDirection.valueOf(direction), ratio);
 	}
 }

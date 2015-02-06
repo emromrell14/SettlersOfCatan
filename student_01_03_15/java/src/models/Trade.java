@@ -8,9 +8,11 @@ public class Trade
 	private Index mReceiver; //The index of the person the trade was offered to.
 	private ResourceList mOffer; //Positive numbers are resources being offered. Negative are resources being asked for.
 	
-	public Trade()
+	public Trade(Index sender, Index receiver, ResourceList offer)
 	{
-		
+		mSender = sender;
+		mReceiver = receiver;
+		mOffer = offer;
 	}
 
 	public Index sender() 

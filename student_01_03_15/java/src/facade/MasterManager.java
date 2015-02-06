@@ -547,8 +547,8 @@ public class MasterManager implements IMasterManager
 	 */
 	public String buildRoad(int playerID, EdgeLocation loc) 
 	{
-		return mModelManager.buildRoad(playerID, loc);
-		
+		//return mModelManager.buildRoad(playerID, loc);
+		return "";
 	}
 	/**
 	 * Builds a settlement at the specified location. (Set 'free' to true during initial setup)

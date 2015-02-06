@@ -14,10 +14,10 @@ import shared.locations.VertexLocation;
 public class Board 
 {
 	/** A list of all the hexes on the grid */
-	private Hex[] mHexes; //A list of all the hexes on the grid - it's only land tiles.
+	private List<Hex> mHexes; //A list of all the hexes on the grid - it's only land tiles.
 	
 	/** A list of all the ports (harbors) on the grid */
-	private Port[] mPorts;
+	private List<Port> mPorts;
 	
 	private List<Road> mRoads;
 	private List<Building> mSettlements;
@@ -34,12 +34,37 @@ public class Board
 		
 	}
 	
+	public void addSettlement(Building b)
+	{
+		mSettlements.add(b);
+	}
+	
+	public void addCity(Building b)
+	{
+		mCities.add(b);
+	}
+	
+	public void addRoad(Road r)
+	{
+		mRoads.add(r);
+	}
+	
+	public void addHex(Hex h)
+	{
+		mHexes.add(h);
+	}
+	
+	public void addPort(Port p)
+	{
+		mPorts.add(p);
+	}
+	
 	/** 
 	 * Gets hexes of grid
 	 * 
 	 * @return a list of all the hexes on the grid
 	 */
-	public Hex[] hexes()
+	public List<Hex> hexes()
 	{
 		return mHexes;
 	}
@@ -49,7 +74,7 @@ public class Board
 	 * 
 	 * @return a list of all the ports on the grid
 	 */
-	public Port[] ports()
+	public List<Port> ports()
 	{
 		return mPorts;
 	}

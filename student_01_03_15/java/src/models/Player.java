@@ -6,11 +6,8 @@ import java.util.List;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
-import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class Player implements IPlayer
@@ -46,28 +43,40 @@ public class Player implements IPlayer
 		this.mRoads = new ArrayList<Road>();
 		this.mSettlements = new ArrayList<Building>();
 		this.mCities = new ArrayList<Building>();
+		this.mDevCards = new ArrayList<DevCard>();
 	}
 	
 	public Player(CatanColor color, boolean discarded, Number monuments, 
-			String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, boolean playerDevCard, 
-			int playerID, ResourceList resources, List<Road> roads, 
-			List<Building> settlements, List<Building> cities, int soldiers, int victoryPoints)
+			String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, 
+			int playerID, ResourceList resources, int soldiers, int victoryPoints, int numSettlements,int numCities, int numRoads)
 	{
 		this.mColor = color;
 		this.mName = name;
 		this.mPlayerIndex = playerIndex;
 		this.mPlayerID = playerID;
 		this.mResources = resources;
-		this.mRoads = roads;
-		this.mSettlements = settlements;
-		this.mCities = cities;
 		this.mSoldierCount = soldiers;
 		this.mVictoryPointCount = victoryPoints;
-		this.mRoadCount = 15;
-		this.mSettlementCount = 5;
-		this.mCityCount = 4;
+		this.mRoadCount = numRoads;
+		this.mSettlementCount = numSettlements;
+		this.mCityCount = numCities;
 	}
-
+	
+	
+	public void setRoads(List<Road> roads)
+	{
+		this.mRoads = roads;
+	}
+	public void setSettlements(List<Building> settlements)
+	{
+		this.mSettlements = settlements;
+	}
+	public void setCities(List<Building> cities)
+	{
+		this.mCities = cities;
+	}
+	
+	
 	public int soldierCount()
 	{
 		return mSoldierCount;
@@ -420,8 +429,8 @@ public class Player implements IPlayer
 		ResourceList r = this.resources();
 		if (
 				this.devCards().isEmpty() || // Checks that this player has a dev card
-				this.hasPlayedDevCard() || // Checks that player hasn't already played a dev card
-				r.sheep() < 1 || r.wheat() < 1 || r.ore() < 1) // Checks that there are enough resources
+				this.hasPlayedDevCard() // Checks that player hasn't already played a dev card
+		)
 		{
 			return false;
 		}
@@ -440,22 +449,34 @@ public class Player implements IPlayer
 		return true;
 	}
 
-	
+	public void buyDevCard()		// needs to be filled correctly
+	{
+		//Takes players resource cards
+		//asks DevCard Bank to return 1 DevCard
+		//adds returned DevCard to players list
+		
+		
+		//this.addDevCard(m);
+	}
+	public void addDevCard(DevCard card)
+	{
+		this.mDevCards.add(card);
+	}
 	
 	/**
 	 * Returns whether this player needs to discard when a 7 is rolled
 	 * 
 	 * @return false if they already have discarded or if they don't have more than 7 cards
 	 */
-	public boolean canDiscard()
+	public boolean canDiscard()		//does this do anything more than check the num of resource cards?
 	{
-		if(this.hasDiscarded() || this.resources().getTotal() < 7)
+		if(this.resources().getTotal() < 7)
 		{
 			return false;
 		}
 		return true;
 	}
-	public boolean discard()
+	public boolean discard()		//what does this dooooooo
 	{
 		return true;
 	}
@@ -569,7 +590,7 @@ public class Player implements IPlayer
 	{
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.MONUMENT);
+			if(devCard.type() == DevCardType.MONUMENT)
 			{
 				return true;
 			}

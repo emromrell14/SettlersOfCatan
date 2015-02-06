@@ -1,5 +1,7 @@
 package JSONmodels;
 
+import models.Board;
+
 import com.google.gson.Gson;
 
 public class Map 
@@ -74,5 +76,61 @@ public class Map
 	 */
 	public HexLocation getRobber() {
 		return robber;
+	}
+	
+	public models.Robber getModelRobber()
+	{
+		return new models.Robber(robber.getModelHexLocation());
+	}
+	
+	public Board getModelBoard()
+	{
+		Board b = new Board();
+		addHexesToBoard(b);
+		addPortsToBoard(b);
+		addRoadsToBoard(b);
+		addSettlementsToBoard(b);
+		addCitiesToBoard(b);
+		return b;
+	}
+	
+	private void addSettlementsToBoard(Board b)
+	{
+		for(int i = 0; i < settlements.length; ++i)
+		{
+			b.addSettlement(settlements[i].getModelSettlement());
+		}
+	}
+	
+	private void addCitiesToBoard(Board b)
+	{
+		for(int i = 0; i < cities.length; ++i)
+		{
+			b.addCity(cities[i].getModelCity());
+		}
+	}
+	
+	private void addRoadsToBoard(Board b)
+	{
+		for(int i = 0; i < roads.length; ++i)
+		{
+			b.addRoad(roads[i].getModelRoad());
+		}
+	}
+	
+	private void addHexesToBoard(Board b)
+	{
+		for(int i = 0; i < hexes.length; ++i)
+		{
+			b.addHex(hexes[i].getModelHex());
+		}
+	}
+	
+	private void addPortsToBoard(Board b)
+	{
+		for(int i = 0; i < ports.length; ++i)
+		{
+			b.addPort(ports[i].getModelPort());
+		}
 	}
 }

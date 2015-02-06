@@ -1,5 +1,7 @@
 package JSONmodels;
 
+import models.Message;
+
 import com.google.gson.Gson;
 
 public class MessageLine 
@@ -42,5 +44,10 @@ public class MessageLine
 	 */
 	public String getSource() {
 		return source;
+	}
+	
+	public Message getModel()
+	{
+		return new Message(message, source);
 	}
 }

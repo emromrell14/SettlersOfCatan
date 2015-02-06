@@ -86,6 +86,7 @@ public class ModelManager {
 		}
 	}
 
+	
 	/**
 	 * Builds a road at the specified location. (Set 'free' to true during initial setup)
 	 * @pre player must have necessary resources to build a road
@@ -95,6 +96,7 @@ public class ModelManager {
 	 * @post player's resources will be decreased according to building cost of road
 	 * @return JSON String with the client model
 	 */
+	/*
 	public String buildRoad(int playerID, EdgeLocation loc) 
 	{
 		Player p = mGameModel.players().get(playerID);
@@ -104,7 +106,7 @@ public class ModelManager {
 		mGameModel.board().buildRoad(mGameModel.getPlayerIndex(playerID),loc);
 		return "";
 	}
-	
+	*/
 	
 	/**
 	 * Checks all preconditions for building a new settlement
@@ -157,6 +159,7 @@ public class ModelManager {
 	 * @post resources will be decreased according to building costs
 	 * @return JSON String with the client model
 	 */
+	/*
 	public String buildSettlement(int playerID, VertexLocation loc) 
 	{
 		Player p = mGameModel.players().get(playerID);
@@ -169,6 +172,7 @@ public class ModelManager {
 		mGameModel.board().buildSettlement(mGameModel.getPlayerIndex(playerID),loc);
 		return "";
 	}
+	*/
 	
 	/**
 	 * Checks all preconditions for building a city.
@@ -196,6 +200,19 @@ public class ModelManager {
 		return this.mGameModel.getPlayer(playerID).canPlaceCity(loc);
 	}
 
+	/*
+	public String buildCity(int playerID, VertexLocation loc) 
+	{
+		Player p = mGameModel.players().get(playerID);
+		p.buildCity(loc);
+		mGameModel.bank().addOre(3);
+		mGameModel.bank().addWheat(2);
+
+		mGameModel.board().buildCity(mGameModel.getPlayerIndex(playerID),loc);
+		return "";
+	}
+	*/
+	
 	/**
 	 * Checks all preconditions for buying a development card.
 	 * 

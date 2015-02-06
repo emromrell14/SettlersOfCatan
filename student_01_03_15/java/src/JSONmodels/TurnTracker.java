@@ -1,5 +1,8 @@
 package JSONmodels;
 
+import models.Index;
+import models.Status;
+
 import com.google.gson.Gson;
 
 public class TurnTracker 
@@ -35,28 +38,46 @@ public class TurnTracker
 	/**
 	 * @return the currentTurn
 	 */
-	public int getCurrentTurn() {
+	public int getCurrentTurn()
+	{
 		return currentTurn;
 	}
 
 	/**
 	 * @return the status
 	 */
-	public String getStatus() {
+	public String getStatus() 
+	{
 		return status;
 	}
 
 	/**
 	 * @return the longestRoad
 	 */
-	public int getLongestRoad() {
+	public int getLongestRoad() 
+	{
 		return longestRoad;
 	}
 
 	/**
 	 * @return the largestArmy
 	 */
-	public int getLargestArmy() {
+	public int getLargestArmy() 
+	{
 		return largestArmy;
+	}
+	
+	public models.TurnTracker getModelTurnTracker()
+	{
+		models.TurnTracker t = null;
+		try 
+		{
+			t = new models.TurnTracker(new Index(currentTurn), Status.valueOf(status), new Index(longestRoad), new Index(largestArmy));
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return t;
 	}
 }

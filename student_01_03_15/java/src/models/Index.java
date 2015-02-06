@@ -28,11 +28,11 @@ public class Index
 		return mIndex;
 	}
 
-	public int getmIndex() {
+	public int getIndex() {
 		return mIndex;
 	}
 
-	public void setmIndex(int mIndex) {
+	public void setIndex(int mIndex) {
 		this.mIndex = mIndex;
 	}
 	

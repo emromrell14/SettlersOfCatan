@@ -1,5 +1,9 @@
 package JSONmodels;
 
+import shared.locations.EdgeDirection;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+
 import com.google.gson.Gson;
 
 public class EdgeLocation 
@@ -50,5 +54,15 @@ public class EdgeLocation
 	 */
 	public String getDirection() {
 		return direction;
+	}
+	
+	public shared.locations.EdgeLocation getModelEdgeLocation()
+	{
+		return new shared.locations.EdgeLocation(new shared.locations.HexLocation(x,y), EdgeDirection.valueOf(direction));
+	}
+	
+	public VertexLocation getModelVertexLocation()
+	{
+		return new VertexLocation(new shared.locations.HexLocation(x, y), VertexDirection.valueOf(direction));
 	}
 }
