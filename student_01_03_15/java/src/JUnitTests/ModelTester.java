@@ -9,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import shared.definitions.CatanColor;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 public class ModelTester 
 {
@@ -37,7 +40,7 @@ public class ModelTester
 	{
 		System.out.println("testCanAffordRoad");
 		mm.gameModel().getPlayer(0).addResourcesToList(0, 0, 0, 0, 0);
-		assertFalse(mm.canAffordRoad(0));
+		assertFalse(mm.canAffordRoad(10));
 	}
 	
 	@Test
@@ -61,6 +64,17 @@ public class ModelTester
 	@Test
 	public void testCanAffordCity()
 	{
+		System.out.println("testCanAffordCity");
+		mm.gameModel().getPlayer(12).addResourcesToList(0, 0, 0, 0, 0);
+		assertFalse(mm.canAffordCity(12));	//false cause it has no resources and no settlement to place on
+		
+		mm.gameModel().getPlayer(12).addResourcesToList(0, 3, 0, 2, 0);
+		assertFalse(mm.canAffordCity(12));	//false cause it has no settlements to replace with city
+		
+		mm.gameModel().getPlayer(12).addResourcesToList(1, 1, 1, 1, 1);
+		VertexLocation loc = new VertexLocation(new HexLocation(1,1), VertexDirection.East);
+		mm.gameModel().getPlayer(12).buildSettlement(loc);
+		assertTrue(mm.canAffordCity(12));
 		
 	}
 	
