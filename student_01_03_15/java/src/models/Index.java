@@ -2,7 +2,7 @@ package models;
 
 public class Index 
 {
-	private int mIndex;
+	private int mValue;
 	
 	/** 
 	 * Creates an Index model object
@@ -15,7 +15,7 @@ public class Index
 		{
 			throw new Exception("The index was out of range.");
 		}
-		mIndex = index;
+		mValue = index;
 	}
 	
 	/** 
@@ -23,17 +23,24 @@ public class Index
 	 * 
 	 * @return an integer value between 0 and 3 inclusive
 	 */
-	public int index()
+	public int value()
 	{
-		return mIndex;
+		return mValue;
 	}
 
-	public int getIndex() {
-		return mIndex;
+	public void setIndex(int mValue) 
+	{
+		this.mValue = mValue;
 	}
-
-	public void setIndex(int mIndex) {
-		this.mIndex = mIndex;
+	
+	public boolean equals(Index index)
+	{
+		if (this.mValue == index.value())
+		{
+			return true;
+		}
+		
+		return false;
 	}
 	
 }

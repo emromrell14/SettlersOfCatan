@@ -17,7 +17,7 @@ public class Game implements IGame
 	private MessageList mChat; //All the chat messages.
 	private MessageList mLog; //All the log messages.
 	private Robber mRobber;
-	private Trade mCurrentTrade;
+	private Trade mCurrentTrade = null;
 	
 	public Game()
 	{
@@ -26,6 +26,20 @@ public class Game implements IGame
 		mTurnTracker = new TurnTracker();
 		mBank = new ResourceList();
 		mDevCards = new ArrayList<DevCard>();
+		for(int i=0; i<2; i++)
+		{
+			mDevCards.add(new Monopoly());
+			mDevCards.add(new Monument());
+			mDevCards.add(new YearOfPlenty());
+		}
+		for(int i=0; i<5; i++)
+		{
+			mDevCards.add(new RoadBuild());
+		}
+		for(int i=0; i<14; i++)
+		{
+			mDevCards.add(new Soldier());
+		}
 	}
 	
 	@Override
