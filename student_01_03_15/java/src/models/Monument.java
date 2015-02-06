@@ -10,6 +10,7 @@ public class Monument extends DevCard
 	public Monument() 
 	{
 		this.setType(DevCardType.MONUMENT);
+		this.setNew();
 	}
 	
 	

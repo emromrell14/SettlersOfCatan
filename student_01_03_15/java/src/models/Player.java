@@ -46,6 +46,7 @@ public class Player implements IPlayer
 		this.mRoads = new ArrayList<Road>();
 		this.mSettlements = new ArrayList<Building>();
 		this.mCities = new ArrayList<Building>();
+		this.mDevCards = new ArrayList<DevCard>();
 	}
 	
 	public Player(CatanColor color, boolean discarded, Number monuments, 
@@ -439,22 +440,34 @@ public class Player implements IPlayer
 		return true;
 	}
 
-	
+	public void buyDevCard()		// needs to be filled correctly
+	{
+		//Takes players resource cards
+		//asks DevCard Bank to return 1 DevCard
+		//adds returned DevCard to players list
+		
+		
+		//this.addDevCard(m);
+	}
+	public void addDevCard(DevCard card)
+	{
+		this.mDevCards.add(card);
+	}
 	
 	/**
 	 * Returns whether this player needs to discard when a 7 is rolled
 	 * 
 	 * @return false if they already have discarded or if they don't have more than 7 cards
 	 */
-	public boolean canDiscard()
+	public boolean canDiscard()		//does this do anything more than check the num of resource cards?
 	{
-		if(this.hasDiscarded() || this.resources().getTotal() < 7)
+		if(this.resources().getTotal() < 7)
 		{
 			return false;
 		}
 		return true;
 	}
-	public boolean discard()
+	public boolean discard()		//what does this dooooooo
 	{
 		return true;
 	}
@@ -568,7 +581,7 @@ public class Player implements IPlayer
 	{
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.MONUMENT);
+			if(devCard.type() == DevCardType.MONUMENT)
 			{
 				return true;
 			}
