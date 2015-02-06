@@ -48,7 +48,7 @@ public class PlayerTester
 	@Test
 	public void testNewResources() 
 	{
-		System.out.println("\nTESTING adding resources");
+		System.out.println("\nRESOURCES TEST:\n");
 		
 		System.out.print("Testing load resources and getters");
 		//Simple tests to make sure that the resources were all loaded in correctly and the getters works
@@ -107,7 +107,7 @@ public class PlayerTester
 	@Test
 	public void testCanAffordRoad()
 	{
-		System.out.println("\nTESTING canAffordRoad");
+		System.out.println("\nCAN AFFORD ROAD TEST:\n");
 		
 		System.out.print("Testing build road with no resources");
 		//Can I build a road when I have no resources?
@@ -166,7 +166,7 @@ public class PlayerTester
 	@Test
 	public void testCanPlaceRoad()
 	{
-		System.out.println("\nTESTING canPlaceRoad");
+		System.out.println("\nCAN PLACE ROAD TEST\n");
 		HexLocation hex_10 = new HexLocation(-1,0);
 		HexLocation hex_11 = new HexLocation(-1,1);
 		HexLocation hex0_1 = new HexLocation(0,-1);
@@ -184,13 +184,13 @@ public class PlayerTester
 		//Can you place a road next to another road? (Testing some normalized, others not)
 		playerZero.buildRoad(new EdgeLocation(hex00, EdgeDirection.NorthWest));
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(hex00, EdgeDirection.North)));
-		System.out.println(" . ");
+		System.out.print(" . ");
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(hex00, EdgeDirection.SouthWest)));
-		System.out.println(" . ");
+		System.out.print(" . ");
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(hex0_1, EdgeDirection.SouthWest)));
-		System.out.println(" . ");
+		System.out.print(" . ");
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(hex_10, EdgeDirection.South)));
-		System.out.println(" - PASSED");
+		System.out.print(" - PASSED");
 		
 		System.out.print("Testing place road where another already exists (Should fail)");
 		//Can you place a road where another road already is?
@@ -211,7 +211,7 @@ public class PlayerTester
 	@Test
 	public void testCanPlaceRoadFirstOrSecondRound()
 	{
-		System.out.println("\nTESTING Place road first or second round");
+		System.out.println("\nCAN PLACE ROAD FIRST OR SECOND ROUND TEST:\n");
 		//The Player.canPlaceRoad(Edge,Vertex) function will only be used when the turn tracker has been checked, and it is the first or second turn
 		HexLocation hex_10 = new HexLocation(-1,0);
 		HexLocation hex_11 = new HexLocation(-1,1);
@@ -229,9 +229,9 @@ public class PlayerTester
 		System.out.print("Testing place road not next to settlement (First Round - Should fail)");
 		//Can you place a road not next to another settlement? (Testing some normalized, others not)
 		assertFalse(playerZero.canPlaceRoad(new EdgeLocation(hex00, EdgeDirection.North), new VertexLocation(hex00, VertexDirection.SouthWest)));
-		System.out.println(" . ");
+		System.out.print(" . ");
 		assertFalse(playerZero.canPlaceRoad(new EdgeLocation(hex00, EdgeDirection.SouthWest), new VertexLocation(hex0_1, VertexDirection.SouthEast)));
-		System.out.println(" . ");
+		System.out.print(" . ");
 		assertFalse(playerZero.canPlaceRoad(new EdgeLocation(hex0_1, EdgeDirection.SouthWest), new VertexLocation(hex00, VertexDirection.East)));
 		System.out.println(" - PASSED");
 	}
@@ -239,7 +239,7 @@ public class PlayerTester
 	@Test
 	public void testCanAffordSettlement()
 	{
-		System.out.println("\nTESTING canAffordSettlement");
+		System.out.println("\nCAN AFFORD SETTLEMENT TEST:\n");
 		System.out.print("Testing build settlement with no resources (Should fail)");
 		//Can I build a settlement when I have no resources?
 		assertFalse(playerTwo.canAffordSettlement());
@@ -286,7 +286,7 @@ public class PlayerTester
 	@Test
 	public void testCanPlaceSettlement()
 	{
-		System.out.println("\nTESTING canPlaceSettlement");
+		System.out.println("\nCAN PLACE SETTLEMENT TEST:\n");
 		HexLocation hex_10 = new HexLocation(-1,0);
 		HexLocation hex_11 = new HexLocation(-1,1);
 		HexLocation hex0_1 = new HexLocation(0,-1);
@@ -330,7 +330,7 @@ public class PlayerTester
 	@Test
 	public void testCanAffordCity()
 	{
-		System.out.println("\nTESTING canAffordCity");
+		System.out.println("\nCAN AFFORD CITY TEST:\n");
 		System.out.print("Testing afford city with no resources (Should fail)");
 		//Can I afford a city with no resources?
 		assertFalse(playerTwo.canAffordCity());
@@ -388,7 +388,7 @@ public class PlayerTester
 	@Test
 	public void testCanPlaceCity()
 	{
-		System.out.println("\nTESTING canPlaceCity");
+		System.out.println("\nCAN PLACE CITY TEST:\n");
 		HexLocation hex_10 = new HexLocation(-1,0);
 		HexLocation hex_11 = new HexLocation(-1,1);
 		HexLocation hex0_1 = new HexLocation(0,-1);
@@ -426,7 +426,7 @@ public class PlayerTester
 	@Test
 	public void canPlayDevCard()
 	{
-		System.out.println("\nTESTING CAN PLAY DEV CARDS");
+		System.out.println("\nCAN PLAY DEV CARD TEST:\n");
 		Monument monu = new Monument(); Monopoly monop = new Monopoly(); YearOfPlenty yearOf = new YearOfPlenty();
 		Soldier soldier = new Soldier(); RoadBuild rBuilder = new RoadBuild();
 		
