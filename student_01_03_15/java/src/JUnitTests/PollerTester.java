@@ -2,6 +2,7 @@ package JUnitTests;
 
 import static org.junit.Assert.*;
 import models.Building;
+import models.Game;
 import models.Index;
 
 import org.junit.After;
@@ -36,7 +37,6 @@ public class PollerTester
 	{
 		System.out.println("POLLER TEST:\n");
 		int beforeVersion = poller.getVersion();
-		
 
 		poller.run();
 		try 
@@ -51,11 +51,7 @@ public class PollerTester
 		System.out.println("Awake, version: " + poller.getVersion());
 		assertTrue(poller.getVersion() != beforeVersion);
 		System.out.println("Poller's getGameModel() query passed.");
-		
-		
-		
-		
-		
+			
 	}
 
 	
