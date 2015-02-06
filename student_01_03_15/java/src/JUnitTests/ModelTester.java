@@ -2,11 +2,16 @@ package JUnitTests;
 
 import models.*;
 import facade.*;
-
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import shared.definitions.CatanColor;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 public class ModelTester 
 {
@@ -17,12 +22,25 @@ public class ModelTester
 	{
 		mm = new ModelManager();
 		mm.updateModel(new Game());
+		try
+		{
+			mm.gameModel().addPlayer(new Player(CatanColor.RED, "Mike", new Index(0), 10));
+			mm.gameModel().addPlayer(new Player(CatanColor.BLUE, "ERom", new Index(1), 11));
+			mm.gameModel().addPlayer(new Player(CatanColor.GREEN, "ESea", new Index(2), 12));
+			mm.gameModel().addPlayer(new Player(CatanColor.PURPLE, "Cannon", new Index(3), 13));
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testCanAffordRoad()
 	{
-		
+		System.out.println("testCanAffordRoad");
+		mm.gameModel().getPlayer(0).addResourcesToList(0, 0, 0, 0, 0);
+		assertFalse(mm.canAffordRoad(10));
 	}
 	
 	@Test
@@ -34,7 +52,26 @@ public class ModelTester
 	@Test
 	public void testCanAffordSettlement()
 	{
+		System.out.println("Testing canAffordSettlement\n ");
 		
+		System.out.print("Test with too few resources - ");
+		Player p = mm.gameModel().getPlayer(11);
+		assertFalse(p.canAffordSettlement());
+		System.out.println("PASSED");
+		
+		p.addResourcesToList(2, 0, 2, 2, 2);
+		System.out.print("Test with enough resources - ");
+		assertTrue(p.canAffordSettlement());
+		System.out.println("PASSED");
+		
+		System.out.print("Test with enough resources, but no more settlements - ");
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		p.buildSettlement(null);
+		assertFalse(p.canAffordSettlement());
+		System.out.println("PASSED");
 	}
 	
 	@Test
@@ -46,6 +83,17 @@ public class ModelTester
 	@Test
 	public void testCanAffordCity()
 	{
+		System.out.println("testCanAffordCity");
+		mm.gameModel().getPlayer(12).addResourcesToList(0, 0, 0, 0, 0);
+		assertFalse(mm.canAffordCity(12));	//false cause it has no resources and no settlement to place on
+		
+		mm.gameModel().getPlayer(12).addResourcesToList(0, 3, 0, 2, 0);
+		assertFalse(mm.canAffordCity(12));	//false cause it has no settlements to replace with city
+		
+		mm.gameModel().getPlayer(12).addResourcesToList(1, 1, 1, 1, 1);
+		VertexLocation loc = new VertexLocation(new HexLocation(1,1), VertexDirection.East);
+		mm.gameModel().getPlayer(12).buildSettlement(loc);
+		assertTrue(mm.canAffordCity(12));
 		
 	}
 	

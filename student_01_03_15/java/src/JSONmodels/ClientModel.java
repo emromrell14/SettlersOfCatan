@@ -121,6 +121,10 @@ public class ClientModel
 		g.setBoard(map.getModelBoard());
 		g.setChat(chat);
 		g.setLog(log);
+		if(tradeOffer != null)
+		{
+			g.setTrade(tradeOffer.getModel());
+		}
 		
 		for(Player p : players)
 		{

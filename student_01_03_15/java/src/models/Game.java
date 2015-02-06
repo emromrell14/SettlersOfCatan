@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import JSONmodels.MessageList;
@@ -16,6 +17,16 @@ public class Game implements IGame
 	private MessageList mChat; //All the chat messages.
 	private MessageList mLog; //All the log messages.
 	private Robber mRobber;
+	private Trade mCurrentTrade;
+	
+	public Game()
+	{
+		mBoard = new Board();
+		mPlayers = new ArrayList<Player>();
+		mTurnTracker = new TurnTracker();
+		mBank = new ResourceList();
+		mDevCards = new ArrayList<DevCard>();
+	}
 	
 	@Override
 	public int rollDice()
@@ -86,7 +97,7 @@ public class Game implements IGame
 	}
 	public Player getPlayer(int playerID)
 	{
-		for(Player player : players())
+		for(Player player : this.mPlayers)
 		{
 			if(player.playerID() == playerID)
 			{
@@ -173,5 +184,10 @@ public class Game implements IGame
 		}
 		
 		return playerHasCards && othersHaveCards;
+	}
+
+	public void setTrade(Trade model) 
+	{
+		mCurrentTrade = model;
 	}	
 }
