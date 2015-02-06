@@ -266,15 +266,16 @@ public class ModelManager {
 	 */
 	public boolean canPlayDevCard(int playerID) 
 	{
+		Player p = mGameModel.getPlayer(playerID);
 		if (
-				//!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().value() != playerID || // Checks that it is this player's turn
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canPlayDevCard();
+		return p.canPlayDevCard();
 	}
 
 	/**
@@ -288,13 +289,13 @@ public class ModelManager {
 	 */
 	public boolean canOfferTrade(int playerID) 
 	{
-		boolean toReturn = false;
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if (mGameModel.turnTracker().isPlayersTurn(playerIndex)) {
-			toReturn = mGameModel.canOfferTrade(playerID);
+		if (mGameModel.turnTracker().isPlayersTurn(playerIndex)) 
+		{
+			return mGameModel.canOfferTrade(playerID);
 		}
 
-		return toReturn;
+		return false;
 	}
 
 	/**
@@ -388,7 +389,8 @@ public class ModelManager {
 	public boolean canPlayYearOfPlenty(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlayYearOfPlenty();
 		}
@@ -419,7 +421,8 @@ public class ModelManager {
 	public boolean canPlaySoldier(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlaySoldier();
 		}
@@ -450,7 +453,8 @@ public class ModelManager {
 	public boolean canPlayMonument(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlayMonument();
 		}

@@ -296,12 +296,29 @@ public class ModelTester
 	@Test
 	public void testCanPlayDevCard()
 	{
+		System.out.println("\nTesting canPlayDevCard\n");
+		Player p = mm.gameModel().getPlayer(12);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		Monopoly monop = new Monopoly();
+		p.addDevCard(monop);
+		System.out.print("Testing canPlayDevCard with card that is status:new -");
+		assertFalse(mm.canPlayDevCard(12));	//false because the card is new
+		System.out.println("Passed");
+		monop.setNew(false);
 		
+		p.addDevCard(monop);
+		System.out.print("Testing canPlayDevCard with card that is status:old -");
+		assertTrue(mm.canPlayDevCard(12));	//holds 2 monopoly cards, one new one not. 
+		System.out.println("Passed");
 	}
 	
 	@Test
 	public void testCanOfferTrade()
 	{
+		System.out.println("\nTesting canOfferTrade\n");
+		Player p = mm.gameModel().getPlayer(12);
+		assertFalse(mm.canOfferTrade(p.playerID()));
+		
 		
 	}
 	
@@ -339,13 +356,79 @@ public class ModelTester
 	@Test
 	public void testCanPlayYearOfPlenty()
 	{
+		System.out.println("Testing testCanPlayYearOfPlenty/n");
+		Player p = mm.gameModel().getPlayer(12);
 		
+		System.out.print("Testing when status is not PLAYING - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canPlayYearOfPlenty(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it is player's turn, but not in PLAYING status - ");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		assertFalse(mm.canPlayYearOfPlenty(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING, but player has no YearOfPlenty - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canPlayYearOfPlenty(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has new YearOfPlenty - ");
+		mm.gameModel().getPlayer(12).addDevCard(new YearOfPlenty());
+		assertFalse(mm.canPlayYearOfPlenty(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has old YearOfPlenty - ");
+		mm.gameModel().endTurn();
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canPlayYearOfPlenty(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing whe it is not player's turn - ");
+		mm.gameModel().turnTracker().endTurn();
+		assertFalse(mm.canPlayYearOfPlenty(12));
+		System.out.println("PASSED");
 	}
 	
 	@Test
 	public void testCanPlaySoldier()
 	{
+		System.out.println("Testing testCanPlaySoldier/n");
+		Player p = mm.gameModel().getPlayer(12);
 		
+		System.out.print("Testing when status is not PLAYING - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canPlaySoldier(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it is player's turn, but not in PLAYING status - ");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		assertFalse(mm.canPlaySoldier(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING, but player has no Soldier - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canPlaySoldier(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has new Soldier - ");
+		mm.gameModel().getPlayer(12).addDevCard(new Soldier());
+		assertFalse(mm.canPlaySoldier(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has old Soldier - ");
+		mm.gameModel().endTurn();
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canPlaySoldier(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing whe it is not player's turn - ");
+		mm.gameModel().turnTracker().endTurn();
+		assertFalse(mm.canPlaySoldier(12));
+		System.out.println("PASSED");
 	}
 	
 	@Test
@@ -390,7 +473,33 @@ public class ModelTester
 	@Test
 	public void testCanPlayMonument()
 	{
+		System.out.println("Testing testCanPlayMonument/n");
+		Player p = mm.gameModel().getPlayer(12);
 		
+		System.out.print("Testing when status is not PLAYING - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canPlayMonument(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it is player's turn, but not in PLAYING status - ");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		assertFalse(mm.canPlayMonument(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING, but player has no Monument - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canPlayMonument(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has new Monument - ");
+		mm.gameModel().getPlayer(12).addDevCard(new Monument());
+		assertTrue(mm.canPlayMonument(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing whe it is not player's turn - ");
+		mm.gameModel().turnTracker().endTurn();
+		assertFalse(mm.canPlayMonument(12));
+		System.out.println("PASSED");
 	}
 	
 	@Test
