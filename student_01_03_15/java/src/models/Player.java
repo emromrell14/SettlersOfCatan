@@ -429,7 +429,6 @@ public class Player implements IPlayer
 		if (
 				this.devCards().isEmpty() || // Checks that this player has a dev card
 				this.hasPlayedDevCard() || // Checks that player hasn't already played a dev card
-				r.sheep() < 1 || r.wheat() < 1 || r.ore() < 1) // Checks that there are enough resources
 		{
 			return false;
 		}
