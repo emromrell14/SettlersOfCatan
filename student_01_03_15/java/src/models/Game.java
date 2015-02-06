@@ -42,6 +42,20 @@ public class Game implements IGame
 		}
 	}
 	
+	public void endTurn()
+	{
+		Index currentPlayer = mTurnTracker.currentTurn();
+		for(Player p: mPlayers)
+		{
+			if(p.playerIndex().value() == currentPlayer.value())
+			{
+				p.endTurn();
+				break;
+			}
+		}
+		mTurnTracker.endTurn();
+	}
+	
 	@Override
 	public int rollDice()
 	{

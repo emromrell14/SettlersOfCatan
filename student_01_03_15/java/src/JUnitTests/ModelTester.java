@@ -290,7 +290,40 @@ public class ModelTester
 	@Test
 	public void testCanPlayMonopoly()
 	{
+		System.out.println("Testing testCanPlayMonopoly/n");
+		Player p = mm.gameModel().getPlayer(12);
 		
+		System.out.print("Testing when status is not PLAYING - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canPlayMonopoly(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it is player's turn, but not in PLAYING status - ");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		assertFalse(mm.canPlayMonopoly(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING, but player has no Monopoly - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canPlayMonopoly(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has new Monopoly - ");
+		mm.gameModel().getPlayer(12).addDevCard(new Monopoly());
+		assertFalse(mm.canPlayMonopoly(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has old Monopoly - ");
+		mm.gameModel().endTurn();
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canPlayMonopoly(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing whe it is not player's turn - ");
+		mm.gameModel().turnTracker().endTurn();
+		assertFalse(mm.canPlayMonopoly(12));
+		System.out.println("PASSED");
 	}
 	
 	@Test
@@ -308,9 +341,41 @@ public class ModelTester
 	@Test
 	public void testCanPlayRoadBuilder()
 	{
+		System.out.println("Testing testCanPlayRoadBuilder/n");
+		Player p = mm.gameModel().getPlayer(12);
 		
+		System.out.print("Testing when status is not PLAYING - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canPlayRoadBuilder(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it is player's turn, but not in PLAYING status - ");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		assertFalse(mm.canPlayRoadBuilder(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING, but player has no RoadBuilder - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canPlayRoadBuilder(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has new RoadBuilder - ");
+		mm.gameModel().getPlayer(12).addDevCard(new RoadBuild());
+		assertFalse(mm.canPlayRoadBuilder(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has old RoadBuilder - ");
+		mm.gameModel().endTurn();
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canPlayRoadBuilder(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing whe it is not player's turn - ");
+		mm.gameModel().turnTracker().endTurn();
+		assertFalse(mm.canPlayRoadBuilder(12));
+		System.out.println("PASSED");
 	}
-	
 	
 	@After
 	public void tearDown()
