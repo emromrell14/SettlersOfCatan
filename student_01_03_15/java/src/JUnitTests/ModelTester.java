@@ -53,7 +53,7 @@ public class ModelTester
 	public void testCanAffordSettlement()
 	{
 		System.out.println("Testing canAffordSettlement\n ");
-		
+
 		System.out.print("Test with too few resources - ");
 		Player p = mm.gameModel().getPlayer(11);
 		assertFalse(mm.canAffordSettlement(11));
