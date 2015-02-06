@@ -3,12 +3,12 @@ package JSONmodels;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Board;
 import models.Building;
 import models.DevCard;
 import models.Index;
 import models.Road;
 import shared.definitions.CatanColor;
-import shared.locations.VertexLocation;
 
 import com.google.gson.Gson;
 
@@ -31,56 +31,81 @@ public class Player
 	private int victoryPoints;
 	
 	
-	public models.Player getModel()
+	public models.Player getModel(Board board)
 	{
+		List<Road> boardRoads = board.roads();
+		List<Building> boardCities = board.cities();
+		List<Building> boardSettlements = board.settlements();
 		models.Player player = null;
-		List<DevCard> newList = makeDevCardList(newDevCards);
-		List<DevCard> oldList = makeDevCardList(oldDevCards);
-		
+		List<DevCard> newList = makeDevCardList(newDevCards,true);
+		List<DevCard> oldList = makeDevCardList(oldDevCards,false);
 		
 		try 
 		{
 			player = new models.Player(CatanColor.valueOf(color), discarded, victoryPoints, name, newList, oldList,
 										new Index(playerIndex), playerID, resources.getModel(),this.soldiers, this.victoryPoints,
-										this.settlements, this.cities, this.roads);
+										this.settlements, this.cities, this.roads);			
 		} 
 		catch (Exception e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+
+		for(Road r : boardRoads)
+		{
+			if(r.owner().index() == playerIndex)
+			{
+				player.addRoad(r);
+			}
+		}
+		for(Building b : boardCities)
+		{
+			if(b.owner().index() == playerIndex)
+			{
+				player.addCity(b);
+			}
+		}
+		for(Building b : boardSettlements)
+		{
+			if(b.owner().index() == playerIndex)
+			{
+				player.addSettlement(b);
+			}
 		}
 		return player;
 	}
 	// call this from createGameModel() and use lines like: 
 		//	List<Building> sets = makeBuildings(player.settlementCount(), ?, ?);
 		//	List<Building> cits = makeBuildings(player.cityCount(), ?, ?);
-	private List<Building> makeBuildings(int numBuildings, Index index, shared.locations.VertexLocation vertLoc )
-	{
-		List<Building> buildings = new ArrayList();
-		for(int i = 0; i < numBuildings; i++)
-		{
-			buildings.add(new Building(index, vertLoc));
-		}
-		return buildings;
-	}
+//	private List<Building> makeBuildings(int numBuildings, Index index, shared.locations.VertexLocation vertLoc )
+//	{
+//		List<Building> buildings = new ArrayList();
+//		for(int i = 0; i < numBuildings; i++)
+//		{
+//			buildings.add(new Building(index, vertLoc));
+//		}
+//		return buildings;
+//	}
 	
 	// call this from createGameModel() and use a line like: 
 		//	List<Road> rds = makeRoads(?, ?);
-	private List<Road> makeRoads(Index index, shared.locations.EdgeLocation loc)
+//	private List<Road> makeRoads(Index index, shared.locations.EdgeLocation loc)
+//	{
+//		List<Road> r = new ArrayList();
+//		for(int i = 0; i < this.roads; i++)
+//		{
+//			r.add(new Road(index, loc));
+//		}
+//		return r;
+//	}
+	private List<DevCard> makeDevCardList(DevCardList list, boolean isNew)
 	{
-		List<Road> r = new ArrayList();
-		for(int i = 0; i < this.roads; i++)
-		{
-			r.add(new Road(index, loc));
-		}
-		return r;
-	}
-	private List<DevCard> makeDevCardList(DevCardList list)
-	{
-		List<DevCard> devList = new ArrayList();
+		List<DevCard> devList = new ArrayList<>();
 		for(int i = 0; i < list.getMonopoly(); i++)
 		{
-			devList.add(new models.Monopoly());
+			models.Monopoly m = new models.Monopoly();
+			m.setNew(isNew);
+			devList.add(m);
 		}
 		for(int i = 0; i < list.getMonument(); i++)
 		{
@@ -88,15 +113,21 @@ public class Player
 		}
 		for(int i = 0; i < list.getRoadBuilding(); i++)
 		{
-			devList.add(new models.RoadBuild());
+			models.RoadBuild rb = new models.RoadBuild();
+			rb.setNew(isNew);
+			devList.add(rb);
 		}
 		for(int i = 0; i < list.getSoldier(); i++)
 		{
-			devList.add(new models.Soldier());
+			models.Soldier s = new models.Soldier();
+			s.setNew(isNew);
+			devList.add(s);
 		}
 		for(int i = 0; i < list.getYearOfPlenty(); i++)
 		{
-			devList.add(new models.YearOfPlenty());
+			models.YearOfPlenty yop = new models.YearOfPlenty();
+			yop.setNew(isNew);
+			devList.add(yop);
 		}
 		return devList;
 	}

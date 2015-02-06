@@ -41,8 +41,8 @@ public abstract class DevCard implements IDevCard
 	 * 
 	 * @param isNew
 	 */
-	public void setNew()
+	public void setNew(boolean bool)
 	{
-		this.mNew = false;
+		this.mNew = bool;
 	}
 }

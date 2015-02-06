@@ -119,6 +119,14 @@ public class ClientModel
 		g.setWinner(winner);
 		g.setRobber(map.getModelRobber());
 		g.setBoard(map.getModelBoard());
+		g.setChat(chat);
+		g.setLog(log);
+		
+		for(Player p : players)
+		{
+			g.addPlayer(p.getModel(g.board()));
+		}
+		
 		return g;
 	}
 }

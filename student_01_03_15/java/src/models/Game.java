@@ -28,6 +28,21 @@ public class Game implements IGame
 		return mBoard;
 	}
 	
+	public void addPlayer(Player p)
+	{
+		mPlayers.add(p);
+	}
+	
+	public void setLog(MessageList m)
+	{
+		mLog = m;
+	}
+	
+	public void setChat(MessageList m)
+	{
+		mChat = m;
+	}
+	
 	public void setBoard(Board b)
 	{
 		mBoard = b;

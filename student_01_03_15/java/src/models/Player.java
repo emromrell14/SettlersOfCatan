@@ -60,22 +60,41 @@ public class Player implements IPlayer
 		this.mRoadCount = numRoads;
 		this.mSettlementCount = numSettlements;
 		this.mCityCount = numCities;
+		this.mRoads = new ArrayList<Road>();
+		this.mSettlements = new ArrayList<Building>();
+		this.mCities = new ArrayList<Building>();
+		this.mDevCards = new ArrayList<DevCard>();
+		this.mDevCards.addAll(newDevCards);
+		this.mDevCards.addAll(oldDevCards);
 	}
 	
-	
-	public void setRoads(List<Road> roads)
+	public void addRoad(Road r)
 	{
-		this.mRoads = roads;
-	}
-	public void setSettlements(List<Building> settlements)
-	{
-		this.mSettlements = settlements;
-	}
-	public void setCities(List<Building> cities)
-	{
-		this.mCities = cities;
+		mRoads.add(r);
 	}
 	
+	public void addCity(Building b)
+	{
+		mCities.add(b);
+	}
+	
+	public void addSettlement(Building b)
+	{
+		mSettlements.add(b);
+	}
+	
+//	public void setRoads(List<Road> roads)
+//	{
+//		this.mRoads = roads;
+//	}
+//	public void setSettlements(List<Building> settlements)
+//	{
+//		this.mSettlements = settlements;
+//	}
+//	public void setCities(List<Building> cities)
+//	{
+//		this.mCities = cities;
+//	}
 	
 	public int soldierCount()
 	{

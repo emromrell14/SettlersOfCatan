@@ -35,16 +35,19 @@ public class Poller implements Runnable
 	 * Class to extend TimerTask
 	 * The run method checks if the model has changed and if so updates the client
 	 */
-	class PollTimer extends TimerTask {
+	class PollTimer extends TimerTask 
+	{
 	    @Override
-		public void run() {
+		public void run()
+	    {
 			 
 			//if (!compareVersions()) // THE COMPARING ACTUALLY TAKES PLACE AND IS
 	    								// RESOLVED ON THE SERVER SIDE
-			if (getGameModel(version) != null)
+	    	Game gameModel = getGameModel(version);
+			if(gameModel != null)
 	    	{
-				// DEJSONIFY A JSON OBJECT THEN PASS IT INTO updateGUI()
-				updateGUI(new Game());
+				version = gameModel.version();
+				updateGUI(gameModel);
 			}
 	    }
 	 }
@@ -87,7 +90,7 @@ public class Poller implements Runnable
 		if(gameModel != null)
 		{
 			cModel = ClientModel.fromJSON(gameModel);
-			
+			game = cModel.getGameObject();
 		}
 		return game;
 	}
