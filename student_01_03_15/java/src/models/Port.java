@@ -1,6 +1,7 @@
 package models;
 
 import shared.definitions.PortType;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 
@@ -8,7 +9,7 @@ public class Port
 {
 	private PortType mResource; //What type resource this port trades for. If it's omitted, then it's for any resource.
 	private HexLocation mLocation; //What hex this port is on. This shows the ocean/non-existent hex to draw the port on.
-	private VertexDirection mDirection; //Which edge this port is on.
+	private EdgeDirection mDirection; //Which edge this port is on.
 	
 	/**
 	 * Creates a Port
@@ -19,7 +20,7 @@ public class Port
 	 * @param ratio the trade ratio for this port (ex: 3:1, 4:1) represented by an integer
 	 * @return a new Port object
 	 */
-	public Port(PortType resource, HexLocation location, VertexDirection direction, int ratio)
+	public Port(PortType resource, HexLocation location, EdgeDirection direction, int ratio)
 	{
 		this.mResource = resource;
 		this.mLocation = location;
@@ -48,7 +49,7 @@ public class Port
 	 * 
 	 * @return one of the following VertexDirection enum types: West, NorthWest, NorthEast, East, SouthEast, SouthWest
 	 */
-	public VertexDirection direction()
+	public EdgeDirection direction()
 	{
 		return mDirection;
 	}

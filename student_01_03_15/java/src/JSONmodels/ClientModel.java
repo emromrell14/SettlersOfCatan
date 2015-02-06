@@ -121,10 +121,11 @@ public class ClientModel
 		g.setBoard(map.getModelBoard());
 		g.setChat(chat);
 		g.setLog(log);
-		
+		System.out.println(players.length);
 		for(Player p : players)
 		{
-			g.addPlayer(p.getModel(g.board()));
+			if(p != null)
+				g.addPlayer(p.getModel(g.board()));
 		}
 		
 		return g;

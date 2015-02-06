@@ -72,7 +72,7 @@ public class TurnTracker
 		models.TurnTracker t = null;
 		try 
 		{
-			t = new models.TurnTracker(new Index(currentTurn), Status.valueOf(status), new Index(longestRoad), new Index(largestArmy));
+			t = new models.TurnTracker(new Index(currentTurn), Status.valueOf(status.toUpperCase()), new Index(longestRoad), new Index(largestArmy));
 		} 
 		catch (Exception e) 
 		{
