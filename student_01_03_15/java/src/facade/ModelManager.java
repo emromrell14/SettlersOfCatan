@@ -1,11 +1,8 @@
 package facade;
 
-import java.util.List;
-
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import models.DevCard;
 import models.Game;
 import models.Index;
 import models.Player;

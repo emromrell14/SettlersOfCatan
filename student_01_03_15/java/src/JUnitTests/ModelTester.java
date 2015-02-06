@@ -52,7 +52,8 @@ public class ModelTester
 	@Test
 	public void testCanAffordSettlement()
 	{
-		
+		Player p = mm.gameModel().getPlayer(0);
+		p.add
 	}
 	
 	@Test
