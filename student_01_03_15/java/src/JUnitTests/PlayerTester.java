@@ -102,8 +102,8 @@ public class PlayerTester
 	public void testCanPlace()
 	{
 		VertexLocation loc = new VertexLocation(new HexLocation(0,0), VertexDirection.SouthEast);
-		//System.out.println(loc);
-		//System.out.println(loc.getNormalizedLocation());
+		System.out.println(loc);
+		System.out.println(loc.getNormalizedLocation());
 		playerZero.canPlaceSettlement(new VertexLocation(new HexLocation(0,0), VertexDirection.SouthEast));
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(new HexLocation(0,0), EdgeDirection.SouthEast)));
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(new HexLocation(0,0), EdgeDirection.South)));
