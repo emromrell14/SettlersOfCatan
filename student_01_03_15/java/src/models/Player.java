@@ -514,7 +514,9 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.YEAR_OF_PLENTY && !devCard.isNew())
+			if(devCard.type() == DevCardType.YEAR_OF_PLENTY 
+					&& !devCard.isNew()
+					&& !devCard.hasBeenPlayed())
 			{
 				return true;
 			}
@@ -540,7 +542,9 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.ROAD_BUILD && !devCard.isNew())
+			if(devCard.type() == DevCardType.ROAD_BUILD 
+					&& !devCard.isNew()
+					&& !devCard.hasBeenPlayed())
 			{
 				return true;
 			}
@@ -565,7 +569,9 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.SOLDIER && !devCard.isNew())
+			if(devCard.type() == DevCardType.SOLDIER 
+					&& !devCard.isNew()
+					&& !devCard.hasBeenPlayed())
 			{
 				return true;
 			}
@@ -590,7 +596,9 @@ public class Player implements IPlayer
 		}
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.MONOPOLY && !devCard.isNew())
+			if(devCard.type() == DevCardType.MONOPOLY 
+					&& !devCard.isNew()
+					&& !devCard.hasBeenPlayed())
 			{
 				return true;
 			}
@@ -611,7 +619,8 @@ public class Player implements IPlayer
 	{
 		for(DevCard devCard : this.devCards())
 		{
-			if(devCard.type() == DevCardType.MONUMENT)
+			if(devCard.type() == DevCardType.MONUMENT
+					&& !devCard.hasBeenPlayed())
 			{
 				return true;
 			}

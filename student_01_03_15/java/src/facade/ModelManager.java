@@ -388,7 +388,8 @@ public class ModelManager {
 	public boolean canPlayYearOfPlenty(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlayYearOfPlenty();
 		}
@@ -419,7 +420,8 @@ public class ModelManager {
 	public boolean canPlaySoldier(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlaySoldier();
 		}
@@ -450,7 +452,8 @@ public class ModelManager {
 	public boolean canPlayMonument(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerID).canPlayMonument();
 		}
