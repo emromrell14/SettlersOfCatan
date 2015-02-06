@@ -63,13 +63,22 @@ public class ModelManager {
 		return this.mGameModel.getPlayer(playerID).canAffordRoad();
 	}
 	
+	/**
+	 * This function will check the player and the board to see if this is an okay spot for a road
+	 * 
+	 * @param playerID
+	 * @param loc
+	 * @return If this place is an eligible edge for a road
+	 */
 	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
 	{
 		Player p = this.mGameModel.getPlayer(playerID);
-		if (mGameModel.turnTracker().status() == Status.FIRSTROUND ||
-				mGameModel.turnTracker().status() == Status.SECONDROUND
+		if (mGameModel.turnTracker().currentTurn().index() == p.playerID() &&
+				(mGameModel.turnTracker().status() == Status.FIRSTROUND ||
+				mGameModel.turnTracker().status() == Status.SECONDROUND)
 		)
 		{
+			//This is the first or second round, use the overloaded function, passing in the location of the last settlement
 			if (p.canPlaceRoad(loc, p.settlements().get(p.settlements().size()-1).location()))
 			{
 				return true;
@@ -78,6 +87,7 @@ public class ModelManager {
 		}
 		else
 		{
+			//This is a regular round, use the the regular function
 			if (p.canPlaceRoad(loc) && this.mGameModel.board().canPlaceRoad(loc))
 			{
 				return true;
@@ -88,15 +98,16 @@ public class ModelManager {
 
 	
 	/**
-	 * Builds a road at the specified location. (Set 'free' to true during initial setup)
+	 * Builds a road at the specified location
+	 * 
 	 * @pre player must have necessary resources to build a road
 	 * @pre location (edge) must be adjacent to existing road or building built by this player
 	 * @pre location (edge) must not already be occupied
 	 * @post road will be built where specified
 	 * @post player's resources will be decreased according to building cost of road
+	 * @post bank's resources will be increased accoring to building cost of road
 	 * @return JSON String with the client model
 	 */
-	/*
 	public String buildRoad(int playerID, EdgeLocation loc) 
 	{
 		Player p = mGameModel.players().get(playerID);
@@ -106,7 +117,6 @@ public class ModelManager {
 		mGameModel.board().buildRoad(mGameModel.getPlayerIndex(playerID),loc);
 		return "";
 	}
-	*/
 	
 	/**
 	 * Checks all preconditions for building a new settlement

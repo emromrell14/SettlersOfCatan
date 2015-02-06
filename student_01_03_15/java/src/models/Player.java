@@ -189,6 +189,7 @@ public class Player implements IPlayer
 
 	public boolean canPlaceRoad(EdgeLocation loc) 
 	{
+		// STILL NEED TO CHECK FOR SEA TILES AS NEIGHBOR HEXES ONCE WE GET THE GUI (just in case the GUI handles it)
 		loc = loc.getNormalizedLocation();
 		switch (loc.getDir())
 		{
@@ -253,7 +254,7 @@ public class Player implements IPlayer
 	 */
 	public boolean canPlaceRoad(EdgeLocation loc, VertexLocation settlement) 
 	{
-		// STILL NEED TO CHECK FOR SEA TILES AS NEIGHBOR HEXES
+		// STILL NEED TO CHECK FOR SEA TILES AS NEIGHBOR HEXES ONCE WE GET THE GUI (just in case the GUI handles it)
 		loc = loc.getNormalizedLocation();
 		settlement = settlement.getNormalizedLocation();
 		switch (settlement.getDir())
@@ -445,7 +446,6 @@ public class Player implements IPlayer
 	
 	public boolean canPlayDevCard() 
 	{
-		ResourceList r = this.resources();
 		if (
 				this.devCards().isEmpty() || // Checks that this player has a dev card
 				this.hasPlayedDevCard() // Checks that player hasn't already played a dev card

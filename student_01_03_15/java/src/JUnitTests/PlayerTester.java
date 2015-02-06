@@ -155,6 +155,27 @@ public class PlayerTester
 	}
 	
 	@Test
+	public void testCanPlaceRoadFirstOrSecondRound()
+	{
+		//The Player.canPlaceRoad(Edge,Vertex) function will only be used when the turn tracker has been checked, and it is the first or second turn
+		HexLocation hex_10 = new HexLocation(-1,0);
+		HexLocation hex_11 = new HexLocation(-1,1);
+		HexLocation hex0_1 = new HexLocation(0,-1);
+		HexLocation hex00 = new HexLocation(0,0);
+		HexLocation hex01 = new HexLocation(0,1);
+		HexLocation hex1_1 = new HexLocation(1,-1);
+		HexLocation hex10 = new HexLocation(1,0);
+		
+		//Can you place a road next to a settlement?
+		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(hex00, EdgeDirection.North), new VertexLocation(hex00, VertexDirection.NorthWest)));
+		
+		//Can you place a road not next to another settlement? (Testing some normalized, others not)
+		assertFalse(playerZero.canPlaceRoad(new EdgeLocation(hex00, EdgeDirection.North), new VertexLocation(hex00, VertexDirection.SouthWest)));
+		assertFalse(playerZero.canPlaceRoad(new EdgeLocation(hex00, EdgeDirection.SouthWest), new VertexLocation(hex0_1, VertexDirection.SouthEast)));
+		assertFalse(playerZero.canPlaceRoad(new EdgeLocation(hex0_1, EdgeDirection.SouthWest), new VertexLocation(hex00, VertexDirection.East)));
+	}
+	
+	@Test
 	public void testCanAffordSettlement()
 	{
 		//Can I build a settlement when I have no resources?
