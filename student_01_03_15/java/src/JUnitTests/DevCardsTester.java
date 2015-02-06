@@ -74,9 +74,9 @@ public class DevCardsTester
 	@Test
 	public void testNew()
 	{
-		monop.setNew();
-		monu.setNew();
-		rBuilder.setNew();
+		monop.setNew(false);
+		monu.setNew(false);
+		rBuilder.setNew(false);
 		
 		assertFalse(monop.isNew());
 		assertFalse(monu.isNew());

@@ -297,7 +297,7 @@ public class PlayerTester
 		Monument monu = new Monument(); Monopoly monop = new Monopoly(); YearOfPlenty yearOf = new YearOfPlenty();
 		Soldier soldier = new Soldier(); RoadBuild rBuilder = new RoadBuild();
 		
-		monop.setNew(); yearOf.setNew(); soldier.setNew(); rBuilder.setNew();
+		monop.setNew(false); yearOf.setNew(false); soldier.setNew(false); rBuilder.setNew(false);
 		
 		playerZero.addDevCard(monu);
 		playerOne.addDevCard(monop);

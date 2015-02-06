@@ -34,6 +34,21 @@ public class Board
 		
 	}
 	
+	public List<Building> settlements()
+	{
+		return mSettlements;
+	}
+	
+	public List<Building> cities()
+	{
+		return mCities;
+	}
+	
+	public List<Road> roads()
+	{
+		return mRoads;
+	}
+	
 	public void addSettlement(Building b)
 	{
 		mSettlements.add(b);
