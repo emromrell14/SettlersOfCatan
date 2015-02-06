@@ -460,11 +460,16 @@ public class ModelManager {
 	 *            the board.
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber(HexLocation newRobberLocation) 
+	public boolean canPlaceRobber(int playerID, HexLocation newRobberLocation) 
 	{
-		HexLocation currentRobberLocation = mGameModel.robber().location();
-		return !(currentRobberLocation.getX() == newRobberLocation.getX() && currentRobberLocation
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		{
+			HexLocation currentRobberLocation = mGameModel.robber().location();
+			return !(currentRobberLocation.getX() == newRobberLocation.getX() && currentRobberLocation
 				.getY() == newRobberLocation.getY());
+		}
+		return false;
 	}
 	
 }

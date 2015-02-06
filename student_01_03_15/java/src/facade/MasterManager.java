@@ -279,9 +279,9 @@ public class MasterManager implements IMasterManager
 	 * @param newRobberLocation The location of where the player wants to play the robber on the board. 
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber(HexLocation newRobberLocation)
+	public boolean canPlaceRobber(int playerID, HexLocation newRobberLocation)
 	{
-		return mModelManager.canPlaceRobber(newRobberLocation);
+		return mModelManager.canPlaceRobber(playerID, newRobberLocation);
 	}
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
