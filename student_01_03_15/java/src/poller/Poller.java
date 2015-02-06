@@ -45,7 +45,6 @@ public class Poller implements Runnable
 	    @Override
 		public void run()
 	    {
-			 System.out.println("--- RUNNING ---");
 			//if (!compareVersions()) // THE COMPARING ACTUALLY TAKES PLACE AND IS
 	    								// RESOLVED ON THE SERVER SIDE
 	    	Game gameModel = getGameModel(version);
@@ -91,7 +90,6 @@ public class Poller implements Runnable
 		ClientModel cModel = null;
 		Game game = null;
 		String gameModel = mMasterManager.getGameModel(version);
-		System.out.println("getting game model in Poller" + gameModel);
 		
 		if(gameModel != null)
 		{

@@ -47,7 +47,8 @@ public class ModelManager {
 	 */
 	public boolean canAffordRoad(int playerID) 
 	{
-		if (mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that this player is in the game
+		Player p = this.mGameModel.getPlayer(playerID);
+		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) && // Checks that this player is in the game
 			(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks that it is this player's turn
 			mGameModel.turnTracker().status().equals(Status.SECONDROUND))) 
 		{
@@ -55,15 +56,15 @@ public class ModelManager {
 
 		}
 		else if (
-				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canAffordRoad();
+		return p.canAffordRoad();
 	}
 	
 	/**
@@ -76,7 +77,7 @@ public class ModelManager {
 	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
 	{
 		Player p = this.mGameModel.getPlayer(playerID);
-		if (mGameModel.turnTracker().currentTurn().index() == p.playerID() &&
+		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) &&
 				(mGameModel.turnTracker().status() == Status.FIRSTROUND ||
 				mGameModel.turnTracker().status() == Status.SECONDROUND)
 		)
@@ -113,7 +114,7 @@ public class ModelManager {
 	 */
 	public String buildRoad(int playerID, EdgeLocation loc) 
 	{
-		Player p = mGameModel.players().get(playerID);
+		Player p = mGameModel.getPlayer(playerID);
 		p.buildRoad(loc);
 		mGameModel.bank().addBrick(1);
 		mGameModel.bank().addWood(1);
@@ -133,21 +134,22 @@ public class ModelManager {
 	public boolean canAffordSettlement(int playerID) 
 	{
 		Player p = this.mGameModel.getPlayer(playerID);
-		if (mGameModel.turnTracker().currentTurn().index() == playerID && // Checks that it is this player's turn
+
+		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) && // Checks that it is this player's turn
 				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or
 				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) // second round (special cases)
 		) 
 		{
 			return true;
 		}
-		else if (!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+		else if (!mGameModel.players().contains(p) || // Checks that this player is in this game
+				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canAffordSettlement();
+		return p.canAffordSettlement();
 	}
 
 	public boolean canPlaceSettlement(int playerID, VertexLocation loc) 
@@ -177,7 +179,7 @@ public class ModelManager {
 	 */
 	public String buildSettlement(int playerID, VertexLocation loc) 
 	{
-		Player p = mGameModel.players().get(playerID);
+		Player p = mGameModel.getPlayer(playerID);
 		p.buildSettlement(loc);
 		mGameModel.bank().addBrick(1);
 		mGameModel.bank().addWood(1);
@@ -199,15 +201,16 @@ public class ModelManager {
 	 */
 	public boolean canAffordCity(int playerID) 
 	{
-		if (		//this needs to be fixed
-				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+		Player p = mGameModel.getPlayer(playerID);
+		if (
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canAffordCity();
+		return p.canAffordCity();
 	}
 
 	public boolean canPlaceCity(int playerID, VertexLocation loc) 
@@ -217,7 +220,7 @@ public class ModelManager {
 
 	public String buildCity(int playerID, VertexLocation loc) 
 	{
-		Player p = mGameModel.players().get(playerID);
+		Player p = mGameModel.getPlayer(playerID);
 		p.buildCity(loc);
 		mGameModel.bank().addOre(3);
 		mGameModel.bank().addWheat(2);
@@ -237,16 +240,17 @@ public class ModelManager {
 	 */
 	public boolean canBuyDevCard(int playerID)
 	{
+		Player p = mGameModel.getPlayer(playerID);
 		if (
-				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) || // Checks that the dice has been rolled
 				mGameModel.devCards().isEmpty() // Checks that there are still Dev Cards to buy
 		)
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canBuyDevCard();
+		return p.canBuyDevCard();
 	}
 
 	/**
@@ -263,7 +267,7 @@ public class ModelManager {
 	{
 		if (
 				!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().index() != playerID || // Checks that it is this player's turn
+				mGameModel.turnTracker().currentTurn().value() != playerID || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{

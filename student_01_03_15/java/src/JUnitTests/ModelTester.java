@@ -22,6 +22,7 @@ public class ModelTester
 	{
 		mm = new ModelManager();
 		mm.updateModel(new Game());
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
 		try
 		{
 			mm.gameModel().addPlayer(new Player(CatanColor.RED, "Mike", new Index(0), 10));
@@ -38,9 +39,49 @@ public class ModelTester
 	@Test
 	public void testCanAffordRoad()
 	{
-		System.out.println("testCanAffordRoad");
-		mm.gameModel().getPlayer(0).addResourcesToList(0, 0, 0, 0, 0);
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		Player p = mm.gameModel().getPlayer(10);
+		System.out.println("Testing canAffordRoad\n");
+		p.addResourcesToList(0, 0, 0, 0, 0);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		
+		System.out.print("Can I build a road without resources?");
 		assertFalse(mm.canAffordRoad(10));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Can I build a road with a brick?");
+		p.addResourcesToList(1, 0, 0, 0, 0);
+		assertFalse(mm.canAffordRoad(10));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Can I build a road with a brick and a wood?");
+		p.addResourcesToList(0, 0, 0, 0, 1);
+		assertTrue(mm.canAffordRoad(10));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Can I build a road if all but one of my roads are used?");
+		p.addResourcesToList(100,100,100,100,100);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		assertTrue(mm.canAffordRoad(10));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Can I build a road if all of my roads are used?");
+		mm.buildRoad(10, null);
+		assertFalse(mm.canAffordRoad(10));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
@@ -52,10 +93,10 @@ public class ModelTester
 	@Test
 	public void testCanAffordSettlement()
 	{
-		System.out.println("Testing canAffordSettlement\n ");
-
-		System.out.print("Test with too few resources - ");
+		System.out.println("\nTesting canAffordSettlement\n ");
 		Player p = mm.gameModel().getPlayer(11);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		System.out.print("Test with too few resources - ");
 		assertFalse(mm.canAffordSettlement(11));
 		System.out.println("PASSED");
 		
@@ -105,7 +146,18 @@ public class ModelTester
 	@Test
 	public void testCanBuyDevCard()
 	{
+		System.out.println("Testing canBuyDevCard/n");
+		Player p = mm.gameModel().getPlayer(12);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		System.out.print("Test with too few resources");
+		p.addResourcesToList(0, 0, 0, 0, 0);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println("Passed");
 		
+		System.out.print("Testing with sufficient resources");
+		mm.gameModel().getPlayer(12).addResourcesToList(0, 1, 1, 1, 0);
+		assertTrue(mm.canBuyDevCard(12));
+		System.out.println("Passed");
 	}
 	
 	/* NOTE TO ERIC R.
@@ -135,6 +187,7 @@ public class ModelTester
 	}
 	
 	@Test
+
 	public void testCanMaritimeTrade()
 	{
 		
