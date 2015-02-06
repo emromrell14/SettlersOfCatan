@@ -28,10 +28,6 @@ public class Game implements IGame
 		mDevCards = new ArrayList<DevCard>();
 	}
 	
-	public Game()
-	{
-		mPlayers = new ArrayList();
-	}
 	@Override
 	public int rollDice()
 	{
@@ -97,6 +93,7 @@ public class Game implements IGame
 
 	public List<Player> players() 
 	{
+		
 		return mPlayers;
 	}
 	public Player getPlayer(int playerID)

@@ -56,12 +56,12 @@ public class ModelTester
 		
 		System.out.print("Test with too few resources - ");
 		Player p = mm.gameModel().getPlayer(11);
-		assertFalse(p.canAffordSettlement());
+		assertFalse(mm.canAffordSettlement(11));
 		System.out.println("PASSED");
 		
 		p.addResourcesToList(2, 0, 2, 2, 2);
 		System.out.print("Test with enough resources - ");
-		assertTrue(p.canAffordSettlement());
+		assertTrue(mm.canAffordSettlement(11));
 		System.out.println("PASSED");
 		
 		System.out.print("Test with enough resources, but no more settlements - ");
@@ -70,7 +70,7 @@ public class ModelTester
 		p.buildSettlement(null);
 		p.buildSettlement(null);
 		p.buildSettlement(null);
-		assertFalse(p.canAffordSettlement());
+		assertFalse(mm.canAffordSettlement(11));
 		System.out.println("PASSED");
 	}
 	
