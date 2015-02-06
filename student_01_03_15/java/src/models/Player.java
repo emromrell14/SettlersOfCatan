@@ -371,7 +371,7 @@ public class Player implements IPlayer
 		loc = loc.getNormalizedLocation();
 		
 		ResourceList r = this.resources();
-		r.addSheep(-2);
+		r.addWheat(-2);
 		r.addOre(-3);
 		for(Building settlement : this.settlements())
 		{
@@ -384,6 +384,7 @@ public class Player implements IPlayer
 				settlement.setBuildingTypeToCity();
 				this.mCityCount -= 1;
 				this.mCities.add(settlement);
+				break;
 			}
 		}		
 	}
