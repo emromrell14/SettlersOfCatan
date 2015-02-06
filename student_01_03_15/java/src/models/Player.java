@@ -428,7 +428,8 @@ public class Player implements IPlayer
 		ResourceList r = this.resources();
 		if (
 				this.devCards().isEmpty() || // Checks that this player has a dev card
-				this.hasPlayedDevCard() || // Checks that player hasn't already played a dev card
+				this.hasPlayedDevCard() // Checks that player hasn't already played a dev card
+		)
 		{
 			return false;
 		}
