@@ -93,6 +93,7 @@ public class Game implements IGame
 
 	public List<Player> players() 
 	{
+		
 		return mPlayers;
 	}
 	public Player getPlayer(int playerID)
