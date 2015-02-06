@@ -57,6 +57,30 @@ public class ModelTester
 		p.addResourcesToList(0, 0, 0, 0, 1);
 		assertTrue(mm.canAffordRoad(10));
 		System.out.println(" - PASSED");
+		
+		System.out.print("Can I build a road if all but one of my roads are used?");
+		p.addResourcesToList(100,100,100,100,100);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		mm.buildRoad(10, null);
+		assertTrue(mm.canAffordRoad(10));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Can I build a road if all of my roads are used?");
+		mm.buildRoad(10, null);
+		assertFalse(mm.canAffordRoad(10));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
@@ -64,7 +88,7 @@ public class ModelTester
 	{
 		
 	}
-	/*
+	
 	@Test
 	public void testCanAffordSettlement()
 	{
@@ -117,7 +141,7 @@ public class ModelTester
 		assertTrue(mm.canAffordCity(12));
 		System.out.println("Passed");
 	}
-	*/
+	
 	@Test
 	public void testCanBuyDevCard()
 	{
@@ -160,6 +184,7 @@ public class ModelTester
 	}
 	
 	@Test
+
 	public void testCanMaritimeTrade()
 	{
 		
