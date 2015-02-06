@@ -2,11 +2,13 @@ package JUnitTests;
 
 import models.*;
 import facade.*;
-
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import shared.definitions.CatanColor;
 
 public class ModelTester 
 {
@@ -17,12 +19,25 @@ public class ModelTester
 	{
 		mm = new ModelManager();
 		mm.updateModel(new Game());
+		try
+		{
+			mm.gameModel().addPlayer(new Player(CatanColor.RED, "Mike", new Index(0), 10));
+			mm.gameModel().addPlayer(new Player(CatanColor.BLUE, "ERom", new Index(1), 11));
+			mm.gameModel().addPlayer(new Player(CatanColor.GREEN, "ESea", new Index(2), 12));
+			mm.gameModel().addPlayer(new Player(CatanColor.PURPLE, "Cannon", new Index(3), 13));
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testCanAffordRoad()
 	{
-		
+		System.out.println("testCanAffordRoad");
+		mm.gameModel().getPlayer(0).addResourcesToList(0, 0, 0, 0, 0);
+		assertFalse(mm.canAffordRoad(0));
 	}
 	
 	@Test

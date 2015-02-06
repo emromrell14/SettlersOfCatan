@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import JSONmodels.MessageList;
@@ -16,6 +17,15 @@ public class Game implements IGame
 	private MessageList mChat; //All the chat messages.
 	private MessageList mLog; //All the log messages.
 	private Robber mRobber;
+	
+	public Game()
+	{
+		mBoard = new Board();
+		mPlayers = new ArrayList<Player>();
+		mTurnTracker = new TurnTracker();
+		mBank = new ResourceList();
+		mDevCards = new ArrayList<DevCard>();
+	}
 	
 	@Override
 	public int rollDice()
