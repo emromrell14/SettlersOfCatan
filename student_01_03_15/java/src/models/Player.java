@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.CatanColor;
@@ -41,6 +42,10 @@ public class Player implements IPlayer
 		this.mName = name;
 		this.mPlayerIndex = index;
 		this.mPlayerID = playerID;
+		
+		this.mRoads = new ArrayList<Road>();
+		this.mSettlements = new ArrayList<Building>();
+		this.mCities = new ArrayList<Building>();
 	}
 	
 	public Player(CatanColor color, boolean discarded, Number monuments, 
@@ -346,11 +351,41 @@ public class Player implements IPlayer
 		}
 		return true;
 	}
-
 	public boolean canPlaceCity(VertexLocation loc) 
 	{
-		// TODO Auto-generated method stub
+		//Return true for locations where a settlement is already placed
+		loc = loc.getNormalizedLocation();
+		for(Building settlement : this.mSettlements)
+		{
+			VertexLocation vertex = settlement.location().getNormalizedLocation();
+			if(loc.equals(vertex))
+			{
+				return true;
+			}
+		}
 		return false;
+	}
+	
+	public void buildCity(VertexLocation loc)
+	{
+		loc = loc.getNormalizedLocation();
+		
+		ResourceList r = this.resources();
+		r.addSheep(-2);
+		r.addOre(-3);
+		for(Building settlement : this.settlements())
+		{
+			VertexLocation vertex = settlement.location().getNormalizedLocation();
+			if(loc.equals(vertex))
+			{
+				//Remove settlement, change to a city, and add to the cities
+				this.mSettlements.remove(settlement);
+				this.mSettlementCount += 1;
+				settlement.setBuildingTypeToCity();
+				this.mCityCount -= 1;
+				this.mCities.add(settlement);
+			}
+		}		
 	}
 
 	/**
