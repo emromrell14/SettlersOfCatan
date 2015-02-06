@@ -46,5 +46,10 @@ public class HexLocation
 	public int getY() {
 		return y;
 	}
+	
+	public shared.locations.HexLocation getModelHexLocation()
+	{
+		return new shared.locations.HexLocation(x, y);
+	}
 }
 

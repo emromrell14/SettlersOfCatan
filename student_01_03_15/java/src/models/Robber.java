@@ -6,9 +6,9 @@ public class Robber
 {
 	private HexLocation mLocation;
 	
-	public Robber() 
+	public Robber(HexLocation l) 
 	{
-		
+		mLocation = l;
 	}
 	
 	public HexLocation location()

@@ -1,5 +1,8 @@
 package JSONmodels;
 
+import models.TokenValue;
+import shared.definitions.HexType;
+
 import com.google.gson.Gson;
 
 public class Hex 
@@ -50,5 +53,10 @@ public class Hex
 	 */
 	public int getNumber() {
 		return number;
+	}
+	
+	public models.Hex getModelHex()
+	{
+		return new models.Hex(location.getModelHexLocation(), HexType.valueOf(resource), new TokenValue(number));
 	}
 }

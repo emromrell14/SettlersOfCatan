@@ -3,18 +3,19 @@ package models;
 public class Message 
 {
 	private String mMessage;
-	private Index mPlayerIndex;
+	private String mPlayerName;
 	
-	public Message()
+	public Message(String message, String name)
 	{
-		
+		mMessage = message;
+		mPlayerName = name;
 	}
 
 	public String message() {
 		return mMessage;
 	}
 
-	public Index playerIndex() {
-		return mPlayerIndex;
+	public String playerName() {
+		return mPlayerName;
 	}	
 }

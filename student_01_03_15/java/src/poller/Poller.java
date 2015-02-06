@@ -3,6 +3,7 @@ package poller;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import JSONmodels.ClientModel;
 import models.Game;
 import facade.IMasterManager;
 import facade.MasterManager;
@@ -77,9 +78,18 @@ public class Poller implements Runnable
 	 * 
 	 * @return a String of JSON or null if the game state hasn't changed
 	 */
-	public String getGameModel(int version)
+	public Game getGameModel(int version)
 	{
-		return mMasterManager.getGameModel(version);
+		String gameModel = mMasterManager.getGameModel(version);
+		ClientModel cModel = null;
+		Game game = null;
+		
+		if(gameModel != null)
+		{
+			cModel = ClientModel.fromJSON(gameModel);
+			
+		}
+		return game;
 	}
 	
 	/**

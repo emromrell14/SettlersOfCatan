@@ -27,6 +27,43 @@ public class Game implements IGame
 	{
 		return mBoard;
 	}
+	
+	public void setBoard(Board b)
+	{
+		mBoard = b;
+	}
+	
+	public void setRobber(Robber r)
+	{
+		mRobber = r;
+	}
+	
+	public void setResourceList(ResourceList r)
+	{
+		mBank = r;
+	}
+	
+	public void setVersion(int v)
+	{
+		mVersion = v;
+	}
+	
+	public void setWinner(int w)
+	{
+		try 
+		{
+			mWinner = new Index(w);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void setTurnTracker(TurnTracker t)
+	{
+		mTurnTracker = t;
+	}
 
 	public List<Player> players() 
 	{

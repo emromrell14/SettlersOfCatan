@@ -1,5 +1,8 @@
 package JSONmodels;
 
+import models.Building;
+import models.Index;
+
 import com.google.gson.Gson;
 
 public class VertexObject 
@@ -42,5 +45,33 @@ public class VertexObject
 	 */
 	public EdgeLocation getLocation() {
 		return location;
+	}
+	
+	public Building getModelSettlement()
+	{
+		Building b = null;
+		try
+		{
+			b = new Building(new Index(owner),location.getModelVertexLocation());
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public Building getModelCity()
+	{
+		Building b = null;
+		try
+		{
+			b = new Building(new Index(owner),location.getModelVertexLocation());
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return b;
 	}
 }
