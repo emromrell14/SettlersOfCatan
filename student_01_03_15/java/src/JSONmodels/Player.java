@@ -53,21 +53,21 @@ public class Player
 
 		for(Road r : boardRoads)
 		{
-			if(r.owner().index() == playerIndex)
+			if(r.owner().value() == playerIndex)
 			{
 				player.addRoad(r);
 			}
 		}
 		for(Building b : boardCities)
 		{
-			if(b.owner().index() == playerIndex)
+			if(b.owner().value() == playerIndex)
 			{
 				player.addCity(b);
 			}
 		}
 		for(Building b : boardSettlements)
 		{
-			if(b.owner().index() == playerIndex)
+			if(b.owner().value() == playerIndex)
 			{
 				player.addSettlement(b);
 			}
