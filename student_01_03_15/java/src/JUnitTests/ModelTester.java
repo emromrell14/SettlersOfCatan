@@ -36,8 +36,11 @@ public class ModelTester
 	public void testCanAffordRoad()
 	{
 		System.out.println("testCanAffordRoad");
-		mm.gameModel().getPlayer(0).addResourcesToList(0, 0, 0, 0, 0);
+		mm.gameModel().getPlayer(10).addResourcesToList(0, 0, 0, 0, 0);
+		
+		System.out.println("Can I build a road without resources");
 		assertFalse(mm.canAffordRoad(0));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
