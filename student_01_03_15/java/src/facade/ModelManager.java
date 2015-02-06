@@ -249,7 +249,7 @@ public class ModelManager {
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canBuyDevCard();
+		return p.canBuyDevCard();
 	}
 
 	/**

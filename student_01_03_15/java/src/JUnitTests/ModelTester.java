@@ -188,6 +188,7 @@ public class ModelTester
 	}
 	
 	@Test
+
 	public void testCanMaritimeTrade()
 	{
 		
