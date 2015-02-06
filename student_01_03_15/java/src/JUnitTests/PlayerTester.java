@@ -5,6 +5,7 @@ import models.*;
 import shared.definitions.*;
 import shared.locations.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,11 +49,16 @@ public class PlayerTester
 	public void testNewResources() 
 	{
 		
-		
 		assertTrue(playerZero.resources().getTotal() == 5);
 		assertTrue(playerOne.resources().getTotal() == 9);
 		assertTrue(playerTwo.resources().getTotal() == 0);
 		assertTrue(playerThree.resources().getTotal() == 14);
+		
+		//these should work unless we find out we need to change the canDiscard function
+		assertFalse(playerZero.canDiscard());
+		assertTrue(playerOne.canDiscard());
+		assertFalse(playerTwo.canDiscard());
+		assertTrue(playerThree.canDiscard());
 		
 		assertTrue(playerZero.resources().brick() == 3);
 		assertFalse(playerZero.resources().wood() < 2);
@@ -96,8 +102,8 @@ public class PlayerTester
 	public void testCanPlace()
 	{
 		VertexLocation loc = new VertexLocation(new HexLocation(0,0), VertexDirection.SouthEast);
-		System.out.println(loc);
-		System.out.println(loc.getNormalizedLocation());
+		//System.out.println(loc);
+		//System.out.println(loc.getNormalizedLocation());
 		playerZero.canPlaceSettlement(new VertexLocation(new HexLocation(0,0), VertexDirection.SouthEast));
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(new HexLocation(0,0), EdgeDirection.SouthEast)));
 		assertTrue(playerZero.canPlaceRoad(new EdgeLocation(new HexLocation(0,0), EdgeDirection.South)));
@@ -113,4 +119,49 @@ public class PlayerTester
 		//Three: 3B, 3O, 4S, 2W, 2Wo
 		
 	}
+	
+	@Test
+	public void canPlayDevCards()
+	{
+		Monument monu = new Monument(); Monopoly monop = new Monopoly(); YearOfPlenty yearOf = new YearOfPlenty();
+		Soldier soldier = new Soldier(); RoadBuild rBuilder = new RoadBuild();
+		
+		monop.setNew(); yearOf.setNew(); soldier.setNew(); rBuilder.setNew();
+		
+		playerZero.addDevCard(monu);
+		playerOne.addDevCard(monop);
+		playerTwo.addDevCard(yearOf);
+		playerThree.addDevCard(soldier);
+		playerThree.addDevCard(rBuilder);
+		
+		//Assert Trues
+		assertTrue(playerZero.canPlayMonument());
+		assertTrue(playerOne.canPlayMonopoly());
+		assertTrue(playerTwo.canPlayYearOfPlenty());
+		assertTrue(playerThree.canPlaySoldier());
+		assertTrue(playerThree.canPlayRoadBuilder());
+		
+		//Assert False
+		assertFalse(playerZero.canPlayRoadBuilder());
+		assertFalse(playerOne.canPlaySoldier());
+		assertFalse(playerTwo.canPlayMonopoly());
+		assertFalse(playerTwo.canPlayMonument());
+		assertFalse(playerThree.canPlayYearOfPlenty());
+		
+		
+	}
+	
+	
+	
+	
+	
+	@After
+	public void tearDown()
+	{
+		
+	}
+	
+	
+	
+	
 }
