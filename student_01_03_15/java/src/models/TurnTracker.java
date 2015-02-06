@@ -9,7 +9,17 @@ public class TurnTracker implements ITurnTracker
 	
 	public TurnTracker()
 	{
-		
+		try 
+		{
+			mCurrentTurn = new Index(0);
+			mStatus = Status.FIRSTROUND;
+			mLongestRoad = new Index(-1);
+			mLargestArmy = new Index(-1);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public TurnTracker(Index currentTurn, Status status, Index longestRoad, Index largestArmy)
@@ -23,6 +33,10 @@ public class TurnTracker implements ITurnTracker
 	public Index currentTurn()
 	{
 		return mCurrentTurn;
+	}
+	public void setCurrentTurn(Index i)
+	{
+		mCurrentTurn = i;
 	}
 	public Status status()
 	{
