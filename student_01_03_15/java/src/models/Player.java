@@ -454,19 +454,16 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		boolean hasPlayableCard = false;
+		
 		for (DevCard d : this.devCards())
 		{
 			if (!d.isNew())
 			{
-				hasPlayableCard = true;
+				return true;
 			}
 		}
-		if (!hasPlayableCard)
-		{
-			return false;
-		}
-		return true;
+		
+		return false;
 	}
 
 	public void buyDevCard()		// needs to be filled correctly
