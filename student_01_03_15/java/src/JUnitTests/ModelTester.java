@@ -233,7 +233,34 @@ public class ModelTester
 	@Test
 	public void testCanPlaceCity()
 	{
+		System.out.println("\nTesting canPlaceCity\n");
+		Player p = mm.gameModel().getPlayer(12);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		
+		System.out.print("Testing placing a city on an empty board during the PLAYING phase");
+		assertFalse(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city during the first round");
+		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertFalse(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city during the second round");
+		mm.gameModel().turnTracker().setStatus(Status.SECONDROUND);
+		assertFalse(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthWest)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city on top of a settlement during a PLAYING phase");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		mm.buildSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
+		assertTrue(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city on top of another city");
+		mm.buildCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
+		assertFalse(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
