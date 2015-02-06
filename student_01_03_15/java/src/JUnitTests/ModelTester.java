@@ -22,6 +22,7 @@ public class ModelTester
 	{
 		mm = new ModelManager();
 		mm.updateModel(new Game());
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
 		try
 		{
 			mm.gameModel().addPlayer(new Player(CatanColor.RED, "Mike", new Index(0), 10));
@@ -40,7 +41,7 @@ public class ModelTester
 	{
 		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
 		Player p = mm.gameModel().getPlayer(10);
-		System.out.println("testCanAffordRoad");
+		System.out.println("Testing canAffordRoad\n");
 		p.addResourcesToList(0, 0, 0, 0, 0);
 		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		
@@ -92,10 +93,11 @@ public class ModelTester
 	@Test
 	public void testCanAffordSettlement()
 	{
-		System.out.println("Testing canAffordSettlement\n ");
+		System.out.println("\nTesting canAffordSettlement\n ");
+		Player p = mm.gameModel().getPlayer(11);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		
 		System.out.print("Test with too few resources - ");
-		Player p = mm.gameModel().getPlayer(11);
 		assertFalse(mm.canAffordSettlement(11));
 		System.out.println("PASSED");
 		
@@ -146,8 +148,10 @@ public class ModelTester
 	public void testCanBuyDevCard()
 	{
 		System.out.println("Testing canBuyDevCard/n");
+		Player p = mm.gameModel().getPlayer(12);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		System.out.print("Test with too few resources");
-		mm.gameModel().getPlayer(12).addResourcesToList(0, 0, 0, 0, 0);
+		p.addResourcesToList(0, 0, 0, 0, 0);
 		assertFalse(mm.canBuyDevCard(12));
 		System.out.println("Passed");
 		
