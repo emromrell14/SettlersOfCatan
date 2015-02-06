@@ -105,7 +105,16 @@ public class ModelTester
 	@Test
 	public void testCanBuyDevCard()
 	{
+		System.out.println("Testing canBuyDevCard/n");
+		System.out.print("Test with too few resources");
+		mm.gameModel().getPlayer(12).addResourcesToList(0, 0, 0, 0, 0);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println("Passed");
 		
+		System.out.print("Testing with sufficient resources");
+		mm.gameModel().getPlayer(12).addResourcesToList(0, 1, 1, 1, 0);
+		assertTrue(mm.canBuyDevCard(12));
+		System.out.println("Passed");
 	}
 	
 	/* NOTE TO ERIC R.
