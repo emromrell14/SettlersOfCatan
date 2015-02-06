@@ -134,6 +134,7 @@ public class ModelManager {
 	public boolean canAffordSettlement(int playerID) 
 	{
 		Player p = this.mGameModel.getPlayer(playerID);
+
 		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) && // Checks that it is this player's turn
 				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or
 				mGameModel.turnTracker().status().equals(Status.SECONDROUND)) // second round (special cases)

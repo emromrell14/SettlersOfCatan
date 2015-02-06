@@ -96,7 +96,6 @@ public class ModelTester
 		System.out.println("\nTesting canAffordSettlement\n ");
 		Player p = mm.gameModel().getPlayer(11);
 		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
-		
 		System.out.print("Test with too few resources");
 		assertFalse(mm.canAffordSettlement(11));
 		System.out.println(" - PASSED");
