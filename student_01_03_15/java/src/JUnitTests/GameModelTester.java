@@ -43,7 +43,7 @@ public class GameModelTester
 		System.out.println("PASSED");
 		
 		System.out.println("Checking player index populated correctly...");
-		assertTrue(game.getPlayer(12).playerIndex().index() == 0);
+		assertTrue(game.getPlayer(12).playerIndex().value() == 0);
 		System.out.println("PASSED");
 		
 		System.out.println("Checking player color populated correctly...");
@@ -76,13 +76,13 @@ public class GameModelTester
 		
 		System.out.println("Checking turntracker populated correctly...");
 		assertTrue(game.turnTracker().status() == Status.FIRSTROUND);
-		assertTrue(game.turnTracker().currentTurn().index() == 0);
-		assertTrue(game.turnTracker().largestArmy().index() == -1);
-		assertTrue(game.turnTracker().longestRoad().index() == -1);
+		assertTrue(game.turnTracker().currentTurn().value() == 0);
+		assertTrue(game.turnTracker().largestArmy().value() == -1);
+		assertTrue(game.turnTracker().longestRoad().value() == -1);
 		System.out.println("PASSED");
 		
 		System.out.println("Checking game winner populated correctly...");
-		assertTrue(game.winner().index() == -1);
+		assertTrue(game.winner().value() == -1);
 		System.out.println("PASSED");
 		
 		System.out.println("Checking board populated correctly...");
