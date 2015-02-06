@@ -50,7 +50,7 @@ public class PlayerTester
 	{
 		System.out.println("\nTESTING adding resources");
 		
-		System.out.println("Testing load lesources and Getters");
+		System.out.println("Testing load resources and getters");
 		//Simple tests to make sure that the resources were all loaded in correctly and the getters works
 		assertTrue(playerZero.resources().getTotal() == 5);
 		System.out.println("PASSED");
