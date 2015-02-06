@@ -22,6 +22,11 @@ public class ResourceList
 		return gson.fromJson(JSON, ResourceList.class);
 	}
 	
+	public models.ResourceList getModel()
+	{
+		return new models.ResourceList(this.brick, this.ore, this.sheep, this.wheat, this.wood);
+	}
+	
 	/**
 	 * Creates the JSON code from this object
 	 * 

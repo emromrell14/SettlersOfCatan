@@ -1,5 +1,8 @@
 package JSONmodels;
 
+import models.Index;
+import models.Trade;
+
 import com.google.gson.Gson;
 
 public class TradeOffer 
@@ -50,5 +53,21 @@ public class TradeOffer
 	 */
 	public ResourceList getOffer() {
 		return offer;
+	}
+	
+	public Trade getModel()
+	{
+		Trade t = null;
+		try 
+		{
+			t = new Trade(new Index(sender), new Index(receiver), offer);
+		} 
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return t;
 	}
 }

@@ -1,10 +1,19 @@
 package JSONmodels;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import models.Building;
+import models.DevCard;
+import models.Index;
+import models.Road;
+import shared.definitions.CatanColor;
+import shared.locations.VertexLocation;
+
 import com.google.gson.Gson;
 
 public class Player 
 {
-	private int cities; //How many cities this player has left to play.
 	private String color; //The color of this player
 	private boolean discarded; //Whether this player has discarded or not already this discard phase
 	private Number monuments; //How many monuments this player has played.
@@ -17,8 +26,80 @@ public class Player
 	private ResourceList resources; //The resource cards this player has.
 	private int roads;
 	private int settlements; //How many settlements this player has left to play.
+	private int cities; //How many cities this player has left to play.
 	private int soldiers;
 	private int victoryPoints;
+	
+	
+	public models.Player getModel()
+	{
+		models.Player player = null;
+		List<DevCard> newList = makeDevCardList(newDevCards);
+		List<DevCard> oldList = makeDevCardList(oldDevCards);
+		
+		
+		try 
+		{
+			player = new models.Player(CatanColor.valueOf(color), discarded, victoryPoints, name, newList, oldList,
+										new Index(playerIndex), playerID, resources.getModel(),this.soldiers, this.victoryPoints,
+										this.settlements, this.cities, this.roads);
+		} 
+		catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return player;
+	}
+	// call this from createGameModel() and use lines like: 
+		//	List<Building> sets = makeBuildings(player.settlementCount(), ?, ?);
+		//	List<Building> cits = makeBuildings(player.cityCount(), ?, ?);
+	private List<Building> makeBuildings(int numBuildings, Index index, shared.locations.VertexLocation vertLoc )
+	{
+		List<Building> buildings = new ArrayList();
+		for(int i = 0; i < numBuildings; i++)
+		{
+			buildings.add(new Building(index, vertLoc));
+		}
+		return buildings;
+	}
+	
+	// call this from createGameModel() and use a line like: 
+		//	List<Road> rds = makeRoads(?, ?);
+	private List<Road> makeRoads(Index index, shared.locations.EdgeLocation loc)
+	{
+		List<Road> r = new ArrayList();
+		for(int i = 0; i < this.roads; i++)
+		{
+			r.add(new Road(index, loc));
+		}
+		return r;
+	}
+	private List<DevCard> makeDevCardList(DevCardList list)
+	{
+		List<DevCard> devList = new ArrayList();
+		for(int i = 0; i < list.getMonopoly(); i++)
+		{
+			devList.add(new models.Monopoly());
+		}
+		for(int i = 0; i < list.getMonument(); i++)
+		{
+			devList.add(new models.Monument());
+		}
+		for(int i = 0; i < list.getRoadBuilding(); i++)
+		{
+			devList.add(new models.RoadBuild());
+		}
+		for(int i = 0; i < list.getSoldier(); i++)
+		{
+			devList.add(new models.Soldier());
+		}
+		for(int i = 0; i < list.getYearOfPlenty(); i++)
+		{
+			devList.add(new models.YearOfPlenty());
+		}
+		return devList;
+	}
 	
 	/**
 	 * Creates a Player object from a JSON string
@@ -147,4 +228,5 @@ public class Player
 	public int getVictoryPoints() {
 		return victoryPoints;
 	}
+	
 }

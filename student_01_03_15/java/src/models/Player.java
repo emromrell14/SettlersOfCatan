@@ -44,25 +44,36 @@ public class Player implements IPlayer
 	}
 	
 	public Player(CatanColor color, boolean discarded, Number monuments, 
-			String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, boolean playerDevCard, 
-			int playerID, ResourceList resources, List<Road> roads, 
-			List<Building> settlements, List<Building> cities, int soldiers, int victoryPoints)
+			String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, 
+			int playerID, ResourceList resources, int soldiers, int victoryPoints, int numSettlements,int numCities, int numRoads)
 	{
 		this.mColor = color;
 		this.mName = name;
 		this.mPlayerIndex = playerIndex;
 		this.mPlayerID = playerID;
 		this.mResources = resources;
-		this.mRoads = roads;
-		this.mSettlements = settlements;
-		this.mCities = cities;
 		this.mSoldierCount = soldiers;
 		this.mVictoryPointCount = victoryPoints;
-		this.mRoadCount = 15;
-		this.mSettlementCount = 5;
-		this.mCityCount = 4;
+		this.mRoadCount = numRoads;
+		this.mSettlementCount = numSettlements;
+		this.mCityCount = numCities;
 	}
-
+	
+	
+	public void setRoads(List<Road> roads)
+	{
+		this.mRoads = roads;
+	}
+	public void setSettlements(List<Building> settlements)
+	{
+		this.mSettlements = settlements;
+	}
+	public void setCities(List<Building> cities)
+	{
+		this.mCities = cities;
+	}
+	
+	
 	public int soldierCount()
 	{
 		return mSoldierCount;
