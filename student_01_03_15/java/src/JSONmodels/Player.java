@@ -42,7 +42,7 @@ public class Player
 		
 		try 
 		{
-			player = new models.Player(CatanColor.valueOf(color), discarded, victoryPoints, name, newList, oldList,
+			player = new models.Player(CatanColor.valueOf(color.toUpperCase()), discarded, victoryPoints, name, newList, oldList,
 										new Index(playerIndex), playerID, resources.getModel(),this.soldiers, this.victoryPoints,
 										this.settlements, this.cities, this.roads);			
 		} 
@@ -74,30 +74,7 @@ public class Player
 		}
 		return player;
 	}
-	// call this from createGameModel() and use lines like: 
-		//	List<Building> sets = makeBuildings(player.settlementCount(), ?, ?);
-		//	List<Building> cits = makeBuildings(player.cityCount(), ?, ?);
-//	private List<Building> makeBuildings(int numBuildings, Index index, shared.locations.VertexLocation vertLoc )
-//	{
-//		List<Building> buildings = new ArrayList();
-//		for(int i = 0; i < numBuildings; i++)
-//		{
-//			buildings.add(new Building(index, vertLoc));
-//		}
-//		return buildings;
-//	}
-	
-	// call this from createGameModel() and use a line like: 
-		//	List<Road> rds = makeRoads(?, ?);
-//	private List<Road> makeRoads(Index index, shared.locations.EdgeLocation loc)
-//	{
-//		List<Road> r = new ArrayList();
-//		for(int i = 0; i < this.roads; i++)
-//		{
-//			r.add(new Road(index, loc));
-//		}
-//		return r;
-//	}
+
 	private List<DevCard> makeDevCardList(DevCardList list, boolean isNew)
 	{
 		List<DevCard> devList = new ArrayList<>();

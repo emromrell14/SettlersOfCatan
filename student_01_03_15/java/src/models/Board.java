@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.locations.EdgeDirection;
@@ -31,7 +32,11 @@ public class Board
 	 */
 	public Board()
 	{
-		
+		mHexes = new ArrayList();
+		mPorts = new ArrayList();
+		mRoads = new ArrayList();
+		mSettlements = new ArrayList();
+		mCities = new ArrayList();
 	}
 	
 	public List<Building> settlements()

@@ -57,6 +57,7 @@ public class Hex
 	
 	public models.Hex getModelHex()
 	{
-		return new models.Hex(location.getModelHexLocation(), HexType.valueOf(resource), new TokenValue(number));
+		String resourceName = (resource == null) ? "DESERT" : resource.toUpperCase();
+		return new models.Hex(location.getModelHexLocation(), HexType.valueOf(resourceName), new TokenValue(number));
 	}
 }

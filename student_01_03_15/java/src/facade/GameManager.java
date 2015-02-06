@@ -28,6 +28,7 @@ public class GameManager
 		String response;
 		
 		response = mProxy.get("/game/model");
+		System.out.println("getting game model in GameManager");
 		return response;
 	}
 	
