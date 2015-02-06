@@ -53,7 +53,7 @@ public class TurnTracker implements ITurnTracker
 	
 	public boolean isPlayersTurn(Index playerIndex)
 	{
-		return playerIndex.index() == mCurrentTurn.index();
+		return playerIndex.value() == mCurrentTurn.value();
 	}
 	
 	public boolean canRollDice(Index playerIndex)
@@ -73,8 +73,8 @@ public class TurnTracker implements ITurnTracker
 	
 	public void endTurn()
 	{
-		mCurrentTurn.setIndex(mCurrentTurn.getIndex()+1);
-		if(mCurrentTurn.getIndex() > 3)
+		mCurrentTurn.setIndex(mCurrentTurn.value()+1);
+		if(mCurrentTurn.value() > 3)
 		{
 			mCurrentTurn.setIndex(0);
 		}
