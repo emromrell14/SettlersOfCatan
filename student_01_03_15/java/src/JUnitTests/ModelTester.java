@@ -173,12 +173,29 @@ public class ModelTester
 	@Test
 	public void testCanPlayDevCard()
 	{
+		System.out.println("\nTesting canPlayDevCard\n");
+		Player p = mm.gameModel().getPlayer(12);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		Monopoly monop = new Monopoly();
+		p.addDevCard(monop);
+		System.out.print("Testing canPlayDevCard with card that is status:new -");
+		assertFalse(mm.canPlayDevCard(12));	//false because the card is new
+		System.out.println("Passed");
+		monop.setNew(false);
 		
+		p.addDevCard(monop);
+		System.out.print("Testing canPlayDevCard with card that is status:old -");
+		assertTrue(mm.canPlayDevCard(12));	//holds 2 monopoly cards, one new one not. 
+		System.out.println("Passed");
 	}
 	
 	@Test
 	public void testCanOfferTrade()
 	{
+		System.out.println("\nTesting canOfferTrade\n");
+		Player p = mm.gameModel().getPlayer(12);
+		assertFalse(mm.canOfferTrade(p.playerID()));
+		
 		
 	}
 	
