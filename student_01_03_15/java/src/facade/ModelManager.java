@@ -82,10 +82,11 @@ public class ModelManager {
 				mGameModel.turnTracker().status() == Status.SECONDROUND)
 		)
 		{
-			//This is the first or second round, use the overloaded function, passing in the location of the last settlement
-			if (p.canPlaceRoad(loc, p.settlements().get(p.settlements().size()-1).location()))
+			//If they don't have any settlement, return false
+			if(p.settlements().size() != 0)
 			{
-				return true;
+				//This is the first or second round, use the overloaded function, passing in the location of the last settlement
+				return p.canPlaceRoad(loc, p.settlements().get(p.settlements().size()-1).location());
 			}
 			return false;
 		}

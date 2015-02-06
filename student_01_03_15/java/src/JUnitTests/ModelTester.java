@@ -99,8 +99,12 @@ public class ModelTester
 		assertFalse(mm.canPlaceRoad(p.playerID(), new EdgeLocation(new HexLocation(0,0), EdgeDirection.North)));
 		System.out.println(" - PASSED");
 		
-		System.out.print("Testing placing a road during the first round next to a settlement");
+		System.out.print("Testing placing a road during the first round before a settlement is played");
 		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertFalse(mm.canPlaceRoad(p.playerID(), new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a road during the first round next to a settlement");
 		mm.buildSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
 		assertTrue(mm.canPlaceRoad(p.playerID(), new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthEast)));
 		System.out.println(" - PASSED");
@@ -162,7 +166,37 @@ public class ModelTester
 	@Test
 	public void testCanPlaceSettlement()
 	{
+		System.out.println("\nTesting canPlaceSettlement\n");
+		Player p = mm.gameModel().getPlayer(12);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		
+		System.out.print("Testing placing a settlement on an empty board during the PLAYING phase");
+		assertFalse(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a settlement during the first round");
+		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertTrue(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a settlement during the second round right next to the other settlement");
+		mm.buildSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
+		mm.gameModel().turnTracker().setStatus(Status.SECONDROUND);
+		assertFalse(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthWest)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a settlement during the second round NOT next to the other settlement");
+		assertTrue(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.SouthEast)));
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a settlement right next to another settlement in the PLAYING phase");
+		assertFalse(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthWest)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing place a settlement on top of another settlement");
+		assertFalse(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
