@@ -10,7 +10,9 @@ public class JUnitMain
 				DevCardsTester.class,
 				JSONTester.class,
 				ModelTester.class,
-				PlayerTester.class);
+				PlayerTester.class,
+				GameModelTester.class,
+				PollerTester.class);
 	}
 
 }
