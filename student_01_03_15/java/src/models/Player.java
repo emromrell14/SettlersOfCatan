@@ -636,6 +636,10 @@ public class Player implements IPlayer
 	
 	public boolean canAcceptTrade(ResourceList tradeOffer)
 	{
+		if (tradeOffer.isEmpty())
+		{
+			return false;
+		}
 		return mResources.brick() >= tradeOffer.brick()
 				&& mResources.ore() >= tradeOffer.ore()
 				&& mResources.sheep() >= tradeOffer.sheep()
