@@ -487,7 +487,7 @@ public class Player implements IPlayer
 	 */
 	public boolean canDiscard()		//does this do anything more than check the num of resource cards?
 	{
-		if(this.resources().getTotal() < 7)
+		if(this.resources().getTotal() <= 7)
 		{
 			return false;
 		}

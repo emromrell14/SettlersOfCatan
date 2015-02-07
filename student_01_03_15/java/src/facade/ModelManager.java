@@ -352,7 +352,8 @@ public class ModelManager {
 	public boolean canRollDice(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		return mGameModel.turnTracker().canRollDice(playerIndex);
+		return mGameModel.turnTracker().canRollDice(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.ROLLING);
 	}
 
 	/**
@@ -364,7 +365,8 @@ public class ModelManager {
 	 */
 	public boolean canDiscard(int playerID) 
 	{
-		return this.mGameModel.getPlayer(playerID).canDiscard();
+		return this.mGameModel.getPlayer(playerID).canDiscard()
+				&& mGameModel.turnTracker().status().equals(Status.DISCARDING);
 	}
 
 	/**

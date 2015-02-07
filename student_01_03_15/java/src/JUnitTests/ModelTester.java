@@ -423,13 +423,53 @@ public class ModelTester
 	@Test
 	public void testCanRollDice()
 	{
+		System.out.println("Testing testCanRollDice:\n");
 		
+		try
+		{
+			mm.gameModel().turnTracker().setCurrentTurn(new Index(0));
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.print("Testing when it's not the player's turn - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canRollDice(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it's player's turn and is ROLLING status - ");
+		mm.gameModel().endTurn();
+		assertTrue(mm.canRollDice(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it's player's turn and is not ROLLING status - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canRollDice(11));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanDiscard()
 	{
+		System.out.println("Testing testCanDiscard:\n");
 		
+		System.out.print("Testing when player has <= 7 cards - ");
+		assertFalse(mm.canDiscard(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has > 7 cards, but not DISCARDING status - ");
+		Player p = mm.gameModel().getPlayer(12);
+		p.addResourcesToList(0, 3, 4, 1, 0);
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canDiscard(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has > 7 cards and in DISCARDING status - ");
+		mm.gameModel().turnTracker().setStatus(Status.DISCARDING);
+		assertTrue(mm.canDiscard(12));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
