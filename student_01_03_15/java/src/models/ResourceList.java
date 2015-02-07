@@ -129,4 +129,15 @@ public class ResourceList
 		mWood += value;
 	}
 	
+	public boolean isEmpty(ResourceList rList)
+	{
+		if (rList.brick() != 0 && rList.ore() != 0 && rList.wheat() !=0 && rList.wood() != 0 && rList.sheep() != 0)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
 }
