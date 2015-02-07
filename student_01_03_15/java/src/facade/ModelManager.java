@@ -289,13 +289,16 @@ public class ModelManager {
 	 */
 	public boolean canOfferTrade(int playerID) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if (mGameModel.turnTracker().isPlayersTurn(playerIndex)) 
+		Player p = mGameModel.getPlayer(playerID);
+		if (
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
+				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
+		)
 		{
-			return mGameModel.canOfferTrade(playerID);
+			return false;
 		}
-
-		return false;
+		return mGameModel.canOfferTrade(playerID);
 	}
 
 	/**
@@ -312,13 +315,16 @@ public class ModelManager {
 	 */
 	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer) 
 	{
-		boolean toReturn = false;
-		Player player = mGameModel.getPlayer(playerID);
-		if (!mGameModel.turnTracker().isPlayersTurn(player.playerIndex())
-				&& mGameModel.turnTracker().hasRolled()) {
-			toReturn = player.canAcceptTrade(tradeOffer);
+		Player p = mGameModel.getPlayer(playerID);
+		if (
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it isn't this player's turn
+				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
+		)
+		{
+			return false;
 		}
-		return toReturn;
+		return p.canAcceptTrade(tradeOffer);
 	}
 
 	/**
@@ -352,7 +358,8 @@ public class ModelManager {
 	public boolean canRollDice(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		return mGameModel.turnTracker().canRollDice(playerIndex);
+		return mGameModel.turnTracker().canRollDice(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.ROLLING);
 	}
 
 	/**
@@ -364,7 +371,8 @@ public class ModelManager {
 	 */
 	public boolean canDiscard(int playerID) 
 	{
-		return this.mGameModel.getPlayer(playerID).canDiscard();
+		return this.mGameModel.getPlayer(playerID).canDiscard()
+				&& mGameModel.turnTracker().status().equals(Status.DISCARDING);
 	}
 
 	/**

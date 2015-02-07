@@ -18,6 +18,7 @@ public class Poller implements Runnable
 	private IMasterManager mMasterManager;
 	private final int mSecondsBetweenPolls = 2;
 	private int version = 0;
+	private Timer timer;
 
 
 	
@@ -65,7 +66,7 @@ public class Poller implements Runnable
 	{
 	
 		 // And From your main() method or any other method
-		 Timer timer = new Timer();
+		 timer = new Timer();
 		 timer.schedule(new PollTimer(), 0, mSecondsBetweenPolls * 1000);
 		 System.out.println("Starting Timer");
 	}
@@ -109,4 +110,9 @@ public class Poller implements Runnable
 		mMasterManager.updateModel(g);
 	}
 	
+	public void interrupt()
+	{
+		if(timer != null)
+			timer.cancel();
+	}
 }

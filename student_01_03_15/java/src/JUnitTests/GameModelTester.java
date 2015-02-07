@@ -108,7 +108,6 @@ public class GameModelTester
 		}
 		System.out.println(" - PASSED");
 	
-		poller.interrupt();
 	}
 	
 	@After

@@ -198,14 +198,14 @@ public class Game implements IGame
 			ResourceList temp = p.resources();
 			if(p.playerID() == playerID) 
 			{
-				if(temp.brick() >= 0 || temp.ore() >= 0 || temp.wheat() >= 0 || temp.wood() >= 0 || temp.sheep() >= 0)
+				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
 				{
 					playerHasCards = true;
 				}
 			}
 			else
 			{
-				if(temp.brick() >= 0 || temp.ore() >= 0 || temp.wheat() >= 0 || temp.wood() >= 0 || temp.sheep() >= 0)
+				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
 				{
 					othersHaveCards = true;
 				}
