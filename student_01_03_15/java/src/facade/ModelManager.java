@@ -335,15 +335,15 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade(int playerID) {
-		boolean toReturn = false;
+	public boolean canMaritimeTrade(int playerID) 
+	{
 		Player player = mGameModel.getPlayer(playerID);
-		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex())) 
+		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) &&
+				mGameModel.turnTracker().status() == Status.PLAYING) 
 		{
-			toReturn = player.canMaritimeTrade();
+			return player.canMaritimeTrade();
 		}
-
-		return toReturn;
+		return false;
 	}
 
 	/**
@@ -358,7 +358,8 @@ public class ModelManager {
 	public boolean canRollDice(int playerID) 
 	{
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		return mGameModel.turnTracker().canRollDice(playerIndex);
+		return mGameModel.turnTracker().canRollDice(playerIndex)
+				&& mGameModel.turnTracker().status().equals(Status.ROLLING);
 	}
 
 	/**
@@ -370,7 +371,8 @@ public class ModelManager {
 	 */
 	public boolean canDiscard(int playerID) 
 	{
-		return this.mGameModel.getPlayer(playerID).canDiscard();
+		return this.mGameModel.getPlayer(playerID).canDiscard()
+				&& mGameModel.turnTracker().status().equals(Status.DISCARDING);
 	}
 
 	/**
@@ -380,11 +382,9 @@ public class ModelManager {
 	 */
 	public boolean canFinishTurn(int playerID) 
 	{
-		if (this.mGameModel.turnTracker().status() == Status.PLAYING) 
-		{
-			return true;
-		}
-		return false;
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		return this.mGameModel.turnTracker().status() == Status.PLAYING
+				&& mGameModel.turnTracker().isPlayersTurn(playerIndex);
 	}
 
 	/**
@@ -475,14 +475,13 @@ public class ModelManager {
 	 *            the board.
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber(int playerID, HexLocation newRobberLocation) 
+	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().status().equals(Status.ROBBING))
 		{
 			HexLocation currentRobberLocation = mGameModel.robber().location();
-			return !(currentRobberLocation.getX() == newRobberLocation.getX() && currentRobberLocation
-				.getY() == newRobberLocation.getY());
+			return !(currentRobberLocation.getX() == newRobberLocation.getX() 
+					&& currentRobberLocation.getY() == newRobberLocation.getY());
 		}
 		return false;
 	}

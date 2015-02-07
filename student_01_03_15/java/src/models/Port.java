@@ -3,7 +3,6 @@ package models;
 import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 
 public class Port 
 {
@@ -20,7 +19,7 @@ public class Port
 	 * @param ratio the trade ratio for this port (ex: 3:1, 4:1) represented by an integer
 	 * @return a new Port object
 	 */
-	public Port(PortType resource, HexLocation location, EdgeDirection direction, int ratio)
+	public Port(PortType resource, HexLocation location, EdgeDirection direction)
 	{
 		this.mResource = resource;
 		this.mLocation = location;
@@ -34,6 +33,15 @@ public class Port
 	public PortType resource()
 	{
 		return mResource;
+	}
+	/**
+	 * Sets the type of the resource for which this port trades
+	 * 
+	 * @param one of the following PortType enum types: WOOD, BRICK, SHEEP, WHEAT, ORE, THREE
+	 */
+	public void setResource(PortType type)
+	{
+		this.mResource = type;
 	}
 	/**
 	 * Gets the location of the hexagon upon which this port lies

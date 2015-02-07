@@ -4,8 +4,8 @@ import models.*;
 import facade.*;
 import shared.definitions.*;
 import shared.locations.*;
-
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -203,10 +203,11 @@ public class ModelTester
 	public void testCanAffordCity()
 	{
 		System.out.println("\nTesting canAffordCity\n");
+
 		Player p = mm.gameModel().getPlayer(12);
 		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		
-		System.out.print("Test with too few resources: ");
+		System.out.print("Test with too few resources ");
 		p.addResourcesToList(0, 0, 0, 0, 0);
 		assertFalse(mm.canAffordCity(12)); //false cause it has no resources and no settlement to place on
 		System.out.println(" - PASSED");
@@ -233,7 +234,34 @@ public class ModelTester
 	@Test
 	public void testCanPlaceCity()
 	{
+		System.out.println("\nTesting canPlaceCity\n");
+		Player p = mm.gameModel().getPlayer(12);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		
+		System.out.print("Testing placing a city on an empty board during the PLAYING phase");
+		assertFalse(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city during the first round");
+		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertFalse(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city during the second round");
+		mm.gameModel().turnTracker().setStatus(Status.SECONDROUND);
+		assertFalse(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthWest)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city on top of a settlement during a PLAYING phase");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		mm.buildSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
+		assertTrue(mm.canPlaceCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing placing a city on top of another city");
+		mm.buildCity(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
+		assertFalse(mm.canPlaceSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast)));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
@@ -256,6 +284,28 @@ public class ModelTester
 		mm.gameModel().devCards().clear();
 		assertFalse(mm.canBuyDevCard(12));
 		System.out.println(" - PASSED");
+		
+		System.out.print("Test with it being the FIRST ROUND");
+		mm.gameModel().devCards().add(new Monopoly());
+		p.addResourcesToList(0,1,1,1,0);
+		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
+
+		System.out.print("Test with it being the SECOND ROUND");
+		mm.gameModel().turnTracker().setStatus(Status.SECONDROUND);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Test with the turn status: ROLLING");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Test with the turn status: PLAYING");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
 	}
 	
 	/* NOTE TO ERIC R.
@@ -273,6 +323,7 @@ public class ModelTester
 		Player p = mm.gameModel().getPlayer(12);
 		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		Monopoly monop = new Monopoly();
+		
 		p.addDevCard(monop);
 		System.out.print("Testing canPlayDevCard with card that is status:new -");
 		assertFalse(mm.canPlayDevCard(12));	//false because the card is new
@@ -303,6 +354,29 @@ public class ModelTester
 		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
 		assertTrue(mm.canPlayDevCard(11));	//true cause monuments dont have to wait a turn to play
 		System.out.println("Passed");
+
+		System.out.print("Testing canPlayDevCard with it being the FIRST ROUND");
+		p.addDevCard(monop);
+		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertFalse(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing canPlayDevCard with it being the SECOND ROUND");
+		p.addDevCard(monop);
+		mm.gameModel().turnTracker().setStatus(Status.SECONDROUND);
+		assertFalse(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing canPlayDevCard with the turn status: ROLLING");
+		p.addDevCard(monop);
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing canPlayDevCard with the turn status: PLAYING");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
@@ -396,34 +470,139 @@ public class ModelTester
 	}
 	
 	@Test
-
 	public void testCanMaritimeTrade()
 	{
+		System.out.println("\nTesting canMaritimeTrade\n");
+		Player p = mm.gameModel().getPlayer(11);
+		Player p2 = mm.gameModel().getPlayer(12);
 		
+		System.out.print("Testing when it's not your turn");
+		mm.gameModel().turnTracker().setCurrentTurn(p2.playerIndex());
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when it is your turn, but not enough resources");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you have enough resources for a 4:1");
+		p.addResourcesToList(4, 0, 0, 0, 0);
+		assertTrue(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 3 like resources, and no port");
+		p.addResourcesToList(-1, 0, 0, 0, 0);
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 3 like resources, and a 3:1 port");
+		p.addResourcesToList(1, 0, 1, 1, 1);
+		mm.buildSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
+		p.settlements().get(0).setPort(new Port(PortType.THREE, new HexLocation(0,0), EdgeDirection.NorthEast));
+		assertTrue(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 2 brick, and a 2:1 sheep port");
+		p.addResourcesToList(-1, 0, 0, 0, 0);
+		p.settlements().get(0).port().setResource(PortType.SHEEP);
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 2 brick, and a 2:1 brick port");
+		p.settlements().get(0).port().setResource(PortType.BRICK);
+		assertTrue(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
 	public void testCanRollDice()
 	{
+		System.out.println("Testing testCanRollDice:\n");
 		
+		try
+		{
+			mm.gameModel().turnTracker().setCurrentTurn(new Index(0));
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.print("Testing when it's not the player's turn - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canRollDice(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it's player's turn and is ROLLING status - ");
+		mm.gameModel().endTurn();
+		assertTrue(mm.canRollDice(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when it's player's turn and is not ROLLING status - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canRollDice(11));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanDiscard()
 	{
+		System.out.println("Testing testCanDiscard:\n");
 		
+		System.out.print("Testing when player has <= 7 cards - ");
+		assertFalse(mm.canDiscard(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has > 7 cards, but not DISCARDING status - ");
+		Player p = mm.gameModel().getPlayer(12);
+		p.addResourcesToList(0, 3, 4, 1, 0);
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canDiscard(12));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when player has > 7 cards and in DISCARDING status - ");
+		mm.gameModel().turnTracker().setStatus(Status.DISCARDING);
+		assertTrue(mm.canDiscard(12));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanFinishTurn()
 	{
+		System.out.println("Testing testCanFinishTurn\n");
+
+		try
+		{
+			mm.gameModel().turnTracker().setCurrentTurn(new Index(0));
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 		
+		System.out.print("Testing when status is not PLAYING - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canFinishTurn(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING, but not the player's turn - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canFinishTurn(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING and is player's turn - ");
+		mm.gameModel().endTurn();
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canFinishTurn(11));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayYearOfPlenty()
 	{
 		System.out.println("\nTesting testCanPlayYearOfPlenty\n");
+
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -453,16 +632,17 @@ public class ModelTester
 		assertTrue(mm.canPlayYearOfPlenty(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayYearOfPlenty(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlaySoldier()
 	{
 		System.out.println("\nTesting testCanPlaySoldier\n");
+
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -492,16 +672,17 @@ public class ModelTester
 		assertTrue(mm.canPlaySoldier(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlaySoldier(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayMonopoly()
 	{
 		System.out.println("\nTesting testCanPlayMonopoly\n");
+
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -531,16 +712,17 @@ public class ModelTester
 		assertTrue(mm.canPlayMonopoly(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayMonopoly(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayMonument()
 	{
 		System.out.println("\nTesting testCanPlayMonument\n");
+
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -563,22 +745,38 @@ public class ModelTester
 		assertTrue(mm.canPlayMonument(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayMonument(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlaceRobber()
 	{
+		System.out.println("Testing testCanPlaceRobber\n");
+		mm.gameModel().setRobber(new Robber(new HexLocation(0,0)));
 		
+		System.out.print("Testing when not during ROBBING status - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canPlaceRobber(new HexLocation(1,0)));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing during ROBBING status and when Robber is not placed at same location - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROBBING);
+		assertTrue(mm.canPlaceRobber(new HexLocation(1,0)));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when Robber is placed at same location - ");
+		assertFalse(mm.canPlaceRobber(new HexLocation(0,0)));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayRoadBuilder()
 	{
 		System.out.println("\nTesting testCanPlayRoadBuilder\n");
+
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -608,10 +806,10 @@ public class ModelTester
 		assertTrue(mm.canPlayRoadBuilder(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayRoadBuilder(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@After
