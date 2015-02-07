@@ -4,8 +4,8 @@ import models.*;
 import facade.*;
 import shared.definitions.*;
 import shared.locations.*;
-
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -329,10 +329,49 @@ public class ModelTester
 	}
 	
 	@Test
-
 	public void testCanMaritimeTrade()
 	{
+		System.out.println("\nTesting canMaritimeTrade\n");
+		Player p = mm.gameModel().getPlayer(11);
+		Player p2 = mm.gameModel().getPlayer(12);
 		
+		System.out.print("Testing when it's not your turn");
+		mm.gameModel().turnTracker().setCurrentTurn(p2.playerIndex());
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when it is your turn, but not enough resources");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you have enough resources for a 4:1");
+		p.addResourcesToList(4, 0, 0, 0, 0);
+		assertTrue(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 3 like resources, and no port");
+		p.addResourcesToList(-1, 0, 0, 0, 0);
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 3 like resources, and a 3:1 port");
+		p.addResourcesToList(1, 0, 1, 1, 1);
+		mm.buildSettlement(p.playerID(), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthEast));
+		p.settlements().get(0).setPort(new Port(PortType.THREE, new HexLocation(0,0), EdgeDirection.NorthEast));
+		assertTrue(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 2 brick, and a 2:1 sheep port");
+		p.addResourcesToList(-1, 0, 0, 0, 0);
+		p.settlements().get(0).port().setResource(PortType.SHEEP);
+		assertFalse(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing when you only have 2 brick, and a 2:1 brick port");
+		p.settlements().get(0).port().setResource(PortType.BRICK);
+		assertTrue(mm.canMaritimeTrade(p.playerID()));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
