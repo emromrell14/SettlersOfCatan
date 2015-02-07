@@ -329,15 +329,15 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade(int playerID) {
-		boolean toReturn = false;
+	public boolean canMaritimeTrade(int playerID) 
+	{
 		Player player = mGameModel.getPlayer(playerID);
-		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex())) 
+		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) &&
+				mGameModel.turnTracker().status() == Status.PLAYING) 
 		{
-			toReturn = player.canMaritimeTrade();
+			return player.canMaritimeTrade();
 		}
-
-		return toReturn;
+		return false;
 	}
 
 	/**
