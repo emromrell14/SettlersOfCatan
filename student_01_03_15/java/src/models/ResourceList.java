@@ -131,7 +131,7 @@ public class ResourceList
 	
 	public boolean isEmpty()
 	{
-		if (this.brick() != 0 && this.ore() != 0 && this.wheat() !=0 && this.wood() != 0 && this.sheep() != 0)
+		if (this.brick() == 0 && this.ore() == 0 && this.wheat() == 0 && this.wood() == 0 && this.sheep() == 0)
 		{
 			return true;
 		}
