@@ -129,9 +129,9 @@ public class ResourceList
 		mWood += value;
 	}
 	
-	public boolean isEmpty(ResourceList rList)
+	public boolean isEmpty()
 	{
-		if (rList.brick() != 0 && rList.ore() != 0 && rList.wheat() !=0 && rList.wood() != 0 && rList.sheep() != 0)
+		if (this.brick() != 0 && this.ore() != 0 && this.wheat() !=0 && this.wood() != 0 && this.sheep() != 0)
 		{
 			return true;
 		}
