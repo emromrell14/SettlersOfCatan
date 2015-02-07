@@ -52,7 +52,7 @@ public class Poller implements Runnable
 	    	{
 				version = gameModel.version();
 				updateGUI(gameModel);
-			}
+			} 
 	    }
 	 }
 	
