@@ -1,7 +1,6 @@
 package JSONmodels;
 
 import shared.definitions.PortType;
-import shared.locations.VertexDirection;
 
 import com.google.gson.Gson;
 
@@ -67,6 +66,6 @@ public class Port
 	{
 		String portType = (resource == null) ? "THREE" : resource.toUpperCase();
 		return new models.Port(PortType.valueOf(portType), location.getModelHexLocation(), 
-				shared.locations.EdgeDirection.valueOf(direction), ratio);
+				shared.locations.EdgeDirection.valueOf(direction));
 	}
 }

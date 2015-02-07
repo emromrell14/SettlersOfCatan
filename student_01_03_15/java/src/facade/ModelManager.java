@@ -374,11 +374,9 @@ public class ModelManager {
 	 */
 	public boolean canFinishTurn(int playerID) 
 	{
-		if (this.mGameModel.turnTracker().status() == Status.PLAYING) 
-		{
-			return true;
-		}
-		return false;
+		Index playerIndex = mGameModel.getPlayerIndex(playerID);
+		return this.mGameModel.turnTracker().status() == Status.PLAYING
+				&& mGameModel.turnTracker().isPlayersTurn(playerIndex);
 	}
 
 	/**
@@ -469,14 +467,13 @@ public class ModelManager {
 	 *            the board.
 	 * @return true if player can place the Robber, false otherwise
 	 */
-	public boolean canPlaceRobber(int playerID, HexLocation newRobberLocation) 
+	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex))
+		if(mGameModel.turnTracker().status().equals(Status.ROBBING))
 		{
 			HexLocation currentRobberLocation = mGameModel.robber().location();
-			return !(currentRobberLocation.getX() == newRobberLocation.getX() && currentRobberLocation
-				.getY() == newRobberLocation.getY());
+			return !(currentRobberLocation.getX() == newRobberLocation.getX() 
+					&& currentRobberLocation.getY() == newRobberLocation.getY());
 		}
 		return false;
 	}
