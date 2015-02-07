@@ -4,8 +4,8 @@ import models.*;
 import facade.*;
 import shared.definitions.*;
 import shared.locations.*;
-
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -306,13 +306,38 @@ public class ModelTester
 	@Test
 	public void testCanFinishTurn()
 	{
+		System.out.println("Testing testCanFinishTurn\n");
+
+		try
+		{
+			mm.gameModel().turnTracker().setCurrentTurn(new Index(0));
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 		
+		System.out.print("Testing when status is not PLAYING - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canFinishTurn(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING, but not the player's turn - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canFinishTurn(11));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when status is PLAYING and is player's turn - ");
+		mm.gameModel().endTurn();
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canFinishTurn(11));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayYearOfPlenty()
 	{
-		System.out.println("Testing testCanPlayYearOfPlenty/n");
+		System.out.println("Testing testCanPlayYearOfPlenty\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -345,13 +370,13 @@ public class ModelTester
 		System.out.print("Testing whe it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayYearOfPlenty(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlaySoldier()
 	{
-		System.out.println("Testing testCanPlaySoldier/n");
+		System.out.println("Testing testCanPlaySoldier\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -384,13 +409,13 @@ public class ModelTester
 		System.out.print("Testing whe it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlaySoldier(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayMonopoly()
 	{
-		System.out.println("Testing testCanPlayMonopoly/n");
+		System.out.println("Testing testCanPlayMonopoly\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -423,13 +448,13 @@ public class ModelTester
 		System.out.print("Testing whe it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayMonopoly(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayMonument()
 	{
-		System.out.println("Testing testCanPlayMonument/n");
+		System.out.println("Testing testCanPlayMonument\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -455,19 +480,34 @@ public class ModelTester
 		System.out.print("Testing whe it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayMonument(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlaceRobber()
 	{
+		System.out.println("Testing testCanPlaceRobber\n");
+		mm.gameModel().setRobber(new Robber(new HexLocation(0,0)));
 		
+		System.out.print("Testing when not during ROBBING status - ");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertFalse(mm.canPlaceRobber(new HexLocation(1,0)));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing during ROBBING status and when Robber is not placed at same location - ");
+		mm.gameModel().turnTracker().setStatus(Status.ROBBING);
+		assertTrue(mm.canPlaceRobber(new HexLocation(1,0)));
+		System.out.println("PASSED");
+		
+		System.out.print("Testing when Robber is placed at same location - ");
+		assertFalse(mm.canPlaceRobber(new HexLocation(0,0)));
+		System.out.println("PASSED\n");
 	}
 	
 	@Test
 	public void testCanPlayRoadBuilder()
 	{
-		System.out.println("Testing testCanPlayRoadBuilder/n");
+		System.out.println("Testing testCanPlayRoadBuilder\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -500,7 +540,7 @@ public class ModelTester
 		System.out.print("Testing whe it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayRoadBuilder(12));
-		System.out.println("PASSED");
+		System.out.println("PASSED\n");
 	}
 	
 	@After
