@@ -357,6 +357,7 @@ public class ModelTester
 
 		System.out.print("Testing canPlayDevCard with it being the FIRST ROUND");
 		p.addDevCard(monop);
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
 		assertFalse(mm.canPlayDevCard(12));
 		System.out.println(" - PASSED");
@@ -374,6 +375,7 @@ public class ModelTester
 		System.out.println(" - PASSED");
 		
 		System.out.print("Testing canPlayDevCard with the turn status: PLAYING");
+		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
 		assertTrue(mm.canPlayDevCard(12));
 		System.out.println(" - PASSED");
