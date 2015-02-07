@@ -42,7 +42,7 @@ public interface IMasterManager
 
 	public boolean canPlayMonument(int playerID);
 
-	public boolean canPlaceRobber(int playerID, HexLocation newRobberLocation);
+	public boolean canPlaceRobber(HexLocation newRobberLocation);
 	
 	public boolean canAffordRoad(int playerID);
 	
