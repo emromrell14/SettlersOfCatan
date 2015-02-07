@@ -603,6 +603,9 @@ public class ModelTester
 	@Test
 	public void testCanPlayYearOfPlenty()
 	{
+		// This will only be called if canPlayDevCard() returns true, which
+		// checks that only one dev card is played per turn
+		
 		System.out.println("\nTesting testCanPlayYearOfPlenty\n");
 
 		Player p = mm.gameModel().getPlayer(12);
@@ -643,6 +646,9 @@ public class ModelTester
 	@Test
 	public void testCanPlaySoldier()
 	{
+		// This will only be called if canPlayDevCard() returns true, which
+		// checks that only one dev card is played per turn
+		
 		System.out.println("\nTesting testCanPlaySoldier\n");
 
 		Player p = mm.gameModel().getPlayer(12);
@@ -683,6 +689,8 @@ public class ModelTester
 	@Test
 	public void testCanPlayMonopoly()
 	{
+		// This will only be called if canPlayDevCard() returns true, which
+		// checks that only one dev card is played per turn
 		System.out.println("\nTesting testCanPlayMonopoly\n");
 
 		Player p = mm.gameModel().getPlayer(12);
@@ -723,6 +731,8 @@ public class ModelTester
 	@Test
 	public void testCanPlayMonument()
 	{
+		// This will only be called if canPlayDevCard() returns true, which
+		// checks that only one dev card is played per turn
 		System.out.println("\nTesting testCanPlayMonument\n");
 
 		Player p = mm.gameModel().getPlayer(12);
@@ -777,6 +787,8 @@ public class ModelTester
 	@Test
 	public void testCanPlayRoadBuilder()
 	{
+		// This will only be called if canPlayDevCard() returns true, which
+		// checks that only one dev card is played per turn
 		System.out.println("\nTesting testCanPlayRoadBuilder\n");
 
 		Player p = mm.gameModel().getPlayer(12);
