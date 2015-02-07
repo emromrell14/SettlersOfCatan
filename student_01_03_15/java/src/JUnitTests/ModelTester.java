@@ -432,7 +432,7 @@ public class ModelTester
 		assertTrue(mm.canPlayYearOfPlenty(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayYearOfPlenty(12));
 		System.out.println("PASSED");
@@ -471,7 +471,7 @@ public class ModelTester
 		assertTrue(mm.canPlaySoldier(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlaySoldier(12));
 		System.out.println("PASSED");
@@ -510,7 +510,7 @@ public class ModelTester
 		assertTrue(mm.canPlayMonopoly(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayMonopoly(12));
 		System.out.println("PASSED");
@@ -542,7 +542,7 @@ public class ModelTester
 		assertTrue(mm.canPlayMonument(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayMonument(12));
 		System.out.println("PASSED");
@@ -587,7 +587,7 @@ public class ModelTester
 		assertTrue(mm.canPlayRoadBuilder(12));
 		System.out.println("PASSED");
 		
-		System.out.print("Testing whe it is not player's turn - ");
+		System.out.print("Testing when it is not player's turn - ");
 		mm.gameModel().turnTracker().endTurn();
 		assertFalse(mm.canPlayRoadBuilder(12));
 		System.out.println("PASSED");
