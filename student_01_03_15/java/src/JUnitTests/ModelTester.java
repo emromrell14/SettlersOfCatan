@@ -202,11 +202,11 @@ public class ModelTester
 	@Test
 	public void testCanAffordCity()
 	{
-		System.out.println("Testing canAffordCity\n");
+		System.out.println("\nTesting canAffordCity:\n");
 		Player p = mm.gameModel().getPlayer(12);
 		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		
-		System.out.print("Test with too few resources: ");
+		System.out.print("Test with too few resources ");
 		p.addResourcesToList(0, 0, 0, 0, 0);
 		assertFalse(mm.canAffordCity(12)); //false cause it has no resources and no settlement to place on
 		System.out.println(" - PASSED");
@@ -283,6 +283,28 @@ public class ModelTester
 		mm.gameModel().devCards().clear();
 		assertFalse(mm.canBuyDevCard(12));
 		System.out.println(" - PASSED");
+		
+		System.out.print("Test with it being the FIRST ROUND");
+		mm.gameModel().devCards().add(new Monopoly());
+		p.addResourcesToList(0,1,1,1,0);
+		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
+
+		System.out.print("Test with it being the SECOND ROUND");
+		mm.gameModel().turnTracker().setStatus(Status.SECONDROUND);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Test with the turn status: ROLLING");
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Test with the turn status: PLAYING");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canBuyDevCard(12));
+		System.out.println(" - PASSED");
 	}
 	
 	/* NOTE TO ERIC R.
@@ -300,6 +322,7 @@ public class ModelTester
 		Player p = mm.gameModel().getPlayer(12);
 		mm.gameModel().turnTracker().setCurrentTurn(p.playerIndex());
 		Monopoly monop = new Monopoly();
+		
 		p.addDevCard(monop);
 		System.out.print("Testing canPlayDevCard with card that is status:new -");
 		assertFalse(mm.canPlayDevCard(12));	//false because the card is new
@@ -310,6 +333,29 @@ public class ModelTester
 		System.out.print("Testing canPlayDevCard with card that is status:old -");
 		assertTrue(mm.canPlayDevCard(12));	//holds 2 monopoly cards, one new one not. 
 		System.out.println("Passed");
+		
+		System.out.print("Testing canPlayDevCard with it being the FIRST ROUND");
+		p.addDevCard(monop);
+		mm.gameModel().turnTracker().setStatus(Status.FIRSTROUND);
+		assertFalse(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing canPlayDevCard with it being the SECOND ROUND");
+		p.addDevCard(monop);
+		mm.gameModel().turnTracker().setStatus(Status.SECONDROUND);
+		assertFalse(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing canPlayDevCard with the turn status: ROLLING");
+		p.addDevCard(monop);
+		mm.gameModel().turnTracker().setStatus(Status.ROLLING);
+		assertFalse(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
+		
+		System.out.print("Testing canPlayDevCard with the turn status: PLAYING");
+		mm.gameModel().turnTracker().setStatus(Status.PLAYING);
+		assertTrue(mm.canPlayDevCard(12));
+		System.out.println(" - PASSED");
 	}
 	
 	@Test
@@ -356,7 +402,7 @@ public class ModelTester
 	@Test
 	public void testCanPlayYearOfPlenty()
 	{
-		System.out.println("Testing testCanPlayYearOfPlenty/n");
+		System.out.println("\nTesting testCanPlayYearOfPlenty:\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -395,7 +441,7 @@ public class ModelTester
 	@Test
 	public void testCanPlaySoldier()
 	{
-		System.out.println("Testing testCanPlaySoldier/n");
+		System.out.println("\nTesting testCanPlaySoldier:\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -434,7 +480,7 @@ public class ModelTester
 	@Test
 	public void testCanPlayMonopoly()
 	{
-		System.out.println("Testing testCanPlayMonopoly/n");
+		System.out.println("\nTesting testCanPlayMonopoly:\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -473,7 +519,7 @@ public class ModelTester
 	@Test
 	public void testCanPlayMonument()
 	{
-		System.out.println("Testing testCanPlayMonument/n");
+		System.out.println("\nTesting testCanPlayMonument:\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
@@ -511,7 +557,7 @@ public class ModelTester
 	@Test
 	public void testCanPlayRoadBuilder()
 	{
-		System.out.println("Testing testCanPlayRoadBuilder/n");
+		System.out.println("\nTesting testCanPlayRoadBuilder:\n");
 		Player p = mm.gameModel().getPlayer(12);
 		
 		System.out.print("Testing when status is not PLAYING - ");
