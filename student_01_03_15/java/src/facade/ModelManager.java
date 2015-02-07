@@ -266,15 +266,16 @@ public class ModelManager {
 	 */
 	public boolean canPlayDevCard(int playerID) 
 	{
+		Player p = mGameModel.getPlayer(playerID);
 		if (
-				//!mGameModel.players().contains(this) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().value() != playerID || // Checks that it is this player's turn
+				!mGameModel.players().contains(p) || // Checks that this player is in this game
+				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
 				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
 		)
 		{
 			return false;
 		}
-		return this.mGameModel.getPlayer(playerID).canPlayDevCard();
+		return p.canPlayDevCard();
 	}
 
 	/**
@@ -288,13 +289,13 @@ public class ModelManager {
 	 */
 	public boolean canOfferTrade(int playerID) 
 	{
-		boolean toReturn = false;
 		Index playerIndex = mGameModel.getPlayerIndex(playerID);
-		if (mGameModel.turnTracker().isPlayersTurn(playerIndex)) {
-			toReturn = mGameModel.canOfferTrade(playerID);
+		if (mGameModel.turnTracker().isPlayersTurn(playerIndex)) 
+		{
+			return mGameModel.canOfferTrade(playerID);
 		}
 
-		return toReturn;
+		return false;
 	}
 
 	/**
@@ -328,15 +329,15 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade(int playerID) {
-		boolean toReturn = false;
+	public boolean canMaritimeTrade(int playerID) 
+	{
 		Player player = mGameModel.getPlayer(playerID);
-		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex())) 
+		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) &&
+				mGameModel.turnTracker().status() == Status.PLAYING) 
 		{
-			toReturn = player.canMaritimeTrade();
+			return player.canMaritimeTrade();
 		}
-
-		return toReturn;
+		return false;
 	}
 
 	/**

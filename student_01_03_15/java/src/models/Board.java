@@ -189,6 +189,7 @@ public class Board
 				this.mSettlements.remove(settlement);
 				settlement.setBuildingTypeToCity();
 				this.mCities.add(settlement);
+				break;
 			}
 		}
 	}

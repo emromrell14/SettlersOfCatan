@@ -403,7 +403,7 @@ public class Player implements IPlayer
 		ResourceList r = this.resources();
 		r.addWheat(-2);
 		r.addOre(-3);
-		for(Building settlement : this.settlements())
+		for(Building settlement : mSettlements)
 		{
 			VertexLocation vertex = settlement.location().getNormalizedLocation();
 			if(loc.equals(vertex))
@@ -454,19 +454,16 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		boolean hasPlayableCard = false;
+		
 		for (DevCard d : this.devCards())
 		{
 			if (!d.isNew())
 			{
-				hasPlayableCard = true;
+				return true;
 			}
 		}
-		if (!hasPlayableCard)
-		{
-			return false;
-		}
-		return true;
+		
+		return false;
 	}
 
 	public void buyDevCard()		// needs to be filled correctly
