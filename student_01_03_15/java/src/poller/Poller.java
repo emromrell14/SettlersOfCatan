@@ -53,7 +53,7 @@ public class Poller implements Runnable
 	    	{
 				version = gameModel.version();
 				updateGUI(gameModel);
-			}
+			} 
 	    }
 	 }
 	
@@ -112,6 +112,7 @@ public class Poller implements Runnable
 	
 	public void interrupt()
 	{
-		timer.cancel();
+		if(timer != null)
+			timer.cancel();
 	}
 }

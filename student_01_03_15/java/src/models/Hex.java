@@ -11,8 +11,8 @@ public class Hex
 {
 	/** Location of this hex on the grid */
 	private HexLocation mLocation;
-	/** What resource this hex gives. If it is the desert tile this will return null */
-	private HexType mResource; //OPTIONAL. What resource this title gives- it's only here if the tile is not the desert.
+	/** What resource this hex gives. If it is the desert tile this will return DESERT. */
+	private HexType mResource;
 	/** The dice roll number associated with this hex.  It has no value if this hex is the desert hex */
 	private TokenValue mNumber; //OPTIONAL. What number is on this tile. It's omitted if this is a desert hex.
 	
