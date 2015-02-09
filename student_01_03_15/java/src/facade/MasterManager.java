@@ -368,7 +368,7 @@ public class MasterManager implements IMasterManager
 	 */
 	public String getGameModel(int version)
 	{
-		return mGameManager.getGameModel();
+		return mGameManager.getGameModel(version);
 	}
 	
 	/**
