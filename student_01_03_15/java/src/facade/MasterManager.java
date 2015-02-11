@@ -47,6 +47,11 @@ public class MasterManager implements IMasterManager
 		mModelManager.updateModel(newGameModel);
 
 	}
+	
+	public Game getCurrentModel()
+	{
+		return mModelManager.getCurrentModel();
+	}
 
 	public void communicateWithMockProxy()
 	{

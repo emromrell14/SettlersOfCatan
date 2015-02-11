@@ -23,6 +23,11 @@ public class ModelManager {
 	{
 		mGameModel = newGameModel;
 	}
+	
+	public Game getCurrentModel()
+	{
+		return mGameModel;
+	}
 
 	/**
 	 * Checks all preconditions for user registration
