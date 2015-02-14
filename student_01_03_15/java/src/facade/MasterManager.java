@@ -3,6 +3,7 @@ package facade;
 import models.Game;
 import models.ResourceList;
 import proxy.*;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -44,8 +45,10 @@ public class MasterManager implements IMasterManager
 	
 	public void updateModel(Game newGameModel)
 	{
-		mModelManager.updateModel(newGameModel);
-
+		if(newGameModel != null)
+		{
+			mModelManager.updateModel(newGameModel);
+		}
 	}
 	
 	public Game getCurrentModel()
@@ -369,11 +372,13 @@ public class MasterManager implements IMasterManager
 	/**
 	 * Requests json String with game model info
 	 * @pre none
-	 * @return json String with game model in it
+	 * @return the current game version
 	 */
-	public String getGameModel(int version)
+	public void getGameModel(int version)
 	{
-		return mGameManager.getGameModel(version);
+		Game game = mGameManager.getGameModel(version);
+		mModelManager.updateModel(game);
+//		return mModelManager.gameModel().version();
 	}
 	
 	/**
@@ -438,9 +443,10 @@ public class MasterManager implements IMasterManager
 	 * @post a message is sent to the other plans via the message board
 	 * @return JSON String with the client model
 	 */
-	public String sendChatMessage() 
+	public void sendChatMessage(int playerIndex,String message) 
 	{
-		return null;
+		Game game = mMovesManager.sendChatMessage(playerIndex, message);
+		this.updateModel(game);
 	}
 	/**
 	 * Used to roll a number at the beginning of your turn
@@ -450,9 +456,10 @@ public class MasterManager implements IMasterManager
 	 * 		(who gets resources, whether the robber gets moved, etc.)
 	 * @return JSON String with the client model
 	 */
-	public String rollDice()
+	public void rollDice(int playerIndex, int rollNum)
 	{
-		return null;
+		Game game = mMovesManager.rollDice(playerIndex, rollNum);
+		this.updateModel(game);
 	}
 	/**
 	 * Moves the robber, selecting the new robber position and player to rob
@@ -461,9 +468,10 @@ public class MasterManager implements IMasterManager
 	 * @post player is given opportunity to choose which player to steal from
 	 * @return JSON String with the client model
 	 */
-	public String robPlayer() 
+	public void robPlayer(int playerIndex, int victimIndex, HexLocation location) 
 	{
-		return null;
+		Game game = mMovesManager.robPlayer(playerIndex, victimIndex, location);
+		this.updateModel(game);
 	}
 	/**
 	 * Used to finish your turn
@@ -471,9 +479,10 @@ public class MasterManager implements IMasterManager
 	 * @post turn is moved to next player in order
 	 * @return JSON String with the client model
 	 */
-	public String finishTurn() 
+	public void finishTurn(int playerIndex) 
 	{
-		return null;
+		Game game = mMovesManager.finishTurn(playerIndex);
+		this.updateModel(game);
 	}
 	/**
 	 * Used to buy a development card
@@ -482,9 +491,10 @@ public class MasterManager implements IMasterManager
 	 * @post player's resource cards decrease by development card cost
 	 * @return JSON String with the client model
 	 */
-	public String buyDevCard() 
+	public void buyDevCard(int playerIndex) 
 	{
-		return null;
+		Game game = mMovesManager.buyDevCard(playerIndex);
+		this.updateModel(game);
 	}
 	/**
 	 * Plays a "Year of Plenty" card from your hand to gain the two specified resources
@@ -492,9 +502,10 @@ public class MasterManager implements IMasterManager
 	 * @post Player gains the two specified resources
 	 * @return JSON String with the client model
 	 */
-	public String playYearOfPlenty()
+	public void playYearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2)
 	{
-		return null;
+		Game game = mMovesManager.playYearOfPlenty(playerIndex, res1, res2);
+		this.updateModel(game);
 	}
 	/**
 	 * Plays a "Road Building" card from your hand to build two roads at the specified locations
@@ -502,9 +513,10 @@ public class MasterManager implements IMasterManager
 	 * @post player is given opportunity to place two roads
 	 * @return JSON String with the client model
 	 */
-	public String playRoadBuilding() 
+	public void playRoadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) 
 	{
-		return null;
+		Game game = mMovesManager.playRoadBuilding(playerIndex, spot1, spot2);
+		this.updateModel(game);
 	}
 	/**
 	 * Plays a "Soldier" from your hand, selecting the new robber position and player to rob
@@ -514,9 +526,10 @@ public class MasterManager implements IMasterManager
 	 * @post gives player option to move Robber
 	 * @return JSON String with the client model
 	 */
-	public String playSoldier()
+	public void playSoldier(int playerIndex, int victimIndex, HexLocation location)
 	{
-		return null;
+		Game game = mMovesManager.playSoldier(playerIndex, victimIndex, location);
+		this.updateModel(game);
 	}
 	/**
 	 * Plays a "Monopoly" card from your hand to monopolize the specified resource
@@ -526,9 +539,10 @@ public class MasterManager implements IMasterManager
 	 * @post all opposing players will have all of the specified resource discarded
 	 * @return JSON String with the client model
 	 */
-	public String playMonopoly() 
+	public void playMonopoly(ResourceType resource, int playerIndex) 
 	{
-		return null;
+		Game game = mMovesManager.playMonopoly(resource, playerIndex);
+		this.updateModel(game);
 	}
 	/**
 	 * Plays a "Monument" card from your hand to give you a victory point
@@ -536,9 +550,10 @@ public class MasterManager implements IMasterManager
 	 * @post a victory point is awarded to player
 	 * @return JSON String with the client model
 	 */
-	public String playMonument() 
+	public void playMonument(int playerIndex) 
 	{
-		return null;
+		Game game = mMovesManager.playMonument(playerIndex);
+		this.updateModel(game);
 	}
 	
 	/**
@@ -550,10 +565,10 @@ public class MasterManager implements IMasterManager
 	 * @post player's resources will be decreased according to building cost of road
 	 * @return JSON String with the client model
 	 */
-	public String buildRoad(int playerID, EdgeLocation loc) 
+	public void buildRoad(int playerIndex, EdgeLocation roadLoc, boolean free) 
 	{
-		//return mModelManager.buildRoad(playerID, loc);
-		return "";
+		Game game = mMovesManager.buildRoad(playerIndex,roadLoc,free);
+		this.updateModel(game);
 	}
 	/**
 	 * Builds a settlement at the specified location. (Set 'free' to true during initial setup)
@@ -566,9 +581,10 @@ public class MasterManager implements IMasterManager
 	 * @post resources will be decreased according to building costs
 	 * @return JSON String with the client model
 	 */
-	public String buildSettlement() 
+	public void buildSettlement(int playerIndex, VertexLocation vertexLoc, boolean free) 
 	{
-		return null;
+		Game game = mMovesManager.buildSettlement(playerIndex, vertexLoc,free);
+		this.updateModel(game);
 	}
 	/**
 	 * Builds a city at the specified location
@@ -580,9 +596,10 @@ public class MasterManager implements IMasterManager
 	 * @post resources will be decreased according to building costs
 	 * @return JSON String with the client model
 	 */
-	public String buildCity() 
+	public void buildCity(int playerIndex, VertexLocation vertexLoc, boolean free) 
 	{
-		return null;
+		Game game = mMovesManager.buildCity(playerIndex, vertexLoc, free);
+		this.updateModel(game);
 	}
 	/**
 	 * Offers a domestic trade to another player
@@ -592,9 +609,10 @@ public class MasterManager implements IMasterManager
 	 * @post a trade is offered
 	 * @return JSON String with the client model
 	 */
-	public String offerTrade() 
+	public void offerTrade(int playerIndex, ResourceList offer, int receiverIndex) 
 	{
-		return null;
+		Game game = mMovesManager.offerTrade(playerIndex, offer, receiverIndex);
+		this.updateModel(game);
 	}
 	/**
 	 * Used to accept or reject a trade offered to you
@@ -602,9 +620,10 @@ public class MasterManager implements IMasterManager
 	 * @post a trade is either accepted or rejected
 	 * @return JSON String with the client model
 	 */
-	public String acceptTrade() 
+	public void acceptTrade(int playerIndex, boolean willAccept) 
 	{
-		return null;
+		Game game = mMovesManager.acceptTrade(playerIndex, willAccept);
+		this.updateModel(game);
 	}
 	/**
 	 * Used to execute a maritime trade
@@ -612,9 +631,10 @@ public class MasterManager implements IMasterManager
 	 * @post adjusts resource amounts according to trade criteria
 	 * @return JSON String with the client model
 	 */
-	public String executeMaritimeTrade()
+	public void executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes)
 	{
-		return null;
+		Game game = mMovesManager.executeMaritimeTrade(playerIndex, ratio, inputRes, outputRes);
+		this.updateModel(game);
 	}
 	/**
 	 * Discards the specified resource cards
@@ -622,9 +642,10 @@ public class MasterManager implements IMasterManager
 	 * @post specified resource cards will be discarded
 	 * @return JSON String with the client model
 	 */
-	public String discardCards() 
+	public void discardCards(int playerIndex, ResourceList cards) 
 	{
-		return null;
+		Game game = mMovesManager.discardCards(playerIndex, cards);
+		this.updateModel(game);
 	}
 
 	// Util Manager

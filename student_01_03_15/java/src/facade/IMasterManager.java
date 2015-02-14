@@ -1,5 +1,6 @@
 package facade;
 
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -8,6 +9,8 @@ import models.ResourceList;
 
 public interface IMasterManager 
 {		
+	public Game getCurrentModel();
+	
 	public void updateModel(Game newGameModel);
 	
 	public void communicateWithMockProxy();
@@ -74,7 +77,7 @@ public interface IMasterManager
 	public String loadGame();
 
 	// Game Manager
-	public String getGameModel(int version);
+	public void getGameModel(int version);
 
 	public String resetGame();
 
@@ -85,39 +88,39 @@ public interface IMasterManager
 	public String getAIPlayers();
 
 	// Moves Manager
-	public String sendChatMessage();
+	public void sendChatMessage(int playerIndex,String message);
 
-	public String rollDice();
+	public void rollDice(int playerIndex, int rollNum);
 
-	public String robPlayer();
+	public void robPlayer(int playerIndex, int victimIndex, HexLocation location);
 
-	public String finishTurn();
+	public void finishTurn(int playerIndex);
 
-	public String buyDevCard();
+	public void buyDevCard(int playerIndex);
 
-	public String playYearOfPlenty();
+	public void playYearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2);
 
-	public String playRoadBuilding();
+	public void playRoadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 
-	public String playSoldier();
+	public void playSoldier(int playerIndex, int victimIndex, HexLocation location);
 
-	public String playMonopoly();
+	public void playMonopoly(ResourceType resource, int playerIndex);
 
-	public String playMonument();
+	public void playMonument(int playerIndex);
 
-	public String buildRoad(int playerID, EdgeLocation loc);
+	public void buildRoad(int playerIndex, EdgeLocation roadLoc, boolean free);
 
-	public String buildSettlement();
+	public void buildSettlement(int playerIndex, VertexLocation vertexLoc, boolean free);
 
-	public String buildCity();
+	public void buildCity(int playerIndex, VertexLocation vertexLoc, boolean free);
 
-	public String offerTrade();
+	public void offerTrade(int playerIndex, ResourceList offer, int receiverIndex);
 
-	public String acceptTrade();
+	public void acceptTrade(int playerIndex, boolean willAccept);
 
-	public String executeMaritimeTrade();
+	public void executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes);
 
-	public String discardCards();
+	public void discardCards(int playerIndex, ResourceList cards);
 
 	// Util Manager
 	public String changeLogLevel();

@@ -1,5 +1,7 @@
 package facade;
 
+import models.Game;
+import JSONmodels.ClientModel;
 import JSONmodels.ResourceList;
 import proxy.IProxy;
 import shared.definitions.ResourceType;
@@ -26,6 +28,17 @@ public class MovesManager
 		mProxy = proxy;
 	}
 	
+	private Game jsonToGame(String response)
+	{
+		Game game = null;
+		if(!response.contains("Failed"))
+		{
+			ClientModel model = ClientModel.fromJSON(response);
+			game = model.getGameObject();
+		}
+		return game;
+	}
+	
 	/**
 	 * Sends a chat message
 	 * 
@@ -37,7 +50,7 @@ public class MovesManager
 	 * @post a message is sent to the other plans via the message board
 	 * @return JSON String with the client model
 	 */
-	public String sendChatMessage(int playerIndex, String message) 
+	public Game sendChatMessage(int playerIndex, String message) 
 	{
 		String response;
 		String body;
@@ -45,7 +58,7 @@ public class MovesManager
 		body = "{type:\"sendChat\", playerIndex:" + playerIndex + ", content:\"" + message + "\"}";
 		
 		response = mProxy.post("/moves/sendChat", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Used to roll a number at the beginning of your turn
@@ -55,7 +68,7 @@ public class MovesManager
 	 * 		(who gets resources, whether the robber gets moved, etc.)
 	 * @return JSON String with the client model
 	 */
-	public String rollDice(int playerIndex, int rollNum)
+	public Game rollDice(int playerIndex, int rollNum)
 	{
 		String response;
 		String body;
@@ -63,7 +76,7 @@ public class MovesManager
 		body = "{type:\"rollNumber\", playerIndex:" + playerIndex + ", number:" + rollNum + "}";
 		
 		response = mProxy.post("/moves/rollNumber", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Moves the robber, selecting the new robber position and player to rob
@@ -72,7 +85,7 @@ public class MovesManager
 	 * @post player is given opportunity to choose which player to steal from
 	 * @return JSON String with the client model
 	 */
-	public String robPlayer(int playerIndex, int victimIndex, HexLocation location) 
+	public Game robPlayer(int playerIndex, int victimIndex, HexLocation location) 
 	{
 		String response;
 		String body;
@@ -81,7 +94,7 @@ public class MovesManager
 					", location:{x:\"" + location.getX() + "\", y:\"" + location.getY() + "\"}}";
 		
 		response = mProxy.post("/moves/robPlayer", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Used to finish your turn
@@ -89,7 +102,7 @@ public class MovesManager
 	 * @post turn is moved to next player in order
 	 * @return JSON String with the client model
 	 */
-	public String finishTurn(int playerIndex) 
+	public Game finishTurn(int playerIndex) 
 	{
 		String response;
 		String body;
@@ -97,7 +110,7 @@ public class MovesManager
 		body = "{type:\"finishTurn\", playerIndex:" + playerIndex + "}";
 		
 		response = mProxy.post("/moves/finishTurn", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Used to buy a development card
@@ -106,7 +119,7 @@ public class MovesManager
 	 * @post player's resource cards decrease by development card cost
 	 * @return JSON String with the client model
 	 */
-	public String buyDevCard(int playerIndex) 
+	public Game buyDevCard(int playerIndex) 
 	{
 		String response;
 		String body;
@@ -114,7 +127,7 @@ public class MovesManager
 		body = "{type:\"buyDevCard\", playerIndex:" + playerIndex + "}";
 		
 		response = mProxy.post("/moves/buyDevCard", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Plays a "Year of Plenty" card from your hand to gain the two specified resources
@@ -122,7 +135,7 @@ public class MovesManager
 	 * @post Player gains the two specified resources
 	 * @return JSON String with the client model
 	 */
-	public String playYearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2)
+	public Game playYearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2)
 	{
 		String response;
 		String body;
@@ -131,7 +144,7 @@ public class MovesManager
 					"\", resource2:\"" + res2 + "\"}";
 		
 		response = mProxy.post("/moves/Year_of_Plenty", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Plays a "Road Building" card from your hand to build two roads at the specified locations
@@ -139,7 +152,7 @@ public class MovesManager
 	 * @post player is given opportunity to place two roads
 	 * @return JSON String with the client model
 	 */
-	public String playRoadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2 ) 
+	public Game playRoadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2 ) 
 	{
 		String response;
 		String body;
@@ -149,7 +162,7 @@ public class MovesManager
 					spot2.getX() + ", y:" + spot2.getY() + ", direction:\"" + spot2.getDirection() + "\"}}";
 		
 		response = mProxy.post("/moves/Road_Building", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Plays a "Soldier" from your hand, selecting the new robber position and player to rob
@@ -159,7 +172,7 @@ public class MovesManager
 	 * @post gives player option to move Robber
 	 * @return JSON String with the client model
 	 */
-	public String playSoldier(int playerIndex, int victimIndex, HexLocation location)
+	public Game playSoldier(int playerIndex, int victimIndex, HexLocation location)
 	{
 		String response;
 		String body;
@@ -168,7 +181,7 @@ public class MovesManager
 					", location:{x:\"" + location.getX() + "\", y:\"" + location.getY() + "\"}}";
 		
 		response = mProxy.post("/moves/Soldier", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Plays a "Monopoly" card from your hand to monopolize the specified resource
@@ -178,7 +191,7 @@ public class MovesManager
 	 * @post all opposing players will have all of the specified resource discarded
 	 * @return JSON String with the client model
 	 */
-	public String playMonopoly(ResourceType resource, int playerIndex) 
+	public Game playMonopoly(ResourceType resource, int playerIndex) 
 	{
 		String response;
 		String body;
@@ -186,7 +199,7 @@ public class MovesManager
 		body = "{type:\"Monopoly\", resource:\"" + resource + "\", playerIndex:" + playerIndex + "}";
 		
 		response = mProxy.post("/moves/Monopoly", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Plays a "Monument" card from your hand to give you a victory point
@@ -194,7 +207,7 @@ public class MovesManager
 	 * @post a victory point is awarded to player
 	 * @return JSON String with the client model
 	 */
-	public String playMonument(int playerIndex) 
+	public Game playMonument(int playerIndex) 
 	{
 		String response;
 		String body;
@@ -202,7 +215,7 @@ public class MovesManager
 		body = "{type:\"Monument\", playerIndex:" + playerIndex + "}";
 		
 		response = mProxy.post("/moves/Monument", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Builds a road at the specified location. (Set 'free' to true during initial setup)
@@ -213,7 +226,7 @@ public class MovesManager
 	 * @post player's resources will be decreased according to building cost of road
 	 * @return JSON String with the client model
 	 */
-	public String buildRoad(int playerIndex, EdgeLocation roadLoc, boolean free) 
+	public Game buildRoad(int playerIndex, EdgeLocation roadLoc, boolean free) 
 	{
 		String response;
 		String body;
@@ -222,7 +235,7 @@ public class MovesManager
 				free + "}";
 		
 		response = mProxy.post("/moves/buildRoad", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Builds a settlement at the specified location. (Set 'free' to true during initial setup)
@@ -235,7 +248,7 @@ public class MovesManager
 	 * @post resources will be decreased according to building costs
 	 * @return JSON String with the client model
 	 */
-	public String buildSettlement(int playerIndex, VertexLocation vertexLoc, boolean free) 
+	public Game buildSettlement(int playerIndex, VertexLocation vertexLoc, boolean free) 
 	{
 		String response;
 		String body;
@@ -245,7 +258,7 @@ public class MovesManager
 				"\"}, free:" + free + "}";
 		
 		response = mProxy.post("/moves/buildSettlement", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Builds a city at the specified location
@@ -257,7 +270,7 @@ public class MovesManager
 	 * @post resources will be decreased according to building costs
 	 * @return JSON String with the client model
 	 */
-	public String buildCity(int playerIndex, VertexLocation vertexLoc, boolean free) 
+	public Game buildCity(int playerIndex, VertexLocation vertexLoc, boolean free) 
 	{
 		String response;
 		String body;
@@ -267,7 +280,7 @@ public class MovesManager
 				"\"}, free:" + free + "}";
 		
 		response = mProxy.post("/moves/buildCity", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Offers a domestic trade to another player
@@ -277,7 +290,7 @@ public class MovesManager
 	 * @post a trade is offered
 	 * @return JSON String with the client model
 	 */
-	public String offerTrade(int playerIndex, ResourceList offer, int receiverIndex) 
+	public Game offerTrade(int playerIndex, ResourceList offer, int receiverIndex) 
 	{
 		String response;
 		String body;
@@ -286,7 +299,7 @@ public class MovesManager
 					receiverIndex + "}";
 		
 		response = mProxy.post("/moves/offerTrade", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Used to accept or reject a trade offered to you
@@ -294,7 +307,7 @@ public class MovesManager
 	 * @post a trade is either accepted or rejected
 	 * @return JSON String with the client model
 	 */
-	public String acceptTrade(int playerIndex, boolean willAccept) 
+	public Game acceptTrade(int playerIndex, boolean willAccept) 
 	{
 		String response;
 		String body;
@@ -302,7 +315,7 @@ public class MovesManager
 		body = "{type:\"acceptTrade\", playerIndex:" + playerIndex + ", willAccept:" + willAccept + "}";
 		
 		response = mProxy.post("/moves/acceptTrade", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Used to execute a maritime trade, The ratio of the trade your doing as an integer (ie. put 3 for a 3:1 trade)
@@ -310,7 +323,7 @@ public class MovesManager
 	 * @post adjusts resource amounts according to trade criteria
 	 * @return JSON String with the client model
 	 */
-	public String executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes)
+	public Game executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes)
 	{
 		String response;
 		String body;
@@ -319,7 +332,7 @@ public class MovesManager
 					inputRes + "\", outputResource:\"" + outputRes +"\"}";
 		
 		response = mProxy.post("/moves/maritimeTrade", body);
-		return response;
+		return jsonToGame(response);
 	}
 	/**
 	 * Discards the specified resource cards
@@ -327,7 +340,7 @@ public class MovesManager
 	 * @post specified resource cards will be discarded
 	 * @return JSON String with the client model
 	 */
-	public String discardCards(int playerIndex, ResourceList cards) 
+	public Game discardCards(int playerIndex, ResourceList cards) 
 	{
 		String response;
 		String body;
@@ -335,6 +348,6 @@ public class MovesManager
 		body = "{type:\"discardCards\", playerIndex:" + playerIndex + ", discardedCards:" + cards.toJSON() + "}";
 		
 		response = mProxy.post("/moves/discardCards", body);
-		return response;
+		return jsonToGame(response);
 	}
 }

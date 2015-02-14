@@ -1,5 +1,7 @@
 package facade;
 
+import models.Game;
+import JSONmodels.ClientModel;
 import proxy.IProxy;
 
 public class GameManager
@@ -23,12 +25,12 @@ public class GameManager
 	 * @pre none
 	 * @return json String with game model in it
 	 */
-	public String getGameModel(int version)
+	public Game getGameModel(int version)
 	{
 		String response;
 		
 		response = mProxy.get("/game/model");
-		return response;
+		return jsonToGame(response);
 	}
 	
 	/**
@@ -98,5 +100,16 @@ public class GameManager
 		
 		response = mProxy.get("/game/listAI");
 		return response;
+	}
+	
+	private Game jsonToGame(String response)
+	{
+		Game game = null;
+		if(!response.contains("Failed"))
+		{
+			ClientModel model = ClientModel.fromJSON(response);
+			game = model.getGameObject();
+		}
+		return game;
 	}
 }

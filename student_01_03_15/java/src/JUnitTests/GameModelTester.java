@@ -42,7 +42,9 @@ public class GameModelTester
 	public void test() throws Exception
 	{
 		// Get most recent game
-		Game game = poller.getGameModel(0);
+//		Game game = poller.getGameModel(0);
+		MasterManager.getInstance().getGameModel(0);
+		Game game = MasterManager.getInstance().getCurrentModel();
 		System.out.print("Aquiring current game model");
 		assertTrue(game.version() == 1);
 		System.out.println(" - PASSED");

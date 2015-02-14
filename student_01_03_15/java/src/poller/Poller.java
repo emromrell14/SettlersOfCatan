@@ -17,7 +17,7 @@ public class Poller implements Runnable
 {
 	private IMasterManager mMasterManager;
 	private final int mSecondsBetweenPolls = 2;
-	private int version = 0;
+//	private int version = 0;
 	private Timer timer;
 
 
@@ -34,7 +34,7 @@ public class Poller implements Runnable
 	
 	public int getVersion()
 	{
-		return this.version;
+		return mMasterManager.getCurrentModel().version();
 	}
 	
 	/**
@@ -46,14 +46,9 @@ public class Poller implements Runnable
 	    @Override
 		public void run()
 	    {
-			//if (!compareVersions()) // THE COMPARING ACTUALLY TAKES PLACE AND IS
-	    								// RESOLVED ON THE SERVER SIDE
-	    	Game gameModel = getGameModel(version);
-			if(gameModel != null)
-	    	{
-				version = gameModel.version();
-				updateGUI(gameModel);
-			} 
+			// THE COMPARING ACTUALLY TAKES PLACE AND IS RESOLVED ON THE SERVER SIDE
+//			version = 
+			mMasterManager.getGameModel(getVersion());
 	    }
 	 }
 	
@@ -79,35 +74,6 @@ public class Poller implements Runnable
 	public boolean compareVersions() 
 	{
 		return true; // this is just a temporary default
-	}
-    
-	/**
-	 * returns a String of JSON from the Server if the game state has changed
-	 * 
-	 * @return a String of JSON or null if the game state hasn't changed
-	 */
-	public Game getGameModel(int version)
-	{
-		ClientModel cModel = null;
-		Game game = null;
-		String gameModel = mMasterManager.getGameModel(version);
-		
-		if(gameModel != null)
-		{
-			cModel = ClientModel.fromJSON(gameModel);
-			game = cModel.getGameObject();
-		}
-		return game;
-	}
-	
-	/**
-     * updateGUI calls to update clients game to the game/s latest version
-     *
-     */
-	
-	public void updateGUI(Game g) 
-	{
-		mMasterManager.updateModel(g);
 	}
 	
 	public void interrupt()
