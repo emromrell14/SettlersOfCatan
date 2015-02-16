@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 public class EdgeValue 
 {
 	private int owner; //The index (not ID) of the player who owns this piece (0-3).
-	private EdgeLocation location; //The location of this road.
+	private EdgeLocationJSON location; //The location of this road.
 	
 	/**
 	 * Creates a EdgeValue object from a JSON string
@@ -43,7 +43,7 @@ public class EdgeValue
 	/**
 	 * @return the location
 	 */
-	public EdgeLocation getLocation() {
+	public EdgeLocationJSON getLocation() {
 		return location;
 	}
 	

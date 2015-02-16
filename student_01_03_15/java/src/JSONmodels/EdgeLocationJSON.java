@@ -1,12 +1,13 @@
 package JSONmodels;
 
 import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 import com.google.gson.Gson;
 
-public class EdgeLocation 
+public class EdgeLocationJSON 
 {
 	private int x;
 	private int y;
@@ -18,10 +19,10 @@ public class EdgeLocation
 	 * @param Valid JSON string
 	 * @return New EdgeLocation object
 	 */
-	public static EdgeLocation fromJSON(String JSON)
+	public static EdgeLocationJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, EdgeLocation.class);
+		return gson.fromJson(JSON, EdgeLocationJSON.class);
 	}
 	
 	/**
@@ -56,9 +57,9 @@ public class EdgeLocation
 		return direction;
 	}
 	
-	public shared.locations.EdgeLocation getModelEdgeLocation()
+	public EdgeLocation getModelEdgeLocation()
 	{
-		return new shared.locations.EdgeLocation(new shared.locations.HexLocation(x,y), EdgeDirection.valueOf(direction));
+		return new EdgeLocation(new shared.locations.HexLocation(x,y), EdgeDirection.valueOf(direction));
 	}
 	
 	public VertexLocation getModelVertexLocation()

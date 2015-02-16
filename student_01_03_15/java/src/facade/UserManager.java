@@ -25,15 +25,15 @@ public class UserManager
 	 * @post Cookie will be set.
 	 * @return a String of JSON
 	 */
-	public String login(String username, String password)
+	public void login(String username, String password)
 	{
-		String response;
+//		String response;
 		String body;
 		
 		body = "{username:\"" + username + "\",password:\"" + password + "\"}";
-		response = mProxy.post("/user/login", body);
+		/*response = */mProxy.post("/user/login", body);
 		
-		return response;
+//		return response;
 	}
 
 	/**
@@ -42,14 +42,14 @@ public class UserManager
 	 * @post Player is logged in and cookie set.
 	 * @return a String of JSON
 	 */
-	public String register(String username, String password) 
+	public void register(String username, String password) 
 	{
-		String response;
+//		String response;
 		String body;
 		
 		body = "{username:\"" + username + "\",password:\"" + password + "\"}";
-		response = mProxy.post("/user/register", body);
+		/*response = */mProxy.post("/user/register", body);
 		
-		return response;
+//		return response;
 	}
 }

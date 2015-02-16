@@ -39,7 +39,7 @@ public class GameManager
 	 * @post game is reset to initial state
 	 * @return new GameModel json String
 	 */
-	public String resetGame()
+	public Game resetGame()
 	{
 		String response;
 		String body;
@@ -47,7 +47,7 @@ public class GameManager
 		body = "";
 		
 		response = mProxy.post("/game/reset", body);
-		return response;
+		return jsonToGame(response);
 	}
 	
 	/**
@@ -56,9 +56,11 @@ public class GameManager
 	 * @post list of commands is executed
 	 * @return json String client model identical to GameModel
 	 */
-	public String executeCommandList()
+	public Game executeCommandList()
 	{
-		return null;
+		String body = "";
+		String response = mProxy.post("game/commands", body);
+		return jsonToGame(response);
 	}
 
 	/**
@@ -69,7 +71,7 @@ public class GameManager
 	 */
 	public String getCommandList() 
 	{
-		return null;
+		return mProxy.get("/game/commands");
 	}
 	
 	/**
@@ -77,15 +79,15 @@ public class GameManager
 	 * @pre must not have more than 3 total players already
 	 * @post an AI player is added to the game
 	 */
-	public String addAIPlayer() 
+	public void addAIPlayer() 
 	{
-		String response;
+//		String response;
 		String body;
 		
 		body = "{AIType:\"LARGEST_ARMY\"}";
 		
-		response = mProxy.post("/game/addAI", body);
-		return response;
+		/*response = */mProxy.post("/game/addAI", body);
+//		return response;
 	}
 
 	/**

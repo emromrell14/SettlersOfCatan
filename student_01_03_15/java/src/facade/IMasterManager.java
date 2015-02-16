@@ -1,5 +1,6 @@
 package facade;
 
+import JSONmodels.EdgeLocationJSON;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -61,27 +62,27 @@ public interface IMasterManager
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager
-	public String login();
+	public void login(String username,String password);
 
-	public String register();
+	public void register(String username,String password);
 
 	// Games Manager
 	public String getGameList();
 
-	public String createGame();
+	public String createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
 
-	public String joinGame();
+	public String joinGame(int id, String color);
 
-	public String saveGame();
+	public String saveGame(int gameId, String fileName);
 
-	public String loadGame();
+	public String loadGame(String fileName);
 
 	// Game Manager
 	public void getGameModel(int version);
 
-	public String resetGame();
+	public void resetGame();
 
-	public String executeCommandList();
+	public void executeCommandList();
 
 	public void addAIPlayer();
 
@@ -108,21 +109,21 @@ public interface IMasterManager
 
 	public void playMonument(int playerIndex);
 
-	public void buildRoad(int playerIndex, EdgeLocation roadLoc, boolean free);
+	public void buildRoad(int playerIndex, EdgeLocationJSON roadLoc, boolean free);
 
 	public void buildSettlement(int playerIndex, VertexLocation vertexLoc, boolean free);
 
 	public void buildCity(int playerIndex, VertexLocation vertexLoc, boolean free);
 
-	public void offerTrade(int playerIndex, ResourceList offer, int receiverIndex);
+	public void offerTrade(int playerIndex, JSONmodels.ResourceList offer, int receiverIndex);
 
 	public void acceptTrade(int playerIndex, boolean willAccept);
 
-	public void executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes);
+	public void executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, JSONmodels.ResourceList outputRes);
 
-	public void discardCards(int playerIndex, ResourceList cards);
+	public void discardCards(int playerIndex, JSONmodels.ResourceList cards);
 
 	// Util Manager
-	public String changeLogLevel();
+	public void changeLogLevel(String log);
 
 }

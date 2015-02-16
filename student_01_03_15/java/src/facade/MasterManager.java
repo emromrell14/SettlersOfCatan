@@ -1,7 +1,8 @@
 package facade;
 
+import JSONmodels.EdgeLocationJSON;
+import JSONmodels.ResourceList;
 import models.Game;
-import models.ResourceList;
 import proxy.*;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -182,7 +183,7 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer) 
+	public boolean canAcceptTrade(int playerID, models.ResourceList tradeOffer) 
 	{
 		return mModelManager.canAcceptTrade(playerID,tradeOffer);
 	}
@@ -300,9 +301,9 @@ public class MasterManager implements IMasterManager
 	 * @post Cookie will be set.
 	 * @return a String of JSON
 	 */
-	public String login()
+	public void login(String username, String password)
 	{
-		return null;
+		mUserManager.login(username, password);
 	}
 
 	/**
@@ -311,9 +312,9 @@ public class MasterManager implements IMasterManager
 	 * @post Player is logged in and cookie set.
 	 * @return a String of JSON
 	 */
-	public String register() 
+	public void register(String username, String password) 
 	{
-		return null;
+		mUserManager.register(username, password);
 	}
 
 	// Games Manager
@@ -324,7 +325,7 @@ public class MasterManager implements IMasterManager
 	 */
 	public String getGameList()
 	{
-		return null;
+		return mGamesManager.getGameList();
 	}
 
 	/**
@@ -332,9 +333,9 @@ public class MasterManager implements IMasterManager
 	 * @pre none
 	 * @return a String of JSON
 	 */
-	public String createGame()
+	public String createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
 	{
-		return null;
+		return mGamesManager.createGame(randomTiles, randomNumbers, randomPorts, name);
 	}
 
 	/**
@@ -343,9 +344,9 @@ public class MasterManager implements IMasterManager
 	 * @post Player is added to the game
 	 * @return a String of JSON
 	 */
-	public String joinGame()
+	public String joinGame(int id, String color)
 	{
-		return null;
+		return mGamesManager.joinGame(id, color);
 	}
 
 	/**
@@ -353,9 +354,9 @@ public class MasterManager implements IMasterManager
 	 * @pre none
 	 * @return a String of JSON
 	 */
-	public String saveGame()
+	public String saveGame(int gameId, String fileName)
 	{
-		return null;
+		return mGamesManager.saveGame(gameId, fileName);
 	}
 
 	/**
@@ -363,9 +364,9 @@ public class MasterManager implements IMasterManager
 	 * pre saved game file must be in parsable JSON format
 	 * @return a String of JSON
 	 */
-	public String loadGame() 
+	public String loadGame(String fileName) 
 	{
-		return null;
+		return mGamesManager.loadGame(fileName);
 	}
 
 	// Game Manager
@@ -387,9 +388,10 @@ public class MasterManager implements IMasterManager
 	 * @post game is reset to initial state
 	 * @return new GameModel json String
 	 */
-	public String resetGame()
+	public void resetGame()
 	{
-		return null;
+		Game game = mGameManager.resetGame();
+		this.updateModel(game);
 	}
 	
 	/**
@@ -398,9 +400,9 @@ public class MasterManager implements IMasterManager
 	 * @post list of commands is executed
 	 * @return json String client model identical to GameModel
 	 */
-	public String executeCommandList()
+	public void executeCommandList()
 	{
-		return null;
+		mGameManager.executeCommandList();
 	}
 
 	/**
@@ -411,7 +413,7 @@ public class MasterManager implements IMasterManager
 	 */
 	public String getCommandList() 
 	{
-		return null;
+		return mGameManager.getCommandList();
 	}
 	
 	/**
@@ -421,7 +423,7 @@ public class MasterManager implements IMasterManager
 	 */
 	public void addAIPlayer() 
 	{
-		
+		mGameManager.addAIPlayer();
 	}
 
 	/**
@@ -432,7 +434,7 @@ public class MasterManager implements IMasterManager
 	 */
 	public String getAIPlayers()
 	{
-		return null;
+		return mGameManager.getAIPlayers();
 	}
 
 	// Moves Manager
@@ -565,7 +567,7 @@ public class MasterManager implements IMasterManager
 	 * @post player's resources will be decreased according to building cost of road
 	 * @return JSON String with the client model
 	 */
-	public void buildRoad(int playerIndex, EdgeLocation roadLoc, boolean free) 
+	public void buildRoad(int playerIndex, EdgeLocationJSON roadLoc, boolean free) 
 	{
 		Game game = mMovesManager.buildRoad(playerIndex,roadLoc,free);
 		this.updateModel(game);
@@ -655,8 +657,8 @@ public class MasterManager implements IMasterManager
 	 * @post sets the server's log level
 	 * @return JSON string
 	 */
-	public String changeLogLevel() 
+	public void changeLogLevel(String log) 
 	{
-		return null;
+		mUtilManager.changeLogLevel(log);
 	}
 }

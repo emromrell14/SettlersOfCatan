@@ -26,7 +26,7 @@ public class JSONTester {
 		
 		//EdgeLocation
 		String JSONEdgeLocation = "{\"x\":360,\"y\":55,\"direction\":\"N\"}";
-		EdgeLocation edgeLocation = EdgeLocation.fromJSON(JSONEdgeLocation);
+		EdgeLocationJSON edgeLocation = EdgeLocationJSON.fromJSON(JSONEdgeLocation);
 		assertTrue(edgeLocation.getX() == 360);
 		assertTrue(edgeLocation.getDirection().equals("N"));
 		assertTrue(edgeLocation.toJSON().equals(JSONEdgeLocation));

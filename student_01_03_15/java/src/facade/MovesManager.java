@@ -2,12 +2,13 @@ package facade;
 
 import models.Game;
 import JSONmodels.ClientModel;
+import JSONmodels.EdgeLocationJSON;
 import JSONmodels.ResourceList;
 import proxy.IProxy;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import JSONmodels.EdgeLocation;
 
 public class MovesManager
 {
@@ -158,8 +159,8 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"Road_Building\", playerIndex:" + playerIndex + ", spot1:{x:" +
-					spot1.getX() + ", y:" + spot1.getY() + ", direction:\"" + spot1.getDirection() + "\"}, spot2:{x:" +
-					spot2.getX() + ", y:" + spot2.getY() + ", direction:\"" + spot2.getDirection() + "\"}}";
+					spot1.getHexLoc().getX() + ", y:" + spot1.getHexLoc().getY() + ", direction:\"" + spot1.getDir() + "\"}, spot2:{x:" +
+					spot2.getHexLoc().getX() + ", y:" + spot2.getHexLoc().getY() + ", direction:\"" + spot2.getDir() + "\"}}";
 		
 		response = mProxy.post("/moves/Road_Building", body);
 		return jsonToGame(response);
@@ -226,7 +227,7 @@ public class MovesManager
 	 * @post player's resources will be decreased according to building cost of road
 	 * @return JSON String with the client model
 	 */
-	public Game buildRoad(int playerIndex, EdgeLocation roadLoc, boolean free) 
+	public Game buildRoad(int playerIndex, EdgeLocationJSON roadLoc, boolean free) 
 	{
 		String response;
 		String body;
