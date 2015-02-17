@@ -2,10 +2,15 @@ package client.map;
 
 import java.util.*;
 
+import JSONmodels.EdgeLocationJSON;
+import models.Index;
+import models.Status;
+import models.TurnTracker;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import facade.MasterManager;
 
 
 /**
@@ -14,10 +19,13 @@ import client.data.*;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
+	private MasterManager master;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
+		
+		master = MasterManager.getInstance();
 		
 		setRobView(robView);
 		
@@ -45,10 +53,19 @@ public class MapController extends Controller implements IMapController {
 		for (int x = 0; x <= 3; ++x) {
 			
 			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {				
-				int r = rand.nextInt(HexType.values().length);
-				HexType hexType = HexType.values()[r];
+			for (int y = -3; y <= maxY; ++y) {
+				System.out.println("x: " + x + " y: " + y);
 				HexLocation hexLoc = new HexLocation(x, y);
+				int r = rand.nextInt(HexType.values().length);
+				HexType hexType;
+				if (Math.abs(y)==3 || Math.abs(x)==3)
+				{
+					hexType = HexType.WATER;
+				}
+				else
+				{
+					hexType = HexType.values()[r];
+				}
 				getView().addHex(hexLoc, hexType);
 				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
 						CatanColor.RED);
@@ -64,7 +81,15 @@ public class MapController extends Controller implements IMapController {
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) {
 					int r = rand.nextInt(HexType.values().length);
-					HexType hexType = HexType.values()[r];
+					HexType hexType;
+					if (Math.abs(y)==3 || Math.abs(x)==3)
+					{
+						hexType = HexType.WATER;
+					}
+					else
+					{
+						hexType = HexType.values()[r];
+					}
 					HexLocation hexLoc = new HexLocation(-x, y);
 					getView().addHex(hexLoc, hexType);
 					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
@@ -78,6 +103,12 @@ public class MapController extends Controller implements IMapController {
 				}
 			}
 		}
+		
+		// Adding water tiles
+		getView().addHex(new HexLocation(1,2), HexType.WATER);
+		getView().addHex(new HexLocation(2,1), HexType.WATER);
+		getView().addHex(new HexLocation(-1,-2), HexType.WATER);
+		getView().addHex(new HexLocation(-2,-1), HexType.WATER);
 		
 		PortType portType = PortType.BRICK;
 		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
@@ -101,30 +132,40 @@ public class MapController extends Controller implements IMapController {
 		getView().addNumber(new HexLocation(2, 0), 12);
 		
 		//</temp>
+		
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		
-		return true;
+		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
+		return master.canPlaceRoad(playerID, edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		
-		return true;
+		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
+		return master.canPlaceSettlement(playerID, vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
 		
-		return true;
+		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
+		return master.canPlaceCity(playerID, vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		
-		return true;
+		return master.canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		
+		EdgeLocationJSON edgeLocJSON = new EdgeLocationJSON(edgeLoc);
+		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
+		Status status = master.getCurrentModel().turnTracker().status();
+		//String type = status.toString();
+		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
+		master.buildRoad(playerID, edgeLocJSON, free);
 		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
 	}
 

@@ -149,6 +149,18 @@ public class Game implements IGame
 		return playerIndex;
 	}
 
+	public int getPlayerID(Index playerIndex)
+	{
+		for(Player player : this.mPlayers)
+		{
+			if(player.playerIndex().equals(playerIndex))
+			{
+				return player.playerID();
+			}
+		}
+		return -1;
+	}
+	
 	public TurnTracker turnTracker() 
 	{
 		return mTurnTracker;
