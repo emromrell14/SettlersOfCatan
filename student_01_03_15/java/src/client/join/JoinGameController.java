@@ -4,6 +4,7 @@ import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import facade.MasterManager;
 
 
 /**
@@ -15,6 +16,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private MasterManager master;
 	
 	/**
 	 * JoinGameController constructor
@@ -32,6 +34,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		master = MasterManager.getInstance();
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -106,8 +109,23 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	@Override
-	public void createNewGame() {
+	public void createNewGame() 
+	{
+		String title = this.newGameView.getTitle();
+		Boolean randHexes = this.newGameView.getRandomlyPlaceHexes();
+		Boolean randNums = this.newGameView.getRandomlyPlaceNumbers();
+		Boolean randPorts = this.newGameView.getUseRandomPorts();
 		
+		// for testing
+//		System.out.println("Checkboxes: " + randHexes + " " + randNums +  " " + randPorts);
+//		System.out.println("Title-" + title + "-");
+		
+		// if title isn't blank
+		if(!title.equals(""))
+		{
+			master.createGame(randHexes, randNums, randPorts, title);
+			getNewGameView().closeModal();
+		}
 		getNewGameView().closeModal();
 	}
 
