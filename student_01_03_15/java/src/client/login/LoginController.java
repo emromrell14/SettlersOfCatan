@@ -77,18 +77,24 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
 		String username = getLoginView().getLoginUsername();
 		String password = getLoginView().getLoginPassword();
-		boolean success = MasterManager.getInstance().login(username, password);
+		boolean success = !username.isEmpty() && !password.isEmpty();
+		if(success)
+		{
+			success = MasterManager.getInstance().login(username, password);
+		}
 
 		// TODO: log in user
 
 		// If log in succeeded
 		if(success)
 		{
+//			System.out.println("login succeeded");
 			getLoginView().closeModal();
 			loginAction.execute();
 		}
 		else
 		{
+//			System.out.println("login failed");
 			messageView.setTitle("ERROR");
 			messageView.setMessage("Invalid Login Credentials");
 //			getLoginView().closeModal();
@@ -101,8 +107,8 @@ public class LoginController extends Controller implements ILoginController {
 		String username = getLoginView().getRegisterUsername();
 		String password = getLoginView().getRegisterPassword();
 		String password2 = getLoginView().getRegisterPasswordRepeat();
-		boolean success = false;
-		if(password.contentEquals(password2))
+		boolean success = !username.isEmpty() && !password.isEmpty() && !password2.isEmpty() && password.contentEquals(password2);
+		if(success)
 		{
 			success = MasterManager.getInstance().register(username, password2);
 		}
