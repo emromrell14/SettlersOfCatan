@@ -2,12 +2,16 @@ package client.login;
 
 import client.base.*;
 import client.misc.*;
+
 import java.net.*;
 import java.io.*;
 import java.util.*;
 import java.lang.reflect.*;
+
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+
+import facade.MasterManager;
 
 /**
  * Implementation for the login controller
@@ -71,22 +75,51 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void signIn() {
+		String username = getLoginView().getLoginUsername();
+		String password = getLoginView().getLoginPassword();
+		boolean success = MasterManager.getInstance().login(username, password);
 
 		// TODO: log in user
 
 		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		if(success)
+		{
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
+		else
+		{
+			messageView.setTitle("ERROR");
+			messageView.setMessage("Invalid Login Credentials");
+//			getLoginView().closeModal();
+			messageView.showModal();
+		}
 	}
 
 	@Override
 	public void register() {
-
+		String username = getLoginView().getRegisterUsername();
+		String password = getLoginView().getRegisterPassword();
+		String password2 = getLoginView().getRegisterPasswordRepeat();
+		boolean success = false;
+		if(password.contentEquals(password2))
+		{
+			success = MasterManager.getInstance().register(username, password2);
+		}
 		// TODO: register new user (which, if successful, also logs them in)
 
 		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		if(success)
+		{
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
+		else
+		{
+			messageView.setTitle("ERROR");
+			messageView.setMessage("Invalid Register Credentials");
+//			getLoginView().closeModal();
+			messageView.showModal();
+		}
 	}
-
 }
