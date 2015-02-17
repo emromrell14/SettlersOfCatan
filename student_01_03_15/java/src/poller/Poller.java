@@ -34,7 +34,8 @@ public class Poller implements Runnable
 	
 	public int getVersion()
 	{
-		return mMasterManager.getCurrentModel().version();
+		Game game = mMasterManager.getCurrentModel();
+		return game == null?-1:game.version();
 	}
 	
 	/**
