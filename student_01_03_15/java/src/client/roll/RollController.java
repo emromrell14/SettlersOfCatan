@@ -36,7 +36,9 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-
+		int die1 = (int)(Math.random() * 6) + 1;
+		int die2 = (int)(Math.random() * 6) + 1;
+		this.resultView.setRollValue(die1 + die2);
 		getResultView().showModal();
 	}
 
