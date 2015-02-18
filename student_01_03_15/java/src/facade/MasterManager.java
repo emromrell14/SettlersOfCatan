@@ -49,6 +49,11 @@ public class MasterManager implements IMasterManager
 		return mProxy.getPlayerID();
 	}
 	
+	public Index getPlayerIndex()
+	{
+		return this.getCurrentModel().getPlayerIndex(mProxy.getPlayerID());
+	}
+	
 	public void updateModel(Game newGameModel)
 	{
 		if(newGameModel != null)
