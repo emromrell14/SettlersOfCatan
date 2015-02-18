@@ -9,6 +9,7 @@ import javax.swing.border.Border;
 import java.util.*;
 
 import shared.definitions.PieceType;
+import shared.locations.HexLocation;
 import client.base.*;
 import client.data.*;
 
@@ -28,6 +29,8 @@ public class RobView extends OverlayView implements IRobView {
 	private JLabel label;
 	private JButton defaultButton = null;
 	private JPanel buttonPanel;
+	
+	private HexLocation robberLocation;
 	RobPlayerInfo[] victims;
 	private ArrayList<JButton> victimButtons;
 
@@ -128,6 +131,16 @@ public class RobView extends OverlayView implements IRobView {
 				revalidate();
 			}
 		}
+	}
+
+	@Override
+	public HexLocation getRobberLocation() {
+		return this.robberLocation;
+	}
+
+	@Override
+	public void setRobberLocation(HexLocation robberLocation) {
+		this.robberLocation = robberLocation;
 	}
 
 }
