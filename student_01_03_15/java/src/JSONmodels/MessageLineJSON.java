@@ -4,7 +4,7 @@ import models.Message;
 
 import com.google.gson.Gson;
 
-public class MessageLine 
+public class MessageLineJSON 
 {
 	private String message;
 	private String source;
@@ -15,10 +15,10 @@ public class MessageLine
 	 * @param Valid JSON string
 	 * @return New MessageLine object
 	 */
-	public static MessageLine fromJSON(String JSON)
+	public static MessageLineJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, MessageLine.class);
+		return gson.fromJson(JSON, MessageLineJSON.class);
 	}
 	
 	/**

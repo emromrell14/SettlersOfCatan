@@ -1,8 +1,10 @@
 package JSONmodels;
 
+import models.ResourceList;
+
 import com.google.gson.Gson;
 
-public class ResourceList 
+public class ResourceListJSON 
 {
 	private int brick;
 	private int ore;
@@ -10,16 +12,24 @@ public class ResourceList
 	private int wheat;
 	private int wood;
 	
+	public ResourceListJSON(ResourceList cards) {
+		this.brick = cards.brick();
+		this.ore = cards.ore();
+		this.sheep = cards.sheep();
+		this.wheat = cards.wheat();
+		this.wood = cards.wood();
+	}
+
 	/**
 	 * Creates a ResourceList object from a JSON string
 	 * 
 	 * @param Valid JSON string
 	 * @return New ResourceList object
 	 */
-	public static ResourceList fromJSON(String JSON)
+	public static ResourceListJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, ResourceList.class);
+		return gson.fromJson(JSON, ResourceListJSON.class);
 	}
 	
 	public models.ResourceList getModel()

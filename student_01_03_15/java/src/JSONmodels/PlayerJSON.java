@@ -12,18 +12,18 @@ import shared.definitions.CatanColor;
 
 import com.google.gson.Gson;
 
-public class Player 
+public class PlayerJSON 
 {
 	private String color; //The color of this player
 	private boolean discarded; //Whether this player has discarded or not already this discard phase
 	private Number monuments; //How many monuments this player has played.
 	private String name;
-	private DevCardList newDevCards; //The dev cards the player bought this turn
-	private DevCardList oldDevCards; //The dev cards the player had when the turn started
+	private DevCardListJSON newDevCards; //The dev cards the player bought this turn
+	private DevCardListJSON oldDevCards; //The dev cards the player had when the turn started
 	private int playerIndex; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
 	private boolean playedDevCard; //Whether the player has played a dev card this turn
 	private int playerID; //The unique playerID. This is used to pick the client player apart from the others. This is only used here and in your cookie.
-	private ResourceList resources; //The resource cards this player has.
+	private ResourceListJSON resources; //The resource cards this player has.
 	private int roads;
 	private int settlements; //How many settlements this player has left to play.
 	private int cities; //How many cities this player has left to play.
@@ -75,7 +75,7 @@ public class Player
 		return player;
 	}
 
-	private List<DevCard> makeDevCardList(DevCardList list, boolean isNew)
+	private List<DevCard> makeDevCardList(DevCardListJSON list, boolean isNew)
 	{
 		List<DevCard> devList = new ArrayList<>();
 		for(int i = 0; i < list.getMonopoly(); i++)
@@ -115,10 +115,10 @@ public class Player
 	 * @param Valid JSON string
 	 * @return New Player object
 	 */
-	public static Player fromJSON(String JSON)
+	public static PlayerJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, Player.class);
+		return gson.fromJson(JSON, PlayerJSON.class);
 	}
 	
 	/**
@@ -163,14 +163,14 @@ public class Player
 	/**
 	 * @return the newDevCards
 	 */
-	public DevCardList getNewDevCards() {
+	public DevCardListJSON getNewDevCards() {
 		return newDevCards;
 	}
 
 	/**
 	 * @return the oldDevCards
 	 */
-	public DevCardList getOldDevCards() {
+	public DevCardListJSON getOldDevCards() {
 		return oldDevCards;
 	}
 
@@ -198,7 +198,7 @@ public class Player
 	/**
 	 * @return the resources
 	 */
-	public ResourceList getResources() {
+	public ResourceListJSON getResources() {
 		return resources;
 	}
 

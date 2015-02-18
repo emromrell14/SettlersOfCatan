@@ -1,8 +1,8 @@
 package facade;
 
-import JSONmodels.EdgeLocationJSON;
-import JSONmodels.ResourceList;
 import models.Game;
+import models.Index;
+import models.ResourceList;
 import proxy.*;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -101,14 +101,14 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a road can be built, false otherwise
 	 */
-	public boolean canAffordRoad(int playerID)
+	public boolean canAffordRoad(Index playerIndex)
 	{
-		return mModelManager.canAffordRoad(playerID);
+		return mModelManager.canAffordRoad(playerIndex);
 	}
 	
-	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
+	public boolean canPlaceRoad(Index playerIndex, EdgeLocation loc)
 	{
-		return mModelManager.canPlaceRoad(playerID, loc);
+		return mModelManager.canPlaceRoad(playerIndex, loc);
 	}
 
 	/**
@@ -118,14 +118,14 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
-	public boolean canAffordSettlement(int playerID) 
+	public boolean canAffordSettlement(Index playerIndex) 
 	{
-		return mModelManager.canAffordSettlement(playerID);
+		return mModelManager.canAffordSettlement(playerIndex);
 	}
 	
-	public boolean canPlaceSettlement(int playerID, VertexLocation loc)
+	public boolean canPlaceSettlement(Index playerIndex, VertexLocation loc)
 	{
-		return mModelManager.canPlaceSettlement(playerID, loc);
+		return mModelManager.canPlaceSettlement(playerIndex, loc);
 	}
 	
 	/**
@@ -135,14 +135,14 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return	true if a city can be built, false otherwise
 	 */
-	public boolean canAffordCity(int playerID) 
+	public boolean canAffordCity(Index playerIndex) 
 	{
-		return mModelManager.canAffordCity(playerID);
+		return mModelManager.canAffordCity(playerIndex);
 	}
 	
-	public boolean canPlaceCity(int playerID, VertexLocation loc)
+	public boolean canPlaceCity(Index playerIndex, VertexLocation loc)
 	{
-		return mModelManager.canPlaceCity(playerID, loc);
+		return mModelManager.canPlaceCity(playerIndex, loc);
 	}
 	
 	/**
@@ -152,9 +152,9 @@ public class MasterManager implements IMasterManager
 	 * @post none 
 	 * @return true if a card can be bought, false otherwise
 	 */
-	public boolean canBuyDevCard(int playerID)
+	public boolean canBuyDevCard(Index playerIndex)
 	{
-		return mModelManager.canBuyDevCard(playerID);
+		return mModelManager.canBuyDevCard(playerIndex);
 	}
 
 	/**
@@ -164,9 +164,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a card can be played, false otherwise
 	 */
-	public boolean canPlayDevCard(int playerID) 
+	public boolean canPlayDevCard(Index playerIndex) 
 	{
-		return mModelManager.canPlayDevCard(playerID);
+		return mModelManager.canPlayDevCard(playerIndex);
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a trade can be offered, false otherwise
 	 */
-	public boolean canOfferTrade(int playerID) 
+	public boolean canOfferTrade(Index playerIndex) 
 	{
-		return mModelManager.canOfferTrade(playerID);
+		return mModelManager.canOfferTrade(playerIndex);
 	}
 
 	/**
@@ -188,9 +188,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade(int playerID, models.ResourceList tradeOffer) 
+	public boolean canAcceptTrade(Index playerIndex, models.ResourceList tradeOffer) 
 	{
-		return mModelManager.canAcceptTrade(playerID,tradeOffer);
+		return mModelManager.canAcceptTrade(playerIndex,tradeOffer);
 	}
 
 	/**
@@ -199,21 +199,21 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade(int playerID) 
+	public boolean canMaritimeTrade(Index playerIndex) 
 	{
-		return mModelManager.canMaritimeTrade(playerID);
+		return mModelManager.canMaritimeTrade(playerIndex);
 	}
 
 	/**
 	 * Checks all preconditions for rolling the dice.
 	 * @pre Player is logged in, playing a game, it is their turn, they haven't already rolled. 
 	 * @post none
-	 * @params playerID ID of the player
+	 * @params playerIndex Index of the player
 	 * @return true if the dice can be rolled, false otherwise
 	 */
-	public boolean canRollDice(int playerID) 
+	public boolean canRollDice(Index playerIndex) 
 	{
-		return mModelManager.canRollDice(playerID);
+		return mModelManager.canRollDice(playerIndex);
 	}
 
 	/**
@@ -222,9 +222,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if the card can be discarded, false otherwise
 	 */
-	public boolean canDiscard(int playerID)
+	public boolean canDiscard(Index playerIndex)
 	{
-		return mModelManager.canDiscard(playerID);
+		return mModelManager.canDiscard(playerIndex);
 	}
 
 	/**
@@ -232,9 +232,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can finish turn, false otherwise
 	 */
-	public boolean canFinishTurn(int playerID)
+	public boolean canFinishTurn(Index playerIndex)
 	{
-		return mModelManager.canFinishTurn(playerID);
+		return mModelManager.canFinishTurn(playerIndex);
 	}
 
 	/**
@@ -242,9 +242,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canPlayYearOfPlenty(int playerID)
+	public boolean canPlayYearOfPlenty(Index playerIndex)
 	{
-		return mModelManager.canPlayYearOfPlenty(playerID);
+		return mModelManager.canPlayYearOfPlenty(playerIndex);
 	}
 
 	/**
@@ -252,9 +252,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canPlayRoadBuilder(int playerID)
+	public boolean canPlayRoadBuilder(Index playerIndex)
 	{
-		return mModelManager.canPlayRoadBuilder(playerID);
+		return mModelManager.canPlayRoadBuilder(playerIndex);
 	}
 
 	/**
@@ -262,9 +262,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canPlaySoldier(int playerID)
+	public boolean canPlaySoldier(Index playerIndex)
 	{
-		return mModelManager.canPlaySoldier(playerID);
+		return mModelManager.canPlaySoldier(playerIndex);
 	}
 
 	/**
@@ -272,9 +272,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canPlayMonopoly(int playerID)
+	public boolean canPlayMonopoly(Index playerIndex)
 	{
-		return mModelManager.canPlayMonopoly(playerID);
+		return mModelManager.canPlayMonopoly(playerIndex);
 	}
 
 	/**
@@ -282,9 +282,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument(int playerID)
+	public boolean canPlayMonument(Index playerIndex)
 	{
-		return mModelManager.canPlayMonument(playerID);
+		return mModelManager.canPlayMonument(playerIndex);
 	}
 
 	/**
@@ -450,7 +450,7 @@ public class MasterManager implements IMasterManager
 	 * @post a message is sent to the other plans via the message board
 	 * @return JSON String with the client model
 	 */
-	public void sendChatMessage(int playerIndex,String message) 
+	public void sendChatMessage(Index playerIndex,String message) 
 	{
 		Game game = mMovesManager.sendChatMessage(playerIndex, message);
 		this.updateModel(game);
@@ -463,7 +463,7 @@ public class MasterManager implements IMasterManager
 	 * 		(who gets resources, whether the robber gets moved, etc.)
 	 * @return JSON String with the client model
 	 */
-	public void rollDice(int playerIndex, int rollNum)
+	public void rollDice(Index playerIndex, int rollNum)
 	{
 		Game game = mMovesManager.rollDice(playerIndex, rollNum);
 		this.updateModel(game);
@@ -475,7 +475,7 @@ public class MasterManager implements IMasterManager
 	 * @post player is given opportunity to choose which player to steal from
 	 * @return JSON String with the client model
 	 */
-	public void robPlayer(int playerIndex, int victimIndex, HexLocation location) 
+	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation location) 
 	{
 		Game game = mMovesManager.robPlayer(playerIndex, victimIndex, location);
 		this.updateModel(game);
@@ -486,7 +486,7 @@ public class MasterManager implements IMasterManager
 	 * @post turn is moved to next player in order
 	 * @return JSON String with the client model
 	 */
-	public void finishTurn(int playerIndex) 
+	public void finishTurn(Index playerIndex) 
 	{
 		Game game = mMovesManager.finishTurn(playerIndex);
 		this.updateModel(game);
@@ -498,7 +498,7 @@ public class MasterManager implements IMasterManager
 	 * @post player's resource cards decrease by development card cost
 	 * @return JSON String with the client model
 	 */
-	public void buyDevCard(int playerIndex) 
+	public void buyDevCard(Index playerIndex) 
 	{
 		Game game = mMovesManager.buyDevCard(playerIndex);
 		this.updateModel(game);
@@ -509,7 +509,7 @@ public class MasterManager implements IMasterManager
 	 * @post Player gains the two specified resources
 	 * @return JSON String with the client model
 	 */
-	public void playYearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2)
+	public void playYearOfPlenty(Index playerIndex, ResourceType res1, ResourceType res2)
 	{
 		Game game = mMovesManager.playYearOfPlenty(playerIndex, res1, res2);
 		this.updateModel(game);
@@ -520,7 +520,7 @@ public class MasterManager implements IMasterManager
 	 * @post player is given opportunity to place two roads
 	 * @return JSON String with the client model
 	 */
-	public void playRoadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) 
+	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2) 
 	{
 		Game game = mMovesManager.playRoadBuilding(playerIndex, spot1, spot2);
 		this.updateModel(game);
@@ -533,7 +533,7 @@ public class MasterManager implements IMasterManager
 	 * @post gives player option to move Robber
 	 * @return JSON String with the client model
 	 */
-	public void playSoldier(int playerIndex, int victimIndex, HexLocation location)
+	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location)
 	{
 		Game game = mMovesManager.playSoldier(playerIndex, victimIndex, location);
 		this.updateModel(game);
@@ -546,7 +546,7 @@ public class MasterManager implements IMasterManager
 	 * @post all opposing players will have all of the specified resource discarded
 	 * @return JSON String with the client model
 	 */
-	public void playMonopoly(ResourceType resource, int playerIndex) 
+	public void playMonopoly(ResourceType resource, Index playerIndex) 
 	{
 		Game game = mMovesManager.playMonopoly(resource, playerIndex);
 		this.updateModel(game);
@@ -557,7 +557,7 @@ public class MasterManager implements IMasterManager
 	 * @post a victory point is awarded to player
 	 * @return JSON String with the client model
 	 */
-	public void playMonument(int playerIndex) 
+	public void playMonument(Index playerIndex) 
 	{
 		Game game = mMovesManager.playMonument(playerIndex);
 		this.updateModel(game);
@@ -572,7 +572,7 @@ public class MasterManager implements IMasterManager
 	 * @post player's resources will be decreased according to building cost of road
 	 * @return JSON String with the client model
 	 */
-	public void buildRoad(int playerIndex, EdgeLocationJSON roadLoc, boolean free) 
+	public void buildRoad(Index playerIndex, EdgeLocation roadLoc, boolean free) 
 	{
 		Game game = mMovesManager.buildRoad(playerIndex,roadLoc,free);
 		this.updateModel(game);
@@ -588,7 +588,7 @@ public class MasterManager implements IMasterManager
 	 * @post resources will be decreased according to building costs
 	 * @return JSON String with the client model
 	 */
-	public void buildSettlement(int playerIndex, VertexLocation vertexLoc, boolean free) 
+	public void buildSettlement(Index playerIndex, VertexLocation vertexLoc, boolean free) 
 	{
 		Game game = mMovesManager.buildSettlement(playerIndex, vertexLoc,free);
 		this.updateModel(game);
@@ -603,7 +603,7 @@ public class MasterManager implements IMasterManager
 	 * @post resources will be decreased according to building costs
 	 * @return JSON String with the client model
 	 */
-	public void buildCity(int playerIndex, VertexLocation vertexLoc, boolean free) 
+	public void buildCity(Index playerIndex, VertexLocation vertexLoc, boolean free) 
 	{
 		Game game = mMovesManager.buildCity(playerIndex, vertexLoc, free);
 		this.updateModel(game);
@@ -616,7 +616,8 @@ public class MasterManager implements IMasterManager
 	 * @post a trade is offered
 	 * @return JSON String with the client model
 	 */
-	public void offerTrade(int playerIndex, ResourceList offer, int receiverIndex) 
+	@Override
+	public void offerTrade(Index playerIndex, ResourceList offer, Index receiverIndex) 
 	{
 		Game game = mMovesManager.offerTrade(playerIndex, offer, receiverIndex);
 		this.updateModel(game);
@@ -627,7 +628,7 @@ public class MasterManager implements IMasterManager
 	 * @post a trade is either accepted or rejected
 	 * @return JSON String with the client model
 	 */
-	public void acceptTrade(int playerIndex, boolean willAccept) 
+	public void acceptTrade(Index playerIndex, boolean willAccept) 
 	{
 		Game game = mMovesManager.acceptTrade(playerIndex, willAccept);
 		this.updateModel(game);
@@ -638,7 +639,7 @@ public class MasterManager implements IMasterManager
 	 * @post adjusts resource amounts according to trade criteria
 	 * @return JSON String with the client model
 	 */
-	public void executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes)
+	public void executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes)
 	{
 		Game game = mMovesManager.executeMaritimeTrade(playerIndex, ratio, inputRes, outputRes);
 		this.updateModel(game);
@@ -649,7 +650,7 @@ public class MasterManager implements IMasterManager
 	 * @post specified resource cards will be discarded
 	 * @return JSON String with the client model
 	 */
-	public void discardCards(int playerIndex, ResourceList cards) 
+	public void discardCards(Index playerIndex, ResourceList cards) 
 	{
 		Game game = mMovesManager.discardCards(playerIndex, cards);
 		this.updateModel(game);

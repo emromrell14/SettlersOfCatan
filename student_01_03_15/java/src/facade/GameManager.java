@@ -1,7 +1,7 @@
 package facade;
 
 import models.Game;
-import JSONmodels.ClientModel;
+import JSONmodels.ClientModelJSON;
 import proxy.IProxy;
 
 public class GameManager
@@ -109,7 +109,7 @@ public class GameManager
 		Game game = null;
 		if(!response.contains("Failed"))
 		{
-			ClientModel model = ClientModel.fromJSON(response);
+			ClientModelJSON model = ClientModelJSON.fromJSON(response);
 			game = model.getGameObject();
 		}
 		return game;

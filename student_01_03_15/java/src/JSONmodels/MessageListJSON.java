@@ -2,9 +2,9 @@ package JSONmodels;
 
 import com.google.gson.Gson;
 
-public class MessageList 
+public class MessageListJSON 
 {
-	private MessageLine[] lines;
+	private MessageLineJSON[] lines;
 	
 	/**
 	 * Creates a MessageList object from a JSON string
@@ -12,10 +12,10 @@ public class MessageList
 	 * @param Valid JSON string
 	 * @return New MessageList object
 	 */
-	public static MessageList fromJSON(String JSON)
+	public static MessageListJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, MessageList.class);
+		return gson.fromJson(JSON, MessageListJSON.class);
 	}
 	
 	/**
@@ -32,7 +32,7 @@ public class MessageList
 	/**
 	 * @return the lines
 	 */
-	public MessageLine[] getLines() {
+	public MessageLineJSON[] getLines() {
 		return lines;
 	}
 }

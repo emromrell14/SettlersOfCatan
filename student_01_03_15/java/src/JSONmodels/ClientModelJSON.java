@@ -3,15 +3,15 @@ package JSONmodels;
 import models.Game;
 import com.google.gson.Gson;
 
-public class ClientModel 
+public class ClientModelJSON 
 {
-	private ResourceList bank; //The cards available to be distributed to the players.
-	private MessageList chat; //All the chat messages.
-	private MessageList log; //All the log messages.
-	private Map map;
-	private Player[] players;
-	private TradeOffer tradeOffer; //OPTIONAL. Current trade offer, if there is one.
-	private TurnTracker turnTracker; //This tracks whose turn it is and what action's being done.
+	private ResourceListJSON bank; //The cards available to be distributed to the players.
+	private MessageListJSON chat; //All the chat messages.
+	private MessageListJSON log; //All the log messages.
+	private MapJSON map;
+	private PlayerJSON[] players;
+	private TradeOfferJSON tradeOffer; //OPTIONAL. Current trade offer, if there is one.
+	private TurnTrackerJSON turnTracker; //This tracks whose turn it is and what action's being done.
 	private int version; //The version of the model. This is incremented whenever anyone makes a move.
 	private int winner; //This is -1 when nobody's won yet. When they have, it's their order index [0-3].
 	
@@ -21,10 +21,10 @@ public class ClientModel
 	 * @param Valid JSON string
 	 * @return New ClientModel object
 	 */
-	public static ClientModel fromJSON(String JSON)
+	public static ClientModelJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, ClientModel.class);
+		return gson.fromJson(JSON, ClientModelJSON.class);
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class ClientModel
 	/**
 	 * @return the bank
 	 */
-	public ResourceList getBank()
+	public ResourceListJSON getBank()
 	{
 		return bank;
 	}
@@ -49,7 +49,7 @@ public class ClientModel
 	/**
 	 * @return the chat
 	 */
-	public MessageList getChat() 
+	public MessageListJSON getChat() 
 	{
 		return chat;
 	}
@@ -57,7 +57,7 @@ public class ClientModel
 	/**
 	 * @return the log
 	 */
-	public MessageList getLog() 
+	public MessageListJSON getLog() 
 	{
 		return log;
 	}
@@ -65,7 +65,7 @@ public class ClientModel
 	/**
 	 * @return the map
 	 */
-	public Map getMap()
+	public MapJSON getMap()
 	{
 		return map;
 	}
@@ -73,7 +73,7 @@ public class ClientModel
 	/**
 	 * @return the players
 	 */
-	public Player[] getPlayers()
+	public PlayerJSON[] getPlayers()
 	{
 		return players;
 	}
@@ -81,7 +81,7 @@ public class ClientModel
 	/**
 	 * @return the tradeOffer
 	 */
-	public TradeOffer getTradeOffer()
+	public TradeOfferJSON getTradeOffer()
 	{
 		return tradeOffer;
 	}
@@ -89,7 +89,7 @@ public class ClientModel
 	/**
 	 * @return the turnTracker
 	 */
-	public TurnTracker getTurnTracker()
+	public TurnTrackerJSON getTurnTracker()
 	{
 		return turnTracker;
 	}
@@ -125,7 +125,7 @@ public class ClientModel
 		{
 			g.setTrade(tradeOffer.getModel());
 		}
-		for(Player p : players)
+		for(PlayerJSON p : players)
 		{
 			if(p != null)
 				g.addPlayer(p.getModel(g.board()));

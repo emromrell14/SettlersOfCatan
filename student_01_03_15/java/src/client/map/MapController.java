@@ -30,6 +30,8 @@ public class MapController extends Controller implements IMapController {
 		setRobView(robView);
 		
 		initFromModel();
+		
+		master = MasterManager.getInstance();
 	}
 	
 	public IMapView getView() {
@@ -137,21 +139,18 @@ public class MapController extends Controller implements IMapController {
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
-		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
-		return master.canPlaceRoad(playerID, edgeLoc);
+		return master.canPlaceRoad(playerIndex, edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
 		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
-		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
-		return master.canPlaceSettlement(playerID, vertLoc);
+		return master.canPlaceSettlement(playerIndex, vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
 		
 		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
-		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
-		return master.canPlaceCity(playerID, vertLoc);
+		return master.canPlaceCity(playerIndex, vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
@@ -159,15 +158,12 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		EdgeLocationJSON edgeLocJSON = new EdgeLocationJSON(edgeLoc);
 		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
-		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
 		Status status = master.getCurrentModel().turnTracker().status();
 		//String type = status.toString();
 		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
-		master.buildRoad(playerID, edgeLocJSON, free);
-		CatanColor color = master.getCurrentModel().players().get(playerID).color();
-		getView().placeRoad(edgeLoc, color);
+		master.buildRoad(playerIndex, edgeLoc, free);
+		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {

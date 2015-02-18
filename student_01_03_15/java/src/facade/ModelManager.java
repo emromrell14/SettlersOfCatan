@@ -50,9 +50,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a road can be built, false otherwise
 	 */
-	public boolean canAffordRoad(int playerID) 
+	public boolean canAffordRoad(Index playerIndex) 
 	{
-		Player p = this.mGameModel.getPlayer(playerID);
+		Player p = this.mGameModel.getPlayer(playerIndex);
 		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) && // Checks that this player is in the game
 			(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks that it is this player's turn
 			mGameModel.turnTracker().status().equals(Status.SECONDROUND))) 
@@ -79,10 +79,10 @@ public class ModelManager {
 	 * @param loc
 	 * @return If this place is an eligible edge for a road
 	 */
-	public boolean canPlaceRoad(int playerID, EdgeLocation loc)
+	public boolean canPlaceRoad(Index playerIndex, EdgeLocation loc)
 	{
-		Player p = this.mGameModel.getPlayer(playerID);
-		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) &&
+		Player p = mGameModel.getPlayer(playerIndex);
+		if (mGameModel.turnTracker().currentTurn().equals(playerIndex) &&
 				(mGameModel.turnTracker().status() == Status.FIRSTROUND ||
 				mGameModel.turnTracker().status() == Status.SECONDROUND)
 		)
@@ -118,13 +118,13 @@ public class ModelManager {
 	 * @post bank's resources will be increased accoring to building cost of road
 	 * @return JSON String with the client model
 	 */
-	public String buildRoad(int playerID, EdgeLocation loc) 
+	public String buildRoad(Index index, EdgeLocation loc) 
 	{
-		Player p = mGameModel.getPlayer(playerID);
+		Player p = mGameModel.getPlayer(index);
 		p.buildRoad(loc);
 		mGameModel.bank().addBrick(1);
 		mGameModel.bank().addWood(1);
-		mGameModel.board().buildRoad(mGameModel.getPlayerIndex(playerID),loc);
+		mGameModel.board().buildRoad(index,loc);
 		return "";
 	}
 	
@@ -137,9 +137,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a settlement can be built, false otherwise
 	 */
-	public boolean canAffordSettlement(int playerID) 
+	public boolean canAffordSettlement(Index playerIndex) 
 	{
-		Player p = this.mGameModel.getPlayer(playerID);
+		Player p = this.mGameModel.getPlayer(playerIndex);
 
 		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) && // Checks that it is this player's turn
 				(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks if this is first or
@@ -158,12 +158,12 @@ public class ModelManager {
 		return p.canAffordSettlement();
 	}
 
-	public boolean canPlaceSettlement(int playerID, VertexLocation loc) 
+	public boolean canPlaceSettlement(Index playerIndex, VertexLocation loc) 
 	{
 		if (mGameModel.turnTracker().status() != Status.FIRSTROUND &&
 				mGameModel.turnTracker().status() != Status.SECONDROUND)
 		{
-			if (!this.mGameModel.getPlayer(playerID).canPlaceSettlement(loc))
+			if (!this.mGameModel.getPlayer(playerIndex).canPlaceSettlement(loc))
 			{
 				return false;
 			}
@@ -205,9 +205,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a city can be built, false otherwise
 	 */
-	public boolean canAffordCity(int playerID) 
+	public boolean canAffordCity(Index playerIndex) 
 	{
-		Player p = mGameModel.getPlayer(playerID);
+		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
 				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
@@ -219,9 +219,9 @@ public class ModelManager {
 		return p.canAffordCity();
 	}
 
-	public boolean canPlaceCity(int playerID, VertexLocation loc) 
+	public boolean canPlaceCity(Index playerIndex, VertexLocation loc) 
 	{
-		return this.mGameModel.getPlayer(playerID).canPlaceCity(loc);
+		return this.mGameModel.getPlayer(playerIndex).canPlaceCity(loc);
 	}
 
 	public String buildCity(int playerID, VertexLocation loc) 
@@ -244,9 +244,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a card can be bought, false otherwise
 	 */
-	public boolean canBuyDevCard(int playerID)
+	public boolean canBuyDevCard(Index playerIndex)
 	{
-		Player p = mGameModel.getPlayer(playerID);
+		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
 				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
@@ -269,9 +269,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a card can be played, false otherwise
 	 */
-	public boolean canPlayDevCard(int playerID) 
+	public boolean canPlayDevCard(Index playerIndex) 
 	{
-		Player p = mGameModel.getPlayer(playerID);
+		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
 				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
@@ -292,9 +292,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a trade can be offered, false otherwise
 	 */
-	public boolean canOfferTrade(int playerID) 
+	public boolean canOfferTrade(Index playerIndex) 
 	{
-		Player p = mGameModel.getPlayer(playerID);
+		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
 				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
@@ -303,7 +303,7 @@ public class ModelManager {
 		{
 			return false;
 		}
-		return mGameModel.canOfferTrade(playerID);
+		return mGameModel.canOfferTrade(playerIndex);
 	}
 
 	/**
@@ -312,15 +312,15 @@ public class ModelManager {
 	 * @pre Player is logged in, playing a game, it is not their turn, they have
 	 *      requested resource cards. Dice have also already been rolled.
 	 * @post none
-	 * @param playerID
+	 * @param playerIndex
 	 *            ID of the player
 	 * @param tradeOffer
 	 *            List of cards that another player wants to trade for.
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer) 
+	public boolean canAcceptTrade(Index playerIndex, ResourceList tradeOffer) 
 	{
-		Player p = mGameModel.getPlayer(playerID);
+		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
 				mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it isn't this player's turn
@@ -340,9 +340,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if a maritime trade can be made, false otherwise
 	 */
-	public boolean canMaritimeTrade(int playerID) 
+	public boolean canMaritimeTrade(Index playerIndex) 
 	{
-		Player player = mGameModel.getPlayer(playerID);
+		Player player = mGameModel.getPlayer(playerIndex);
 		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) &&
 				mGameModel.turnTracker().status() == Status.PLAYING) 
 		{
@@ -360,9 +360,8 @@ public class ModelManager {
 	 * @params playerID ID of the player
 	 * @return true if the dice can be rolled, false otherwise
 	 */
-	public boolean canRollDice(int playerID) 
+	public boolean canRollDice(Index playerIndex) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		return mGameModel.turnTracker().canRollDice(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.ROLLING);
 	}
@@ -374,9 +373,9 @@ public class ModelManager {
 	 * @post none
 	 * @return true if the card can be discarded, false otherwise
 	 */
-	public boolean canDiscard(int playerID) 
+	public boolean canDiscard(Index playerIndex) 
 	{
-		return this.mGameModel.getPlayer(playerID).canDiscard()
+		return this.mGameModel.getPlayer(playerIndex).canDiscard()
 				&& mGameModel.turnTracker().status().equals(Status.DISCARDING);
 	}
 
@@ -385,9 +384,8 @@ public class ModelManager {
 	 * @post none
 	 * @return true if player can finish turn, false otherwise
 	 */
-	public boolean canFinishTurn(int playerID) 
+	public boolean canFinishTurn(Index playerIndex) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		return this.mGameModel.turnTracker().status() == Status.PLAYING
 				&& mGameModel.turnTracker().isPlayersTurn(playerIndex);
 	}
@@ -397,13 +395,12 @@ public class ModelManager {
 	 * @post none
 	 * @return true if player can use Year Of Plenty, false otherwise
 	 */
-	public boolean canPlayYearOfPlenty(int playerID) 
+	public boolean canPlayYearOfPlenty(Index playerIndex) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
-			return this.mGameModel.getPlayer(playerID).canPlayYearOfPlenty();
+			return this.mGameModel.getPlayer(playerIndex).canPlayYearOfPlenty();
 		}
 		return false;
 	}
@@ -413,13 +410,12 @@ public class ModelManager {
 	 * @post none
 	 * @return true if player can use Road Builder, false otherwise
 	 */
-	public boolean canPlayRoadBuilder(int playerID) 
+	public boolean canPlayRoadBuilder(Index playerIndex) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
-			return this.mGameModel.getPlayer(playerID).canPlayRoadBuilder();
+			return this.mGameModel.getPlayer(playerIndex).canPlayRoadBuilder();
 		}
 		return false;
 	}
@@ -429,13 +425,12 @@ public class ModelManager {
 	 * @post none
 	 * @return true if player can use a Soldier, false otherwise
 	 */
-	public boolean canPlaySoldier(int playerID) 
+	public boolean canPlaySoldier(Index playerIndex) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
-			return this.mGameModel.getPlayer(playerID).canPlaySoldier();
+			return this.mGameModel.getPlayer(playerIndex).canPlaySoldier();
 		}
 		return false;
 	}
@@ -445,13 +440,12 @@ public class ModelManager {
 	 * @post none
 	 * @return true if player can use Monopoly, false otherwise
 	 */
-	public boolean canPlayMonopoly(int playerID) 
+	public boolean canPlayMonopoly(Index playerIndex) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
-			return this.mGameModel.getPlayer(playerID).canPlayMonopoly();
+			return this.mGameModel.getPlayer(playerIndex).canPlayMonopoly();
 		}
 		return false;
 	}
@@ -461,13 +455,12 @@ public class ModelManager {
 	 * @post none
 	 * @return true if player can use Monument, false otherwise
 	 */
-	public boolean canPlayMonument(int playerID) 
+	public boolean canPlayMonument(Index playerIndex) 
 	{
-		Index playerIndex = mGameModel.getPlayerIndex(playerID);
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
-			return this.mGameModel.getPlayer(playerID).canPlayMonument();
+			return this.mGameModel.getPlayer(playerIndex).canPlayMonument();
 		}
 		return false;
 	}
