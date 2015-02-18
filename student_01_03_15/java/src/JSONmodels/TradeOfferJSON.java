@@ -5,11 +5,11 @@ import models.Trade;
 
 import com.google.gson.Gson;
 
-public class TradeOffer 
+public class TradeOfferJSON 
 {
 	private int sender; //The index of the person offering the trade.
 	private int receiver; //The index of the person the trade was offered to.
-	private ResourceList offer; //Positive numbers are resources being offered. Negative are resources being asked for.
+	private ResourceListJSON offer; //Positive numbers are resources being offered. Negative are resources being asked for.
 	
 	/**
 	 * Creates a TradeOffer object from a JSON string
@@ -17,10 +17,10 @@ public class TradeOffer
 	 * @param Valid JSON string
 	 * @return New TradeOffer object
 	 */
-	public static TradeOffer fromJSON(String JSON)
+	public static TradeOfferJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, TradeOffer.class);
+		return gson.fromJson(JSON, TradeOfferJSON.class);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class TradeOffer
 	/**
 	 * @return the offer
 	 */
-	public ResourceList getOffer() {
+	public ResourceListJSON getOffer() {
 		return offer;
 	}
 	

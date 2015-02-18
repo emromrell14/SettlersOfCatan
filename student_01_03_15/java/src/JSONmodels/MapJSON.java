@@ -4,15 +4,15 @@ import models.Board;
 
 import com.google.gson.Gson;
 
-public class Map 
+public class MapJSON 
 {
-	private Hex[] hexes; //A list of all the hexes on the grid - it's only land tiles.
-	private Port[] ports;
-	private EdgeValue[] roads;
-	private VertexObject[] settlements;
-	private VertexObject[] cities;
+	private HexJSON[] hexes; //A list of all the hexes on the grid - it's only land tiles.
+	private PortJSON[] ports;
+	private EdgeValueJSON[] roads;
+	private VertexObjectJSON[] settlements;
+	private VertexObjectJSON[] cities;
 	private int radius; //The radius of the map (it includes the center hex, and the ocean hexes; pass this into the hex grid constructor)
-	private HexLocation robber; //The current location of the robber
+	private HexLocationJSON robber; //The current location of the robber
 	
 	/**
 	 * Creates a Map object from a JSON string
@@ -20,10 +20,10 @@ public class Map
 	 * @param Valid JSON string
 	 * @return New Map object
 	 */
-	public static Map fromJSON(String JSON)
+	public static MapJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, Map.class);
+		return gson.fromJson(JSON, MapJSON.class);
 	}
 	/**
 	 * Creates the JSON code from this object
@@ -38,31 +38,31 @@ public class Map
 	/**
 	 * @return the hexes
 	 */
-	public Hex[] getHexes() {
+	public HexJSON[] getHexes() {
 		return hexes;
 	}
 	/**
 	 * @return the ports
 	 */
-	public Port[] getPorts() {
+	public PortJSON[] getPorts() {
 		return ports;
 	}
 	/**
 	 * @return the roads
 	 */
-	public EdgeValue[] getRoads() {
+	public EdgeValueJSON[] getRoads() {
 		return roads;
 	}
 	/**
 	 * @return the settlements
 	 */
-	public VertexObject[] getSettlements() {
+	public VertexObjectJSON[] getSettlements() {
 		return settlements;
 	}
 	/**
 	 * @return the cities
 	 */
-	public VertexObject[] getCities() {
+	public VertexObjectJSON[] getCities() {
 		return cities;
 	}
 	/**
@@ -74,7 +74,7 @@ public class Map
 	/**
 	 * @return the robber
 	 */
-	public HexLocation getRobber() {
+	public HexLocationJSON getRobber() {
 		return robber;
 	}
 	

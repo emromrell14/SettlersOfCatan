@@ -5,9 +5,9 @@ import shared.definitions.HexType;
 
 import com.google.gson.Gson;
 
-public class Hex 
+public class HexJSON 
 {
-	private HexLocation location;
+	private HexLocationJSON location;
 	private String resource; //OPTIONAL. What resource this title gives- it's only here if the tile is not the desert.
 	private int number; //OPTIONAL. What number is on this tile. It's omitted if this is a desert hex.
 	
@@ -17,10 +17,10 @@ public class Hex
 	 * @param Valid JSON string
 	 * @return New Hex object
 	 */
-	public static Hex fromJSON(String JSON)
+	public static HexJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, Hex.class);
+		return gson.fromJson(JSON, HexJSON.class);
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class Hex
 	/**
 	 * @return the location
 	 */
-	public HexLocation getLocation() {
+	public HexLocationJSON getLocation() {
 		return location;
 	}
 

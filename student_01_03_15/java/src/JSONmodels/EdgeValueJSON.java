@@ -5,7 +5,7 @@ import models.Road;
 
 import com.google.gson.Gson;
 
-public class EdgeValue 
+public class EdgeValueJSON 
 {
 	private int owner; //The index (not ID) of the player who owns this piece (0-3).
 	private EdgeLocationJSON location; //The location of this road.
@@ -16,10 +16,10 @@ public class EdgeValue
 	 * @param Valid JSON string
 	 * @return New EdgeValue object
 	 */
-	public static EdgeValue fromJSON(String JSON)
+	public static EdgeValueJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, EdgeValue.class);
+		return gson.fromJson(JSON, EdgeValueJSON.class);
 	}
 	
 	/**

@@ -4,10 +4,10 @@ import shared.definitions.PortType;
 
 import com.google.gson.Gson;
 
-public class Port 
+public class PortJSON 
 {
 	private String resource; //What type resource this port trades for. If it's omitted, then it's for any resource.
-	private HexLocation location; //What hex this port is on. This shows the ocean/non-existent hex to draw the port on.
+	private HexLocationJSON location; //What hex this port is on. This shows the ocean/non-existent hex to draw the port on.
 	private String direction; //Which edge this port is on.
 	private int ratio; //The ratio for trade in (ie., if this is 2, then it's a 2:1 port)
 	
@@ -17,10 +17,10 @@ public class Port
 	 * @param Valid JSON string
 	 * @return New Port object
 	 */
-	public static Port fromJSON(String JSON)
+	public static PortJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, Port.class);
+		return gson.fromJson(JSON, PortJSON.class);
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class Port
 	/**
 	 * @return the location
 	 */
-	public HexLocation getLocation() {
+	public HexLocationJSON getLocation() {
 		return location;
 	}
 

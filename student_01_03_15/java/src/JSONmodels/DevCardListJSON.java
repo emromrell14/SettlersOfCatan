@@ -2,7 +2,7 @@ package JSONmodels;
 
 import com.google.gson.Gson;
 
-public class DevCardList 
+public class DevCardListJSON 
 {
 	private int monopoly;
 	private int monument;
@@ -16,10 +16,10 @@ public class DevCardList
 	 * @param Valid JSON string
 	 * @return New DevCardList object
 	 */
-	public static DevCardList fromJSON(String JSON)
+	public static DevCardListJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, DevCardList.class);
+		return gson.fromJson(JSON, DevCardListJSON.class);
 	}
 	
 	/**

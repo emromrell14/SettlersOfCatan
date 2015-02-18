@@ -5,7 +5,7 @@ import models.Status;
 
 import com.google.gson.Gson;
 
-public class TurnTracker 
+public class TurnTrackerJSON 
 {
 	private int currentTurn; //Whose turn it is (0-3).
 	private String status; //What's happening now.
@@ -18,10 +18,10 @@ public class TurnTracker
 	 * @param Valid JSON string
 	 * @return New TurnTracker object
 	 */
-	public static TurnTracker fromJSON(String JSON)
+	public static TurnTrackerJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, TurnTracker.class);
+		return gson.fromJson(JSON, TurnTrackerJSON.class);
 	}
 	
 	/**

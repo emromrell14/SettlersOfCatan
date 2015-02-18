@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 /**
  * Represents the location of a hex on a hex map
  */
-public class HexLocation
+public class HexLocationJSON
 {
 	private int x;
 	private int y;
@@ -16,10 +16,10 @@ public class HexLocation
 	 * @param Valid JSON string
 	 * @return New HexLocation object
 	 */
-	public static HexLocation fromJSON(String JSON)
+	public static HexLocationJSON fromJSON(String JSON)
 	{
 		Gson gson = new Gson();
-		return gson.fromJson(JSON, HexLocation.class);
+		return gson.fromJson(JSON, HexLocationJSON.class);
 	}
 	
 	/**
