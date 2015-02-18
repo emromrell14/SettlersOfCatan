@@ -186,9 +186,9 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		
 		getView().placeRobber(hexLoc);
 		
+		getRobView().setRobberLocation(hexLoc);
 		getRobView().showModal();
 	}
 	
@@ -198,7 +198,7 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void cancelMove() {
-		
+		// We somehow need to close the modal...
 	}
 	
 	public void playSoldierCard() {	
@@ -209,8 +209,15 @@ public class MapController extends Controller implements IMapController {
 		// Why do we need this, if it is already on the DevCardController?
 	}
 	
-	public void robPlayer(RobPlayerInfo victim) {	
-		//master.robPlayer(master.getPlayerIndex(), victim.getPlayerIndex(), ??);
+	public void robPlayer(RobPlayerInfo victim) {
+		Index victimIndex = null;
+		try {
+			victimIndex = new Index(victim.getPlayerIndex());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
 	}
 	
 }
