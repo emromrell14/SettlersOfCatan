@@ -93,12 +93,18 @@ public class EdgeLocation
 		switch (dir)
 		{
 			case NorthWest:
+			case NW:
 			case North:
+			case N:
 			case NorthEast:
+			case NE:
 				return this;
 			case SouthWest:
+			case SW:	
 			case South:
+			case S:
 			case SouthEast:
+			case SE:
 				return new EdgeLocation(hexLoc.getNeighborLoc(dir),
 										dir.getOppositeDirection());
 			default:

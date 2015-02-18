@@ -2,7 +2,7 @@ package shared.locations;
 
 public enum VertexDirection
 {
-	West, NorthWest, NorthEast, East, SouthEast, SouthWest; //, W, NW, NE, E, SE, SW;
+	West, NorthWest, NorthEast, East, SouthEast, SouthWest, W, NW, NE, E, SE, SW;
 	
 	private VertexDirection opposite;
 	
@@ -15,14 +15,12 @@ public enum VertexDirection
 		SouthEast.opposite = NorthWest;
 		SouthWest.opposite = NorthEast;
 		
-		/*
 		W.opposite = E;
 		NW.opposite = SE;
 		NE.opposite = SW;
 		E.opposite = W;
 		SE.opposite = NW;
 		SW.opposite = NE;
-		*/
 	}
 	
 	public VertexDirection getOppositeDirection()

@@ -23,7 +23,17 @@ public class Cookie
 	
 	public int getPlayerID()
 	{
-		return mUserMap == null?-1:(int) mUserMap.get("playerID");
+		if (mUserMap == null)
+		{
+			return -1;
+		}
+		else
+		{
+			Object o = (mUserMap.get("playerID"));
+			Double d = (Double)(o);
+			int i = d.intValue();
+			return i;
+		}
 	}
 
 	/**
