@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.definitions.CatanColor;
 import JSONmodels.MessageList;
 
 public class Game implements IGame
@@ -40,6 +41,18 @@ public class Game implements IGame
 		{
 			mDevCards.add(new Soldier());
 		}
+	}
+	
+	public CatanColor getPlayerColor(int playerID)
+	{
+		for(Player p: mPlayers)
+		{
+			if(p.playerID() == playerID)
+			{
+				return p.color();
+			}
+		}
+		return CatanColor.BROWN;
 	}
 	
 	public void endTurn()
