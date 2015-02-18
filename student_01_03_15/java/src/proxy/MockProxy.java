@@ -140,4 +140,10 @@ public class MockProxy implements IProxy
 		}
 		return toReturn;
 	}
+
+	@Override
+	public int getPlayerID() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

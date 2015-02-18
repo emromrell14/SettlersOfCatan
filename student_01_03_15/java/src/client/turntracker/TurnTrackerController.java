@@ -2,6 +2,7 @@ package client.turntracker;
 
 import shared.definitions.CatanColor;
 import client.base.*;
+import facade.MasterManager;
 
 
 /**
@@ -24,7 +25,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-
+		MasterManager.getInstance().getCurrentModel().endTurn();
 	}
 	
 	private void initFromModel() {

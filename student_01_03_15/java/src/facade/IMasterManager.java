@@ -10,6 +10,8 @@ import models.ResourceList;
 
 public interface IMasterManager 
 {		
+	public int getPlayerID();
+	
 	public Game getCurrentModel();
 	
 	public void updateModel(Game newGameModel);

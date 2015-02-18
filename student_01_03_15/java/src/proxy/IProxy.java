@@ -28,4 +28,6 @@ public interface IProxy
 	 * @return Response from the server.
 	 */
 	String get(String requestPath);
+
+	int getPlayerID();
 }

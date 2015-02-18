@@ -19,6 +19,11 @@ public class Proxy implements IProxy
 		mCookie = new Cookie();
 	}
 	
+	public int getPlayerID()
+	{
+		return mCookie.getPlayerID();
+	}
+	
 	public String post(String requestPath, String json)
 	{
 		String url ="http://localhost:8081" + requestPath;
