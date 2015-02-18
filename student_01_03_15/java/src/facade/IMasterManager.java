@@ -1,12 +1,8 @@
 package facade;
 
-import JSONmodels.EdgeLocationJSON;
-import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
-import models.Game;
-import models.ResourceList;
+import shared.definitions.*;
+import shared.locations.*;
+import models.*;
 
 public interface IMasterManager 
 {		
@@ -20,45 +16,45 @@ public interface IMasterManager
 
 	public boolean canRegister();
 
-	public boolean canBuyDevCard(int playerID);
+	public boolean canBuyDevCard(Index playerIndex);
 
-	public boolean canPlayDevCard(int playerID);
+	public boolean canPlayDevCard(Index playerIndex);
 
-	public boolean canOfferTrade(int playerID);
+	public boolean canOfferTrade(Index playerIndex);
 
-	public boolean canAcceptTrade(int playerID, ResourceList tradeOffer);
+	public boolean canAcceptTrade(Index playerIndex, ResourceList tradeOffer);
 
-	public boolean canMaritimeTrade(int playerID);
+	public boolean canMaritimeTrade(Index playerIndex);
 
-	public boolean canRollDice(int playerID);
+	public boolean canRollDice(Index playerIndex);
 
-	public boolean canDiscard(int playerID);
+	public boolean canDiscard(Index playerIndex);
 	
-	public boolean canFinishTurn(int playerID);
+	public boolean canFinishTurn(Index playerIndex);
 	
-	public boolean canPlayYearOfPlenty(int playerID);
+	public boolean canPlayYearOfPlenty(Index playerIndex);
 	
-	public boolean canPlayRoadBuilder(int playerID);
+	public boolean canPlayRoadBuilder(Index playerIndex);
 
-	public boolean canPlaySoldier(int playerID);
+	public boolean canPlaySoldier(Index playerIndex);
 
-	public boolean canPlayMonopoly(int playerID);
+	public boolean canPlayMonopoly(Index playerIndex);
 
-	public boolean canPlayMonument(int playerID);
+	public boolean canPlayMonument(Index playerIndex);
 
 	public boolean canPlaceRobber(HexLocation newRobberLocation);
 	
-	public boolean canAffordRoad(int playerID);
+	public boolean canAffordRoad(Index playerIndex);
 	
-	public boolean canPlaceRoad(int playerID, EdgeLocation loc);
+	public boolean canPlaceRoad(Index playerIndex, EdgeLocation loc);
 	
-	public boolean canAffordSettlement(int playerID);
+	public boolean canAffordSettlement(Index playerIndex);
 	
-	public boolean canPlaceSettlement(int playerID, VertexLocation loc);
+	public boolean canPlaceSettlement(Index playerIndex, VertexLocation loc);
 	
-	public boolean canAffordCity(int playerID);
+	public boolean canAffordCity(Index playerIndex);
 	
-	public boolean canPlaceCity(int playerID, VertexLocation loc);
+	public boolean canPlaceCity(Index playerIndex, VertexLocation loc);
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager
@@ -89,39 +85,39 @@ public interface IMasterManager
 	public String getAIPlayers();
 
 	// Moves Manager
-	public void sendChatMessage(int playerIndex,String message);
+	public void sendChatMessage(Index playerIndex,String message);
 
-	public void rollDice(int playerIndex, int rollNum);
+	public void rollDice(Index playerIndex, int rollNum);
 
-	public void robPlayer(int playerIndex, int victimIndex, HexLocation location);
+	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation location);
 
-	public void finishTurn(int playerIndex);
+	public void finishTurn(Index playerIndex);
 
-	public void buyDevCard(int playerIndex);
+	public void buyDevCard(Index playerIndex);
 
-	public void playYearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2);
+	public void playYearOfPlenty(Index playerIndex, ResourceType res1, ResourceType res2);
 
-	public void playRoadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
+	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 
-	public void playSoldier(int playerIndex, int victimIndex, HexLocation location);
+	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location);
 
-	public void playMonopoly(ResourceType resource, int playerIndex);
+	public void playMonopoly(ResourceType resource, Index playerIndex);
 
-	public void playMonument(int playerIndex);
+	public void playMonument(Index playerIndex);
 
-	public void buildRoad(int playerIndex, EdgeLocationJSON roadLoc, boolean free);
+	public void buildRoad(Index playerIndex, EdgeLocation roadLoc, boolean free);
 
-	public void buildSettlement(int playerIndex, VertexLocation vertexLoc, boolean free);
+	public void buildSettlement(Index playerIndex, VertexLocation vertexLoc, boolean free);
 
-	public void buildCity(int playerIndex, VertexLocation vertexLoc, boolean free);
+	public void buildCity(Index playerIndex, VertexLocation vertexLoc, boolean free);
 
-	public void offerTrade(int playerIndex, JSONmodels.ResourceList offer, int receiverIndex);
+	public void offerTrade(Index playerIndex, ResourceList offer, Index receiverIndex);
 
-	public void acceptTrade(int playerIndex, boolean willAccept);
+	public void acceptTrade(Index playerIndex, boolean willAccept);
 
-	public void executeMaritimeTrade(int playerIndex, int ratio, ResourceType inputRes, JSONmodels.ResourceList outputRes);
+	public void executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes);
 
-	public void discardCards(int playerIndex, JSONmodels.ResourceList cards);
+	public void discardCards(Index playerIndex, ResourceList cards);
 
 	// Util Manager
 	public void changeLogLevel(String log);

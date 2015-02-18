@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import JSONmodels.MessageList;
+import JSONmodels.MessageListJSON;
 
 public class Game implements IGame
 {
@@ -14,8 +14,8 @@ public class Game implements IGame
 	private List<DevCard> mDevCards;
 	private int mVersion;
 	private Index mWinner;
-	private MessageList mChat; //All the chat messages.
-	private MessageList mLog; //All the log messages.
+	private MessageListJSON mChat; //All the chat messages.
+	private MessageListJSON mLog; //All the log messages.
 	private Robber mRobber;
 	private Trade mCurrentTrade = null;
 	
@@ -72,12 +72,12 @@ public class Game implements IGame
 		mPlayers.add(p);
 	}
 	
-	public void setLog(MessageList m)
+	public void setLog(MessageListJSON m)
 	{
 		mLog = m;
 	}
 	
-	public void setChat(MessageList m)
+	public void setChat(MessageListJSON m)
 	{
 		mChat = m;
 	}
@@ -135,6 +135,17 @@ public class Game implements IGame
 		}
 		return null;
 	}
+	public Player getPlayer(Index playerIndex)
+	{
+		for(Player player : this.mPlayers)
+		{
+			if(player.playerIndex().equals(playerIndex))
+			{
+				return player;
+			}
+		}
+		return null;
+	}
 	public Index getPlayerIndex(int playerID)
 	{
 		Index playerIndex = null;
@@ -174,12 +185,12 @@ public class Game implements IGame
 		return mWinner;
 	}
 
-	public MessageList chat()
+	public MessageListJSON chat()
 	{
 		return mChat;
 	}
 
-	public MessageList log() 
+	public MessageListJSON log() 
 	{
 		return mLog;
 	}
@@ -189,14 +200,14 @@ public class Game implements IGame
 		return mRobber;
 	}
 
-	public boolean canOfferTrade(int playerID) 
+	public boolean canOfferTrade(Index playerIndex) 
 	{
 		boolean playerHasCards = false;
 		boolean othersHaveCards = false;
 		for(Player p: mPlayers)
 		{
 			ResourceList temp = p.resources();
-			if(p.playerID() == playerID) 
+			if(p.playerIndex().equals(playerIndex)) 
 			{
 				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
 				{

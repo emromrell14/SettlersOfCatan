@@ -6,6 +6,7 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import facade.MasterManager;
 
 
 /**
@@ -14,6 +15,7 @@ import client.data.*;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
+	private MasterManager master;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -22,6 +24,8 @@ public class MapController extends Controller implements IMapController {
 		setRobView(robView);
 		
 		initFromModel();
+		
+		master = MasterManager.getInstance();
 	}
 	
 	public IMapView getView() {
