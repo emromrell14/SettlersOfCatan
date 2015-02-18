@@ -1,13 +1,16 @@
 package client.turntracker;
 
-import shared.definitions.CatanColor;
+import models.Game;
 import client.base.*;
+import facade.IMasterManager;
+import facade.MasterManager;
 
 
 /**
  * Implementation for the turn tracker controller
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController {
+	private IMasterManager mMaster = MasterManager.getInstance();
 
 	public TurnTrackerController(ITurnTrackerView view) {
 		
@@ -24,13 +27,16 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-
+		mMaster.getCurrentModel().endTurn();
 	}
 	
 	private void initFromModel() {
-		//<temp>
-		getView().setLocalPlayerColor(CatanColor.RED);
-		//</temp>
+		int playerID = mMaster.getPlayerID();
+		Game game = mMaster.getCurrentModel();
+		if(game != null && playerID >= 0)
+		{
+			getView().setLocalPlayerColor(game.getPlayerColor(playerID));
+		}
 	}
 
 }

@@ -19,6 +19,11 @@ public class Proxy implements IProxy
 		mCookie = new Cookie();
 	}
 	
+	public int getPlayerID()
+	{
+		return mCookie.getPlayerID();
+	}
+	
 	public String post(String requestPath, String json)
 	{
 		String url ="http://localhost:8081" + requestPath;
@@ -44,6 +49,7 @@ public class Proxy implements IProxy
 			{
 				return "Failed with a " + responseCode + " response from server.";
 			}
+			System.out.println("responseCode:"+responseCode);
 			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -54,6 +60,7 @@ public class Proxy implements IProxy
 			}
 			
 			in.close();
+//			System.out.println("PROXY POST RESPONSE BODY:"+response);
 			if(requestPath.equalsIgnoreCase("/user/login"))
 			{
 				String cookieResponse = mCon.getHeaderField("Set-cookie");

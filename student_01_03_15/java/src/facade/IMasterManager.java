@@ -6,6 +6,8 @@ import models.*;
 
 public interface IMasterManager 
 {		
+	public int getPlayerID();
+	
 	public Game getCurrentModel();
 	
 	public void updateModel(Game newGameModel);
@@ -58,9 +60,9 @@ public interface IMasterManager
 
 	// FROM THERE DOWN IS STRAIGHT FROM SWAGGER
 	// User Manager
-	public void login(String username,String password);
+	public boolean login(String username,String password);
 
-	public void register(String username,String password);
+	public boolean register(String username,String password);
 
 	// Games Manager
 	public String getGameList();

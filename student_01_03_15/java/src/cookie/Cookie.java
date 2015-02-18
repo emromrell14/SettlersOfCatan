@@ -1,14 +1,29 @@
 package cookie;
 
+import java.net.URLDecoder;
+import java.util.Map;
+
+import com.google.gson.Gson;
+
+@SuppressWarnings("rawtypes")
 public class Cookie 
 {
-	private String catanUser;
-	private String catanGame;
+	private String mCatanUser;
+	private String mCatanGame;
+	private Map mUserMap;
+	private Map mGameMap;
 	
 	public Cookie()
 	{
-		catanUser = "";
-		catanGame = "";
+		mUserMap = null;
+		mGameMap = null;
+		mCatanUser = "";
+		mCatanGame = "";
+	}
+	
+	public int getPlayerID()
+	{
+		return mUserMap == null?-1:(int) mUserMap.get("playerID");
 	}
 
 	/**
@@ -16,15 +31,18 @@ public class Cookie
 	 */
 	public String getCatanUser() 
 	{
-		return catanUser;
+		return mCatanUser;
 	}
 
 	/**
 	 * @param catanUser the catanUser to set
 	 */
+	@SuppressWarnings("deprecation")
 	public void setCatanUser(String catanUser)
 	{
-		this.catanUser = catanUser;
+		this.mCatanUser = catanUser;
+		String json = URLDecoder.decode(catanUser);
+		mUserMap = new Gson().fromJson(json, Map.class);
 	}
 
 	/**
@@ -32,26 +50,29 @@ public class Cookie
 	 */
 	public String getCatanGame() 
 	{
-		return catanGame;
+		return mCatanGame;
 	}
 
 	/**
 	 * @param catanGame the catanGame to set
 	 */
+	@SuppressWarnings("deprecation")
 	public void setCatanGame(String catanGame) 
 	{
-		this.catanGame = catanGame;
+		this.mCatanGame = catanGame;
+		String json = URLDecoder.decode(catanGame);
+		mGameMap = new Gson().fromJson(json, Map.class);
 	}
 	
 	public String getCookie()
 	{
 		String cookie = "";
-		if(!catanUser.equalsIgnoreCase(""))
+		if(!mCatanUser.equalsIgnoreCase(""))
 		{
-			cookie = "catan.user="+catanUser;
-			if(!catanGame.equalsIgnoreCase(""))
+			cookie = "catan.user="+mCatanUser;
+			if(!mCatanGame.equalsIgnoreCase(""))
 			{
-				cookie += "; catan.game="+catanGame;
+				cookie += "; catan.game="+mCatanGame;
 			}
 		}
 		return cookie;

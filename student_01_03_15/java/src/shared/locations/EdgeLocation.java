@@ -103,6 +103,7 @@ public class EdgeLocation
 										dir.getOppositeDirection());
 			default:
 				assert false;
+				System.out.println("NULL!!!");
 				return null;
 		}
 	}

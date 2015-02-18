@@ -44,6 +44,11 @@ public class MasterManager implements IMasterManager
 		return mInstance;
 	}
 	
+	public int getPlayerID()
+	{
+		return mProxy.getPlayerID();
+	}
+	
 	public void updateModel(Game newGameModel)
 	{
 		if(newGameModel != null)
@@ -301,9 +306,9 @@ public class MasterManager implements IMasterManager
 	 * @post Cookie will be set.
 	 * @return a String of JSON
 	 */
-	public void login(String username, String password)
+	public boolean login(String username, String password)
 	{
-		mUserManager.login(username, password);
+		return mUserManager.login(username, password);
 	}
 
 	/**
@@ -312,9 +317,9 @@ public class MasterManager implements IMasterManager
 	 * @post Player is logged in and cookie set.
 	 * @return a String of JSON
 	 */
-	public void register(String username, String password) 
+	public boolean register(String username, String password) 
 	{
-		mUserManager.register(username, password);
+		return mUserManager.register(username, password);
 	}
 
 	// Games Manager

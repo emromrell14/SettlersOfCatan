@@ -13,10 +13,10 @@ public class EdgeLocationJSON
 	private int y;
 	private String direction;
 	
-	public EdgeLocationJSON(EdgeLocation roadLoc) {
-		this.x = roadLoc.getHexLoc().getX();
-		this.y = roadLoc.getHexLoc().getY();
-		this.direction = roadLoc.getDir().toString();
+	public EdgeLocationJSON(EdgeLocation edgeLoc) {
+		this.x = edgeLoc.getHexLoc().getX();
+		this.y = edgeLoc.getHexLoc().getY();
+		this.direction = edgeLoc.getDir().toString();
 	}
 
 	/**

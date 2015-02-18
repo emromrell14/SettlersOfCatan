@@ -510,6 +510,5 @@ public class LoginView extends OverlayView implements ILoginView
             }
         }
     }
-
 }
 
