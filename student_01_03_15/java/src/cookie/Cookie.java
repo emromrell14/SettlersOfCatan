@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+@SuppressWarnings("rawtypes")
 public class Cookie 
 {
 	private String mCatanUser;
@@ -14,13 +15,15 @@ public class Cookie
 	
 	public Cookie()
 	{
+		mUserMap = null;
+		mGameMap = null;
 		mCatanUser = "";
 		mCatanGame = "";
 	}
 	
 	public int getPlayerID()
 	{
-		return (int) mUserMap.get("playerID");
+		return mUserMap == null?-1:(int) mUserMap.get("playerID");
 	}
 
 	/**

@@ -33,7 +33,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private void initFromModel() {
 		int playerID = mMaster.getPlayerID();
 		Game game = mMaster.getCurrentModel();
-		if(game != null)
+		if(game != null && playerID >= 0)
 		{
 			getView().setLocalPlayerColor(game.getPlayerColor(playerID));
 		}
