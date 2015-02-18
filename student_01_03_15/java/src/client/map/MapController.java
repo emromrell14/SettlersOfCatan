@@ -167,7 +167,7 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		Index playerIndex = master.getPlayerIndex();
 		Status status = master.getCurrentModel().turnTracker().status();
 		//String type = status.toString();
 		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
@@ -177,13 +177,12 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		Index playerIndex = master.getPlayerIndex();
 		Status status = master.getCurrentModel().turnTracker().status();
 		//String type = status.toString();
 		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
 		master.buildCity(playerIndex, vertLoc, free);
-		CatanColor color = master.getCurrentModel().getPlayer(playerIndex).color();	
-		getView().placeCity(vertLoc, color);
+		getView().placeCity(vertLoc, master.getCurrentModel().getPlayer(playerIndex).color());
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -194,8 +193,8 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+
+		getView().startDrop(pieceType, master.getCurrentModel().getPlayer(master.getPlayerIndex()).color(), true);
 	}
 	
 	public void cancelMove() {
@@ -203,15 +202,15 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void playSoldierCard() {	
-		
+		// Why do we need this, if it is already on the DevCardController?		
 	}
 	
 	public void playRoadBuildingCard() {	
-		
+		// Why do we need this, if it is already on the DevCardController?
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
-		
+		//master.robPlayer(master.getPlayerIndex(), victim.getPlayerIndex(), ??);
 	}
 	
 }
