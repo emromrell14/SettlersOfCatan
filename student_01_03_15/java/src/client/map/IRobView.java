@@ -1,5 +1,6 @@
 package client.map;
 
+import shared.locations.HexLocation;
 import client.base.*;
 import client.data.*;
 
@@ -10,5 +11,7 @@ public interface IRobView extends IOverlayView
 {
 	
 	void setPlayers(RobPlayerInfo[] candidateVictims);
+	HexLocation getRobberLocation();
+	void setRobberLocation(HexLocation robberLocation);
 }
 
