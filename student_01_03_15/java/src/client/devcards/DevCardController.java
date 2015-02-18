@@ -1,7 +1,9 @@
 package client.devcards;
 
+import models.Index;
 import shared.definitions.ResourceType;
 import client.base.*;
+import facade.MasterManager;
 
 
 /**
@@ -12,6 +14,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private MasterManager master;
 	
 	/**
 	 * DevCardController constructor
@@ -29,6 +32,8 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
+		
+		this.master = MasterManager.getInstance();
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -41,59 +46,60 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void startBuyCard() {
-		
-		getBuyCardView().showModal();
+		if(!master.canBuyDevCard(master.getPlayerIndex()))
+		{
+			return;
+		}
+		getBuyCardView().showModal();			
 	}
 
 	@Override
 	public void cancelBuyCard() {
-		
 		getBuyCardView().closeModal();
 	}
 
 	@Override
 	public void buyCard() {
-		
+		master.buyDevCard(master.getPlayerIndex());
 		getBuyCardView().closeModal();
 	}
 
 	@Override
 	public void startPlayCard() {
-		
+		master.canPlayDevCard(master.getPlayerIndex());
 		getPlayCardView().showModal();
 	}
 
 	@Override
 	public void cancelPlayCard() {
-
 		getPlayCardView().closeModal();
 	}
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		
+		master.playMonopoly(resource, master.getPlayerIndex());
 	}
 
 	@Override
 	public void playMonumentCard() {
-		
+		master.playMonument(master.getPlayerIndex());
 	}
 
 	@Override
 	public void playRoadBuildCard() {
-		
+		master.canPlayRoadBuilder(master.getPlayerIndex());
 		roadAction.execute();
 	}
 
 	@Override
 	public void playSoldierCard() {
-		
+		master.canPlaySoldier(master.getPlayerIndex());
 		soldierAction.execute();
 	}
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		master.playYearOfPlenty(master.getPlayerIndex(), resource1, resource2);
 	}
 
 }
