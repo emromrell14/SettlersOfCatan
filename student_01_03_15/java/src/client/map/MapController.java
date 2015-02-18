@@ -167,13 +167,25 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
+		Status status = master.getCurrentModel().turnTracker().status();
+		//String type = status.toString();
+		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
+		master.buildSettlement(playerID, vertLoc, free);
+		CatanColor color = master.getCurrentModel().players().get(playerID).color();
+		getView().placeSettlement(vertLoc, color);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+		int playerID = master.getCurrentModel().getPlayerID(playerIndex);
+		Status status = master.getCurrentModel().turnTracker().status();
+		//String type = status.toString();
+		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
+		master.buildCity(playerID, vertLoc, free);
+		CatanColor color = master.getCurrentModel().players().get(playerID).color();	
+		getView().placeCity(vertLoc, color);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
