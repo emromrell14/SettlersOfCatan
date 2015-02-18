@@ -3,7 +3,6 @@ package poller;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import JSONmodels.ClientModelJSON;
 import models.Game;
 import facade.IMasterManager;
 import facade.MasterManager;

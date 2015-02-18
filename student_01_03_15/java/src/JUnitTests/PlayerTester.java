@@ -168,12 +168,12 @@ public class PlayerTester
 	{
 		System.out.println("\nCAN PLACE ROAD TEST\n");
 		HexLocation hex_10 = new HexLocation(-1,0);
-		HexLocation hex_11 = new HexLocation(-1,1);
+		//HexLocation hex_11 = new HexLocation(-1,1);
 		HexLocation hex0_1 = new HexLocation(0,-1);
 		HexLocation hex00 = new HexLocation(0,0);
-		HexLocation hex01 = new HexLocation(0,1);
-		HexLocation hex1_1 = new HexLocation(1,-1);
-		HexLocation hex10 = new HexLocation(1,0);
+		//HexLocation hex01 = new HexLocation(0,1);
+		//HexLocation hex1_1 = new HexLocation(1,-1);
+		//HexLocation hex10 = new HexLocation(1,0);
 		
 		System.out.print("Testing placing on an empty board (Should fail - no settlements");
 		//Can you place a road on an empty board?
@@ -213,13 +213,13 @@ public class PlayerTester
 	{
 		System.out.println("\nCAN PLACE ROAD FIRST OR SECOND ROUND TEST:\n");
 		//The Player.canPlaceRoad(Edge,Vertex) function will only be used when the turn tracker has been checked, and it is the first or second turn
-		HexLocation hex_10 = new HexLocation(-1,0);
-		HexLocation hex_11 = new HexLocation(-1,1);
+		//HexLocation hex_10 = new HexLocation(-1,0);
+		//HexLocation hex_11 = new HexLocation(-1,1);
 		HexLocation hex0_1 = new HexLocation(0,-1);
 		HexLocation hex00 = new HexLocation(0,0);
-		HexLocation hex01 = new HexLocation(0,1);
-		HexLocation hex1_1 = new HexLocation(1,-1);
-		HexLocation hex10 = new HexLocation(1,0);
+		//HexLocation hex01 = new HexLocation(0,1);
+		//HexLocation hex1_1 = new HexLocation(1,-1);
+		//HexLocation hex10 = new HexLocation(1,0);
 		
 		System.out.print("Testing place road next to settlement (Should succeed)");
 		//Can you place a road next to a settlement?
@@ -287,12 +287,12 @@ public class PlayerTester
 	public void testCanPlaceSettlement()
 	{
 		System.out.println("\nCAN PLACE SETTLEMENT TEST:\n");
-		HexLocation hex_10 = new HexLocation(-1,0);
+		//HexLocation hex_10 = new HexLocation(-1,0);
 		HexLocation hex_11 = new HexLocation(-1,1);
-		HexLocation hex0_1 = new HexLocation(0,-1);
+		//HexLocation hex0_1 = new HexLocation(0,-1);
 		HexLocation hex00 = new HexLocation(0,0);
-		HexLocation hex01 = new HexLocation(0,1);
-		HexLocation hex1_1 = new HexLocation(1,-1);
+		//HexLocation hex01 = new HexLocation(0,1);
+		//HexLocation hex1_1 = new HexLocation(1,-1);
 		HexLocation hex10 = new HexLocation(1,0);
 		
 		System.out.print("Testing place settlement on an empty board (Should fail)");
@@ -389,13 +389,13 @@ public class PlayerTester
 	public void testCanPlaceCity()
 	{
 		System.out.println("\nCAN PLACE CITY TEST:\n");
-		HexLocation hex_10 = new HexLocation(-1,0);
-		HexLocation hex_11 = new HexLocation(-1,1);
-		HexLocation hex0_1 = new HexLocation(0,-1);
+		//HexLocation hex_10 = new HexLocation(-1,0);
+		//HexLocation hex_11 = new HexLocation(-1,1);
+		//HexLocation hex0_1 = new HexLocation(0,-1);
 		HexLocation hex00 = new HexLocation(0,0);
-		HexLocation hex01 = new HexLocation(0,1);
-		HexLocation hex1_1 = new HexLocation(1,-1);
-		HexLocation hex10 = new HexLocation(1,0);
+		//HexLocation hex01 = new HexLocation(0,1);
+		//HexLocation hex1_1 = new HexLocation(1,-1);
+		//HexLocation hex10 = new HexLocation(1,0);
 	
 		System.out.print("Testing place city on empty board (Should fail)");
 		//Can I place a city on an empty board

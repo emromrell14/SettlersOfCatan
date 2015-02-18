@@ -1,6 +1,6 @@
 package proxy;
 
-import cookie.Cookie;
+//import cookie.Cookie;
 
 public interface IProxy
 {

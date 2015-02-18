@@ -16,7 +16,7 @@ public class Cookie
 	public Cookie()
 	{
 		mUserMap = null;
-		mGameMap = null;
+		setGameMap(null);
 		mCatanUser = "";
 		mCatanGame = "";
 	}
@@ -61,9 +61,17 @@ public class Cookie
 	{
 		this.mCatanGame = catanGame;
 		String json = URLDecoder.decode(catanGame);
-		mGameMap = new Gson().fromJson(json, Map.class);
+		setGameMap(new Gson().fromJson(json, Map.class));
 	}
 	
+	public Map gameMap() {
+		return mGameMap;
+	}
+
+	public void setGameMap(Map gameMap) {
+		this.mGameMap = gameMap;
+	}
+
 	public String getCookie()
 	{
 		String cookie = "";

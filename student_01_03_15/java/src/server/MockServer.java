@@ -3,23 +3,23 @@ package server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-import server.handlers.AddAIHandler;
-import server.handlers.CommandsHandler;
-import server.handlers.CreateGamesHandler;
-import server.handlers.JoinGamesHandler;
-import server.handlers.ListAIHandler;
-import server.handlers.ListGamesHandler;
-import server.handlers.LoadGamesHandler;
-import server.handlers.LogHandler;
-import server.handlers.LoginHandler;
-import server.handlers.ModelHandler;
-import server.handlers.MovesHandler;
-import server.handlers.RegisterHandler;
-import server.handlers.ResetHandler;
-import server.handlers.SaveGamesHandler;
-
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
+//import server.handlers.AddAIHandler;
+//import server.handlers.CommandsHandler;
+//import server.handlers.CreateGamesHandler;
+//import server.handlers.JoinGamesHandler;
+//import server.handlers.ListAIHandler;
+//import server.handlers.ListGamesHandler;
+//import server.handlers.LoadGamesHandler;
+//import server.handlers.LogHandler;
+//import server.handlers.LoginHandler;
+//import server.handlers.ModelHandler;
+//import server.handlers.MovesHandler;
+//import server.handlers.RegisterHandler;
+//import server.handlers.ResetHandler;
+//import server.handlers.SaveGamesHandler;
+//
+//import com.sun.net.httpserver.Headers;
+//import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 

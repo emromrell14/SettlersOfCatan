@@ -1,34 +1,21 @@
 package JUnitTests;
 
-import static org.junit.Assert.*;
-import models.Building;
-import models.Game;
-import models.Index;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import facade.MasterManager;
 import poller.Poller;
-import proxy.IProxy;
-import proxy.MockProxy;
-import proxy.Proxy;
-import shared.definitions.BuildingType;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
 
 public class PollerTester 
 {
 	private Poller poller;
-	private IProxy proxy;
 
 	@Before
 	public void initialize() 
 	{
 		poller = new Poller();
 		MasterManager.getInstance().communicateWithMockProxy();
-		proxy = new MockProxy();
 	}
 	
 	

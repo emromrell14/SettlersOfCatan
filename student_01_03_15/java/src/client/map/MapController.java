@@ -2,10 +2,8 @@ package client.map;
 
 import java.util.*;
 
-import JSONmodels.EdgeLocationJSON;
 import models.Index;
 import models.Status;
-import models.TurnTracker;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;

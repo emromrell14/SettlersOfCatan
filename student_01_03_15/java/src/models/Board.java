@@ -32,11 +32,11 @@ public class Board
 	 */
 	public Board()
 	{
-		mHexes = new ArrayList();
-		mPorts = new ArrayList();
-		mRoads = new ArrayList();
-		mSettlements = new ArrayList();
-		mCities = new ArrayList();
+		mHexes = new ArrayList<Hex>();
+		mPorts = new ArrayList<Port>();
+		mRoads = new ArrayList<Road>();
+		mSettlements = new ArrayList<Building>();
+		mCities = new ArrayList<Building>();
 	}
 	
 	public List<Building> settlements()

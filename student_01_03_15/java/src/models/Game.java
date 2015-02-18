@@ -249,6 +249,11 @@ public class Game implements IGame
 		
 		return playerHasCards && othersHaveCards;
 	}
+	
+	public Trade trade()
+	{
+		return mCurrentTrade;
+	}
 
 	public void setTrade(Trade model) 
 	{

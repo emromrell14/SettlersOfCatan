@@ -7,42 +7,30 @@ import java.util.List;
 
 import models.Game;
 import models.Hex;
-import models.Index;
 import models.Status;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import poller.Poller;
-import proxy.IProxy;
-import proxy.MockProxy;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
-import shared.definitions.ResourceType;
 import facade.MasterManager;
 
 public class GameModelTester 
 {
-	private Poller poller;
-	private IProxy proxy;
 	private List<Hex> hexes;
 
 	@Before
 	public void initialize() 
 	{
-		poller = new Poller();
 		MasterManager.getInstance().communicateWithMockProxy();
-		proxy = new MockProxy();
-		hexes = new ArrayList();
-		
+		hexes = new ArrayList<Hex>();
 	}
 
 	@Test
 	public void test() throws Exception
 	{
-		// Get most recent game
-//		Game game = poller.getGameModel(0);
 		MasterManager.getInstance().getGameModel(0);
 		Game game = MasterManager.getInstance().getCurrentModel();
 		System.out.print("Aquiring current game model");

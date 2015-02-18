@@ -1,6 +1,5 @@
 package client.devcards;
 
-import models.Index;
 import shared.definitions.ResourceType;
 import client.base.*;
 import facade.MasterManager;

@@ -8,7 +8,7 @@ import client.login.*;
 import client.join.*;
 import client.misc.*;
 import client.base.*;
-import facade.MasterManager;
+//import facade.MasterManager;
 
 /**
  * Main entry point for the Catan program
