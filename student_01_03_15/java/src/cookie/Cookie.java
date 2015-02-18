@@ -35,6 +35,10 @@ public class Cookie
 			return i;
 		}
 	}
+	public String getPlayerName()
+	{
+		return mUserMap == null ? null : (String)mUserMap.get("name");
+	}
 
 	/**
 	 * @return the catanUser
