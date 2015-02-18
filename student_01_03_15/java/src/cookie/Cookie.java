@@ -25,6 +25,10 @@ public class Cookie
 	{
 		return mUserMap == null?-1:(int) mUserMap.get("playerID");
 	}
+	public String getPlayerName()
+	{
+		return mUserMap == null ? null : (String)mUserMap.get("name");
+	}
 
 	/**
 	 * @return the catanUser

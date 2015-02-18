@@ -30,4 +30,5 @@ public interface IProxy
 	String get(String requestPath);
 
 	int getPlayerID();
+	String getPlayerName();
 }

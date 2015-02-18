@@ -23,6 +23,10 @@ public class Proxy implements IProxy
 	{
 		return mCookie.getPlayerID();
 	}
+	public String getPlayerName()
+	{
+		return mCookie.getPlayerName();
+	}
 	
 	public String post(String requestPath, String json)
 	{
