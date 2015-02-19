@@ -54,8 +54,8 @@ public enum EdgeDirection
 				return "SouthEast";
 				
 			default:
-				assert false;
 				System.out.println("NULL!!!");
+				assert false;
 				return null;
 		} 	
 	}

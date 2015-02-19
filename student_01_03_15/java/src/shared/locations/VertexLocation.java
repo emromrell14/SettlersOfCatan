@@ -93,21 +93,27 @@ public class VertexLocation
 		switch (dir)
 		{
 			case NorthWest:
+			case NW:
 			case NorthEast:
+			case NE:
 				return this;
 			case West:
+			case W:
 				return new VertexLocation(
 										  hexLoc.getNeighborLoc(EdgeDirection.SouthWest),
 										  VertexDirection.NorthEast);
 			case SouthWest:
+			case SW:
 				return new VertexLocation(
 										  hexLoc.getNeighborLoc(EdgeDirection.South),
 										  VertexDirection.NorthWest);
 			case SouthEast:
+			case SE:
 				return new VertexLocation(
 										  hexLoc.getNeighborLoc(EdgeDirection.South),
 										  VertexDirection.NorthEast);
 			case East:
+			case E:
 				return new VertexLocation(
 										  hexLoc.getNeighborLoc(EdgeDirection.SouthEast),
 										  VertexDirection.NorthWest);

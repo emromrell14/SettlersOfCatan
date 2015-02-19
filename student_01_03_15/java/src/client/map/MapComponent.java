@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.*;
+
 import javax.swing.*;
 
 import client.base.*;
@@ -937,7 +938,41 @@ public class MapComponent extends JComponent
 		
 		Point2D hexPoint = getHexPoint(normEdgeLoc.getHexLoc());
 		
-		Point2D edgePoint = EDGE_POINTS.get(normEdgeLoc.getDir());
+		
+		EdgeDirection loc = normEdgeLoc.getDir();
+		
+		switch (loc)
+		{
+			case NorthWest:
+			case NW:
+				loc = EdgeDirection.NorthWest;
+				break;
+			case North: 
+			case N: 
+				loc = EdgeDirection.North;
+				break;			
+			case NorthEast:
+			case NE: 
+				loc = EdgeDirection.NorthEast;
+				break;			
+			case SouthWest: 
+			case SW:
+				loc = EdgeDirection.SouthWest;
+				break;			
+			case South:
+			case S:
+				loc = EdgeDirection.South;
+				break;			
+			case SouthEast: 
+			case SE:
+				loc = EdgeDirection.SouthEast;
+				break;				
+			default:
+				System.out.println("NULL!!!");
+				assert false;
+				loc = null;
+		}
+		Point2D edgePoint = EDGE_POINTS.get(loc);
 		
 		return add(hexPoint, edgePoint);
 	}
@@ -949,7 +984,41 @@ public class MapComponent extends JComponent
 		
 		Point2D hexPoint = getHexPoint(normVertLoc.getHexLoc());
 		
-		Point2D vertPoint = VERTEX_POINTS.get(normVertLoc.getDir());
+		VertexDirection loc = normVertLoc.getDir();
+		
+		switch (loc)
+		{
+		//W, NW, NE, E, SE, SW
+			case NorthWest:
+			case NW:
+				loc = VertexDirection.NorthWest;
+				break;
+			case NorthEast:
+			case NE: 
+				loc = VertexDirection.NorthEast;
+				break;			
+			case SouthEast:
+			case SE: 
+				loc = VertexDirection.SouthEast;
+				break;			
+			case SouthWest: 
+			case SW:
+				loc = VertexDirection.SouthWest;
+				break;			
+			case West:
+			case W:
+				loc = VertexDirection.West;
+				break;			
+			case East: 
+			case E:
+				loc = VertexDirection.East;
+				break;				
+			default:
+				System.out.println("NULL!!!");
+				assert false;
+				return null;
+		}
+		Point2D vertPoint = VERTEX_POINTS.get(loc);
 		
 		return add(hexPoint, vertPoint);
 	}
