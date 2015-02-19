@@ -146,4 +146,10 @@ public class MockProxy implements IProxy
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public String getPlayerName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
