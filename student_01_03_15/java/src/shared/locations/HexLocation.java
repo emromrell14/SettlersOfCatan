@@ -73,16 +73,22 @@ public class HexLocation
 		switch (dir)
 		{
 			case NorthWest:
+			case NW:
 				return new HexLocation(x - 1, y);
 			case North:
+			case N:
 				return new HexLocation(x, y - 1);
 			case NorthEast:
+			case NE:
 				return new HexLocation(x + 1, y - 1);
 			case SouthWest:
+			case SW:
 				return new HexLocation(x - 1, y + 1);
 			case South:
+			case S:
 				return new HexLocation(x, y + 1);
 			case SouthEast:
+			case SE:	
 				return new HexLocation(x + 1, y);
 			case NW:
 				return new HexLocation(x - 1, y);
@@ -97,6 +103,7 @@ public class HexLocation
 			case SE:
 				return new HexLocation(x + 1, y);
 			default:
+				System.out.println("NULL HEXLOC Dir!!!");
 				assert false;
 				return null;
 		}
