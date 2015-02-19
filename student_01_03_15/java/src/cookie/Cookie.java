@@ -11,12 +11,12 @@ public class Cookie
 	private String mCatanUser;
 	private String mCatanGame;
 	private Map mUserMap;
-	private Map mGameMap;
+	private int mGameID;
 	
 	public Cookie()
 	{
+		mGameID = -1;
 		mUserMap = null;
-		setGameMap(null);
 		mCatanUser = "";
 		mCatanGame = "";
 	}
@@ -70,20 +70,15 @@ public class Cookie
 	/**
 	 * @param catanGame the catanGame to set
 	 */
-	@SuppressWarnings("deprecation")
 	public void setCatanGame(String catanGame) 
 	{
 		this.mCatanGame = catanGame;
-		String json = URLDecoder.decode(catanGame);
-		setGameMap(new Gson().fromJson(json, Map.class));
+		this.mGameID = Integer.parseInt(catanGame);
 	}
 	
-	public Map gameMap() {
-		return mGameMap;
-	}
-
-	public void setGameMap(Map gameMap) {
-		this.mGameMap = gameMap;
+	public int getGameID()
+	{
+		return mGameID;
 	}
 
 	public String getCookie()
