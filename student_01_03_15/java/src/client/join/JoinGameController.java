@@ -1,5 +1,11 @@
 package client.join;
 
+import java.awt.List;
+import java.util.ArrayList;
+
+import JSONmodels.GameInfoJSON;
+import JSONmodels.GamesInfoJSON;
+import models.Game;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
@@ -92,7 +98,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		
+			
+		this.fromJsonToViewFormat();
 		getJoinGameView().showModal();
 	}
 
@@ -120,13 +127,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 //		System.out.println("Checkboxes: " + randHexes + " " + randNums +  " " + randPorts);
 //		System.out.println("Title-" + title + "-");
 		
-		// if title isn't blank
-		if(!title.equals(""))
+		// Check that title has at least 1 non-whitespace character
+		if(title.matches(".*\\w.*"))
 		{
 			master.createGame(randHexes, randNums, randPorts, title);
 			getNewGameView().closeModal();
 		}
-		getNewGameView().closeModal();
 	}
 
 	@Override
@@ -148,6 +154,38 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		joinAction.execute();
+	}
+	
+	public void fromJsonToViewFormat()
+	{
+		String JSON = master.getGameList();
+		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
+		GameInfoJSON gameInfo = new GameInfoJSON();
+		GameInfoJSON[] gameInfoArray;
+		
+		gameInfoArray = gameInfo.getGamesArrayFromJSON(JSON);
+		for(GameInfoJSON gameJSON : gameInfoArray)
+		{
+			GameInfo game = new GameInfo();
+			game.setId(gameJSON.getId());
+			game.setTitle(gameJSON.getTitle());
+			for(PlayerInfo p : gameJSON.getPlayers())
+			{
+				game.addPlayer(p);
+			}
+			games.add(game);
+		}
+		
+//		Set info for current player
+		PlayerInfo localPlayer = new PlayerInfo();
+		localPlayer.setId(master.getPlayerID());
+		localPlayer.setName(master.getPlayerName());
+		
+//		Convert ArrayList to Array
+		GameInfo[] gamesArray = new GameInfo[games.size()];
+		games.toArray(gamesArray);
+		
+		getJoinGameView().setGames(gamesArray, localPlayer);
 	}
 
 }

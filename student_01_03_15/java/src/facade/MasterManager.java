@@ -48,6 +48,10 @@ public class MasterManager implements IMasterManager
 	{
 		return mProxy.getPlayerID();
 	}
+	public String getPlayerName()
+	{
+		return mProxy.getPlayerName();
+	}
 	
 	public Index getPlayerIndex()
 	{
