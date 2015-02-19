@@ -45,11 +45,10 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void startBuyCard() {
-		if(!master.canBuyDevCard(master.getPlayerIndex()))
+		if(master.canBuyDevCard(master.getPlayerIndex()))
 		{
-			return;
-		}
-		getBuyCardView().showModal();			
+			getBuyCardView().showModal();
+		}	
 	}
 
 	@Override
