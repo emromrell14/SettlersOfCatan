@@ -84,6 +84,18 @@ public class HexLocation
 				return new HexLocation(x, y + 1);
 			case SouthEast:
 				return new HexLocation(x + 1, y);
+			case NW:
+				return new HexLocation(x - 1, y);
+			case N:
+				return new HexLocation(x, y - 1);
+			case NE:
+				return new HexLocation(x + 1, y - 1);
+			case SW:
+				return new HexLocation(x - 1, y + 1);
+			case S:
+				return new HexLocation(x, y + 1);
+			case SE:
+				return new HexLocation(x + 1, y);
 			default:
 				assert false;
 				return null;
