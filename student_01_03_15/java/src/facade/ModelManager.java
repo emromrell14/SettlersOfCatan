@@ -1,5 +1,7 @@
 package facade;
 
+import java.util.Observable;
+
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -9,7 +11,7 @@ import models.Player;
 import models.ResourceList;
 import models.Status;
 
-public class ModelManager {
+public class ModelManager extends Observable {
 	private Game mGameModel;
 	
 	public ModelManager() {}
