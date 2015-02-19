@@ -62,6 +62,11 @@ public class MasterManager implements IMasterManager
 		}
 	}
 	
+	public ModelManager getModelManager()
+	{
+		return this.mModelManager;
+	}
+	
 	public Game getCurrentModel()
 	{
 		return mModelManager.getCurrentModel();
