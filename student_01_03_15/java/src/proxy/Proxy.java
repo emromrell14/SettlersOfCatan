@@ -28,7 +28,7 @@ public class Proxy implements IProxy
 		return mCookie.getPlayerName();
 	}
 	
-	public String post(String requestPath, String json)
+	public synchronized String post(String requestPath, String json)
 	{
 		String url ="http://localhost:8081" + requestPath;
 		URL obj;
@@ -53,7 +53,7 @@ public class Proxy implements IProxy
 			{
 				return "Failed with a " + responseCode + " response from server.";
 			}
-			System.out.println("responseCode:"+responseCode);
+			System.out.println("Proxy responseCode:"+responseCode + " " + requestPath);
 			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -85,10 +85,10 @@ public class Proxy implements IProxy
 		{
 			e.printStackTrace();
 		}
-		return "Shouldn't get here";
+		return "Shouldn't get here1";
 	}
 	
-	public String get(String requestPath)
+	public synchronized String get(String requestPath)
 	{
 		String url ="http://localhost:8081" + requestPath;
 		URL obj;
@@ -121,6 +121,6 @@ public class Proxy implements IProxy
 		{
 			e.printStackTrace();
 		}
-		return "Shouldn't get here";
+		return "Shouldn't get here2";
 	}
 }
