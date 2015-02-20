@@ -78,27 +78,14 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 				entries.add(new LogEntry(playerColor,m.getMessage()));
 			}
 		}
-		//<temp>
-		
-//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
 		
 		getView().setEntries(entries);
-	
-		//</temp>
 	}
 
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		// TODO Auto-generated method stub
-		
+		initFromModel();
 	}
 	
 }

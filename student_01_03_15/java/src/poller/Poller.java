@@ -48,7 +48,23 @@ public class Poller implements Runnable
 	    {
 			// THE COMPARING ACTUALLY TAKES PLACE AND IS RESOLVED ON THE SERVER SIDE
 //			version = 
+	    	int initialV = -1;
+	    	if (mMasterManager.getCurrentModel() != null)
+	    	{
+	    		initialV = mMasterManager.getCurrentModel().version();
+	    	}
 			mMasterManager.getGameModel(getVersion());
+			int finalV = -1;
+	    	if (mMasterManager.getCurrentModel() != null)
+	    	{
+	    		finalV = mMasterManager.getCurrentModel().version();
+	    	}
+	    	if (initialV != finalV)
+	    	{
+	    		MasterManager.getInstance().getModelManager().setModelChanged();
+				MasterManager.getInstance().getModelManager().notifyObservers();
+	    	}
+
 	    }
 	 }
 	

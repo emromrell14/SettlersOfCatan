@@ -26,7 +26,10 @@ public class ModelManager extends Observable
 
 	public void updateModel(Game newGameModel) 
 	{
+		System.out.println("ModelManager updateModel");
 		mGameModel = newGameModel;
+		setModelChanged();
+		notifyObservers();
 	}
 	
 	public Game getCurrentModel()
