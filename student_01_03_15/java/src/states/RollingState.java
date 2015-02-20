@@ -2,7 +2,6 @@ package states;
 
 public class RollingState implements IState
 {
-
 	@Override
 	public boolean isPlayingFree() throws Exception 
 	{
