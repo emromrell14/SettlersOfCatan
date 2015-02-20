@@ -6,6 +6,7 @@ import models.Index;
 import models.Status;
 import shared.definitions.*;
 import shared.locations.*;
+import states.IState;
 import client.base.*;
 import client.data.*;
 import facade.IMasterManager;
@@ -19,8 +20,10 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	private IRobView robView;
 	private IMasterManager master;
+	private IState state;
 	
-	public MapController(IMapView view, IRobView robView) {
+	public MapController(IMapView view, IRobView robView) 
+	{
 		
 		super(view);
 		
@@ -33,28 +36,34 @@ public class MapController extends Controller implements IMapController, Observe
 		master = MasterManager.getInstance();
 	}
 	
-	public IMapView getView() {
+	public IMapView getView() 
+	{
 		
 		return (IMapView)super.getView();
 	}
 	
-	private IRobView getRobView() {
+	private IRobView getRobView() 
+	{
 		return robView;
 	}
-	private void setRobView(IRobView robView) {
+	private void setRobView(IRobView robView) 
+	{
 		this.robView = robView;
 	}
 	
-	protected void initFromModel() {
+	protected void initFromModel() 
+	{
 		
 		//<temp>
 		
 		Random rand = new Random();
 
-		for (int x = 0; x <= 3; ++x) {
+		for (int x = 0; x <= 3; ++x) 
+		{
 			
 			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {
+			for (int y = -3; y <= maxY; ++y) 
+			{
 				System.out.println("x: " + x + " y: " + y);
 				HexLocation hexLoc = new HexLocation(x, y);
 				int r = rand.nextInt(HexType.values().length);
@@ -78,9 +87,11 @@ public class MapController extends Controller implements IMapController, Observe
 				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 			}
 			
-			if (x != 0) {
+			if (x != 0) 
+			{
 				int minY = x - 3;
-				for (int y = minY; y <= 3; ++y) {
+				for (int y = minY; y <= 3; ++y) 
+				{
 					int r = rand.nextInt(HexType.values().length);
 					HexType hexType;
 					if (Math.abs(y)==3 || Math.abs(x)==3)
@@ -136,91 +147,134 @@ public class MapController extends Controller implements IMapController, Observe
 		
 	}
 
-	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+	public boolean canPlaceRoad(EdgeLocation edgeLoc) 
+	{
+		Index playerIndex = master.getPlayerIndex();
 		return master.canPlaceRoad(playerIndex, edgeLoc);
 	}
 
-	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+	public boolean canPlaceSettlement(VertexLocation vertLoc) 
+	{
+		Index playerIndex = master.getPlayerIndex();
 		return master.canPlaceSettlement(playerIndex, vertLoc);
 	}
 
-	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
-		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
+	public boolean canPlaceCity(VertexLocation vertLoc) 
+	{	
+		Index playerIndex = master.getPlayerIndex();
 		return master.canPlaceCity(playerIndex, vertLoc);
 	}
 
-	public boolean canPlaceRobber(HexLocation hexLoc) {
+	public boolean canPlaceRobber(HexLocation hexLoc) 
+	{
 		return master.canPlaceRobber(hexLoc);
 	}
 
-	public void placeRoad(EdgeLocation edgeLoc) {
-		Index playerIndex = master.getCurrentModel().turnTracker().currentTurn();
-		Status status = master.getCurrentModel().turnTracker().status();
+	public void placeRoad(EdgeLocation edgeLoc) 
+	{
+		
+		//Status status = master.getCurrentModel().turnTracker().status();
 		//String type = status.toString();
-		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
-		master.buildRoad(playerIndex, edgeLoc, free);
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		//boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
+		try
+		{
+			Index playerIndex = master.getPlayerIndex();		
+			master.buildRoad(playerIndex, edgeLoc, state.isPlayingFree());
+			getView().placeRoad(edgeLoc, CatanColor.ORANGE);			
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
-	public void placeSettlement(VertexLocation vertLoc) {
-		Index playerIndex = master.getPlayerIndex();
-		Status status = master.getCurrentModel().turnTracker().status();
+	public void placeSettlement(VertexLocation vertLoc) 
+	{
+		//Status status = master.getCurrentModel().turnTracker().status();
 		//String type = status.toString();
-		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
-		master.buildSettlement(playerIndex, vertLoc, free);
-		CatanColor color = master.getCurrentModel().getPlayer(playerIndex).color();
-		getView().placeSettlement(vertLoc, color);
+		//boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
+		
+		try 
+		{
+			Index playerIndex = master.getPlayerIndex();
+			master.buildSettlement(playerIndex, vertLoc, state.isPlayingFree());
+			CatanColor color = master.getCurrentModel().getPlayer(playerIndex).color();
+			getView().placeSettlement(vertLoc, color);
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
-	public void placeCity(VertexLocation vertLoc) {
-		Index playerIndex = master.getPlayerIndex();
-		Status status = master.getCurrentModel().turnTracker().status();
+	public void placeCity(VertexLocation vertLoc) 
+	{
+		//Status status = master.getCurrentModel().turnTracker().status();
 		//String type = status.toString();
-		boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
-		master.buildCity(playerIndex, vertLoc, free);
-		getView().placeCity(vertLoc, master.getCurrentModel().getPlayer(playerIndex).color());
+		//boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
+		try
+		{
+			Index playerIndex = master.getPlayerIndex();
+			master.buildCity(playerIndex, vertLoc, state.isPlayingFree());
+			getView().placeCity(vertLoc, master.getCurrentModel().getPlayer(playerIndex).color());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
-	public void placeRobber(HexLocation hexLoc) {
+	public void placeRobber(HexLocation hexLoc) 
+	{
 		getView().placeRobber(hexLoc);
 		
 		getRobView().setRobberLocation(hexLoc);
 		getRobView().showModal();
 	}
 	
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		getView().startDrop(pieceType, CatanColor.BLUE, true);
-		//getView().startDrop(pieceType, master.getPlayer().color(), true);
+	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
+	{
+		try 
+		{
+			getView().startDrop(pieceType, master.getPlayer().color(), state.isCancelAllowed());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
-	public void cancelMove() {
+	public void cancelMove() 
+	{
 		// We somehow need to close the modal...
 	}
 	
-	public void playSoldierCard() {	
+	public void playSoldierCard() 
+	{	
 		// Why do we need this, if it is already on the DevCardController?		
 	}
 	
-	public void playRoadBuildingCard() {	
+	public void playRoadBuildingCard() 
+	{	
 		// Why do we need this, if it is already on the DevCardController?
 	}
 	
-	public void robPlayer(RobPlayerInfo victim) {
+	public void robPlayer(RobPlayerInfo victim) 
+	{
 		Index victimIndex = null;
 		try {
 			victimIndex = new Index(victim.getPlayerIndex());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 		master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg) 
+	{
 		// TODO Auto-generated method stub
 
 		System.out.println("UPDATING MAPCONTROLLER");
