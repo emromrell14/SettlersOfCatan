@@ -53,6 +53,11 @@ public class MasterManager implements IMasterManager
 		return mProxy.getPlayerName();
 	}
 	
+	public int getPlayerPoints(int playerID)
+	{
+		return mModelManager.getPlayerPoints(playerID);
+	}
+	
 	public Index getPlayerIndex()
 	{
 		return this.getCurrentModel().getPlayerIndex(mProxy.getPlayerID());
@@ -64,6 +69,11 @@ public class MasterManager implements IMasterManager
 		{
 			mModelManager.updateModel(newGameModel);
 		}
+	}
+	
+	public ModelManager getModelManager()
+	{
+		return this.mModelManager;
 	}
 	
 	public Game getCurrentModel()

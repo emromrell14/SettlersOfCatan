@@ -1,5 +1,7 @@
 package facade;
 
+import java.util.Observable;
+
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -9,7 +11,7 @@ import models.Player;
 import models.ResourceList;
 import models.Status;
 
-public class ModelManager {
+public class ModelManager extends Observable {
 	private Game mGameModel;
 	
 	public ModelManager() {}
@@ -482,6 +484,11 @@ public class ModelManager {
 					&& currentRobberLocation.getY() == newRobberLocation.getY());
 		}
 		return false;
+	}
+
+	public int getPlayerPoints(int playerID) 
+	{
+		return mGameModel == null? 0 : mGameModel.getPlayerPoints(playerID);
 	}
 	
 }

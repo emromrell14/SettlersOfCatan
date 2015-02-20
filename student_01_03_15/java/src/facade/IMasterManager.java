@@ -6,11 +6,15 @@ import models.*;
 
 public interface IMasterManager 
 {		
+	public int getPlayerPoints(int playerID);
+	
 	public int getPlayerID();
 	
 	public Game getCurrentModel();
 	
 	public void updateModel(Game newGameModel);
+	
+	public ModelManager getModelManager();
 	
 	public void communicateWithMockProxy();
 	

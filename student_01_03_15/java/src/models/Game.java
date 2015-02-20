@@ -258,5 +258,17 @@ public class Game implements IGame
 	public void setTrade(Trade model) 
 	{
 		mCurrentTrade = model;
+	}
+
+	public int getPlayerPoints(int playerID) 
+	{
+		for(Player p : mPlayers)
+		{
+			if(p.playerID() == playerID)
+			{
+				return p.victoryPointCount();
+			}
+		}
+		return 0;
 	}	
 }

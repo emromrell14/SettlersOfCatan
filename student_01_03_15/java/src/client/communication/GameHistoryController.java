@@ -1,21 +1,25 @@
 package client.communication;
 
 import java.util.*;
-import java.util.List;
 
 import client.base.*;
+import facade.IMasterManager;
+import facade.MasterManager;
 import shared.definitions.*;
 
 
 /**
  * Game history controller implementation
  */
-public class GameHistoryController extends Controller implements IGameHistoryController {
+public class GameHistoryController extends Controller implements IGameHistoryController, Observer {
+	
+	private IMasterManager master;
 
 	public GameHistoryController(IGameHistoryView view) {
 		
 		super(view);
-		
+		this.master = MasterManager.getInstance();
+		this.master.getModelManager().addObserver(this);
 		initFromModel();
 	}
 	
@@ -42,6 +46,12 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		getView().setEntries(entries);
 	
 		//</temp>
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

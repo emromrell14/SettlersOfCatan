@@ -1,25 +1,21 @@
 package client.login;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
 import client.misc.*;
-
-//import java.net.*;
-//import java.io.*;
-//import java.util.*;
-//import java.lang.reflect.*;
-
-//import com.google.gson.*;
-//import com.google.gson.reflect.TypeToken;
-
+import facade.IMasterManager;
 import facade.MasterManager;
 
 /**
  * Implementation for the login controller
  */
-public class LoginController extends Controller implements ILoginController {
+public class LoginController extends Controller implements ILoginController, Observer {
 
 	private IMessageView messageView;
 	private IAction loginAction;
+	private IMasterManager master;
 
 	/**
 	 * LoginController constructor
@@ -33,7 +29,8 @@ public class LoginController extends Controller implements ILoginController {
 	public LoginController(ILoginView view, IMessageView messageView) {
 
 		super(view);
-
+		this.master = MasterManager.getInstance();
+		this.master.getModelManager().addObserver(this);
 		this.messageView = messageView;
 	}
 
@@ -80,7 +77,7 @@ public class LoginController extends Controller implements ILoginController {
 		boolean success = !username.isEmpty() && !password.isEmpty();
 		if(success)
 		{
-			success = MasterManager.getInstance().login(username, password);
+			success = master.login(username, password);
 		}
 
 		// TODO: log in user
@@ -110,7 +107,7 @@ public class LoginController extends Controller implements ILoginController {
 		boolean success = !username.isEmpty() && !password.isEmpty() && !password2.isEmpty() && password.contentEquals(password2);
 		if(success)
 		{
-			success = MasterManager.getInstance().register(username, password2);
+			success = master.register(username, password2);
 		}
 		// TODO: register new user (which, if successful, also logs them in)
 
@@ -127,5 +124,11 @@ public class LoginController extends Controller implements ILoginController {
 //			getLoginView().closeModal();
 			messageView.showModal();
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 }

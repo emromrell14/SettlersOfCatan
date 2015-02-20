@@ -62,7 +62,6 @@ public class GamesManager
 		String body;
 		
 		body = "{id:" + id + ",color:\"" + color + "\"}";
-		
 		response = mProxy.post("/games/join", body);
 		return response;
 	}

@@ -51,6 +51,7 @@ public class Proxy implements IProxy
 			int responseCode = mCon.getResponseCode();
 			if(responseCode != 200)
 			{
+				System.out.println("responseCode:"+responseCode);
 				return "Failed with a " + responseCode + " response from server.";
 			}
 			System.out.println("Proxy responseCode:"+responseCode + " " + requestPath);
