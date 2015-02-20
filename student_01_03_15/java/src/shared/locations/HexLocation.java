@@ -90,18 +90,6 @@ public class HexLocation
 			case SouthEast:
 			case SE:	
 				return new HexLocation(x + 1, y);
-			case NW:
-				return new HexLocation(x - 1, y);
-			case N:
-				return new HexLocation(x, y - 1);
-			case NE:
-				return new HexLocation(x + 1, y - 1);
-			case SW:
-				return new HexLocation(x - 1, y + 1);
-			case S:
-				return new HexLocation(x, y + 1);
-			case SE:
-				return new HexLocation(x + 1, y);
 			default:
 				System.out.println("NULL HEXLOC Dir!!!");
 				assert false;
