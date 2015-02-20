@@ -402,7 +402,8 @@ public class MasterManager implements IMasterManager
 	public void getGameModel(int version)
 	{
 		Game game = mGameManager.getGameModel(version);
-		mModelManager.updateModel(game);
+		if(game != null)
+			mModelManager.updateModel(game);
 //		return mModelManager.gameModel().version();
 	}
 	

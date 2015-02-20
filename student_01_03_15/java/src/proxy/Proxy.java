@@ -80,6 +80,7 @@ public class Proxy implements IProxy
 				cookieResponse = cookieResponse.replace(";Path=/;", "");
 				mCookie.setCatanGame(cookieResponse);
 			}
+
 			return response.toString();
 		} 
 		catch (IOException e) 

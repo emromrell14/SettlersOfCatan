@@ -32,7 +32,8 @@ public class GameManager
 		String urlPath = "/game/model?version="+version;
 		
 		response = mProxy.get(urlPath);
-		return jsonToGame(response);
+		//System.out.println("gameManger-"+ response  + "-");
+		return (response.equals("\"true\"")) ? null : jsonToGame(response);
 	}
 	
 	/**

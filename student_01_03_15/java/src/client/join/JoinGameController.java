@@ -165,7 +165,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		localPlayer.setColor(color);
 		System.out.println("id: "+localGame.getId());
 		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
-		System.out.println("RESPONSE: " + response);
+		System.out.println("joinGameController RESPONSE: " + response);
+		// we needs checks for failure
 		
 		// If join succeeded
 		getSelectColorView().closeModal();
