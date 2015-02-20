@@ -499,7 +499,10 @@ public class ModelManager extends Observable
 		return false;
 	}
 
-	
+	public int getPlayerPoints(int playerID) 
+	{
+		return mGameModel == null? 0 : mGameModel.getPlayerPoints(playerID);
+	}
 	
 	public void setModelChanged() {
 		setChanged();		

@@ -28,7 +28,7 @@ public class Proxy implements IProxy
 		return mCookie.getPlayerName();
 	}
 	
-	public String post(String requestPath, String json)
+	public synchronized String post(String requestPath, String json)
 	{
 		String url ="http://localhost:8081" + requestPath;
 		URL obj;
@@ -89,7 +89,7 @@ public class Proxy implements IProxy
 		return "Shouldn't get here";
 	}
 	
-	public String get(String requestPath)
+	public synchronized String get(String requestPath)
 	{
 		String url ="http://localhost:8081" + requestPath;
 		URL obj;

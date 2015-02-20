@@ -6,6 +6,8 @@ import models.*;
 
 public interface IMasterManager
 {		
+	public int getPlayerPoints(int playerID);
+	
 	public int getPlayerID();
 	
 	public Index getPlayerIndex();
