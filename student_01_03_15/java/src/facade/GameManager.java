@@ -29,7 +29,9 @@ public class GameManager
 	{
 		String response;
 		
-		response = mProxy.get("/game/model");
+		String urlPath = "/game/model?version="+version;
+		
+		response = mProxy.get(urlPath);
 		return jsonToGame(response);
 	}
 	
