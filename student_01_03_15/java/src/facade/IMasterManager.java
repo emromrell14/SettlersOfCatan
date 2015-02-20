@@ -1,11 +1,14 @@
 package facade;
 
+import JSONmodels.MessageListJSON;
 import shared.definitions.*;
 import shared.locations.*;
 import models.*;
 
 public interface IMasterManager 
 {		
+	public MessageListJSON getLog();
+	
 	public int getPlayerPoints(int playerID);
 	
 	public int getPlayerID();

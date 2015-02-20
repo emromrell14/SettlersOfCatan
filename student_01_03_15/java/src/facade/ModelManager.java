@@ -10,6 +10,7 @@ import models.Index;
 import models.Player;
 import models.ResourceList;
 import models.Status;
+import JSONmodels.MessageListJSON;
 
 public class ModelManager extends Observable {
 	private Game mGameModel;
@@ -491,4 +492,8 @@ public class ModelManager extends Observable {
 		return mGameModel == null? 0 : mGameModel.getPlayerPoints(playerID);
 	}
 	
+	public MessageListJSON getLog()
+	{
+		return mGameModel == null? null : mGameModel.getLog();
+	}
 }

@@ -1,5 +1,6 @@
 package facade;
 
+import JSONmodels.MessageListJSON;
 import models.Game;
 import models.Index;
 import models.ResourceList;
@@ -61,6 +62,11 @@ public class MasterManager implements IMasterManager
 	public Index getPlayerIndex()
 	{
 		return this.getCurrentModel().getPlayerIndex(mProxy.getPlayerID());
+	}
+	
+	public MessageListJSON getLog()
+	{
+		return mModelManager.getLog();
 	}
 	
 	public void updateModel(Game newGameModel)

@@ -73,6 +73,11 @@ public class Game implements IGame
 	{
 		return 0;
 	}
+	
+	public MessageListJSON getLog()
+	{
+		return mLog;
+	}
 
 	public Board board() 
 	{
