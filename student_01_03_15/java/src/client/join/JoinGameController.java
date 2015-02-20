@@ -2,6 +2,8 @@ package client.join;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import JSONmodels.GameInfoJSON;
 import JSONmodels.GamesInfoJSON;
@@ -16,7 +18,7 @@ import facade.MasterManager;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController {
+public class JoinGameController extends Controller implements IJoinGameController, Observer {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
@@ -41,6 +43,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
 		master = MasterManager.getInstance();
+		this.master.getModelManager().addObserver(this);
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -186,6 +189,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		games.toArray(gamesArray);
 		
 		getJoinGameView().setGames(gamesArray, localPlayer);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

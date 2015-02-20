@@ -23,8 +23,8 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		super(view);
 		
-		master = MasterManager.getInstance();
-		
+		this.master = MasterManager.getInstance();
+		this.master.getModelManager().addObserver(this);
 		setRobView(robView);
 		
 		initFromModel();
@@ -221,6 +221,7 @@ public class MapController extends Controller implements IMapController, Observe
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+
 		System.out.println("UPDATING MAPCONTROLLER");
 	}
 	

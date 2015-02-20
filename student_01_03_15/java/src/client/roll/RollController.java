@@ -1,14 +1,19 @@
 package client.roll;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import facade.MasterManager;
 
 
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller implements IRollController {
+public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
+	private MasterManager master;
 
 	/**
 	 * RollController constructor
@@ -21,6 +26,8 @@ public class RollController extends Controller implements IRollController {
 		super(view);
 		
 		setResultView(resultView);
+		this.master = MasterManager.getInstance();
+		this.master.getModelManager().addObserver(this);
 	}
 	
 	public IRollResultView getResultView() {
@@ -40,6 +47,12 @@ public class RollController extends Controller implements IRollController {
 		int die2 = (int)(Math.random() * 6) + 1;
 		this.resultView.setRollValue(die1 + die2);
 		getResultView().showModal();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
