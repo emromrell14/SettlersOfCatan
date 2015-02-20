@@ -149,8 +149,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		ArrayList<CatanColor> colors = new ArrayList<CatanColor>();
 		localGame = game;
-		// i dont think this line is necessary
-		localGame.addPlayer(localPlayer);
+		
+		this.enableAllColors();
 		for(PlayerInfo p : localGame.getPlayers())
 		{
 			if(p.getColorCatan() != null)
@@ -180,7 +180,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
 		System.out.println("joinGameController RESPONSE: " + response);
 		
-		// we need checks for failure
+		// Check for failure...it won't fail if same color is chosen
 		if(response.equals("Success"))
 		{
 			getSelectColorView().closeModal();
@@ -190,7 +190,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		else
 		{
 			messageView.setTitle("ERROR:");
-			messageView.setMessage("Sorry, someone chose that color before you!");
+			messageView.setMessage("Something went wrong when trying to join the game!");
 			messageView.showModal();
 		}
 		
@@ -237,6 +237,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	
 		getJoinGameView().setGames(gamesArray, this.localPlayer);
 		
+	}
+	public void enableAllColors()
+	{
+		CatanColor colors[] = new CatanColor[] {CatanColor.BLUE, CatanColor.BROWN, CatanColor.GREEN, CatanColor.ORANGE,
+				CatanColor.PUCE, CatanColor.PURPLE, CatanColor.RED, CatanColor.WHITE, CatanColor.YELLOW};
+		for(CatanColor c : colors)
+		{
+			getSelectColorView().setColorEnabled(c, true);
+		}
 	}
 
 	@Override
