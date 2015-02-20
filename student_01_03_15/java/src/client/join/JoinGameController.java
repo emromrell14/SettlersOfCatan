@@ -12,6 +12,7 @@ import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -24,7 +25,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
-	private MasterManager master;
+	private IMasterManager master;
 	private PlayerInfo localPlayer;
 	private GameInfo localGame;
 	

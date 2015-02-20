@@ -2,6 +2,7 @@ package facade;
 
 import java.util.Observable;
 
+import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -11,7 +12,8 @@ import models.Player;
 import models.ResourceList;
 import models.Status;
 
-public class ModelManager extends Observable {
+public class ModelManager extends Observable
+{
 	private Game mGameModel;
 	
 	public ModelManager() {}
@@ -55,6 +57,17 @@ public class ModelManager extends Observable {
 	public boolean canAffordRoad(Index playerIndex) 
 	{
 		Player p = this.mGameModel.getPlayer(playerIndex);
+		
+		/*  THIS IS A HACK TO SHOW THAT THE OBSERVER PATTERN IS IN EFFECT WHILE OUR POLLER ISN'T FUNCTIONING
+		// DELETE FOLLOWING TRY CATCH
+		try {
+			p = new Player(CatanColor.BLUE, "Paul", new Index(1), 0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
 		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) && // Checks that this player is in the game
 			(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks that it is this player's turn
 			mGameModel.turnTracker().status().equals(Status.SECONDROUND))) 
@@ -491,4 +504,7 @@ public class ModelManager extends Observable {
 		return mGameModel == null? 0 : mGameModel.getPlayerPoints(playerID);
 	}
 	
+	public void setModelChanged() {
+		setChanged();		
+	}
 }

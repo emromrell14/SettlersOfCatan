@@ -28,12 +28,18 @@ public class GameManager
 	public Game getGameModel(int version)
 	{
 		String response;
-		
 		String urlPath = "/game/model?version="+version;
 		
 		response = mProxy.get(urlPath);
-		//System.out.println("gameManger-"+ response  + "-");
 		return (response.equals("\"true\"")) ? null : jsonToGame(response);
+		
+//		Hack for something paul did
+//		Game g = jsonToGame(response);
+//		if (g == null)
+//		{
+//			g = new Game();
+//		}
+//		return g;
 	}
 	
 	/**
