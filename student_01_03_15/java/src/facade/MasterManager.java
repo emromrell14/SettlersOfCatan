@@ -53,6 +53,11 @@ public class MasterManager implements IMasterManager
 		return mProxy.getPlayerName();
 	}
 	
+	public int getPlayerPoints(int playerID)
+	{
+		return mModelManager.getPlayerPoints(playerID);
+	}
+	
 	public Index getPlayerIndex()
 	{
 		return this.getCurrentModel().getPlayerIndex(mProxy.getPlayerID());
