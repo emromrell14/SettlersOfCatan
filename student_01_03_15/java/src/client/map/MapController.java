@@ -8,6 +8,7 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -17,7 +18,7 @@ import facade.MasterManager;
 public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
-	private MasterManager master;
+	private IMasterManager master;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -191,8 +192,8 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-
-		getView().startDrop(pieceType, master.getCurrentModel().getPlayer(master.getPlayerIndex()).color(), true);
+		getView().startDrop(pieceType, CatanColor.BLUE, true);
+		//getView().startDrop(pieceType, master.getPlayer().color(), true);
 	}
 	
 	public void cancelMove() {

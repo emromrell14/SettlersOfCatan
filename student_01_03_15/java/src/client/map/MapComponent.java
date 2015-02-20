@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import client.base.*;
 import client.utils.*;
+import facade.MasterManager;
 import shared.definitions.*;
 import shared.locations.*;
 
@@ -552,8 +553,11 @@ public class MapComponent extends JComponent
 		
 		@Override
 		public void mouseClicked(MouseEvent e)
-		{
-			
+		{	
+			// THIS IS FOR TESTING WITHOUT THE POLLER WORKING ------------
+			MasterManager.getInstance().getModelManager().setModelChanged();
+			MasterManager.getInstance().getModelManager().notifyObservers();
+			//------------------------------------------------------------
 			if(dropType != null)
 			{
 				

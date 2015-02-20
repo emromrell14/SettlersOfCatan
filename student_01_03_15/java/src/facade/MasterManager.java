@@ -1,7 +1,10 @@
 package facade;
 
+import java.util.Observable;
+
 import models.Game;
 import models.Index;
+import models.Player;
 import models.ResourceList;
 import proxy.*;
 import shared.definitions.ResourceType;
@@ -56,6 +59,11 @@ public class MasterManager implements IMasterManager
 	public Index getPlayerIndex()
 	{
 		return this.getCurrentModel().getPlayerIndex(mProxy.getPlayerID());
+	}
+	
+	public Player getPlayer()
+	{
+		return this.getCurrentModel().getPlayer(this.getPlayerIndex());
 	}
 	
 	public void updateModel(Game newGameModel)
@@ -681,4 +689,5 @@ public class MasterManager implements IMasterManager
 	{
 		mUtilManager.changeLogLevel(log);
 	}
+
 }
