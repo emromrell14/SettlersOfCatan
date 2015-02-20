@@ -54,7 +54,7 @@ public class Proxy implements IProxy
 				System.out.println("responseCode:"+responseCode);
 				return "Failed with a " + responseCode + " response from server.";
 			}
-			System.out.println("responseCode:"+responseCode);
+			System.out.println("Proxy responseCode:"+responseCode + " " + requestPath);
 			BufferedReader in = new BufferedReader(new InputStreamReader(mCon.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -80,13 +80,14 @@ public class Proxy implements IProxy
 				cookieResponse = cookieResponse.replace(";Path=/;", "");
 				mCookie.setCatanGame(cookieResponse);
 			}
+
 			return response.toString();
 		} 
 		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
-		return "Shouldn't get here";
+		return "Shouldn't get here1";
 	}
 	
 	public synchronized String get(String requestPath)
@@ -122,6 +123,6 @@ public class Proxy implements IProxy
 		{
 			e.printStackTrace();
 		}
-		return "Shouldn't get here";
+		return "Shouldn't get here2";
 	}
 }

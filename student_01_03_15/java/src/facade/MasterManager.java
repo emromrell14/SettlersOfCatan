@@ -1,8 +1,10 @@
 package facade;
 
 import JSONmodels.MessageListJSON;
+import java.util.Observable;
 import models.Game;
 import models.Index;
+import models.Player;
 import models.ResourceList;
 import proxy.*;
 import shared.definitions.ResourceType;
@@ -67,6 +69,10 @@ public class MasterManager implements IMasterManager
 	public MessageListJSON getLog()
 	{
 		return mModelManager.getLog();
+	}
+	public Player getPlayer()
+	{
+		return this.getCurrentModel().getPlayer(this.getPlayerIndex());
 	}
 	
 	public void updateModel(Game newGameModel)
@@ -408,7 +414,8 @@ public class MasterManager implements IMasterManager
 	public void getGameModel(int version)
 	{
 		Game game = mGameManager.getGameModel(version);
-		mModelManager.updateModel(game);
+		if(game != null)
+			mModelManager.updateModel(game);
 //		return mModelManager.gameModel().version();
 	}
 	
@@ -692,4 +699,5 @@ public class MasterManager implements IMasterManager
 	{
 		mUtilManager.changeLogLevel(log);
 	}
+
 }

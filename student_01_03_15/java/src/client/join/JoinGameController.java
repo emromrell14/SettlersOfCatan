@@ -12,6 +12,7 @@ import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -24,7 +25,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
-	private MasterManager master;
+	private IMasterManager master;
+	private PlayerInfo localPlayer;
+	private GameInfo localGame;
 	
 	/**
 	 * JoinGameController constructor
@@ -43,6 +46,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
 		master = MasterManager.getInstance();
+		localPlayer = new PlayerInfo();
 		this.master.getModelManager().addObserver(this);
 	}
 	
@@ -139,8 +143,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	@Override
-	public void startJoinGame(GameInfo game) {
-
+	public void startJoinGame(GameInfo game)
+	{
+////	localPlayer.setPlayerIndex();
+//		master.joinGame(game.getId(), getSelectColorView().getSelectedColor().toString());
+		localGame = game;
+		// i dont think this line is necessary
+		localGame.addPlayer(localPlayer);
+		
 		getSelectColorView().showModal();
 	}
 
@@ -151,7 +161,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	@Override
-	public void joinGame(CatanColor color) {
+	public void joinGame(CatanColor color)
+	{
+		localPlayer.setColor(color);
+		System.out.println("id: "+localGame.getId());
+		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
+		System.out.println("joinGameController RESPONSE: " + response);
+		// we needs checks for failure
 		
 		// If join succeeded
 		getSelectColorView().closeModal();
@@ -162,10 +178,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void fromJsonToViewFormat()
 	{
 		String JSON = master.getGameList();
+		System.out.println("JoinGameController json1:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;
 		
+		System.out.println("JoinGameController json2:" + JSON + ":");
+
 		gameInfoArray = gameInfo.getGamesArrayFromJSON(JSON);
 		for(GameInfoJSON gameJSON : gameInfoArray)
 		{
@@ -174,21 +193,23 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			game.setTitle(gameJSON.getTitle());
 			for(PlayerInfo p : gameJSON.getPlayers())
 			{
-				game.addPlayer(p);
+				System.out.println("Player read in from games/list: " + p.getName() + ", id: " + p.getId());
+				if(!p.getName().equals("") || p.getId() != -1)
+					game.addPlayer(p);
 			}
 			games.add(game);
 		}
 		
 //		Set info for current player
-		PlayerInfo localPlayer = new PlayerInfo();
-		localPlayer.setId(master.getPlayerID());
-		localPlayer.setName(master.getPlayerName());
+		this.localPlayer.setId(master.getPlayerID());
+		this.localPlayer.setName(master.getPlayerName());
 		
 //		Convert ArrayList to Array
 		GameInfo[] gamesArray = new GameInfo[games.size()];
 		games.toArray(gamesArray);
+	
+		getJoinGameView().setGames(gamesArray, this.localPlayer);
 		
-		getJoinGameView().setGames(gamesArray, localPlayer);
 	}
 
 	@Override

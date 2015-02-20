@@ -5,13 +5,19 @@ import shared.definitions.*;
 import shared.locations.*;
 import models.*;
 
-public interface IMasterManager 
+public interface IMasterManager
 {		
 	public MessageListJSON getLog();
 	
 	public int getPlayerPoints(int playerID);
 	
 	public int getPlayerID();
+	
+	public Index getPlayerIndex();
+	
+	public Player getPlayer();
+	
+	public String getPlayerName();
 	
 	public Game getCurrentModel();
 	

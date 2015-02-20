@@ -5,6 +5,7 @@ import java.util.*;
 import client.base.*;
 import client.map.IMapView;
 import client.map.MapController;
+import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -15,7 +16,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 {
 
 	private Map<ResourceBarElement, IAction> elementActions;
-	private MasterManager master;
+	private IMasterManager master;
 //	private IMapView mapView;
 	
 	public ResourceBarController(IResourceBarView view) 
@@ -49,9 +50,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildRoad() 
 	{
-		executeElementAction(ResourceBarElement.ROAD);
 		if (master.canAffordCity(master.getPlayerIndex()))
 		{
+			executeElementAction(ResourceBarElement.ROAD);
 			
 		}
 		
@@ -60,10 +61,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildSettlement() 
 	{
-		executeElementAction(ResourceBarElement.SETTLEMENT);
 		if (master.canAffordSettlement(master.getPlayerIndex()))
 		{
-			
+			executeElementAction(ResourceBarElement.SETTLEMENT);
 		}
 		
 	}
@@ -71,10 +71,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildCity() 
 	{
-		executeElementAction(ResourceBarElement.CITY);
 		if (master.canAffordCity(master.getPlayerIndex())) 
 		{
-			
+			executeElementAction(ResourceBarElement.CITY);	
 		}
 		
 	}
@@ -82,10 +81,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buyCard() 
 	{
-		executeElementAction(ResourceBarElement.BUY_CARD);
 		if (master.canBuyDevCard(master.getPlayerIndex()))
 		{
-			
+			executeElementAction(ResourceBarElement.BUY_CARD);			
 		}
 		
 	}
@@ -93,9 +91,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void playCard() 
 	{
-		executeElementAction(ResourceBarElement.PLAY_CARD);
-		
-		
+		if (master.canPlayDevCard(master.getPlayerIndex()))
+		{
+			executeElementAction(ResourceBarElement.PLAY_CARD);
+		}
 	}
 	
 	private void executeElementAction(ResourceBarElement element) 
@@ -113,7 +112,44 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
+		System.out.println("WE HIT THE RESOURCE CONTROLLER'S OBSERVER UPDATE METHOD");
 		
+		// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
+		if (master.canAffordRoad(master.getPlayerIndex()))
+		{
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
+		}
+		else
+		{
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
+		}
+		//----------------------------------------------
+		if (master.canAffordSettlement(master.getPlayerIndex()))
+		{
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+		}
+		else
+		{
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+		}
+		//----------------------------------------------
+		if (master.canAffordCity(master.getPlayerIndex()))
+		{
+			this.getView().setElementEnabled(ResourceBarElement.CITY, true);
+		}
+		else
+		{
+			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
+		}
+		//-----------------------------------------------
+		if (master.canBuyDevCard(master.getPlayerIndex()))
+		{
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+		}
+		else
+		{
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+		}
 		
 		
 	}
