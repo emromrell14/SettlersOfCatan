@@ -1,14 +1,20 @@
 package client.points;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import client.base.*;
+import facade.IMasterManager;
+import facade.MasterManager;
 
 
 /**
  * Implementation for the points controller
  */
-public class PointsController extends Controller implements IPointsController {
+public class PointsController extends Controller implements IPointsController, Observer {
 
 	private IGameFinishedView finishedView;
+	private IMasterManager master;
 	
 	/**
 	 * PointsController constructor
@@ -21,7 +27,8 @@ public class PointsController extends Controller implements IPointsController {
 		super(view);
 		
 		setFinishedView(finishedView);
-		
+		this.master = MasterManager.getInstance();
+		this.master.getModelManager().addObserver(this);
 		initFromModel();
 	}
 	
@@ -41,6 +48,12 @@ public class PointsController extends Controller implements IPointsController {
 		//<temp>		
 		getPointsView().setPoints(5);
 		//</temp>
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

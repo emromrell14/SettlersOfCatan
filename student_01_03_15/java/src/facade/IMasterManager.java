@@ -12,6 +12,8 @@ public interface IMasterManager
 	
 	public void updateModel(Game newGameModel);
 	
+	public ModelManager getModelManager();
+	
 	public void communicateWithMockProxy();
 	
 	public void communicateWithRealProxy();

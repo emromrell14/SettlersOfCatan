@@ -14,7 +14,7 @@ import facade.MasterManager;
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
 	private MasterManager master;
@@ -23,8 +23,8 @@ public class MapController extends Controller implements IMapController {
 		
 		super(view);
 		
-		master = MasterManager.getInstance();
-		
+		this.master = MasterManager.getInstance();
+		this.master.getModelManager().addObserver(this);
 		setRobView(robView);
 		
 		initFromModel();
@@ -216,6 +216,12 @@ public class MapController extends Controller implements IMapController {
 			e.printStackTrace();
 		}
 		master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
