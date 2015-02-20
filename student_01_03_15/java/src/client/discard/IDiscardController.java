@@ -15,7 +15,7 @@ public interface IDiscardController extends IController
 	 * @param resource
 	 *            The resource that was increased
 	 */
-	void increaseAmount(ResourceType resource);
+	void increaseAmount(ResourceType resource, int currentAmount);
 	
 	/**
 	 * This method is called when the user decreases the amount of the specified
@@ -24,7 +24,7 @@ public interface IDiscardController extends IController
 	 * @param resource
 	 *            The resource that was decreased
 	 */
-	void decreaseAmount(ResourceType resource);
+	void decreaseAmount(ResourceType resource, int currentAmount);
 	
 	/**
 	 * This method is called when the user clicks the discard button.

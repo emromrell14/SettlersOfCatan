@@ -41,12 +41,12 @@ public class DiscardController extends Controller implements IDiscardController,
 	}
 
 	@Override
-	public void increaseAmount(ResourceType resource) {
+	public void increaseAmount(ResourceType resource, int currentAmount) {
 		
 	}
 
 	@Override
-	public void decreaseAmount(ResourceType resource) {
+	public void decreaseAmount(ResourceType resource, int currentAmount) {
 		
 	}
 
