@@ -10,6 +10,11 @@ import java.awt.image.*;
 import javax.swing.*;
 
 import client.base.*;
+import client.discard.DiscardController;
+import client.discard.DiscardView;
+import client.discard.IDiscardView;
+import client.misc.IWaitView;
+import client.misc.WaitView;
 import client.utils.*;
 import facade.MasterManager;
 import shared.definitions.*;
@@ -555,9 +560,17 @@ public class MapComponent extends JComponent
 		public void mouseClicked(MouseEvent e)
 		{	
 			// THIS IS FOR TESTING WITHOUT THE POLLER WORKING ------------
-			MasterManager.getInstance().getModelManager().setModelChanged();
-			MasterManager.getInstance().getModelManager().notifyObservers();
+			//MasterManager.getInstance().getModelManager().setModelChanged();
+			//MasterManager.getInstance().getModelManager().notifyObservers();
 			//------------------------------------------------------------
+
+			// THIS IS A HACK FOR SIMULATION PURPOSES --------------------
+			IDiscardView dv = new DiscardView();
+			IWaitView wv = new WaitView();
+			dv.setController(new DiscardController(dv,wv));
+			dv.showModal();
+			// -----------------------------------------------------------
+
 			if(dropType != null)
 			{
 				

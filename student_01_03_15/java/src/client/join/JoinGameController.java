@@ -104,9 +104,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	@Override
-	public void start() {
-			
-		this.fromJsonToViewFormat();
+	public void start()
+	{
+		this.generateGameList();
 		getJoinGameView().showModal();
 	}
 
@@ -117,8 +117,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	@Override
-	public void cancelCreateNewGame() {
-		
+	public void cancelCreateNewGame()
+	{
 		getNewGameView().closeModal();
 	}
 
@@ -138,6 +138,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(title.matches(".*\\w.*"))
 		{
 			master.createGame(randHexes, randNums, randPorts, title);
+			// get the newest list of games
+			this.generateGameList();
 			getNewGameView().closeModal();
 		}
 	}
@@ -145,12 +147,23 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game)
 	{
-////	localPlayer.setPlayerIndex();
-//		master.joinGame(game.getId(), getSelectColorView().getSelectedColor().toString());
+		ArrayList<CatanColor> colors = new ArrayList<CatanColor>();
 		localGame = game;
-		// i dont think this line is necessary
-		localGame.addPlayer(localPlayer);
 		
+		this.enableAllColors();
+		for(PlayerInfo p : localGame.getPlayers())
+		{
+			if(p.getColorCatan() != null)
+				colors.add(p.getColorCatan());
+		}
+		for(CatanColor c : colors)
+		{
+//			if(c != null)
+//				System.out.println("startJoinGame color:" + c.toString());
+//			else
+//				System.out.println("startJoinGame NULL COLOR");
+			getSelectColorView().setColorEnabled(c, false);
+		}
 		getSelectColorView().showModal();
 	}
 
@@ -163,19 +176,28 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color)
 	{
-		localPlayer.setColor(color);
-		System.out.println("id: "+localGame.getId());
+		localPlayer.setColorCatan(color);
 		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
 		System.out.println("joinGameController RESPONSE: " + response);
-		// we needs checks for failure
 		
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+		// Check for failure...it won't fail if same color is chosen
+		if(response.equals("Success"))
+		{
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			joinAction.execute();
+		}
+		else
+		{
+			messageView.setTitle("ERROR:");
+			messageView.setMessage("Something went wrong when trying to join the game!");
+			messageView.showModal();
+		}
+		
+
 	}
 	
-	public void fromJsonToViewFormat()
+	public void generateGameList()
 	{
 		String JSON = master.getGameList();
 		System.out.println("JoinGameController json1:" + JSON + ":");
@@ -183,7 +205,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;
 		
-		System.out.println("JoinGameController json2:" + JSON + ":");
+//		System.out.println("JoinGameController json2:" + JSON + ":");
 
 		gameInfoArray = gameInfo.getGamesArrayFromJSON(JSON);
 		for(GameInfoJSON gameJSON : gameInfoArray)
@@ -193,23 +215,37 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			game.setTitle(gameJSON.getTitle());
 			for(PlayerInfo p : gameJSON.getPlayers())
 			{
-				System.out.println("Player read in from games/list: " + p.getName() + ", id: " + p.getId());
+//				System.out.println("Player read in from games/list: " + p.getName() + ", id: " + p.getId() + ", color: "+p.getColor());
+				// Set the CatanColor if the player has a color
+				if(p.getColor() != null)
+					p.setColor(p.getColor());
 				if(!p.getName().equals("") || p.getId() != -1)
+				{
 					game.addPlayer(p);
+				}
 			}
 			games.add(game);
 		}
 		
-//		Set info for current player
+		// Set info for current player
 		this.localPlayer.setId(master.getPlayerID());
 		this.localPlayer.setName(master.getPlayerName());
 		
-//		Convert ArrayList to Array
+		// Convert ArrayList to Array
 		GameInfo[] gamesArray = new GameInfo[games.size()];
 		games.toArray(gamesArray);
 	
 		getJoinGameView().setGames(gamesArray, this.localPlayer);
 		
+	}
+	public void enableAllColors()
+	{
+		CatanColor colors[] = new CatanColor[] {CatanColor.BLUE, CatanColor.BROWN, CatanColor.GREEN, CatanColor.ORANGE,
+				CatanColor.PUCE, CatanColor.PURPLE, CatanColor.RED, CatanColor.WHITE, CatanColor.YELLOW};
+		for(CatanColor c : colors)
+		{
+			getSelectColorView().setColorEnabled(c, true);
+		}
 	}
 
 	@Override

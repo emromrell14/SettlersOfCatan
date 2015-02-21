@@ -1,5 +1,7 @@
 package client.data;
 
+import java.awt.Color;
+
 import shared.definitions.*;
 
 /**
@@ -20,14 +22,15 @@ public class PlayerInfo
 	private int id;
 	private int playerIndex;
 	private String name;
-	private CatanColor color;
+	private CatanColor colorCatan;
+	private String color;
 	
 	public PlayerInfo()
 	{
 		setId(-1);
 		setPlayerIndex(-1);
 		setName("");
-		setColor(CatanColor.WHITE);
+		setColorCatan(null);
 	}
 	
 	public int getId()
@@ -60,14 +63,26 @@ public class PlayerInfo
 		this.name = name;
 	}
 	
-	public CatanColor getColor()
+	public CatanColor getColorCatan()
+	{
+		return colorCatan;
+	}
+	
+	public void setColorCatan(CatanColor color)
+	{
+		this.colorCatan = color;
+	}
+	public String getColor()
 	{
 		return color;
 	}
 	
-	public void setColor(CatanColor color)
+	public void setColor(String color)
 	{
 		this.color = color;
+		if(color != null)
+			this.colorCatan = CatanColor.valueOf(color.toUpperCase());
+		System.out.println("PLAYER info: " + this.colorCatan);
 	}
 
 	@Override

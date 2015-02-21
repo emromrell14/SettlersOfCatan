@@ -7,9 +7,9 @@ import shared.definitions.CatanColor;
 public class PlayerInfoJSON
 {
 	private int id;
-	private int playerIndex;
+//	private int playerIndex;
 	private String name;
-	private CatanColor color;
+	private String color;
 	
 	public PlayerInfoJSON()
 	{
@@ -35,13 +35,13 @@ public class PlayerInfoJSON
 		this.id = id;
 	}
 
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
-
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
+//	public int getPlayerIndex() {
+//		return playerIndex;
+//	}
+//
+//	public void setPlayerIndex(int playerIndex) {
+//		this.playerIndex = playerIndex;
+//	}
 
 	public String getName() {
 		return name;
@@ -51,11 +51,11 @@ public class PlayerInfoJSON
 		this.name = name;
 	}
 
-	public CatanColor getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(CatanColor color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
