@@ -40,41 +40,8 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		{
 			for(MessageLineJSON m : log.getLines())
 			{
-				String color = m.getSource();
-				CatanColor playerColor = null;
-				switch(color)
-				{
-				case "red":
-					playerColor = CatanColor.RED;
-					break;
-				case "green":
-					playerColor = CatanColor.GREEN;
-					break;
-				case "brown":
-					playerColor = CatanColor.BROWN;
-					break;
-				case "white":
-					playerColor = CatanColor.WHITE;
-					break;
-				case "orange":
-					playerColor = CatanColor.ORANGE;
-					break;
-				case "purple":
-					playerColor = CatanColor.PURPLE;
-					break;
-				case "yellow":
-					playerColor = CatanColor.YELLOW;
-					break;
-				case "blue":
-					playerColor = CatanColor.BLUE;
-					break;
-				case "puce":
-					playerColor = CatanColor.PUCE;
-					break;
-				default:
-					System.out.println("GameHistoryController: should never get here");
-						
-				}
+				String name = m.getSource();
+				CatanColor playerColor = master.getCurrentModel().getPlayerColor(name);
 				entries.add(new LogEntry(playerColor,m.getMessage()));
 			}
 		}

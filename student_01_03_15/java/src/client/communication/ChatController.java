@@ -52,43 +52,9 @@ public class ChatController extends Controller implements IChatController, Obser
 			List<LogEntry> entries = new ArrayList<LogEntry>();
 			for(MessageLineJSON m : chat.getLines())
 			{
-				String color = m.getSource();
-				System.out.println("color:"+color);
-				CatanColor playerColor = null;
-				switch(color)
-				{
-				case "red":
-					playerColor = CatanColor.RED;
-					break;
-				case "green":
-					playerColor = CatanColor.GREEN;
-					break;
-				case "brown":
-					playerColor = CatanColor.BROWN;
-					break;
-				case "white":
-					playerColor = CatanColor.WHITE;
-					break;
-				case "orange":
-					playerColor = CatanColor.ORANGE;
-					break;
-				case "purple":
-					playerColor = CatanColor.PURPLE;
-					break;
-				case "yellow":
-					playerColor = CatanColor.YELLOW;
-					break;
-				case "blue":
-					playerColor = CatanColor.BLUE;
-					break;
-				case "puce":
-					playerColor = CatanColor.PUCE;
-					break;
-				default:
-					System.out.println("ChatController: should never get here");
-						
-				}
-				entries.add(new LogEntry(playerColor,m.getMessage()));
+				String name = m.getSource();
+				CatanColor color = master.getCurrentModel().getPlayerColor(name);
+				entries.add(new LogEntry(color,m.getMessage()));
 			}
 			getView().setEntries(entries);
 		}
