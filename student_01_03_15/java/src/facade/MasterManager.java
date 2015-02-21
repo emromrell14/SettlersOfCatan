@@ -47,6 +47,11 @@ public class MasterManager implements IMasterManager
 		return mInstance;
 	}
 	
+	public void setGameCookie(int gameID)
+	{
+		mProxy.setGameCookie(gameID);
+	}
+	
 	public int getPlayerID()
 	{
 		return mProxy.getPlayerID();

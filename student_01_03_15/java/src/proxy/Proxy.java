@@ -28,6 +28,11 @@ public class Proxy implements IProxy
 		return mCookie.getPlayerName();
 	}
 	
+	public void setGameCookie(int gameID)
+	{
+		mCookie.setCatanGame(gameID);
+	}
+	
 	public synchronized String post(String requestPath, String json)
 	{
 		String url ="http://localhost:8081" + requestPath;

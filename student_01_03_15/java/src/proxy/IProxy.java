@@ -31,4 +31,5 @@ public interface IProxy
 
 	int getPlayerID();
 	String getPlayerName();
+	public void setGameCookie(int gameID);
 }
