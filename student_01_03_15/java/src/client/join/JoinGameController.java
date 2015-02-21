@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import cookie.Cookie;
 import JSONmodels.GameInfoJSON;
 import JSONmodels.GamesInfoJSON;
 import models.Game;
+import models.Player;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
 import facade.IMasterManager;
 import facade.MasterManager;
+import facade.ModelManager;
 
 
 /**
@@ -28,6 +31,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IMasterManager master;
 	private PlayerInfo localPlayer;
 	private GameInfo localGame;
+	private Game gameModel;
 	
 	/**
 	 * JoinGameController constructor
@@ -142,6 +146,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			this.generateGameList();
 			getNewGameView().closeModal();
 		}
+		else
+		{
+			messageView.setTitle("ERROR:");
+			messageView.setMessage("Invalid name!");
+			messageView.showModal();	
+		}
 	}
 
 	@Override
@@ -150,12 +160,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ArrayList<CatanColor> colors = new ArrayList<CatanColor>();
 		localGame = game;
 		
+//		I need to add the game id to the cookie here
+		master.getGameModel(0);
+		
 		this.enableAllColors();
 		for(PlayerInfo p : localGame.getPlayers())
 		{
 			if(p.getColorCatan() != null)
 				colors.add(p.getColorCatan());
 		}
+		// Disable chosen colors for this game
 		for(CatanColor c : colors)
 		{
 //			if(c != null)
@@ -169,7 +183,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void cancelJoinGame() {
-	
+		this.generateGameList();
 		getJoinGameView().closeModal();
 	}
 
@@ -193,8 +207,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			messageView.setMessage("Something went wrong when trying to join the game!");
 			messageView.showModal();
 		}
-		
-
 	}
 	
 	public void generateGameList()
@@ -249,9 +261,27 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	public void update(Observable o, Object arg) 
+	{
+		ModelManager manager = (ModelManager) o;
+		gameModel = manager.getCurrentModel();
 		
+		ArrayList<CatanColor> colors = new ArrayList<CatanColor>();
+		for(Player p : gameModel.players())
+		{
+			System.out.println("update joingamecontroller: " + p.name() + p.color().toString());
+			if(p.color() != null)
+				colors.add(p.color());
+		}
+		// Disable chosen colors for this game
+		for(CatanColor c : colors)
+		{
+			if(c != null)
+				System.out.println("startJoinGame color:" + c.toString());
+			else
+				System.out.println("startJoinGame NULL COLOR");
+			getSelectColorView().setColorEnabled(c, false);
+		}
 	}
 
 }
