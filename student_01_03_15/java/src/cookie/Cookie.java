@@ -39,6 +39,11 @@ public class Cookie
 	{
 		return mUserMap == null ? null : (String)mUserMap.get("name");
 	}
+	
+	public void setCatanGame(int gameID)
+	{
+		mCatanGame = String.valueOf(gameID);
+	}
 
 	/**
 	 * @return the catanUser

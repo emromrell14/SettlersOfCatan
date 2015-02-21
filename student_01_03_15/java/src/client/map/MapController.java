@@ -365,16 +365,15 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void robPlayer(RobPlayerInfo victim) 
 	{
-		Index victimIndex = null;
 		try 
 		{
-			victimIndex = new Index(victim.getPlayerIndex());
+			Index victimIndex = new Index(victim.getPlayerIndex());
+			master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
-		master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
 	}
 
 	@Override
