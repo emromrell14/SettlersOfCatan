@@ -14,7 +14,7 @@ import facade.MasterManager;
 
 public class Poller implements Runnable
 {
-	private IMasterManager mMasterManager;
+	private MasterManager mMasterManager;
 	private final int mSecondsBetweenPolls = 2;
 //	private int version = 0;
 	private Timer timer;
@@ -34,7 +34,7 @@ public class Poller implements Runnable
 	public int getVersion()
 	{
 		Game game = mMasterManager.getCurrentModel();
-		return game == null?-1:game.version();
+		return (game == null) ? -1 : game.version();
 	}
 	
 	/**
@@ -48,22 +48,32 @@ public class Poller implements Runnable
 	    {
 			// THE COMPARING ACTUALLY TAKES PLACE AND IS RESOLVED ON THE SERVER SIDE
 //			version = 
-	    	int initialV = -1;
-	    	if (mMasterManager.getCurrentModel() != null)
-	    	{
-	    		initialV = mMasterManager.getCurrentModel().version();
-	    	}
-			mMasterManager.getGameModel(getVersion());
-			int finalV = -1;
-	    	if (mMasterManager.getCurrentModel() != null)
-	    	{
-	    		finalV = mMasterManager.getCurrentModel().version();
-	    	}
-	    	if (initialV != finalV)
-	    	{
-	    		MasterManager.getInstance().getModelManager().setModelChanged();
-				MasterManager.getInstance().getModelManager().notifyObservers();
-	    	}
+//	    	int initialV = -1;
+//	    	if (mMasterManager.getCurrentModel() != null)
+//	    	{
+//	    		initialV = (mMasterManager.hasJoinedGame) ? mMasterManager.getCurrentModel().version() : -1;
+//	    	}
+	    	
+	    	
+	    	int version = getVersion();
+	    	// if they havent joined a game then switch version back to -1
+	    	version = (mMasterManager.hasJoinedGame) ? version : -1;
+			mMasterManager.getGameModel(version);
+			System.out.println("Poller version: " + version );
+			
+			
+//			int finalV = -1;
+//	    	if (mMasterManager.getCurrentModel() != null)
+//	    	{
+//	    		finalV = mMasterManager.getCurrentModel().version();
+//	    	}
+	    	// I think this code is useless, if mMasterManager.getGameModel(getVersion()); comes back != null it will update
+	    	// the model and all observers automatically
+//	    	if (initialV != finalV)
+//	    	{
+//	    		MasterManager.getInstance().getModelManager().setModelChanged();
+//				MasterManager.getInstance().getModelManager().notifyObservers();
+//	    	}
 
 	    }
 	 }

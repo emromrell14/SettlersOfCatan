@@ -14,7 +14,7 @@ public class Player implements IPlayer
 {	
 	private CatanColor mColor; //The color of this player
 	private String mName;
-	private Index mPlayerIndex; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
+	private Index mPlayerIndex = null; //What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere
 	private int mPlayerID; //The unique playerID. This is used to pick the client player apart from the others. This is only used here and in your cookie.
 	private ResourceList mResources; //The resource cards this player has.
 	private int mRoadCount = 15;

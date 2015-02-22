@@ -161,22 +161,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		localGame = game;
 		
 //		I need to add the game id to the cookie here
-		master.getGameModel(0);
+		master.setGameCookie(game.getId());
+		master.getGameModel(-2);
 		
 		this.enableAllColors();
 		for(PlayerInfo p : localGame.getPlayers())
 		{
 			if(p.getColorCatan() != null)
-				colors.add(p.getColorCatan());
-		}
-		// Disable chosen colors for this game
-		for(CatanColor c : colors)
-		{
-//			if(c != null)
-//				System.out.println("startJoinGame color:" + c.toString());
-//			else
-//				System.out.println("startJoinGame NULL COLOR");
-			getSelectColorView().setColorEnabled(c, false);
+				getSelectColorView().setColorEnabled(p.getColorCatan(), false);
 		}
 		getSelectColorView().showModal();
 	}
@@ -263,6 +255,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void update(Observable o, Object arg) 
 	{
+		System.out.println("UPDATING joinGameController.");
 		ModelManager manager = (ModelManager) o;
 		gameModel = manager.getCurrentModel();
 		
@@ -271,17 +264,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			System.out.println("update joingamecontroller: " + p.name() + p.color().toString());
 			if(p.color() != null)
-				colors.add(p.color());
+				getSelectColorView().setColorEnabled(p.color(), false);
 		}
-		// Disable chosen colors for this game
-		for(CatanColor c : colors)
-		{
-			if(c != null)
-				System.out.println("startJoinGame color:" + c.toString());
-			else
-				System.out.println("startJoinGame NULL COLOR");
-			getSelectColorView().setColorEnabled(c, false);
-		}
+
 	}
 
 }

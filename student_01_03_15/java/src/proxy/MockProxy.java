@@ -152,4 +152,10 @@ public class MockProxy implements IProxy
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setGameCookie(int gameID) {
+		// TODO Auto-generated method stub
+		
+	}
 }
