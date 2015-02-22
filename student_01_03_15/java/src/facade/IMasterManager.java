@@ -133,6 +133,8 @@ public interface IMasterManager
 	public void executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes);
 
 	public void discardCards(Index playerIndex, ResourceList cards);
+	
+	public void setGameCookie(int gameID);
 
 	// Util Manager
 	public void changeLogLevel(String log);

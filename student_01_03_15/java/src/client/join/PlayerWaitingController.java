@@ -38,16 +38,17 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 
 	@Override
-	public void addAI() 
+	public void addAI()
 	{
-
+		master.addAIPlayer();
 		// TEMPORARY
-		getView().closeModal();
+//		getView().closeModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) 
 	{
+		//if there are already 4 players, close modal
 		
 	}
 

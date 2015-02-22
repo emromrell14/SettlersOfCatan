@@ -166,12 +166,18 @@ public class Game implements IGame
 	}
 	public Player getPlayer(Index playerIndex)
 	{
+		System.out.println("********** " + playerIndex);
 		for(Player player : this.mPlayers)
 		{
-			if(player.playerIndex().equals(playerIndex))
+			if(player != null)
 			{
-				return player;
+				System.out.println("***" + player.name() + player.playerIndex().value());
+				if(player.playerIndex().equals(playerIndex))
+				{
+					return player;
+				}
 			}
+			
 		}
 		return null;
 	}
@@ -180,12 +186,17 @@ public class Game implements IGame
 		Index playerIndex = null;
 		for(Player p:mPlayers)
 		{
-			if(p.playerID() == playerID)
+			if(p != null)
 			{
-				playerIndex = p.playerIndex();
-				break;
+				if(p.playerID() == playerID)
+				{
+					playerIndex = p.playerIndex();
+					break;
+				}
 			}
+			
 		}
+		System.out.println("GAME: " + playerIndex);
 		return playerIndex;
 	}
 

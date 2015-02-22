@@ -22,6 +22,7 @@ public class MasterManager implements IMasterManager
 	private UtilManager mUtilManager;
 	private ModelManager mModelManager;
 	protected IProxy mProxy;
+	public boolean hasJoinedGame = false;
 	private static MasterManager mInstance;
 	
 	/**
@@ -140,7 +141,7 @@ public class MasterManager implements IMasterManager
 	public boolean canAffordRoad(Index playerIndex)
 	{
 		return mModelManager.canAffordRoad(playerIndex);
-	}
+	} 
 	
 	public boolean canPlaceRoad(Index playerIndex, EdgeLocation loc)
 	{
@@ -387,7 +388,9 @@ public class MasterManager implements IMasterManager
 	 */
 	public String joinGame(int id, String color)
 	{
-		return mGamesManager.joinGame(id, color);
+		String response = mGamesManager.joinGame(id, color);
+		this.hasJoinedGame = true;
+		return response;
 	}
 
 	/**

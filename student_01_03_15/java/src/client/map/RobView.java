@@ -123,7 +123,7 @@ public class RobView extends OverlayView implements IRobView {
 				victimButton.setContentAreaFilled(false);
 				victimButton.setOpaque(true);
 				victimButton.setAlignmentY(0);
-				victimButton.setBackground(victims[i].getColor().getJavaColor());
+				victimButton.setBackground(victims[i].getColorCatan().getJavaColor());
 				
 				buttonPanel.add(victimButton);
 				victimButtons.add(victimButton);

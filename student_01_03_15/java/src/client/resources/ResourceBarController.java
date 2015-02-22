@@ -16,7 +16,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 {
 
 	private Map<ResourceBarElement, IAction> elementActions;
-	private IMasterManager master;
+	private MasterManager master;
 //	private IMapView mapView;
 	
 	public ResourceBarController(IResourceBarView view) 
@@ -109,49 +109,51 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg)
+	{
 		// TODO Auto-generated method stub
-		
-		System.out.println("WE HIT THE RESOURCE CONTROLLER'S OBSERVER UPDATE METHOD");
-		
-		// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-		if (master.canAffordRoad(master.getPlayerIndex()))
+		if(master.hasJoinedGame)
 		{
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
+			System.out.println("WE HIT THE RESOURCE CONTROLLER'S OBSERVER UPDATE METHOD");
+			
+			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
+			if (master.canAffordRoad(master.getPlayerIndex()))
+			{
+				this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
+			}
+			//----------------------------------------------
+			if (master.canAffordSettlement(master.getPlayerIndex()))
+			{
+				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+			}
+			//----------------------------------------------
+			if (master.canAffordCity(master.getPlayerIndex()))
+			{
+				this.getView().setElementEnabled(ResourceBarElement.CITY, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.CITY, false);
+			}
+			//-----------------------------------------------
+			if (master.canBuyDevCard(master.getPlayerIndex()))
+			{
+				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+			}
+			
 		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
-		}
-		//----------------------------------------------
-		if (master.canAffordSettlement(master.getPlayerIndex()))
-		{
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
-		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
-		}
-		//----------------------------------------------
-		if (master.canAffordCity(master.getPlayerIndex()))
-		{
-			this.getView().setElementEnabled(ResourceBarElement.CITY, true);
-		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
-		}
-		//-----------------------------------------------
-		if (master.canBuyDevCard(master.getPlayerIndex()))
-		{
-			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
-		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
-		}
-		
-		
 	}
 
 }

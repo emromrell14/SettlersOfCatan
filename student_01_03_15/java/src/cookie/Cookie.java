@@ -43,6 +43,7 @@ public class Cookie
 	public void setCatanGame(int gameID)
 	{
 		mCatanGame = String.valueOf(gameID);
+//		mGameID = gameID;
 	}
 
 	/**
