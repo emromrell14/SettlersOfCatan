@@ -51,7 +51,19 @@ public class Game implements IGame
 				return p.color();
 			}
 		}
-		return CatanColor.BROWN;
+		return null;
+	}
+	
+	public CatanColor getPlayerColor(String playerName)
+	{
+		for(Player p: mPlayers)
+		{
+			if(p.name().equals(playerName))
+			{
+				return p.color();
+			}
+		}
+		return null;
 	}
 	
 	public void endTurn()
