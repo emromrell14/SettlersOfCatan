@@ -24,27 +24,30 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 
 	@Override
-	public IPlayerWaitingView getView() {
+	public IPlayerWaitingView getView()
+	{
 
 		return (IPlayerWaitingView)super.getView();
 	}
 
 	@Override
-	public void start() {
+	public void start()
+	{
 
 		getView().showModal();
 	}
 
 	@Override
-	public void addAI() {
+	public void addAI() 
+	{
 
 		// TEMPORARY
 		getView().closeModal();
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	public void update(Observable o, Object arg) 
+	{
 		
 	}
 

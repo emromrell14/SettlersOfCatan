@@ -17,7 +17,8 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private IMaritimeTradeOverlay tradeOverlay;
 	private IMasterManager master;
 	
-	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
+	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay)
+	{
 		
 		super(tradeView);
 		this.master = MasterManager.getInstance();
@@ -25,60 +26,70 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		setTradeOverlay(tradeOverlay);
 	}
 	
-	public IMaritimeTradeView getTradeView() {
+	public IMaritimeTradeView getTradeView() 
+	{
 		
 		return (IMaritimeTradeView)super.getView();
 	}
 	
-	public IMaritimeTradeOverlay getTradeOverlay() {
+	public IMaritimeTradeOverlay getTradeOverlay()
+	{
 		return tradeOverlay;
 	}
 
-	public void setTradeOverlay(IMaritimeTradeOverlay tradeOverlay) {
+	public void setTradeOverlay(IMaritimeTradeOverlay tradeOverlay)
+	{
 		this.tradeOverlay = tradeOverlay;
 	}
 
 	@Override
-	public void startTrade() {
+	public void startTrade()
+	{
 		
 		getTradeOverlay().showModal();
 	}
 
 	@Override
-	public void makeTrade() {
+	public void makeTrade()
+	{
 
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
-	public void cancelTrade() {
+	public void cancelTrade()
+	{
 
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
-	public void setGetResource(ResourceType resource) {
+	public void setGetResource(ResourceType resource)
+	{
 
 	}
 
 	@Override
-	public void setGiveResource(ResourceType resource) {
+	public void setGiveResource(ResourceType resource) 
+	{
 
 	}
 
 	@Override
-	public void unsetGetValue() {
+	public void unsetGetValue()
+	{
 
 	}
 
 	@Override
-	public void unsetGiveValue() {
+	public void unsetGiveValue() 
+	{
 
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	public void update(Observable o, Object arg) 
+	{
 		
 	}
 
