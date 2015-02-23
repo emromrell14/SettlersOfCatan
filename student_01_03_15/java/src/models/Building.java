@@ -32,6 +32,7 @@ public class Building
 	{
 		this.mOwner = owner;
 		this.mLocation = location;
+		this.mPort = null;
 	}
 	
 	public Port port()

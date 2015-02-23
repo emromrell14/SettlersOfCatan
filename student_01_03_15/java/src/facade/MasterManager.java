@@ -69,6 +69,10 @@ public class MasterManager implements IMasterManager
 	
 	public Index getPlayerIndex()
 	{
+		if(this.getCurrentModel() == null)
+		{
+			return null;
+		}
 		return this.getCurrentModel().getPlayerIndex(mProxy.getPlayerID());
 	}
 	
@@ -78,7 +82,12 @@ public class MasterManager implements IMasterManager
 	}
 	public Player getPlayer()
 	{
-		return this.getCurrentModel().getPlayer(this.getPlayerIndex());
+		Index playerIndex = this.getPlayerIndex();
+		if(playerIndex == null)
+		{
+			return null;
+		}
+		return this.getCurrentModel().getPlayer(playerIndex);
 	}
 	
 	public void updateModel(Game newGameModel)
@@ -679,7 +688,7 @@ public class MasterManager implements IMasterManager
 	 * @post adjusts resource amounts according to trade criteria
 	 * @return JSON String with the client model
 	 */
-	public void executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes)
+	public void executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceType outputRes)
 	{
 		Game game = mMovesManager.executeMaritimeTrade(playerIndex, ratio, inputRes, outputRes);
 		this.updateModel(game);

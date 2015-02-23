@@ -130,7 +130,7 @@ public interface IMasterManager
 
 	public void acceptTrade(Index playerIndex, boolean willAccept);
 
-	public void executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes);
+	public void executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceType outputRes);
 
 	public void discardCards(Index playerIndex, ResourceList cards);
 	

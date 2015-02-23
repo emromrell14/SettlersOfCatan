@@ -31,8 +31,6 @@ public class Player implements IPlayer
 	private List<Building> mCities;
 	private List<DevCard> mDevCards;
 	
-	
-	
 	public Player(CatanColor color, String name, Index index, int playerID)
 	{
 		this.mColor = color;

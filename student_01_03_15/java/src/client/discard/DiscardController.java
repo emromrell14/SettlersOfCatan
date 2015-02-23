@@ -90,18 +90,24 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	public void setCardsToDiscard()
 	{
-		if (player.canDiscard())
+		if(player != null)
 		{
-			cardsToDiscard = player.resources().getTotal()/2;
+			if (player.canDiscard())
+			{
+				cardsToDiscard = player.resources().getTotal()/2;
+			}
 		}
 	}
 	public void setCardsTotals()
 	{
-		this.oreTotal = player.resources().ore();
-		this.woodTotal = player.resources().wood();
-		this.brickTotal = player.resources().brick();
-		this.sheepTotal = player.resources().sheep();
-		this.wheatTotal = player.resources().wheat();
+		if(player != null)
+		{
+			this.oreTotal = player.resources().ore();
+			this.woodTotal = player.resources().wood();
+			this.brickTotal = player.resources().brick();
+			this.sheepTotal = player.resources().sheep();
+			this.wheatTotal = player.resources().wheat();
+		}
 	}
 	public void discardNumReached()
 	{
