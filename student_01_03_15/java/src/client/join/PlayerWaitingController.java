@@ -32,7 +32,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 
 	@Override
-	public IPlayerWaitingView getView() {
+	public IPlayerWaitingView getView()
+	{
 
 		return (IPlayerWaitingView)super.getView();
 	}
@@ -41,6 +42,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void start()
 	{
 		System.out.println("----> start() called in playerWaitingController");
+
 		getView().showModal();
 		Game gameModel = master.getCurrentModel();
 		this.controllerStarted = true;

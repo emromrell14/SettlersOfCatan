@@ -615,13 +615,13 @@ public class DiscardView extends OverlayView implements IDiscardView
 						System.out.printf("Increase amount of %s\n",
 						                  Resource.this.getType());
 						DiscardView.this.getController()
-										.increaseAmount(Resource.this.getType(), Resource.this.getDiscardAmount());
+										.increaseAmount(Resource.this.getType());
 						break;
 					case "DOWN":
 						System.out.printf("Decrease amount of %s\n",
 						                  Resource.this.getType());
 						DiscardView.this.getController()
-										.decreaseAmount(Resource.this.getType(), Resource.this.getDiscardAmount());
+										.decreaseAmount(Resource.this.getType());
 						break;
 					default:
 						break;

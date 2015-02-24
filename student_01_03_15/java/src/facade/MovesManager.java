@@ -326,7 +326,7 @@ public class MovesManager
 	 * @post adjusts resource amounts according to trade criteria
 	 * @return JSON String with the client model
 	 */
-	public Game executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceList outputRes)
+	public Game executeMaritimeTrade(Index playerIndex, int ratio, ResourceType inputRes, ResourceType outputRes)
 	{
 		String response;
 		String body;
