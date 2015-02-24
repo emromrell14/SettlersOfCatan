@@ -288,7 +288,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				System.out.print(takenColors.get(k) + " " );
 			}
 			// Check to replace a player's old color with their new one
-			if(takenColors.size() != 0)
+			if(takenColors.size() != 0 && i < takenColors.size())
 			{
 //				System.out.println(p.color().name() +"="+takenColors.get(i)+"--------------Taken colors" + takenColors.get(i) + " INDEX: " + i);
 				if(!takenColors.get(i).equals(p.color().name()))
