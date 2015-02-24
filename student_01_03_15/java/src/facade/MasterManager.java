@@ -389,7 +389,7 @@ public class MasterManager implements IMasterManager
 	public String joinGame(int id, String color)
 	{
 		String response = mGamesManager.joinGame(id, color);
-		this.hasJoinedGame = true;
+//		this.hasJoinedGame = true;
 		return response;
 	}
 

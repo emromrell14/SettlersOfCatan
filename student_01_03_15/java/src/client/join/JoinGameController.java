@@ -32,6 +32,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private PlayerInfo localPlayer;
 	private GameInfo localGame;
 	private Game gameModel;
+	private ArrayList<String> takenColors, newTakenColors;
+	private final int NUMBER_OF_PLAYERS = 4;
 	
 	/**
 	 * JoinGameController constructor
@@ -52,6 +54,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		master = MasterManager.getInstance();
 		localPlayer = new PlayerInfo();
 		this.master.getModelManager().addObserver(this);
+		takenColors = new ArrayList();
+		newTakenColors = new ArrayList();
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -157,7 +161,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game)
 	{
-		ArrayList<CatanColor> colors = new ArrayList<CatanColor>();
+		takenColors = new ArrayList();
 		localGame = game;
 		
 //		I need to add the game id to the cookie here
@@ -168,8 +172,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		for(PlayerInfo p : localGame.getPlayers())
 		{
 			if(p.getColorCatan() != null)
+			{
+				if(takenColors.size() < NUMBER_OF_PLAYERS)
+					takenColors.add(p.getColorCatan().toString());
 				getSelectColorView().setColorEnabled(p.getColorCatan(), false);
+				
+				if(master.getPlayer() != null)
+				{
+					// for re-join
+					if(p.getName().equalsIgnoreCase(master.getPlayer().name()))
+					{
+						getSelectColorView().setColorEnabled(p.getColorCatan(), true);
+					}
+				}
+			}
 		}
+		
 		getSelectColorView().showModal();
 	}
 
@@ -184,7 +202,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		localPlayer.setColorCatan(color);
 		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
-		System.out.println("joinGameController RESPONSE: " + response);
+//		System.out.println("joinGameController RESPONSE: " + response);
 		
 		// Check for failure...it won't fail if same color is chosen
 		if(response.equals("Success"))
@@ -219,7 +237,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			game.setTitle(gameJSON.getTitle());
 			for(PlayerInfo p : gameJSON.getPlayers())
 			{
-//				System.out.println("Player read in from games/list: " + p.getName() + ", id: " + p.getId() + ", color: "+p.getColor());
 				// Set the CatanColor if the player has a color
 				if(p.getColor() != null)
 					p.setColor(p.getColor());
@@ -259,12 +276,48 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ModelManager manager = (ModelManager) o;
 		gameModel = manager.getCurrentModel();
 		
-		ArrayList<CatanColor> colors = new ArrayList<CatanColor>();
+		int i = 0;
 		for(Player p : gameModel.players())
 		{
-			System.out.println("update joingamecontroller: " + p.name() + p.color().toString());
-			if(p.color() != null)
-				getSelectColorView().setColorEnabled(p.color(), false);
+			// Add colors the first time through, but not again
+			if(!takenColors.contains(p.color().name()) && takenColors.size() < NUMBER_OF_PLAYERS)
+				takenColors.add(p.color().name()); 
+			
+			for(int k = 0; k < takenColors.size(); ++k)
+			{
+				System.out.print(takenColors.get(k) + " " );
+			}
+			// Check to replace a player's old color with their new one
+			if(takenColors.size() != 0)
+			{
+//				System.out.println(p.color().name() +"="+takenColors.get(i)+"--------------Taken colors" + takenColors.get(i) + " INDEX: " + i);
+				if(!takenColors.get(i).equals(p.color().name()))
+				{
+					System.out.println("$$$$$$$$$$$ enabling " + takenColors.get(i));
+					getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(i)), true); 
+					takenColors.set(i, p.color().name());
+				}
+			}
+			
+			
+			i++;
+		}
+		for(int j = 0; j < takenColors.size(); j++)
+		{
+			getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(j)), false);
+			
+			// for re-join, enable current player's old color so they can repick
+			if(master.getPlayer() != null)
+			{
+				if(takenColors.get(j).equalsIgnoreCase(master.getPlayer().color().toString()))
+				{
+					getSelectColorView().setColorEnabled(master.getPlayer().color(), true);
+				}
+			}
+			else
+			{
+				System.out.println("NULLLLLLLLLLLL PLAYERRRRRRRRRRRR (joinGameController)");
+			}
 		}
 
 	}

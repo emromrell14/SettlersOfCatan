@@ -59,7 +59,7 @@ public class Poller implements Runnable
 	    	// if they havent joined a game then switch version back to -1
 	    	version = (mMasterManager.hasJoinedGame) ? version : -1;
 			mMasterManager.getGameModel(version);
-			System.out.println("Poller version: " + version );
+//			System.out.println("Poller version: " + version );
 			
 			
 //			int finalV = -1;
