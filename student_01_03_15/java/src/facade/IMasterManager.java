@@ -37,7 +37,7 @@ public interface IMasterManager
 
 	public boolean canOfferTrade(Index playerIndex);
 
-	public boolean canAcceptTrade(Index playerIndex, ResourceList tradeOffer);
+	public boolean canAcceptTrade(Index playerIndex);
 
 	public boolean canMaritimeTrade(Index playerIndex);
 
