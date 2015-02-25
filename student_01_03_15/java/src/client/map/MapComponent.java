@@ -782,6 +782,7 @@ public class MapComponent extends JComponent
 		{
 			EdgeLocation edgeLoc = entry.getKey();
 			PortType portType = entry.getValue();
+			assert(edgeLoc != null);
 			drawPort(g2, edgeLoc, portType);
 		}
 	}
@@ -906,8 +907,38 @@ public class MapComponent extends JComponent
 	
 	private double getPortRotation(EdgeLocation edgeLoc)
 	{
+		System.out.println(edgeLoc.getDir());
 		
-		return PORT_ROTATIONS.get(edgeLoc.getDir());
+		return PORT_ROTATIONS.get(Lengthen(edgeLoc.getDir()));
+	}
+	
+	private EdgeDirection Lengthen (EdgeDirection dir)
+	{
+		switch (dir)
+		{
+			case NorthWest:
+			case NW:
+				return EdgeDirection.NorthWest;
+			case North: 
+			case N: 
+				return EdgeDirection.North;
+			case NorthEast:
+			case NE: 
+				return EdgeDirection.NorthEast;
+			case SouthWest: 
+			case SW:
+				return EdgeDirection.SouthWest;
+			case South:
+			case S:
+				return EdgeDirection.South;
+			case SouthEast: 
+			case SE:
+				return EdgeDirection.SouthEast;				
+			default:
+				System.out.println("NULL!!!");
+				assert false;
+				return null;
+		} 	
 	}
 	
 	private static Point2D getHexPoint(HexLocation hexLoc)

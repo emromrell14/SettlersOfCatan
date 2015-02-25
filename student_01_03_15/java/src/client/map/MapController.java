@@ -61,11 +61,9 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	protected void initFromModel() 
 	{
-		//Game game = master.getCurrentModel();
-		Game game = new Game();
+		Game game = master.getCurrentModel();
+		/*Game game = new Game();
 		Board testBoard = new Board();
-		
-
 		
 		for (int x = 0; x <= 3; ++x) 
 		{	
@@ -88,6 +86,8 @@ public class MapController extends Controller implements IMapController, Observe
 			
 			if (x != 0) 
 			{
+				System.out.println("x: " + x + " y: " + y);
+
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) 
 				{
@@ -114,40 +114,49 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		game.setBoard(testBoard);
 		game.setRobber(new Robber(new HexLocation(0,0)));
-		
-		Board b = game.board();
-
-		for (Hex h : b.hexes())
+		*/
+		if (game != null)
 		{
-			getView().addHex(h.location(),h.resource());
-			TokenValue num = h.number();
-			if (num != null)
+			Board b = game.board();
+			
+	
+			for (Hex h : b.hexes())
 			{
-				getView().addNumber(h.location(),num.value());
+				getView().addHex(h.location(),h.resource());
+				TokenValue num = h.number();
+				if (num != null && num.value() != 0)
+				{
+					System.out.println(num.value());
+					getView().addNumber(h.location(),num.value());
+				}
+				else
+				{
+					assert false;
+					System.out.println("Shouldn\'t get here");
+				}
 			}
+			
+			for (Road r : b.roads())
+			{
+				getView().placeRoad(r.location(), master.getCurrentModel().getPlayer(r.owner()).color());
+			}
+			
+			for (Building s : b.settlements())
+			{
+				getView().placeSettlement(s.location(), master.getCurrentModel().getPlayer(s.owner()).color());
+			}
+			
+			for (Building c : b.cities())
+			{
+				getView().placeCity(c.location(), master.getCurrentModel().getPlayer(c.owner()).color());
+			}
+			for (Port p : b.ports())
+			{
+				getView().addPort(new EdgeLocation(p.location(),p.direction()), p.resource());
+			}
+			
+			getView().placeRobber(game.robber().location());
 		}
-		
-		for (Road r : b.roads())
-		{
-			getView().placeRoad(r.location(), master.getCurrentModel().getPlayer(r.owner()).color());
-		}
-		
-		for (Building s : b.settlements())
-		{
-			getView().placeSettlement(s.location(), master.getCurrentModel().getPlayer(s.owner()).color());
-		}
-		
-		for (Building c : b.cities())
-		{
-			getView().placeCity(c.location(), master.getCurrentModel().getPlayer(c.owner()).color());
-		}
-		for (Port p : b.ports())
-		{
-			getView().addPort(new EdgeLocation(p.location(),p.direction()), p.resource());
-		}
-		
-		getView().placeRobber(game.robber().location());
-
 		/*
 		Random rand = new Random();
 
@@ -340,7 +349,7 @@ public class MapController extends Controller implements IMapController, Observe
 	{
 		try 
 		{
-			getView().startDrop(pieceType, master.getPlayer().color(), state.isCancelAllowed());
+			getView().startDrop(pieceType, master.getPlayer().color(), true);//, state.isCancelAllowed());
 		} 
 		catch (Exception e) 
 		{
@@ -380,7 +389,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public void update(Observable o, Object arg) 
 	{
 		// TODO Auto-generated method stub
-
+		initFromModel();
 		System.out.println("UPDATING MAPCONTROLLER");
 	}
 	

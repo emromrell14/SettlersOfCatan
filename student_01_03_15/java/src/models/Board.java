@@ -3,8 +3,10 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.definitions.HexType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
@@ -23,7 +25,7 @@ public class Board
 	private List<Road> mRoads;
 	private List<Building> mSettlements;
 	private List<Building> mCities;
-
+	
 
 	/** 
 	 * Creates a Board model object
@@ -119,11 +121,24 @@ public class Board
 	}
 
 	public boolean canPlaceSettlement(VertexLocation loc) 
-	{
+	{		
 		loc = loc.getNormalizedLocation();
+		
+			
+			
 		switch (loc.getDir())
 		{
 			case NorthWest:
+			case NW:
+				// Check that the vertex touches a resource
+				if (
+						getHexByLocation(loc.getHexLoc()).resource() == HexType.WATER &&
+						getHexByLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest)).resource() == HexType.WATER &&
+						getHexByLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North)).resource() == HexType.WATER
+				)
+				{
+					return false;
+				}
 				if (
 					!checkForBuilding(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthEast)) &&
 					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),VertexDirection.NorthEast)) &&
@@ -134,6 +149,15 @@ public class Board
 				}
 				break;
 			case NorthEast:
+			case NE:
+				if (
+						getHexByLocation(loc.getHexLoc()).resource() == HexType.WATER &&
+						getHexByLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast)).resource() == HexType.WATER &&
+						getHexByLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North)).resource() == HexType.WATER
+				)
+				{
+					return false;
+				}
 				if (
 					!checkForBuilding(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthWest)) &&
 					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),VertexDirection.NorthWest)) &&
@@ -192,5 +216,17 @@ public class Board
 				break;
 			}
 		}
+	}
+	
+	private Hex getHexByLocation(HexLocation loc)
+	{
+		for (Hex h : mHexes)
+		{
+			if (loc.getX() == h.getHexLocation().getX() && loc.getY() == h.getHexLocation().getY())
+			{
+				return h;
+			}
+		}
+		return new Hex(loc, HexType.WATER, new TokenValue(-1));
 	}
 }
