@@ -38,8 +38,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	 * @param view View displayed to let the user select cards to discard
 	 * @param waitView View displayed to notify the user that they are waiting for other players to discard
 	 */
-	public DiscardController(IDiscardView view, IWaitView waitView) {
-		
+	public DiscardController(IDiscardView view, IWaitView waitView)
+	{		
 		super(view);
 		this.master = MasterManager.getInstance();
 		this.master.getModelManager().addObserver(this);
