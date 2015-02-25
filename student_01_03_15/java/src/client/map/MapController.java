@@ -387,6 +387,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public void update(Observable o, Object arg) 
 	{
 		initFromModel();
+
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
 		{
