@@ -16,43 +16,43 @@ public interface IState
 	
 	public boolean canRegister();
 
-	public boolean canBuyDevCard(Index playerIndex);
+	public boolean canBuyDevCard();
 
-	public boolean canPlayDevCard(Index playerIndex);
+	public boolean canPlayDevCard();
 
-	public boolean canOfferTrade(Index playerIndex);
+	public boolean canOfferTrade();
 
-	public boolean canAcceptTrade(Index playerIndex, ResourceList tradeOffer);
+	public boolean canAcceptTrade();
 
-	public boolean canMaritimeTrade(Index playerIndex);
+	public boolean canMaritimeTrade();
 
-	public boolean canRollDice(Index playerIndex);
+	public boolean canRollDice();
 
-	public boolean canDiscard(Index playerIndex);
+	public boolean canDiscard();
 	
-	public boolean canFinishTurn(Index playerIndex);
+	public boolean canFinishTurn();
 	
-	public boolean canPlayYearOfPlenty(Index playerIndex);
+	public boolean canPlayYearOfPlenty();
 	
-	public boolean canPlayRoadBuilder(Index playerIndex);
+	public boolean canPlayRoadBuilder();
 
-	public boolean canPlaySoldier(Index playerIndex);
+	public boolean canPlaySoldier();
 
-	public boolean canPlayMonopoly(Index playerIndex);
+	public boolean canPlayMonopoly();
 
-	public boolean canPlayMonument(Index playerIndex);
+	public boolean canPlayMonument();
 
 	public boolean canPlaceRobber(HexLocation newRobberLocation);
 	
-	public boolean canAffordRoad(Index playerIndex);
+	public boolean canAffordRoad();
 	
-	public boolean canPlaceRoad(Index playerIndex, EdgeLocation loc);
+	public boolean canPlaceRoad(EdgeLocation loc);
 	
-	public boolean canAffordSettlement(Index playerIndex);
+	public boolean canAffordSettlement();
 	
-	public boolean canPlaceSettlement(Index playerIndex, VertexLocation loc);
+	public boolean canPlaceSettlement(VertexLocation loc);
 	
-	public boolean canAffordCity(Index playerIndex);
+	public boolean canAffordCity();
 	
-	public boolean canPlaceCity(Index playerIndex, VertexLocation loc);
+	public boolean canPlaceCity(VertexLocation loc);
 }

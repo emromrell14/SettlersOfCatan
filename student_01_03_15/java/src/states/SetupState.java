@@ -1,5 +1,7 @@
 package states;
 
+import facade.IMasterManager;
+import facade.MasterManager;
 import models.Index;
 import models.ResourceList;
 import shared.locations.EdgeLocation;
@@ -8,6 +10,12 @@ import shared.locations.VertexLocation;
 
 public class SetupState implements IState
 {
+	IMasterManager mMaster;
+	
+	public SetupState()
+	{
+		mMaster = MasterManager.getInstance();
+	}
 
 	@Override
 	public boolean isPlayingFree() 
@@ -28,85 +36,85 @@ public class SetupState implements IState
 	}
 
 	@Override
-	public boolean canRegister() {
+	public boolean canRegister() 
+	{
+		return false;
+	}
+
+	@Override
+	public boolean canBuyDevCard() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canBuyDevCard(Index playerIndex) {
+	public boolean canPlayDevCard() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayDevCard(Index playerIndex) {
+	public boolean canOfferTrade() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canOfferTrade(Index playerIndex) {
+	public boolean canAcceptTrade() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canAcceptTrade(Index playerIndex, ResourceList tradeOffer) {
+	public boolean canMaritimeTrade() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canMaritimeTrade(Index playerIndex) {
+	public boolean canRollDice() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canRollDice(Index playerIndex) {
+	public boolean canDiscard() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canDiscard(Index playerIndex) {
+	public boolean canFinishTurn() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canFinishTurn(Index playerIndex) {
+	public boolean canPlayYearOfPlenty() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayYearOfPlenty(Index playerIndex) {
+	public boolean canPlayRoadBuilder() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayRoadBuilder(Index playerIndex) {
+	public boolean canPlaySoldier() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlaySoldier(Index playerIndex) {
+	public boolean canPlayMonopoly() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlayMonopoly(Index playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canPlayMonument(Index playerIndex) {
+	public boolean canPlayMonument() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -118,39 +126,38 @@ public class SetupState implements IState
 	}
 
 	@Override
-	public boolean canAffordRoad(Index playerIndex) {
+	public boolean canAffordRoad() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceRoad(Index playerIndex, EdgeLocation loc) {
+	public boolean canPlaceRoad(EdgeLocation loc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canAffordSettlement(Index playerIndex) {
+	public boolean canAffordSettlement() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceSettlement(Index playerIndex, VertexLocation loc) {
+	public boolean canPlaceSettlement(VertexLocation loc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canAffordCity(Index playerIndex) {
+	public boolean canAffordCity() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceCity(Index playerIndex, VertexLocation loc) {
+	public boolean canPlaceCity(VertexLocation loc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }
