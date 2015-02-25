@@ -9,6 +9,12 @@ import shared.locations.VertexLocation;
 
 public class DiscardingState implements IState
 {
+	
+	public DiscardingState()
+	{
+		
+	}
+	
 	@Override
 	public boolean isPlayingFree() throws Exception 
 	{

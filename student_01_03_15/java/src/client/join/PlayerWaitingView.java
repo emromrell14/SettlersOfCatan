@@ -30,6 +30,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 	private JPanel center;
 	private SpinnerListModel aiModel;
 	private JSpinner aiChoices;
+	
 
 	public PlayerWaitingView() {
 		
@@ -118,7 +119,6 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		if(value.length == NUMBER_OF_PLAYERS){
 			labelText = "This game is ready to go!";
 			addAiButton.setEnabled(false);
-//			this.getController().startGame();
 		}
 		else{
 			labelText = ("Waiting for Players: Need " + (NUMBER_OF_PLAYERS-value.length) + " more");
@@ -129,15 +129,17 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		
 		//the center panel contains the individual player panels
 		center.removeAll();
+		center.setPreferredSize(new Dimension(400,200));
+		center.revalidate();
 		
 		//build an individual player panel and add it to the center panel
 		for(int i = 0; i < value.length; i++){
 			String builtString = (i+1) + " " + value[i].getName();
 			JPanel playerPanel = new JPanel();
 			playerPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); //left justify the text in the panel
-			playerPanel.setPreferredSize(new Dimension(200,50));
+			playerPanel.setMaximumSize(new Dimension(600,50));
 			playerPanel.setBackground(value[i].getColorCatan().getJavaColor()); //set the background color of the player
-//			System.out.println("*****" + value[i].getColorCatan().name());
+//			System.out.println("-----------In playerWaitingView: " + builtString + "--" + value[i].getColorCatan().name());
 			JLabel playerLabel = new JLabel(builtString, SwingConstants.LEFT); //justify the text left
 			FontUtils.setFont(playerLabel, LABEL_TEXT_SIZE);
 			playerPanel.add(playerLabel);

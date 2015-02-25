@@ -1,5 +1,7 @@
 package states;
 
+import facade.IMasterManager;
+import facade.MasterManager;
 import models.Index;
 import models.ResourceList;
 import shared.locations.EdgeLocation;
@@ -8,6 +10,13 @@ import shared.locations.VertexLocation;
 
 public class RobbingState implements IState
 {
+	IMasterManager mMaster;
+	
+	public RobbingState()
+	{
+		mMaster = MasterManager.getInstance();
+	}
+	
 	@Override
 	public boolean isPlayingFree() throws Exception 
 	{
@@ -27,128 +36,128 @@ public class RobbingState implements IState
 	}
 
 	@Override
-	public boolean canRegister() {
-		// TODO Auto-generated method stub
+	public boolean canRegister() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canBuyDevCard() {
-		// TODO Auto-generated method stub
+	public boolean canBuyDevCard() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlayDevCard() {
-		// TODO Auto-generated method stub
+	public boolean canPlayDevCard()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canOfferTrade() {
-		// TODO Auto-generated method stub
+	public boolean canOfferTrade() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canAcceptTrade() {
-		// TODO Auto-generated method stub
+	public boolean canAcceptTrade() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canMaritimeTrade() {
-		// TODO Auto-generated method stub
+	public boolean canMaritimeTrade() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canRollDice() {
-		// TODO Auto-generated method stub
+	public boolean canRollDice()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canDiscard() {
-		// TODO Auto-generated method stub
+	public boolean canDiscard() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canFinishTurn() {
-		// TODO Auto-generated method stub
+	public boolean canFinishTurn() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlayYearOfPlenty() {
-		// TODO Auto-generated method stub
+	public boolean canPlayYearOfPlenty()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlayRoadBuilder() {
-		// TODO Auto-generated method stub
+	public boolean canPlayRoadBuilder() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlaySoldier() {
-		// TODO Auto-generated method stub
+	public boolean canPlaySoldier()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlayMonopoly() {
-		// TODO Auto-generated method stub
+	public boolean canPlayMonopoly() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlayMonument() {
-		// TODO Auto-generated method stub
+	public boolean canPlayMonument()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceRobber(HexLocation newRobberLocation) {
-		// TODO Auto-generated method stub
+	public boolean canPlaceRobber(HexLocation newRobberLocation) 
+	{
+		return mMaster.canPlaceRobber(newRobberLocation);
+	}
+
+	@Override
+	public boolean canAffordRoad() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canAffordRoad() {
-		// TODO Auto-generated method stub
+	public boolean canPlaceRoad(EdgeLocation loc)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceRoad(EdgeLocation loc) {
-		// TODO Auto-generated method stub
+	public boolean canAffordSettlement() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canAffordSettlement() {
-		// TODO Auto-generated method stub
+	public boolean canPlaceSettlement(VertexLocation loc)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceSettlement(VertexLocation loc) {
-		// TODO Auto-generated method stub
+	public boolean canAffordCity() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canAffordCity() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canPlaceCity(VertexLocation loc) {
-		// TODO Auto-generated method stub
+	public boolean canPlaceCity(VertexLocation loc) 
+	{
 		return false;
 	}
 }

@@ -8,6 +8,11 @@ import shared.locations.VertexLocation;
 
 public class RollingState implements IState
 {
+	public RollingState()
+	{
+		
+	}
+	
 	@Override
 	public boolean isPlayingFree() throws Exception 
 	{

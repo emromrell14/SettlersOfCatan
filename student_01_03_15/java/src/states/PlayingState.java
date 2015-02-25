@@ -1,5 +1,7 @@
 package states;
 
+import facade.IMasterManager;
+import facade.MasterManager;
 import models.Index;
 import models.ResourceList;
 import shared.locations.EdgeLocation;
@@ -8,6 +10,13 @@ import shared.locations.VertexLocation;
 
 public class PlayingState implements IState
 {
+	IMasterManager mMaster;
+	
+	public PlayingState()
+	{
+		mMaster = MasterManager.getInstance();
+	}
+	
 	@Override
 	public boolean isPlayingFree() 
 	{
@@ -27,39 +36,44 @@ public class PlayingState implements IState
 	}
 
 	@Override
-	public boolean canRegister() {
-		// TODO Auto-generated method stub
+	public boolean canRegister() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canBuyDevCard() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canBuyDevCard() 
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canBuyDevCard(playerIndex);
 	}
 
 	@Override
-	public boolean canPlayDevCard() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canPlayDevCard() 
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canPlayDevCard(playerIndex);
 	}
 
 	@Override
-	public boolean canOfferTrade() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canOfferTrade()
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canOfferTrade(playerIndex);
 	}
 
 	@Override
-	public boolean canAcceptTrade() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canAcceptTrade()
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canAcceptTrade(playerIndex);
 	}
 
 	@Override
-	public boolean canMaritimeTrade() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canMaritimeTrade() 
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canMaritimeTrade(playerIndex);
 	}
 
 	@Override
@@ -77,37 +91,37 @@ public class PlayingState implements IState
 	@Override
 	public boolean canFinishTurn() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canFinishTurn(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayYearOfPlenty() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayYearOfPlenty(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayRoadBuilder() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayRoadBuilder(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaySoldier() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaySoldier(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayMonopoly() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayMonopoly(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayMonument() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayMonument(mMaster.getPlayerIndex());
 	}
 
 	@Override
@@ -119,36 +133,36 @@ public class PlayingState implements IState
 	@Override
 	public boolean canAffordRoad() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canAffordRoad(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaceRoad(EdgeLocation loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaceRoad(mMaster.getPlayerIndex(), loc);
 	}
 
 	@Override
 	public boolean canAffordSettlement() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canAffordSettlement(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaceSettlement(VertexLocation loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaceSettlement(mMaster.getPlayerIndex(), loc);
 	}
 
 	@Override
 	public boolean canAffordCity() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canAffordCity(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaceCity(VertexLocation loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaceCity(mMaster.getPlayerIndex(), loc);
 	}
 }
