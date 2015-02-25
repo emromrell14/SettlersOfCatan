@@ -337,7 +337,7 @@ public class ModelManager extends Observable
 	 *            List of cards that another player wants to trade for.
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade(Index playerIndex, ResourceList tradeOffer) 
+	public boolean canAcceptTrade(Index playerIndex) 
 	{
 		Player p = mGameModel.getPlayer(playerIndex);
 		if (
@@ -348,7 +348,7 @@ public class ModelManager extends Observable
 		{
 			return false;
 		}
-		return p.canAcceptTrade(tradeOffer);
+		return p.canAcceptTrade(mGameModel.trade());
 	}
 
 	/**

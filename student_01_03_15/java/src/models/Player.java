@@ -632,17 +632,17 @@ public class Player implements IPlayer
 		this.mResources = this.resources().updateResourceList(brick, ore, sheep, wheat, wood);
 	}
 	
-	public boolean canAcceptTrade(ResourceList tradeOffer)
+	public boolean canAcceptTrade(Trade tradeOffer)
 	{
-		if (tradeOffer.isEmpty())
+		if (tradeOffer.offer().isEmpty())
 		{
 			return false;
 		}
-		return mResources.brick() >= tradeOffer.brick()
-				&& mResources.ore() >= tradeOffer.ore()
-				&& mResources.sheep() >= tradeOffer.sheep()
-				&& mResources.wheat() >= tradeOffer.wheat()
-				&& mResources.wood() >= tradeOffer.wood();
+		return mResources.brick() >= tradeOffer.offer().getBrick()
+				&& mResources.ore() >= tradeOffer.offer().getOre()
+				&& mResources.sheep() >= tradeOffer.offer().getSheep()
+				&& mResources.wheat() >= tradeOffer.offer().getWheat()
+				&& mResources.wood() >= tradeOffer.offer().getWood();
 	}
 	public boolean haveResourceAmount(PortType type)
 	{

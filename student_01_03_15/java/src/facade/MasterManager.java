@@ -234,9 +234,9 @@ public class MasterManager implements IMasterManager
 	 * @post none
 	 * @return true if the trade can be accepted, false otherwise
 	 */
-	public boolean canAcceptTrade(Index playerIndex, models.ResourceList tradeOffer) 
+	public boolean canAcceptTrade(Index playerIndex) 
 	{
-		return mModelManager.canAcceptTrade(playerIndex,tradeOffer);
+		return mModelManager.canAcceptTrade(playerIndex);
 	}
 
 	/**

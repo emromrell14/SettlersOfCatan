@@ -2,10 +2,9 @@ package client.resources;
 
 import java.util.*;
 
+import models.Status;
+import states.*;
 import client.base.*;
-import client.map.IMapView;
-import client.map.MapController;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -17,13 +16,14 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	private Map<ResourceBarElement, IAction> elementActions;
 	private MasterManager master;
+	private IState state;
 //	private IMapView mapView;
 	
 	public ResourceBarController(IResourceBarView view) 
 	{
 
 		super(view);
-		
+		state = new SetupState();
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		master = MasterManager.getInstance();
 		master.getModelManager().addObserver(this);
@@ -50,7 +50,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildRoad() 
 	{
-		if (master.canAffordCity(master.getPlayerIndex()))
+		if (state.canAffordCity())
 		{
 			executeElementAction(ResourceBarElement.ROAD);
 			
@@ -61,7 +61,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildSettlement() 
 	{
-		if (master.canAffordSettlement(master.getPlayerIndex()))
+		if (state.canAffordSettlement())
 		{
 			executeElementAction(ResourceBarElement.SETTLEMENT);
 		}
@@ -71,7 +71,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildCity() 
 	{
-		if (master.canAffordCity(master.getPlayerIndex())) 
+		if (state.canAffordCity()) 
 		{
 			executeElementAction(ResourceBarElement.CITY);	
 		}
@@ -81,7 +81,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buyCard() 
 	{
-		if (master.canBuyDevCard(master.getPlayerIndex()))
+		if (state.canBuyDevCard())
 		{
 			executeElementAction(ResourceBarElement.BUY_CARD);			
 		}
@@ -91,7 +91,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void playCard() 
 	{
-		if (master.canPlayDevCard(master.getPlayerIndex()))
+		if (state.canPlayDevCard())
 		{
 			executeElementAction(ResourceBarElement.PLAY_CARD);
 		}
@@ -102,7 +102,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		
 		if (elementActions.containsKey(element)) 
 		{
-			
 			IAction action = elementActions.get(element);
 			action.execute();
 		}
@@ -114,10 +113,35 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		// TODO Auto-generated method stub
 		if(master.hasJoinedGame)
 		{
+
+			Status status = master.getCurrentModel().turnTracker().status();
+			switch(status)
+			{
+			case ROBBING:
+				state = new RobbingState();
+				break;
+			case PLAYING:
+				state = new PlayingState();
+				break;
+			case DISCARDING:
+				state = new DiscardingState();
+				break;
+			case ROLLING:
+				state = new RollingState();
+				break;
+			case FIRSTROUND:
+				state = new SetupState();
+				break;
+			case SECONDROUND:
+				state = new SetupState();
+				break;
+			default:
+				System.out.println("ResourceBarController update() should never get here.");
+			}
 			System.out.println("WE HIT THE RESOURCE CONTROLLER'S OBSERVER UPDATE METHOD");
 			
 			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-			if (master.canAffordRoad(master.getPlayerIndex()))
+			if (state.canAffordRoad())
 			{
 				this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
 			}
@@ -126,7 +150,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
 			}
 			//----------------------------------------------
-			if (master.canAffordSettlement(master.getPlayerIndex()))
+			if (state.canAffordSettlement())
 			{
 				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
 			}
@@ -135,7 +159,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
 			}
 			//----------------------------------------------
-			if (master.canAffordCity(master.getPlayerIndex()))
+			if (state.canAffordCity())
 			{
 				this.getView().setElementEnabled(ResourceBarElement.CITY, true);
 			}
@@ -144,7 +168,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				this.getView().setElementEnabled(ResourceBarElement.CITY, false);
 			}
 			//-----------------------------------------------
-			if (master.canBuyDevCard(master.getPlayerIndex()))
+			if (state.canBuyDevCard())
 			{
 				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
 			}

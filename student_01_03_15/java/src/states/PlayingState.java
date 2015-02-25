@@ -36,39 +36,44 @@ public class PlayingState implements IState
 	}
 
 	@Override
-	public boolean canRegister() {
-		// TODO Auto-generated method stub
+	public boolean canRegister() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean canBuyDevCard() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canBuyDevCard() 
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canBuyDevCard(playerIndex);
 	}
 
 	@Override
-	public boolean canPlayDevCard() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canPlayDevCard() 
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canPlayDevCard(playerIndex);
 	}
 
 	@Override
-	public boolean canOfferTrade() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canOfferTrade()
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canOfferTrade(playerIndex);
 	}
 
 	@Override
-	public boolean canAcceptTrade() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canAcceptTrade()
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canAcceptTrade(playerIndex);
 	}
 
 	@Override
-	public boolean canMaritimeTrade() {
-		// TODO Auto-generated method stub
-		return mMaster.canMaritimeTrade(mMaster.getPlayerIndex());
+	public boolean canMaritimeTrade() 
+	{
+		Index playerIndex = mMaster.getPlayerIndex();
+		return mMaster.canMaritimeTrade(playerIndex);
 	}
 
 	@Override

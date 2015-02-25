@@ -47,6 +47,11 @@ public class ResourceListJSON
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
+	
+	public boolean isEmpty()
+	{
+		return brick == 0 && ore == 0 && wheat == 0 && sheep == 0 && wood == 0;
+	}
 
 	public int getBrick() 
 	{
