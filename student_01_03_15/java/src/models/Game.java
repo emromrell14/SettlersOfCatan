@@ -166,7 +166,6 @@ public class Game implements IGame
 	}
 	public Player getPlayer(Index playerIndex)
 	{
-		System.out.println("********** " + playerIndex);
 		for(Player player : this.mPlayers)
 		{
 			// this check is for the joinGameController hack, problems with joining player not having an index
@@ -176,7 +175,6 @@ public class Game implements IGame
 			}
 			if(player != null)
 			{
-				System.out.println("***" + player.name() + player.playerIndex().value());
 				if(player.playerIndex().equals(playerIndex))
 				{
 					return player;
