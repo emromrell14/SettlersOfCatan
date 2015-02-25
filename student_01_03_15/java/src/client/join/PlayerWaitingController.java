@@ -23,6 +23,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	private MasterManager master;
 	private boolean controllerStarted = false;
 	private boolean showModal = false;
+	private final int NUMBER_OF_PLAYERS = 4;
+	private int numPlayers = -1;
 
 	public PlayerWaitingController(IPlayerWaitingView view) {
 		
@@ -64,11 +66,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void update(Observable o, Object arg) 
 	{
 		// TODO Auto-generated method stub
-		System.out.println("UPDATING playerWaitingController.");
-		ModelManager manager = (ModelManager) o;
-		Game gameModel = manager.getCurrentModel();
-		
-		this.setupPlayerInfo(gameModel);
+		if(!master.hasJoinedGame)
+		{
+			System.out.println("UPDATING playerWaitingController.");
+			ModelManager manager = (ModelManager) o;
+			Game gameModel = manager.getCurrentModel();
+			
+			this.setupPlayerInfo(gameModel);
+		}
 	}
 	
 	public void setupPlayerInfo(Game gameModel)
@@ -83,27 +88,30 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				info.setId(p.playerID());
 				info.setPlayerIndex(p.playerIndex().value());
 				info.setColorCatan(p.color());
-//				System.out.println("playerwaiting--->"+ p.color().name());
+				System.out.println("playerwaiting--->"+ p.color().name());
 				players.add(info);
 			}
 		}
 		// Convert ArrayList to Array
 		PlayerInfo[] playersArray = new PlayerInfo[players.size()];
 		players.toArray(playersArray);
-//		for(int i = 0; i < playersArray.length; ++i)
-//		{
-//			System.out.print(playersArray[i].getName() + playersArray[i].getColorCatan().name() + "--");
-//		}
-		getView().setPlayers(playersArray);
 		
-		// Hack to work around current player not showing up on Waiting list, doesn't fix ai players showing up
+		// Only change view if number of players has changed
+		if(numPlayers != playersArray.length)
+		{
+			getView().setPlayers(playersArray);
+			numPlayers = playersArray.length;
+		}
+		
+		// Hack to work around current player not showing up on Waiting list. Will be true first time start() is called.
 		if(showModal)
 		{
 			getView().showModal();
+			numPlayers = playersArray.length;
 			showModal = false;
 		}
 		// Check to close modal
-		if(controllerStarted && playersArray.length == 4)
+		if(controllerStarted && playersArray.length == NUMBER_OF_PLAYERS)
 		{
 			startGame();
 		}
