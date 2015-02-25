@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import models.Player;
+import models.ResourceList;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
@@ -84,8 +85,12 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	@Override
 	public void discard() {
-		//Through master manager we call discardCards(playerIndex, ResourceList) is the param ResourceList the new players list or list to be subtracted from current list
-		getDiscardView().closeModal();
+		if (this.discardReached())
+		{
+			ResourceList rList = new ResourceList(this.brickDiscard, this.oreDiscard, this.sheepDiscard, this.wheatDiscard, this.woodDiscard);
+			this.master.discardCards(this.player.playerIndex(), rList);
+			getDiscardView().closeModal();
+		}
 	}
 
 	public void setCardsToDiscard()
