@@ -145,7 +145,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		// Check that title has at least 1 non-whitespace character
 		if(title.matches(".*\\w.*"))
 		{
-			master.createGame(randHexes, randNums, randPorts, title);
+			String response = master.createGame(randHexes, randNums, randPorts, title);
+			GameInfoJSON newGame = new GameInfoJSON();
+			newGame = newGame.fromJSON(response);
+
+			// Add the creator of the game to the game
+			String responseJoin = master.joinGame(newGame.getId(), "white");
+			
 			// get the newest list of games
 			this.generateGameList();
 			getNewGameView().closeModal();
@@ -222,7 +228,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void generateGameList()
 	{
 		String JSON = master.getGameList();
-		System.out.println("JoinGameController json1:" + JSON + ":");
+		System.out.println("JoinGameController json:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;

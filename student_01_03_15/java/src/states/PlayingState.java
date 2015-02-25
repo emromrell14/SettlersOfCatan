@@ -70,7 +70,8 @@ public class PlayingState implements IState
 	}
 
 	@Override
-	public boolean canMaritimeTrade() {
+	public boolean canMaritimeTrade() 
+	{
 		Index playerIndex = mMaster.getPlayerIndex();
 		return mMaster.canMaritimeTrade(playerIndex);
 	}
@@ -90,37 +91,37 @@ public class PlayingState implements IState
 	@Override
 	public boolean canFinishTurn() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canFinishTurn(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayYearOfPlenty() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayYearOfPlenty(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayRoadBuilder() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayRoadBuilder(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaySoldier() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaySoldier(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayMonopoly() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayMonopoly(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlayMonument() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlayMonument(mMaster.getPlayerIndex());
 	}
 
 	@Override
@@ -132,36 +133,36 @@ public class PlayingState implements IState
 	@Override
 	public boolean canAffordRoad() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canAffordRoad(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaceRoad(EdgeLocation loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaceRoad(mMaster.getPlayerIndex(), loc);
 	}
 
 	@Override
 	public boolean canAffordSettlement() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canAffordSettlement(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaceSettlement(VertexLocation loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaceSettlement(mMaster.getPlayerIndex(), loc);
 	}
 
 	@Override
 	public boolean canAffordCity() {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canAffordCity(mMaster.getPlayerIndex());
 	}
 
 	@Override
 	public boolean canPlaceCity(VertexLocation loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return mMaster.canPlaceCity(mMaster.getPlayerIndex(), loc);
 	}
 }
