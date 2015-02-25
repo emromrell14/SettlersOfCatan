@@ -3,8 +3,10 @@ package client.discard;
 import java.util.Observable;
 import java.util.Observer;
 
+import models.Game;
 import models.Player;
 import models.ResourceList;
+import models.Status;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
@@ -61,13 +63,18 @@ public class DiscardController extends Controller implements IDiscardController,
 		this.setCardsToDiscard();
 		this.setCardsTotals();
 		this.setMap();
+		String message = this.currentDiscardNum + "/" + this.cardsToDiscard;
+		this.getDiscardView().setStateMessage(message);
 	}
 
 	@Override
 	public void increaseAmount(ResourceType resource) 
 	{
 		this.increaseType(resource);
+		this.getDiscardView().setResourceDiscardAmount(resource, this.getType(resource));
 		this.getDiscardView().setResourceAmountChangeEnabled(resource, this.canIncrease(resource), this.canDecrease(resource));
+		String message = this.currentDiscardNum + "/" + this.cardsToDiscard;
+		this.getDiscardView().setStateMessage(message);
 		
 		if (this.discardReached())
 		{
@@ -79,13 +86,16 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void decreaseAmount(ResourceType resource) 
 	{
 		this.decreaseType(resource);
+		this.getDiscardView().setResourceDiscardAmount(resource, this.getType(resource));
 		this.getDiscardView().setResourceAmountChangeEnabled(resource, this.canIncrease(resource), this.canDecrease(resource));
+		String message = this.currentDiscardNum + "/" + this.cardsToDiscard;
+		this.getDiscardView().setStateMessage(message);
 		
 	}
 
 	@Override
 	public void discard() {
-		if (this.discardReached())
+		if (this.discardReached() && this.player != null)
 		{
 			ResourceList rList = new ResourceList(this.brickDiscard, this.oreDiscard, this.sheepDiscard, this.wheatDiscard, this.woodDiscard);
 			this.master.discardCards(this.player.playerIndex(), rList);
@@ -223,6 +233,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		{
 			this.brickDiscard+=1;
 		}
+		this.currentDiscardNum+=1;
 	}
 	public void decreaseType(ResourceType type)
 	{
@@ -246,6 +257,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		{
 			this.brickDiscard-=1;
 		}
+		this.currentDiscardNum-=1;
 	}
 	public boolean discardReached()
 	{
@@ -283,10 +295,44 @@ public class DiscardController extends Controller implements IDiscardController,
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, this.canIncrease(ResourceType.BRICK), this.canDecrease(ResourceType.BRICK));
 		
 	}
+	
+	public int getType(ResourceType type)
+	{
+		if (type == ResourceType.ORE)
+		{
+			return this.brickDiscard;
+		}
+		if (type == ResourceType.WOOD)
+		{
+			return this.woodDiscard;
+		}
+		if (type == ResourceType.SHEEP)
+		{
+			return this.sheepDiscard;
+		}
+		if (type == ResourceType.WHEAT)
+		{
+			return this.wheatDiscard;
+		}
+		if (type == ResourceType.BRICK)
+		{
+			return this.brickDiscard;
+		}
+		return -1;
+	}
+	
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+		Game game = this.master.getCurrentModel();
+		if (game != null)
+		{
+			if (game.turnTracker().status() == Status.DISCARDING)
+			{
+				this.initialize();
+			}
+		}
 	}
 
 }
