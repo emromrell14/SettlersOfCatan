@@ -564,13 +564,6 @@ public class MapComponent extends JComponent
 			//MasterManager.getInstance().getModelManager().notifyObservers();
 			//------------------------------------------------------------
 
-			// THIS IS A HACK FOR SIMULATION PURPOSES --------------------
-			IDiscardView dv = new DiscardView();
-			IWaitView wv = new WaitView();
-			dv.setController(new DiscardController(dv,wv));
-			dv.showModal();
-			// -----------------------------------------------------------
-
 			if(dropType != null)
 			{
 				

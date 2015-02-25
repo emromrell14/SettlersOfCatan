@@ -1,7 +1,22 @@
 package states;
 
+import facade.IMasterManager;
+import facade.MasterManager;
+import models.Index;
+import models.ResourceList;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+
 public class PlayingState implements IState
 {
+	IMasterManager mMaster;
+	
+	public PlayingState()
+	{
+		mMaster = MasterManager.getInstance();
+	}
+	
 	@Override
 	public boolean isPlayingFree() 
 	{
@@ -18,5 +33,131 @@ public class PlayingState implements IState
 	public boolean isCancelAllowed() 
 	{
 		return true;
+	}
+
+	@Override
+	public boolean canRegister() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canBuyDevCard() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canPlayDevCard() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canOfferTrade() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canAcceptTrade() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canMaritimeTrade() {
+		// TODO Auto-generated method stub
+		return mMaster.canMaritimeTrade(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canRollDice() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canDiscard() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canFinishTurn() {
+		// TODO Auto-generated method stub
+		return mMaster.canFinishTurn(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlayYearOfPlenty() {
+		// TODO Auto-generated method stub
+		return mMaster.canPlayYearOfPlenty(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlayRoadBuilder() {
+		// TODO Auto-generated method stub
+		return mMaster.canPlayRoadBuilder(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlaySoldier() {
+		// TODO Auto-generated method stub
+		return mMaster.canPlaySoldier(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlayMonopoly() {
+		// TODO Auto-generated method stub
+		return mMaster.canPlayMonopoly(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlayMonument() {
+		// TODO Auto-generated method stub
+		return mMaster.canPlayMonument(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlaceRobber(HexLocation newRobberLocation) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canAffordRoad() {
+		// TODO Auto-generated method stub
+		return mMaster.canAffordRoad(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlaceRoad(EdgeLocation loc) {
+		// TODO Auto-generated method stub
+		return mMaster.canPlaceRoad(mMaster.getPlayerIndex(), loc);
+	}
+
+	@Override
+	public boolean canAffordSettlement() {
+		// TODO Auto-generated method stub
+		return mMaster.canAffordSettlement(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlaceSettlement(VertexLocation loc) {
+		// TODO Auto-generated method stub
+		return mMaster.canPlaceSettlement(mMaster.getPlayerIndex(), loc);
+	}
+
+	@Override
+	public boolean canAffordCity() {
+		// TODO Auto-generated method stub
+		return mMaster.canAffordCity(mMaster.getPlayerIndex());
+	}
+
+	@Override
+	public boolean canPlaceCity(VertexLocation loc) {
+		// TODO Auto-generated method stub
+		return mMaster.canPlaceCity(mMaster.getPlayerIndex(), loc);
 	}
 }

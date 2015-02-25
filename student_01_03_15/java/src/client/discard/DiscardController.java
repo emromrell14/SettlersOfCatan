@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import models.Player;
+import models.ResourceList;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
@@ -38,8 +39,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	 * @param view View displayed to let the user select cards to discard
 	 * @param waitView View displayed to notify the user that they are waiting for other players to discard
 	 */
-	public DiscardController(IDiscardView view, IWaitView waitView) {
-		
+	public DiscardController(IDiscardView view, IWaitView waitView)
+	{		
 		super(view);
 		this.master = MasterManager.getInstance();
 		this.master.getModelManager().addObserver(this);
@@ -84,8 +85,12 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	@Override
 	public void discard() {
-		//Through master manager we call discardCards(playerIndex, ResourceList) is the param ResourceList the new players list or list to be subtracted from current list
-		getDiscardView().closeModal();
+		if (this.discardReached())
+		{
+			ResourceList rList = new ResourceList(this.brickDiscard, this.oreDiscard, this.sheepDiscard, this.wheatDiscard, this.woodDiscard);
+			this.master.discardCards(this.player.playerIndex(), rList);
+			getDiscardView().closeModal();
+		}
 	}
 
 	public void setCardsToDiscard()
