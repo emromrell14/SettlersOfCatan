@@ -24,7 +24,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	private boolean controllerStarted = false;
 	private boolean showModal = false;
 	private final int NUMBER_OF_PLAYERS = 4;
-	private int numPlayers = -1;
 
 	public PlayerWaitingController(IPlayerWaitingView view) {
 		
@@ -46,7 +45,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	{
 		System.out.println("----> start() called in playerWaitingController");
 
-		//getView().showModal();
 		Game gameModel = master.getCurrentModel();
 		this.controllerStarted = true;
 		this.showModal = true;
@@ -96,18 +94,13 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		PlayerInfo[] playersArray = new PlayerInfo[players.size()];
 		players.toArray(playersArray);
 		
-		// Only change view if number of players has changed
-		if(numPlayers != playersArray.length)
-		{
-			getView().setPlayers(playersArray);
-			numPlayers = playersArray.length;
-		}
+		// Set players in the view
+		getView().setPlayers(playersArray);
 		
 		// Hack to work around current player not showing up on Waiting list. Will be true first time start() is called.
 		if(showModal)
 		{
 			getView().showModal();
-			numPlayers = playersArray.length;
 			showModal = false;
 		}
 		// Check to close modal

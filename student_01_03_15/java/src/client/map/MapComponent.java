@@ -907,7 +907,7 @@ public class MapComponent extends JComponent
 	
 	private double getPortRotation(EdgeLocation edgeLoc)
 	{
-		System.out.println(edgeLoc.getDir());
+//		System.out.println(edgeLoc.getDir());
 		
 		return PORT_ROTATIONS.get(Lengthen(edgeLoc.getDir()));
 	}

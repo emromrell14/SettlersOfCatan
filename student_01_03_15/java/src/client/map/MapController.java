@@ -27,7 +27,7 @@ import facade.MasterManager;
 public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
-	private IMasterManager master;
+	private MasterManager master;
 	private IState state;
 	
 	public MapController(IMapView view, IRobView robView) 
@@ -422,31 +422,34 @@ public class MapController extends Controller implements IMapController, Observe
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		initFromModel();
-
-		Status status = master.getCurrentModel().turnTracker().status();
-		switch(status)
-		{
-		case ROBBING:
-			state = new RobbingState();
-			break;
-		case PLAYING:
-			state = new PlayingState();
-			break;
-		case DISCARDING:
-			state = new DiscardingState();
-			break;
-		case ROLLING:
-			state = new RollingState();
-			break;
-		case FIRSTROUND:
-			state = new SetupState();
-			break;
-		case SECONDROUND:
-			state = new SetupState();
-			break;
-		default:
-			System.out.println("MapController update() should never get here.");
+			if(master.hasJoinedGame)
+			{
+				initFromModel();
+		
+				Status status = master.getCurrentModel().turnTracker().status();
+				switch(status)
+				{
+				case ROBBING:
+					state = new RobbingState();
+					break;
+				case PLAYING:
+					state = new PlayingState();
+					break;
+				case DISCARDING:
+					state = new DiscardingState();
+					break;
+				case ROLLING:
+					state = new RollingState();
+					break;
+				case FIRSTROUND:
+					state = new SetupState();
+					break;
+				case SECONDROUND:
+					state = new SetupState();
+					break;
+				default:
+					System.out.println("MapController update() should never get here.");
+			}
 		}
 	}
 
