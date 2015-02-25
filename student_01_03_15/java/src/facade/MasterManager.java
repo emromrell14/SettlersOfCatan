@@ -432,7 +432,14 @@ public class MasterManager implements IMasterManager
 	{
 		Game game = mGameManager.getGameModel(version);
 		if(game != null)
+		{
 			mModelManager.updateModel(game);
+		}
+		else
+		{
+			System.out.println("Game was null");
+			assert false;
+		}
 //		return mModelManager.gameModel().version();
 	}
 	

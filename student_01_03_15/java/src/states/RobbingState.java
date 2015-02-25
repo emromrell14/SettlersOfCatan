@@ -18,21 +18,24 @@ public class RobbingState implements IState
 	}
 	
 	@Override
-	public boolean isPlayingFree() throws Exception 
+	public boolean isPlayingFree()
 	{
-		throw new Exception("Can't play during a RollingState!");
+		System.out.println("Can't play during a RollingState!");
+		return false;
 	}
 
 	@Override
-	public boolean isDisconnectedPlayingAllowed() throws Exception 
+	public boolean isDisconnectedPlayingAllowed()
 	{
-		throw new Exception("Can't play during a RollingState");
+		//throw new Exception("Can't play during a RollingState");
+		return false;
 	}
 
 	@Override
-	public boolean isCancelAllowed() throws Exception 
+	public boolean isCancelAllowed() 
 	{
-		throw new Exception("Can't play during a RollingState");
+		//throw new Exception("Can't play during a RollingState");
+		return false;
 	}
 
 	@Override
