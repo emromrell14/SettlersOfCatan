@@ -14,7 +14,7 @@ import models.Status;
 import models.TokenValue;
 import shared.definitions.*;
 import shared.locations.*;
-import states.IState;
+import states.*;
 import client.base.*;
 import client.data.*;
 import facade.IMasterManager;
@@ -37,6 +37,7 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		this.master = MasterManager.getInstance();
 		this.master.getModelManager().addObserver(this);
+		state = new SetupState();
 		setRobView(robView);
 		
 		initFromModel();
@@ -262,25 +263,22 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) 
 	{
-		Index playerIndex = master.getPlayerIndex();
-		return master.canPlaceRoad(playerIndex, edgeLoc);
+		return state.canPlaceRoad(edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) 
 	{
-		Index playerIndex = master.getPlayerIndex();
-		return master.canPlaceSettlement(playerIndex, vertLoc);
+		return state.canPlaceSettlement(vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) 
 	{	
-		Index playerIndex = master.getPlayerIndex();
-		return master.canPlaceCity(playerIndex, vertLoc);
+		return state.canPlaceCity(vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) 
 	{
-		return master.canPlaceRobber(hexLoc);
+		return state.canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) 
@@ -388,9 +386,31 @@ public class MapController extends Controller implements IMapController, Observe
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		// TODO Auto-generated method stub
 		initFromModel();
-		System.out.println("UPDATING MAPCONTROLLER");
+		Status status = master.getCurrentModel().turnTracker().status();
+		switch(status)
+		{
+		case ROBBING:
+			state = new RobbingState();
+			break;
+		case PLAYING:
+			state = new PlayingState();
+			break;
+		case DISCARDING:
+			state = new DiscardingState();
+			break;
+		case ROLLING:
+			state = new RollingState();
+			break;
+		case FIRSTROUND:
+			state = new SetupState();
+			break;
+		case SECONDROUND:
+			state = new SetupState();
+			break;
+		default:
+			System.out.println("MapController update() should never get here.");
+		}
 	}
 	
 }
