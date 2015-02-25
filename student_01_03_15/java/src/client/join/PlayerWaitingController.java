@@ -22,6 +22,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	
 	private MasterManager master;
 	private boolean controllerStarted = false;
+	private boolean showModal = false;
 
 	public PlayerWaitingController(IPlayerWaitingView view) {
 		
@@ -43,10 +44,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	{
 		System.out.println("----> start() called in playerWaitingController");
 
-		getView().showModal();
+		//getView().showModal();
 		Game gameModel = master.getCurrentModel();
 		this.controllerStarted = true;
-		this.setupPlayerInfo(gameModel);
+		this.showModal = true;
+//		this.setupPlayerInfo(gameModel);
 		// This doesn't show the current player because joining a game doesn't change the version number...dumb
 	}
 
@@ -94,6 +96,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 //		}
 		getView().setPlayers(playersArray);
 		
+		// Hack to work around current player not showing up on Waiting list, doesn't fix ai players showing up
+		if(showModal)
+		{
+			getView().showModal();
+			showModal = false;
+		}
 		// Check to close modal
 		if(controllerStarted && playersArray.length == 4)
 		{
