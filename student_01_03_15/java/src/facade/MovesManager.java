@@ -8,8 +8,10 @@ import models.Index;
 import models.ResourceList;
 import proxy.IProxy;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class MovesManager
@@ -257,12 +259,14 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"buildSettlement\", playerIndex:" + playerIndex.value() + ", vertexLocation:" + 
-				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc() + ", direction:\"" + vertexLoc.getDir() + 
+				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + vertexLoc.getDir() + 
 				"\"}, free:" + free + "}";
 		
 		response = mProxy.post("/moves/buildSettlement", body);
 		return jsonToGame(response);
 	}
+	
+
 	/**
 	 * Builds a city at the specified location
 	 * @pre player must have less than 4 cities built

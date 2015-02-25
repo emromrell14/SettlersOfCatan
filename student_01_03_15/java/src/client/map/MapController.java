@@ -120,6 +120,43 @@ public class MapController extends Controller implements IMapController, Observe
 		{
 			Board b = game.board();
 			
+			// Add in the water tiles
+			for (int x = 0; x <= 3; ++x) 
+			{	
+				int maxY = 3 - x;
+				for (int y = -3; y <= maxY; ++y) 
+				{
+					
+					if (Math.abs(y)==3 || Math.abs(x)==3)
+					{
+						HexLocation hexLoc = new HexLocation(x, y);
+						HexType hexType;
+						hexType = HexType.WATER;
+						b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
+					}
+				}
+				
+				if (x != 0) 
+				{
+
+					int minY = x - 3;
+					for (int y = minY; y <= 3; ++y) 
+					{
+						if (Math.abs(y)==3 || Math.abs(x)==3)
+						{
+							HexType hexType;
+							hexType = HexType.WATER;
+							HexLocation hexLoc = new HexLocation(-x, y);
+							b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
+						}
+					}
+				}
+			}
+			
+			b.addHex(new Hex(new HexLocation(1,2), HexType.WATER,new TokenValue(0)));
+			b.addHex(new Hex(new HexLocation(-1,-2), HexType.WATER,new TokenValue(0)));
+			b.addHex(new Hex(new HexLocation(2,1), HexType.WATER,new TokenValue(0)));
+			b.addHex(new Hex(new HexLocation(-2,-1), HexType.WATER,new TokenValue(0)));	
 	
 			for (Hex h : b.hexes())
 			{
@@ -132,8 +169,7 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 				else
 				{
-					assert false;
-					System.out.println("Shouldn\'t get here");
+					System.out.println("Should only get here when token value is 0");
 				}
 			}
 			
@@ -347,7 +383,7 @@ public class MapController extends Controller implements IMapController, Observe
 	{
 		try 
 		{
-			getView().startDrop(pieceType, master.getPlayer().color(), true);//, state.isCancelAllowed());
+			getView().startDrop(pieceType, master.getPlayer().color(), state.isCancelAllowed());
 		} 
 		catch (Exception e) 
 		{
@@ -412,6 +448,11 @@ public class MapController extends Controller implements IMapController, Observe
 		default:
 			System.out.println("MapController update() should never get here.");
 		}
+	}
+
+	@Override
+	public IState getState() {
+		return state;
 	}
 	
 }

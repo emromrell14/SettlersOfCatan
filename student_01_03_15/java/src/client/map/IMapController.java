@@ -4,6 +4,7 @@ import client.base.*;
 import client.data.*;
 import shared.definitions.*;
 import shared.locations.*;
+import states.IState;
 
 /**
  * Interface for the map controller
@@ -136,5 +137,12 @@ public interface IMapController extends IController
 	 *            The player to be robbed
 	 */
 	void robPlayer(RobPlayerInfo victim);
+	
+	
+	/**
+	 * This method returns the state
+	 * 
+	 */
+	IState getState();
 }
 

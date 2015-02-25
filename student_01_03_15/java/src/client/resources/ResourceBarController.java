@@ -2,6 +2,7 @@ package client.resources;
 
 import java.util.*;
 
+import models.Player;
 import models.Status;
 import states.*;
 import client.base.*;
@@ -50,7 +51,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildRoad() 
 	{
-		if (state.canAffordCity())
+		if (state.canAffordRoad())
 		{
 			executeElementAction(ResourceBarElement.ROAD);
 			
@@ -110,10 +111,27 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg)
 	{
+		
 		// TODO Auto-generated method stub
 		if(master.hasJoinedGame)
 		{
-
+			if (state.isPlayingFree())
+			{
+				Player p = master.getPlayer();
+				int roadsBuilt = p.roads().size();
+				int settlementsBuilt = p.settlements().size();
+				
+				if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
+				{
+					buildSettlement();
+				}
+				else if ((roadsBuilt == 0 && settlementsBuilt == 1) || (roadsBuilt == 1 && settlementsBuilt == 2))
+				{
+					buildRoad();
+				}
+			}
+			
+			
 			Status status = master.getCurrentModel().turnTracker().status();
 			switch(status)
 			{

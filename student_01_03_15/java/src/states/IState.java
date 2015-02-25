@@ -1,6 +1,5 @@
 package states;
 
-import models.Index;
 import models.ResourceList;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -8,11 +7,11 @@ import shared.locations.VertexLocation;
 
 public interface IState 
 {
-	public boolean isPlayingFree() throws Exception;
+	public boolean isPlayingFree();
 	
-	public boolean isDisconnectedPlayingAllowed() throws Exception;
+	public boolean isDisconnectedPlayingAllowed();
 	
-	public boolean isCancelAllowed() throws Exception;
+	public boolean isCancelAllowed();
 	
 	public boolean canRegister();
 

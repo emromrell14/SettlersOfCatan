@@ -2,12 +2,14 @@ package client.map;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import client.base.*;
 import client.data.*;
 import shared.definitions.*;
 import shared.locations.*;
+import states.IState;
 
 /**
  * Implementation for the map view
@@ -132,8 +134,7 @@ public class MapView extends PanelView implements IMapView
 		
 		@Override
 		public void placeRoad(EdgeLocation edgeLoc)
-		{
-			
+		{	
 			closeModal();
 			getController().placeRoad(edgeLoc);
 		}
@@ -141,8 +142,10 @@ public class MapView extends PanelView implements IMapView
 		@Override
 		public void placeSettlement(VertexLocation vertLoc)
 		{
-			
-			closeModal();
+			if(!getController().getState().isPlayingFree())
+			{
+				closeModal();
+			} 
 			getController().placeSettlement(vertLoc);
 		}
 		
@@ -199,6 +202,13 @@ public class MapView extends PanelView implements IMapView
 		{
 			overlay.cancelDrop();
 			overlay.closeModal();
+		}
+
+		@Override
+		public IState getState() {
+			System.out.println("DON'T CALL THIS MAP VIEW GETSTATE METHOD");
+			assert false;
+			return null;
 		}
 	};
 	
