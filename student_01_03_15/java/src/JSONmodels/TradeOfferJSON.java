@@ -1,6 +1,7 @@
 package JSONmodels;
 
 import models.Index;
+import models.ResourceList;
 import models.Trade;
 
 import com.google.gson.Gson;
@@ -60,7 +61,7 @@ public class TradeOfferJSON
 		Trade t = null;
 		try 
 		{
-			t = new Trade(new Index(sender), new Index(receiver), offer);
+			t = new Trade(new Index(sender), new Index(receiver), new ResourceList(offer.getBrick(), offer.getOre(), offer.getSheep(), offer.getWheat(), offer.getWood()));
 		} 
 		catch (Exception e)
 		{

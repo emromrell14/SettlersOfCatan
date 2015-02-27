@@ -1,14 +1,12 @@
 package models;
 
-import JSONmodels.ResourceListJSON;
-
 public class Trade 
 {
 	private Index mSender; //The index of the person offering the trade.
 	private Index mReceiver; //The index of the person the trade was offered to.
-	private ResourceListJSON mOffer; //Positive numbers are resources being offered. Negative are resources being asked for.
+	private ResourceList mOffer; //Positive numbers are resources being offered. Negative are resources being asked for.
 	
-	public Trade(Index sender, Index receiver, ResourceListJSON offer)
+	public Trade(Index sender, Index receiver, ResourceList offer)
 	{
 		mSender = sender;
 		mReceiver = receiver;
@@ -25,7 +23,7 @@ public class Trade
 		return mReceiver;
 	}
 
-	public ResourceListJSON offer() 
+	public ResourceList offer() 
 	{
 		return mOffer;
 	}
