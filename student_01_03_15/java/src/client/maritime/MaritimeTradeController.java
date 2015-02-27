@@ -23,7 +23,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	private IMaritimeTradeOverlay tradeOverlay;
 	private MasterManager master;
-	private Map<ResourceType,Integer> mTradePrice = new HashMap<>();
+	private Map<ResourceType,Integer> mTradePrice = new HashMap<ResourceType, Integer>();
 	ResourceType mGetType;
 	ResourceType mGiveType;
 	private Game gameModel;
@@ -74,7 +74,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		
 		Player player = master.getPlayer();
 		player.resources().addBrick(4);
-		ArrayList<Building> temp = new ArrayList<>();
+		ArrayList<Building> temp = new ArrayList<Building>();
 		temp.addAll(player.cities());
 		temp.addAll(player.settlements());
 		for(Building b : temp)
