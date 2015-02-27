@@ -29,6 +29,11 @@ public interface IAcceptTradeOverlay extends IOverlayView
 	 *            The amount of the resource being given
 	 */
 	void addGiveResource(ResourceType resource, int amount);
+
+	/**
+	 * Clears all resources from the view.
+	 */
+	void clearAllResources();
 	
 	/**
 	 * Enables or disables the accept button

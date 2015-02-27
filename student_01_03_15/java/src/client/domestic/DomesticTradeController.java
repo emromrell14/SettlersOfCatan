@@ -10,6 +10,7 @@ import java.util.Observer;
 import models.Index;
 import models.Player;
 import models.ResourceList;
+import models.Trade;
 import shared.definitions.*;
 import client.base.*;
 import client.data.PlayerInfo;
@@ -42,7 +43,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
+									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) 
+	{
 
 		super(tradeView);
 		
@@ -53,37 +55,45 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.master.getModelManager().addObserver(this);
 	}
 	
-	public IDomesticTradeView getTradeView() {
+	public IDomesticTradeView getTradeView() 
+	{
 		
 		return (IDomesticTradeView)super.getView();
 	}
 
-	public IDomesticTradeOverlay getTradeOverlay() {
+	public IDomesticTradeOverlay getTradeOverlay() 
+	{
 		return tradeOverlay;
 	}
 
-	public void setTradeOverlay(IDomesticTradeOverlay tradeOverlay) {
+	public void setTradeOverlay(IDomesticTradeOverlay tradeOverlay) 
+	{
 		this.tradeOverlay = tradeOverlay;
 	}
 
-	public IWaitView getWaitOverlay() {
+	public IWaitView getWaitOverlay() 
+	{
 		return waitOverlay;
 	}
 
-	public void setWaitOverlay(IWaitView waitView) {
+	public void setWaitOverlay(IWaitView waitView) 
+	{
 		this.waitOverlay = waitView;
 	}
 
-	public IAcceptTradeOverlay getAcceptOverlay() {
+	public IAcceptTradeOverlay getAcceptOverlay() 
+	{
 		return acceptOverlay;
 	}
 
-	public void setAcceptOverlay(IAcceptTradeOverlay acceptOverlay) {
+	public void setAcceptOverlay(IAcceptTradeOverlay acceptOverlay) 
+	{
 		this.acceptOverlay = acceptOverlay;
 	}
 
 	@Override
-	public void startTrade() {		
+	public void startTrade() 
+	{		
 		this.tradeOverlay.showModal();
 		
 		//Set the resources all to 0 and option to NONE
@@ -162,6 +172,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		//Set the overlay with enabled/disabled arrows
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, new_amount > 0);
+		
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
 	}
 
 	@Override
@@ -180,13 +193,18 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			case RECEIVE:
 				//When requesting to receive something, you can always ask for more, and because we just increased, we can always decrease as well
 				this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, true);
+				break;
 			case SEND:
 				//When requesting to send something, you can only send as much as you have.
 				int resourceAmount = this.getResourceCount(master.getPlayer(), resource);
 				this.tradeOverlay.setResourceAmountChangeEnabled(resource, resourceAmount < new_amount, true);
+				break;
 			default:
-						
+				//Should never get here, because the buttons shouldn't be visible	
 		}
+		
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
 	}
 
 	@Override
@@ -243,6 +261,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		{
 			e.printStackTrace();
 		}
+
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
 	}
 
 	@Override
@@ -254,6 +275,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		//Reset the resource count in the resource map
 		this.resources.put(resource, 0);
 		this.options.put(resource, ResourceOption.RECEIVE);
+		this.tradeOverlay.setResourceAmount(resource, 0 + "");
 		
 		//Set the overlay. They should always be able to increase, but never decrease to start off with
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, false);
@@ -268,6 +290,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		//Reset the resource count in the resource map
 		this.resources.put(resource, 0);
 		this.options.put(resource, ResourceOption.SEND);
+		this.tradeOverlay.setResourceAmount(resource, 0 + "");
 		
 		//Set the overlay. They should only be able to increase if they have the resource
 		int resourceAmount = this.getResourceCount(master.getPlayer(), resource);
@@ -277,16 +300,68 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void unsetResource(ResourceType resource) 
 	{
+		//Give this player one of this resource... FOR TESTING ONLY! DELETE!!!!
+		master.getPlayer().addResourcesToList(1, 1, 1, 1, 1);
+		
 		//Set the overlay to not allow them to increase or decrease
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, false, false);
 		
 		//Reset the resource count and option in the maps
 		this.resources.put(resource, 0);
 		this.options.put(resource, ResourceOption.NONE);
+
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
+	}
+	
+	private boolean areWeReadyToTrade()
+	{
+		//If they haven't selected who to send the offer to, return false
+		if(this.sendOfferTo == null || this.sendOfferTo.value() == -1)
+		{
+			this.tradeOverlay.setStateMessage("Please select someone who you'd like to trade with");
+			return false;
+		}
+		
+		//Check if they've selected resource to both send and receive
+		boolean sending = false;
+		boolean receiving = false;
+		for(ResourceType resource : ResourceType.values())
+		{
+			if(options.get(resource) == ResourceOption.SEND)
+			{
+				if(resources.get(resource) != 0)
+				{
+					sending = true;					
+				}
+			}
+			else if(options.get(resource) == ResourceOption.RECEIVE)
+			{
+				if(resources.get(resource) != 0)
+				{
+					receiving = true;
+				}
+			}
+		}
+		if(!sending)
+		{
+			this.tradeOverlay.setStateMessage("Please select a resource to give");
+			return false;
+		}
+		if(!receiving)
+		{
+			this.tradeOverlay.setStateMessage("Please select a resource to receive");
+			return false;
+		}
+		
+		//If they passed all of these conditions, return true
+		this.tradeOverlay.setStateMessage("TRADE!");
+		return true;
 	}
 
 	@Override
-	public void cancelTrade() {
+	public void cancelTrade() 
+	{
 		//Clear all resources
 		this.resetAllResources();
 		
@@ -294,7 +369,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 
 	@Override
-	public void acceptTrade(boolean willAccept) {
+	public void acceptTrade(boolean willAccept) 
+	{
 		//Clear all the resources
 		this.resetAllResources();
 
@@ -302,9 +378,77 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	public void update(Observable o, Object arg) 
+	{
+		Trade trade = this.master.getCurrentModel().trade();
+		if(trade != null)
+		{
+			if(trade.receiver().equals(this.master.getPlayerIndex()))
+			{
+				this.acceptOverlay.clearAllResources();
+				this.updateAcceptOverlayResourceList(trade);
+				this.acceptOverlay.showModal();
+				this.acceptOverlay.setPlayerName(this.master.getPlayerName());
+			}
+		}
+	}
+	
+	private void updateAcceptOverlayResourceList(Trade trade)
+	{
+		//BRICK
+		int brick = trade.offer().brick();
+		if(brick < 0)
+		{
+			this.acceptOverlay.addGetResource(ResourceType.BRICK, -brick);
+		}
+		else if(brick > 0)
+		{
+			this.acceptOverlay.addGiveResource(ResourceType.BRICK, brick);
+		}
 		
+		//ORE
+		int ore = trade.offer().ore();
+		if(ore < 0)
+		{
+			this.acceptOverlay.addGetResource(ResourceType.ORE, -ore);
+		}
+		else if(ore > 0)
+		{
+			this.acceptOverlay.addGiveResource(ResourceType.ORE, ore);
+		}
+		
+		//SHEEP
+		int sheep = trade.offer().sheep();
+		if(sheep < 0)
+		{
+			this.acceptOverlay.addGetResource(ResourceType.SHEEP, -sheep);
+		}
+		else if(sheep > 0)
+		{
+			this.acceptOverlay.addGiveResource(ResourceType.SHEEP, sheep);
+		}
+
+		//WHEAT
+		int wheat = trade.offer().wheat();
+		if(wheat < 0)
+		{
+			this.acceptOverlay.addGetResource(ResourceType.WHEAT, -wheat);
+		}
+		else if(wheat > 0)
+		{
+			this.acceptOverlay.addGiveResource(ResourceType.WHEAT, wheat);
+		}
+
+		//WOOD
+		int wood = trade.offer().wood();
+		if(wood < 0)
+		{
+			this.acceptOverlay.addGetResource(ResourceType.WOOD, -wood);
+		}
+		else if(wood > 0)
+		{
+			this.acceptOverlay.addGiveResource(ResourceType.WOOD, wood);
+		}
 	}
 
 }
