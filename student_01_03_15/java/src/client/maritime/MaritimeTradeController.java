@@ -7,11 +7,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import models.Building;
+import models.Game;
 import models.Player;
 import models.Port;
 import shared.definitions.*;
 import client.base.*;
 import facade.MasterManager;
+import facade.ModelManager;
 
 
 /**
@@ -24,6 +26,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private Map<ResourceType,Integer> mTradePrice = new HashMap<>();
 	ResourceType mGetType;
 	ResourceType mGiveType;
+	private Game gameModel;
 	
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay)
 	{
@@ -70,6 +73,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		mGetType = null;
 		
 		Player player = master.getPlayer();
+		player.resources().addBrick(4);
 		ArrayList<Building> temp = new ArrayList<>();
 		temp.addAll(player.cities());
 		temp.addAll(player.settlements());
@@ -108,10 +112,30 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				}
 			}
 		}
-		
+		tradeOverlay.showGiveOptions(this.availableTradeResources());
 		getTradeOverlay().showModal();
 	}
 
+	public ResourceType[] availableTradeResources()
+	{
+		ArrayList<ResourceType> resources = new ArrayList<ResourceType>();
+		
+		for (Map.Entry<ResourceType,Integer>entry : mTradePrice.entrySet())
+		{
+			if (entry.getValue() <= master.getPlayer().resources().getResource(entry.getKey()))
+			{
+				resources.add(entry.getKey());
+			}
+		}
+		if (resources.isEmpty())
+		{
+			return null;
+		}
+		ResourceType[] array = new ResourceType[resources.size()];
+		return resources.toArray(array);
+	}
+	
+	
 	@Override
 	public void makeTrade()
 	{
@@ -138,11 +162,40 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void setGiveResource(ResourceType resource) 
 	{
+		
 		mGiveType = resource;
-		if(mGetType != null && mGiveType != null)
+		if(mGiveType != null)
 		{
-			tradeOverlay.setTradeEnabled(true);
+			//tradeOverlay.setTradeEnabled(true);
+			tradeOverlay.selectGiveOption(resource, mTradePrice.get(resource).intValue());
+			tradeOverlay.showGetOptions(getAvailableResourcesInBank());
 		}
+	}
+	public ResourceType[] getAvailableResourcesInBank()
+	{
+		ArrayList<ResourceType> resources = new ArrayList<ResourceType>();
+		if(gameModel.bank().brick() > 0)
+		{
+			resources.add(ResourceType.BRICK);
+		}
+		if(gameModel.bank().wheat() > 0)
+		{
+			resources.add(ResourceType.WHEAT);
+		}
+		if(gameModel.bank().wood() > 0)
+		{
+			resources.add(ResourceType.WOOD);
+		}
+		if(gameModel.bank().ore() > 0)
+		{
+			resources.add(ResourceType.ORE);
+		}
+		if(gameModel.bank().sheep() > 0)
+		{
+			resources.add(ResourceType.SHEEP);
+		}
+		ResourceType[] array = new ResourceType[resources.size()];
+		return resources.toArray(array);
 	}
 
 	@Override
@@ -162,7 +215,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		
+		System.out.println("UPDATING maritimeTradeController.");
+		ModelManager manager = (ModelManager) o;
+		gameModel = manager.getCurrentModel();
 	}
 }
 

@@ -182,6 +182,13 @@ public class AcceptTradeOverlay extends OverlayView implements IAcceptTradeOverl
 		//Add it to the window
 		requesting_component.add(give_combo);
 	}
+	
+	@Override
+	public void clearAllResources()
+	{
+		offering_component = null;		
+		requesting_component = null;
+	}
 
 	@Override
 	public void setAcceptEnabled(boolean enable) {

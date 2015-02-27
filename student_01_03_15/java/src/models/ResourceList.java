@@ -1,5 +1,7 @@
 package models;
 
+import shared.definitions.ResourceType;
+
 public class ResourceList 
 {
 	private int mBrick = 0;
@@ -128,6 +130,29 @@ public class ResourceList
 	{
 		mWood += value;
 	}
+	
+	
+	public int getResource(ResourceType type)
+	{
+		switch (type)
+		{
+		case BRICK:
+			return this.mBrick;
+		case WOOD:
+			return this.mWood;
+		case SHEEP:
+			return this.mSheep;
+		case WHEAT:
+			return this.mWheat;
+		case ORE:
+			return this.mOre;
+		default:
+			return -1;
+		}
+			
+	}
+	
+	
 
 	public boolean isEmpty() 
 	{

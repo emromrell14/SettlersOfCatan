@@ -64,7 +64,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		
 		aiTypePanel.add(Box.createRigidArea(new Dimension(5, 0)));
 		
-		aiModel = new SpinnerListModel();
+		aiModel = new SpinnerListModel(Arrays.asList("LARGEST_ARMY"));
 		aiChoices = new JSpinner(aiModel);
 		((JSpinner.DefaultEditor)aiChoices.getEditor()).getTextField().setEditable(false);
 		FontUtils.setFont(aiChoices, AI_TEXT_SIZE);

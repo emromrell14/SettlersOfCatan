@@ -245,13 +245,17 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 		giveore.setEnabled(false);
 		
 		//Re-enable the available ones
-		for (ResourceType res : enabledResources) {
-			if		(res == ResourceType.WOOD)	{ givewood.setEnabled(true);}
-			else if (res == ResourceType.BRICK)	{givebrick.setEnabled(true);} 
-			else if (res == ResourceType.SHEEP)	{givesheep.setEnabled(true);} 
-			else if (res == ResourceType.WHEAT)	{givewheat.setEnabled(true);} 
-			else if (res == ResourceType.ORE)	{  giveore.setEnabled(true);} 
+		if (enabledResources != null)
+		{
+			for (ResourceType res : enabledResources) {
+				if		(res == ResourceType.WOOD)	{ givewood.setEnabled(true);}
+				else if (res == ResourceType.BRICK)	{givebrick.setEnabled(true);} 
+				else if (res == ResourceType.SHEEP)	{givesheep.setEnabled(true);} 
+				else if (res == ResourceType.WHEAT)	{givewheat.setEnabled(true);} 
+				else if (res == ResourceType.ORE)	{  giveore.setEnabled(true);} 
+			}
 		}
+		
 	}
 
 	private void createListeners() {
