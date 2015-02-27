@@ -157,7 +157,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			default:
 				System.out.println("ResourceBarController update() should never get here.");
 			}
-			System.out.println("WE HIT THE RESOURCE CONTROLLER'S OBSERVER UPDATE METHOD");
 			
 			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
 			if (state.canAffordRoad())
