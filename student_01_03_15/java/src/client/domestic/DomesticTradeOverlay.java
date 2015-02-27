@@ -384,7 +384,6 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 			panel.setVisible(false);
 		}
 	}
-
 	
 //	Alternative way to deal with the enabling/disabling of the
 //	player buttons.
@@ -435,7 +434,15 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 	public void setCancelEnabled(boolean enabled) {
 		this.cancelButton.setEnabled(enabled);
 	}
-
+	
+	@Override
+	public void initializeVisibility()
+	{
+		for(ResourceType resource : ResourceType.values()) 
+		{
+			upDownPanelByResourceType.get(resource).setVisible(false);
+			resourceCounts.get(resource).setText("0");
+			getController().unsetResource(resource);			
+		}
+	}
 }
-
-

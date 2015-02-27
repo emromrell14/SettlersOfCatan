@@ -93,5 +93,8 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 */
 	void setCancelEnabled(boolean enabled);
 	
+	/**
+	 * Disables visibility for all resources
+	 */
+	void initializeVisibility();
 }
-
