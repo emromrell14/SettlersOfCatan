@@ -77,7 +77,7 @@ public class PlayerJSON
 
 	private List<DevCard> makeDevCardList(DevCardListJSON list, boolean isNew)
 	{
-		List<DevCard> devList = new ArrayList<>();
+		List<DevCard> devList = new ArrayList<DevCard>();
 		for(int i = 0; i < list.getMonopoly(); i++)
 		{
 			models.Monopoly m = new models.Monopoly();
