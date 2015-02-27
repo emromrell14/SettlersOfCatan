@@ -29,6 +29,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
 	private MasterManager master;
 	private IState state;
+	private boolean InitializedHexes;
 	
 	public MapController(IMapView view, IRobView robView) 
 	{
@@ -63,115 +64,20 @@ public class MapController extends Controller implements IMapController, Observe
 	protected void initFromModel() 
 	{
 		Game game = master.getCurrentModel();
-		/*Game game = new Game();
-		Board testBoard = new Board();
 		
-		for (int x = 0; x <= 3; ++x) 
-		{	
-			int maxY = 3 - x;
-			for (int y = -3; y <= maxY; ++y) 
-			{
-				System.out.println("x: " + x + " y: " + y);
-				HexLocation hexLoc = new HexLocation(x, y);
-				HexType hexType;
-				if (Math.abs(y)==3 || Math.abs(x)==3)
-				{
-					hexType = HexType.WATER;
-				}
-				else
-				{
-					hexType = HexType.WHEAT;
-				}
-				testBoard.addHex(new Hex(hexLoc, hexType, new TokenValue(2)));
-			}
-			
-			if (x != 0) 
-			{
-				System.out.println("x: " + x + " y: " + y);
-
-				int minY = x - 3;
-				for (int y = minY; y <= 3; ++y) 
-				{
-					HexType hexType;
-					if (Math.abs(y)==3 || Math.abs(x)==3)
-					{
-						hexType = HexType.WATER;
-					}
-					else
-					{
-						hexType = HexType.WHEAT;
-					}
-					HexLocation hexLoc = new HexLocation(-x, y);
-					testBoard.addHex(new Hex(hexLoc, hexType, new TokenValue(2)));
-				}
-			}
-		}
-		
-		
-		testBoard.addHex(new Hex(new HexLocation(1,2), HexType.WATER,null));
-		testBoard.addHex(new Hex(new HexLocation(-1,-2), HexType.WATER,null));
-		testBoard.addHex(new Hex(new HexLocation(2,1), HexType.WATER,null));
-		testBoard.addHex(new Hex(new HexLocation(-2,-1), HexType.WATER,null));	
-		
-		game.setBoard(testBoard);
-		game.setRobber(new Robber(new HexLocation(0,0)));
-		*/
 		if (game != null)
 		{
+			
 			Board b = game.board();
 			
-			// Add in the water tiles
-			for (int x = 0; x <= 3; ++x) 
-			{	
-				int maxY = 3 - x;
-				for (int y = -3; y <= maxY; ++y) 
-				{
-					
-					if (Math.abs(y)==3 || Math.abs(x)==3)
-					{
-						HexLocation hexLoc = new HexLocation(x, y);
-						HexType hexType;
-						hexType = HexType.WATER;
-						b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
-					}
-				}
-				
-				if (x != 0) 
-				{
-
-					int minY = x - 3;
-					for (int y = minY; y <= 3; ++y) 
-					{
-						if (Math.abs(y)==3 || Math.abs(x)==3)
-						{
-							HexType hexType;
-							hexType = HexType.WATER;
-							HexLocation hexLoc = new HexLocation(-x, y);
-							b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
-						}
-					}
-				}
-			}
-			
-			b.addHex(new Hex(new HexLocation(1,2), HexType.WATER,new TokenValue(0)));
-			b.addHex(new Hex(new HexLocation(-1,-2), HexType.WATER,new TokenValue(0)));
-			b.addHex(new Hex(new HexLocation(2,1), HexType.WATER,new TokenValue(0)));
-			b.addHex(new Hex(new HexLocation(-2,-1), HexType.WATER,new TokenValue(0)));	
-	
-			for (Hex h : b.hexes())
+			if (!InitializedHexes)
 			{
-				getView().addHex(h.location(),h.resource());
-				TokenValue num = h.number();
-				if (num != null && num.value() != 0)
-				{
-					System.out.println(num.value());
-					getView().addNumber(h.location(),num.value());
-				}
-				else
-				{
-					System.out.println("Should only get here when token value is 0");
-				}
+				initHexesFromModel(b);
 			}
+			// Add in the water tiles
+			
+			
+			
 			
 			for (Road r : b.roads())
 			{
@@ -194,109 +100,67 @@ public class MapController extends Controller implements IMapController, Observe
 			
 			getView().placeRobber(game.robber().location());
 		}
-		/*
-		Random rand = new Random();
+		
+	}
 
+	private void initHexesFromModel(Board b)
+	{
+		
 		for (int x = 0; x <= 3; ++x) 
-		{
-			
+		{	
 			int maxY = 3 - x;
 			for (int y = -3; y <= maxY; ++y) 
 			{
-				System.out.println("x: " + x + " y: " + y);
-				HexLocation hexLoc = new HexLocation(x, y);
-				int r = rand.nextInt(HexType.values().length);
-				HexType hexType;
+				
 				if (Math.abs(y)==3 || Math.abs(x)==3)
 				{
+					HexLocation hexLoc = new HexLocation(x, y);
+					HexType hexType;
 					hexType = HexType.WATER;
+					b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
 				}
-				else
-				{
-					hexType = HexType.values()[r];
-				}
-				//b.addHex(new Hex(new HexLocation(1,2), hexType, new TokenValue(y+5)));
-
-				getView().addHex(hexLoc, hexType);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-						CatanColor.RED);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-						CatanColor.BLUE);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-						CatanColor.ORANGE);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 			}
 			
 			if (x != 0) 
 			{
+	
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) 
 				{
-					int r = rand.nextInt(HexType.values().length);
-					HexType hexType;
 					if (Math.abs(y)==3 || Math.abs(x)==3)
 					{
+						HexType hexType;
 						hexType = HexType.WATER;
+						HexLocation hexLoc = new HexLocation(-x, y);
+						b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
 					}
-					else
-					{
-						hexType = HexType.values()[r];
-					}
-					HexLocation hexLoc = new HexLocation(-x, y);
-					getView().addHex(hexLoc, hexType);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-							CatanColor.RED);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-							CatanColor.BLUE);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-							CatanColor.ORANGE);
-					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 				}
 			}
 		}
 		
-		// Adding water tiles
+		b.addHex(new Hex(new HexLocation(1,2), HexType.WATER,new TokenValue(0)));
+		b.addHex(new Hex(new HexLocation(-1,-2), HexType.WATER,new TokenValue(0)));
+		b.addHex(new Hex(new HexLocation(2,1), HexType.WATER,new TokenValue(0)));
+		b.addHex(new Hex(new HexLocation(-2,-1), HexType.WATER,new TokenValue(0)));	
+	
+		InitializedHexes = true;
 		
-		getView().addHex(new HexLocation(1,2), HexType.WATER);
-		getView().addHex(new HexLocation(2,1), HexType.WATER);
-		getView().addHex(new HexLocation(-1,-2), HexType.WATER);
-		getView().addHex(new HexLocation(-2,-1), HexType.WATER);
+		for (Hex h : b.hexes())
+		{
+			getView().addHex(h.location(),h.resource());
+			TokenValue num = h.number();
+			if (num != null && num.value() != 0)
+			{
+				System.out.println(num.value());
+				getView().addNumber(h.location(),num.value());
+			}
+			else
+			{
+				System.out.println("Should only get here when token value is 0");
+			}
+		}
 		
-		
-		PortType portType = PortType.BRICK;
-		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-		
-		getView().placeRobber(new HexLocation(0, 0));
-		
-		getView().addNumber(new HexLocation(-2, 0), 2);
-		getView().addNumber(new HexLocation(-2, 1), 3);
-		getView().addNumber(new HexLocation(-2, 2), 4);
-		getView().addNumber(new HexLocation(-1, 0), 5);
-		getView().addNumber(new HexLocation(-1, 1), 6);
-		getView().addNumber(new HexLocation(1, -1), 8);
-		getView().addNumber(new HexLocation(1, 0), 9);
-		getView().addNumber(new HexLocation(2, -2), 10);
-		getView().addNumber(new HexLocation(2, -1), 11);
-		getView().addNumber(new HexLocation(2, 0), 12);
-		*/
-		
-		/*
-		TokenValue t = new TokenValue(-1);
-		b.addHex(new Hex(new HexLocation(1,2), HexType.WATER,t));
-		b.addHex(new Hex(new HexLocation(-1,-2), HexType.WATER,t));
-		b.addHex(new Hex(new HexLocation(2,1), HexType.WATER,t));
-		b.addHex(new Hex(new HexLocation(-2,-1), HexType.WATER,t));
-		//</temp>
-		*/
 	}
-
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) 
 	{
 		return state.canPlaceRoad(edgeLoc);
@@ -327,7 +191,8 @@ public class MapController extends Controller implements IMapController, Observe
 		{
 			Index playerIndex = master.getPlayerIndex();		
 			master.buildRoad(playerIndex, edgeLoc, state.isPlayingFree());
-			getView().placeRoad(edgeLoc, CatanColor.ORANGE);			
+			CatanColor color = master.getCurrentModel().getPlayer(playerIndex).color();
+			getView().placeRoad(edgeLoc, color);			
 		}
 		catch (Exception e) 
 		{
@@ -425,7 +290,6 @@ public class MapController extends Controller implements IMapController, Observe
 			if(master.hasJoinedGame)
 			{
 				initFromModel();
-		
 				Status status = master.getCurrentModel().turnTracker().status();
 				switch(status)
 				{
