@@ -6,6 +6,7 @@ import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import models.Building;
 import models.Game;
 import models.Index;
 import models.Player;
@@ -110,7 +111,13 @@ public class ModelManager extends Observable
 			if(p.settlements().size() != 0)
 			{
 				//This is the first or second round, use the overloaded function, passing in the location of the last settlement
-				return p.canPlaceRoad(loc, p.settlements().get(p.settlements().size()-1).location());
+				for(Building settlement : p.settlements())
+				{
+					if(!p.doesSettlementHaveRoadAttached(settlement))
+					{
+						return p.canPlaceRoad(loc, settlement.location());
+					}
+				}
 			}
 			return false;
 		}

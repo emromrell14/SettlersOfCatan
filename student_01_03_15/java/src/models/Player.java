@@ -265,10 +265,17 @@ public class Player implements IPlayer
 	 */
 	public boolean canPlaceRoad(EdgeLocation loc, VertexLocation settlement) 
 	{
-		// STILL NEED TO CHECK FOR SEA TILES AS NEIGHBOR HEXES ONCE WE GET THE GUI (just in case the GUI handles it)
 		loc = loc.getNormalizedLocation();
+		
+		//Check if we are in the sea first
+		if(loc.isInSea())
+		{
+			return false;
+		}
+		
+		//Check if we are attached to a settlement
 		settlement = settlement.getNormalizedLocation();
-		switch (settlement.getDir())
+		switch (settlement.getDir().getLengthenedDirection())
 		{
 			case NorthWest:
 				if (
@@ -752,6 +759,17 @@ public class Player implements IPlayer
 		{
 			d.setNew(false);
 		}
+	}
+
+	public boolean doesSettlementHaveRoadAttached(Building settlement) {
+		for(Road road : this.roads())
+		{
+			if(this.canPlaceRoad(road.location(), settlement.location()))
+			{
+				return true;
+			}
+		}		
+		return false;
 	}
 
 	

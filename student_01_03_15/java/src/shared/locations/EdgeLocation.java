@@ -1,5 +1,9 @@
 package shared.locations;
 
+import models.Hex;
+import models.TokenValue;
+import shared.definitions.HexType;
+
 /**
  * Represents the location of an edge on a hex map
  */
@@ -112,6 +116,14 @@ public class EdgeLocation
 				System.out.println("NULL!!!");
 				return null;
 		}
+	}
+
+	public boolean isInSea() 
+	{
+		HexLocation standard = this.hexLoc;
+		HexLocation opposite = this.hexLoc.getNeighborLoc(this.dir);
+
+		return standard.isSea() && opposite.isSea();
 	}
 }
 

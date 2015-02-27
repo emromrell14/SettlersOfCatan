@@ -1,5 +1,9 @@
 package shared.locations;
 
+import models.Hex;
+import models.TokenValue;
+import shared.definitions.HexType;
+
 /**
  * Represents the location of a hex on a hex map
  */
@@ -95,6 +99,10 @@ public class HexLocation
 				assert false;
 				return null;
 		}
+	}
+
+	public boolean isSea() {
+		return x >= 3 || x <= -3 || y >= 3 || y <= -3 || (x==1 && y==2) || (x==-1 && y==-2) || (x==2 && y==1) || (x==-2 && y==-1);
 	}
 	
 }

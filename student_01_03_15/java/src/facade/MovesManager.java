@@ -163,8 +163,8 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"Road_Building\", playerIndex:" + playerIndex.value() + ", spot1:{x:" +
-					spot1.getHexLoc().getX() + ", y:" + spot1.getHexLoc().getY() + ", direction:\"" + spot1.getDir() + "\"}, spot2:{x:" +
-					spot2.getHexLoc().getX() + ", y:" + spot2.getHexLoc().getY() + ", direction:\"" + spot2.getDir() + "\"}}";
+					spot1.getHexLoc().getX() + ", y:" + spot1.getHexLoc().getY() + ", direction:\"" + spot1.getDir().getShortenedDirection() + "\"}, spot2:{x:" +
+					spot2.getHexLoc().getX() + ", y:" + spot2.getHexLoc().getY() + ", direction:\"" + spot2.getDir().getShortenedDirection() + "\"}}";
 		
 		response = mProxy.post("/moves/Road_Building", body);
 		return jsonToGame(response);
@@ -259,9 +259,10 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"buildSettlement\", playerIndex:" + playerIndex.value() + ", vertexLocation:" + 
-				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + vertexLoc.getDir() + 
+				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + vertexLoc.getDir().getShortenedDirection() + 
 				"\"}, free:" + free + "}";
 		
+		System.out.println(body);
 		response = mProxy.post("/moves/buildSettlement", body);
 		return jsonToGame(response);
 	}
@@ -283,7 +284,7 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"buildCity\", playerIndex:" + playerIndex.value() + ", vertexLocation:" + 
-				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc() + ", direction:\"" + vertexLoc.getDir() + 
+				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc() + ", direction:\"" + vertexLoc.getDir().getShortenedDirection() + 
 				"\"}, free:" + free + "}";
 		
 		response = mProxy.post("/moves/buildCity", body);
@@ -303,7 +304,7 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"offerTrade\", playerIndex:" + playerIndex.value() + ", offer:" + new ResourceListJSON(offer).toJSON() + ", receiver:" + 
-					receiverIndex + "}";
+					receiverIndex.value() + "}";
 		
 		response = mProxy.post("/moves/offerTrade", body);
 		return jsonToGame(response);
