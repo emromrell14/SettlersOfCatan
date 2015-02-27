@@ -108,10 +108,29 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				}
 			}
 		}
-		
+		tradeOverlay.showGiveOptions(this.availableTradeResources());
 		getTradeOverlay().showModal();
 	}
 
+	public ResourceType[] availableTradeResources()
+	{
+		ArrayList<ResourceType> resources = new ArrayList<ResourceType>();
+		
+		for (Map.Entry<ResourceType,Integer>entry : mTradePrice.entrySet())
+		{
+			if (entry.getValue() <= master.getPlayer().resources().getResource(entry.getKey()))
+			{
+				resources.add(entry.getKey());
+			}
+		}
+		if (resources.isEmpty())
+		{
+			return null;
+		}
+		return (ResourceType[]) resources.toArray();
+	}
+	
+	
 	@Override
 	public void makeTrade()
 	{
