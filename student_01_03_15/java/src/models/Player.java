@@ -197,7 +197,11 @@ public class Player implements IPlayer
 					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthWest)) ||
 					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
 					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.NorthEast)) ||
-					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.South))
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.South)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SW)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.N)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NW), EdgeDirection.NE)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NW), EdgeDirection.S))
 			)
 			{
 				return true;
@@ -208,7 +212,11 @@ public class Player implements IPlayer
 					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthWest)) ||
 					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NorthEast)) ||
 					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthWest)) ||
-					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthEast))
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.SouthEast)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NW)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.NE)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.N), EdgeDirection.SW)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.N), EdgeDirection.SE))
 			)
 			{
 				return true;
@@ -219,7 +227,11 @@ public class Player implements IPlayer
 					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.North)) ||
 					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SouthEast)) ||
 					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.NorthWest)) ||
-					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.South))
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.South)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.N)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(), EdgeDirection.SE)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NE), EdgeDirection.NW)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NE), EdgeDirection.S))
 			)
 			{
 				return true;
@@ -262,7 +274,10 @@ public class Player implements IPlayer
 				if (
 					loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.North)) ||
 					loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.NorthWest)) ||
-					loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),EdgeDirection.NorthEast))
+					loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),EdgeDirection.NorthEast)) ||
+					loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.N)) ||
+					loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.NW)) ||
+					loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NW),EdgeDirection.NE))
 				)
 				{
 					return true;
@@ -272,7 +287,10 @@ public class Player implements IPlayer
 				if (
 						loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.North)) ||
 						loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.NorthEast)) ||
-						loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),EdgeDirection.NorthWest))
+						loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),EdgeDirection.NorthWest)) ||
+						loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.N)) ||
+						loc.equals(new EdgeLocation(settlement.getHexLoc(),EdgeDirection.NE)) ||
+						loc.equals(new EdgeLocation(settlement.getHexLoc().getNeighborLoc(EdgeDirection.NE),EdgeDirection.NW))
 				)
 				{
 					return true;
@@ -324,20 +342,28 @@ public class Player implements IPlayer
 		switch (loc.getDir())
 		{
 			case NorthWest:
-				if (
+				if 
+				(
 					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.North))||
 					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.NorthWest)) ||
-					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),EdgeDirection.NorthEast))
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),EdgeDirection.NorthEast)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.N))||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.NW)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NW),EdgeDirection.NE))
 				)
 				{
 					return true;
 				}
 				break;
 			case NorthEast:
-				if (
+				if 
+				(
 					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.North))||
 					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.NorthEast)) ||
-					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),EdgeDirection.NorthWest))
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),EdgeDirection.NorthWest)) ||		
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.N))||
+					checkForRoad(new EdgeLocation(loc.getHexLoc(),EdgeDirection.NE)) ||
+					checkForRoad(new EdgeLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NE),EdgeDirection.NW))
 				)
 				{
 					return true;
