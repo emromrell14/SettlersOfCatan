@@ -629,7 +629,10 @@ public class MapComponent extends JComponent
 	
 	private void drawHexes(Graphics2D g2)
 	{
-		
+		if (!MapController.InitializedHexes)
+		{
+			return;
+		}
 		for (Map.Entry<HexLocation, HexType> entry : hexes.entrySet())
 		{
 			
@@ -693,7 +696,7 @@ public class MapComponent extends JComponent
 		
 		Point2D edgePoint = getEdgePoint(edgeLoc);
 		
-		List<Point2D> roadShape = translateShape(ROADS.get(edgeLoc.getDir()),
+		List<Point2D> roadShape = translateShape(ROADS.get(Lengthen(edgeLoc.getDir())),
 												 edgePoint);
 		
 		Polygon poly = toPolygon(roadShape);

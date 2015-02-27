@@ -115,6 +115,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		// TODO Auto-generated method stub
 		if(master.hasJoinedGame)
 		{
+			
 			if (state.isPlayingFree())
 			{
 				Player p = master.getPlayer();

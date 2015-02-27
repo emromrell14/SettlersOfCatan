@@ -31,7 +31,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-		mMaster.getCurrentModel().endTurn();
+		System.out.println("Called endTurn() in TurnTrackerController");
+		mMaster.finishTurn(mMaster.getPlayerIndex());
 	}
 	
 	private void initFromModel() {

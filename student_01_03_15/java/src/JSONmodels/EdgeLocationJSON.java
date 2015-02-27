@@ -16,9 +16,39 @@ public class EdgeLocationJSON
 	public EdgeLocationJSON(EdgeLocation edgeLoc) {
 		this.x = edgeLoc.getHexLoc().getX();
 		this.y = edgeLoc.getHexLoc().getY();
-		this.direction = edgeLoc.getDir().toString();
+		this.direction = Shorten(edgeLoc.getDir());
 	}
 
+	private String Shorten(EdgeDirection dir)
+	{
+		switch (dir)
+		{
+			case NorthWest:
+			case NW:
+				return "NW";
+			case North: 
+			case N: 
+				return "N";
+			case NorthEast:
+			case NE: 
+				return "NE";
+			case SouthWest: 
+			case SW:
+				return "SW";
+			case South:
+			case S:
+				return "S";
+			case SouthEast: 
+			case SE:
+				return "SE";
+				
+			default:
+				System.out.println("NULL!!!");
+				assert false;
+				return null;
+		}
+	}
+	
 	/**
 	 * Creates a EdgeLocation object from a JSON string
 	 * 

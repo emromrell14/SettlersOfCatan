@@ -29,7 +29,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
 	private MasterManager master;
 	private IState state;
-	private boolean InitializedHexes;
+	public static Boolean InitializedHexes = false;
 	
 	public MapController(IMapView view, IRobView robView) 
 	{
@@ -64,15 +64,54 @@ public class MapController extends Controller implements IMapController, Observe
 	protected void initFromModel() 
 	{
 		Game game = master.getCurrentModel();
-		
+
 		if (game != null)
 		{
 			
 			Board b = game.board();
 			
+			for (int x = 0; x <= 3; ++x) 
+			{	
+				int maxY = 3 - x;
+				for (int y = -3; y <= maxY; ++y) 
+				{
+					
+					if (Math.abs(y)==3 || Math.abs(x)==3)
+					{
+						HexLocation hexLoc = new HexLocation(x, y);
+						HexType hexType;
+						hexType = HexType.WATER;
+						b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
+					}
+				}
+				
+				if (x != 0) 
+				{
+		
+					int minY = x - 3;
+					for (int y = minY; y <= 3; ++y) 
+					{
+						if (Math.abs(y)==3 || Math.abs(x)==3)
+						{
+							HexType hexType;
+							hexType = HexType.WATER;
+							HexLocation hexLoc = new HexLocation(-x, y);
+							b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
+						}
+					}
+				}
+			}
+			
+			b.addHex(new Hex(new HexLocation(1,2), HexType.WATER,new TokenValue(0)));
+			b.addHex(new Hex(new HexLocation(-1,-2), HexType.WATER,new TokenValue(0)));
+			b.addHex(new Hex(new HexLocation(2,1), HexType.WATER,new TokenValue(0)));
+			b.addHex(new Hex(new HexLocation(-2,-1), HexType.WATER,new TokenValue(0)));
+			
+			ArrayList<Hex> hexListCopy = new ArrayList<Hex>(b.hexes());
+
 			if (!InitializedHexes)
 			{
-				initHexesFromModel(b);
+				initHexesFromModel(hexListCopy);
 			}
 			// Add in the water tiles
 			
@@ -103,49 +142,10 @@ public class MapController extends Controller implements IMapController, Observe
 		
 	}
 
-	private void initHexesFromModel(Board b)
-	{
-		
-		for (int x = 0; x <= 3; ++x) 
-		{	
-			int maxY = 3 - x;
-			for (int y = -3; y <= maxY; ++y) 
-			{
-				
-				if (Math.abs(y)==3 || Math.abs(x)==3)
-				{
-					HexLocation hexLoc = new HexLocation(x, y);
-					HexType hexType;
-					hexType = HexType.WATER;
-					b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
-				}
-			}
-			
-			if (x != 0) 
-			{
+	private void initHexesFromModel(ArrayList<Hex> hexListCopy)
+	{		
 	
-				int minY = x - 3;
-				for (int y = minY; y <= 3; ++y) 
-				{
-					if (Math.abs(y)==3 || Math.abs(x)==3)
-					{
-						HexType hexType;
-						hexType = HexType.WATER;
-						HexLocation hexLoc = new HexLocation(-x, y);
-						b.addHex(new Hex(hexLoc, hexType, new TokenValue(0)));
-					}
-				}
-			}
-		}
-		
-		b.addHex(new Hex(new HexLocation(1,2), HexType.WATER,new TokenValue(0)));
-		b.addHex(new Hex(new HexLocation(-1,-2), HexType.WATER,new TokenValue(0)));
-		b.addHex(new Hex(new HexLocation(2,1), HexType.WATER,new TokenValue(0)));
-		b.addHex(new Hex(new HexLocation(-2,-1), HexType.WATER,new TokenValue(0)));	
-	
-		InitializedHexes = true;
-		
-		for (Hex h : b.hexes())
+		for (Hex h : hexListCopy)
 		{
 			getView().addHex(h.location(),h.resource());
 			TokenValue num = h.number();
@@ -158,7 +158,10 @@ public class MapController extends Controller implements IMapController, Observe
 			{
 				System.out.println("Should only get here when token value is 0");
 			}
+			
 		}
+		MapController.InitializedHexes = true;
+		return;
 		
 	}
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) 
