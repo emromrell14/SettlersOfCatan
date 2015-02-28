@@ -302,7 +302,10 @@ public class MapController extends Controller implements IMapController, Observe
 			{
 				case ROBBING:
 					state = new RobbingState();
-					getView().startDrop(PieceType.ROBBER, master.getPlayer().color(), false);
+					if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
+					{
+						getView().startDrop(PieceType.ROBBER, master.getPlayer().color(), false);
+					}
 					break;
 				case PLAYING:
 					state = new PlayingState();
