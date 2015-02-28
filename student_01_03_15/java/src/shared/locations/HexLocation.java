@@ -105,5 +105,10 @@ public class HexLocation
 		return x >= 3 || x <= -3 || y >= 3 || y <= -3 || (x==1 && y==2) || (x==-1 && y==-2) || (x==2 && y==1) || (x==-2 && y==-1);
 	}
 	
+	public boolean equals(HexLocation h)
+	{
+		return x == h.x && y == h.y;
+	}
+	
 }
 

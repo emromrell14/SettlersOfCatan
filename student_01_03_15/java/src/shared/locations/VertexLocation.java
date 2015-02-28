@@ -119,7 +119,7 @@ public class VertexLocation
 										  hexLoc.getNeighborLoc(EdgeDirection.SouthEast),
 										  VertexDirection.NorthWest);
 			default:
-				System.out.println("NULL VERTEX LOC dir");
+				System.out.println("VertexLocation.getNormalizedLocation() should never get here!");
 				assert false;
 				return null;
 		}

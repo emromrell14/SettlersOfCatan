@@ -8,6 +8,8 @@ import shared.definitions.DevCardType;
 import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class Player implements IPlayer
@@ -769,6 +771,48 @@ public class Player implements IPlayer
 				return true;
 			}
 		}		
+		return false;
+	}
+
+	public boolean isVictim(HexLocation robberHexLoc)
+	{
+		for(Building b : mSettlements)
+		{
+			HexLocation sLoc = b.location().getNormalizedLocation().getHexLoc();
+			if(robberHexLoc.equals(sLoc) || robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.N)))
+			{
+				return true;
+			}
+			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthWest 
+					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NorthWest)))
+			{
+				return true;
+			}
+			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthEast
+					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NE)))
+			{
+				return true;
+			}
+			
+		}
+		for(Building b : mCities)
+		{
+			HexLocation sLoc = b.location().getHexLoc();
+			if(robberHexLoc.equals(sLoc) || robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.N)))
+			{
+				return true;
+			}
+			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthWest 
+					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NorthWest)))
+			{
+				return true;
+			}
+			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthEast
+					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NE)))
+			{
+				return true;
+			}			
+		}
 		return false;
 	}
 

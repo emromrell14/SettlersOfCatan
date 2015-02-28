@@ -1,7 +1,10 @@
 package facade;
 
 import JSONmodels.MessageListJSON;
+
+import java.util.List;
 import java.util.Observable;
+
 import models.Game;
 import models.Index;
 import models.Player;
@@ -722,6 +725,11 @@ public class MasterManager implements IMasterManager
 	public void changeLogLevel(String log) 
 	{
 		mUtilManager.changeLogLevel(log);
+	}
+
+	public List<Player> getRobbingVictims(HexLocation hexLoc)
+	{
+		return mModelManager.getRobbingVictims(hexLoc);
 	}
 
 }

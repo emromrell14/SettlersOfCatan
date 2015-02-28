@@ -246,8 +246,18 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeRobber(HexLocation hexLoc) 
 	{
 		getView().placeRobber(hexLoc);
-		
 		getRobView().setRobberLocation(hexLoc);
+		ArrayList<Player> v = (ArrayList<Player>) master.getRobbingVictims(hexLoc);
+		RobPlayerInfo[] victims = new RobPlayerInfo[v.size()];
+		for(int i = 0; i < v.size(); ++i)
+		{
+			RobPlayerInfo r = new RobPlayerInfo();
+			r.setNumCards(v.get(i).resources().getTotal());
+			r.setColor(v.get(i).color().toString());
+			r.setName(v.get(i).name());
+			victims[i] = r;
+		}
+		getRobView().setPlayers(victims);
 		getRobView().showModal();
 	}
 	
