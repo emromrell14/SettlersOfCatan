@@ -29,8 +29,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		this.master = MasterManager.getInstance();
 		this.master.getModelManager().addObserver(this);
 		this.state = new SetupState();
-
-		initFromModel();
+		//initFromModel();
 	}
 	
 	@Override
@@ -50,47 +49,48 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		Game game = master.getCurrentModel();
 		if(game != null && playerID >= 0)
 		{
-			getView().setLocalPlayerColor(game.getPlayerColor(playerID));
+			getView().setLocalPlayerColor(master.getPlayer().color());
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		initFromModel();
 		
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
 		{
-		case ROBBING:
-			getView().updateGameState("Place the Robber", false);
-			state = new RobbingState();
-			break;
-		case PLAYING:
-			getView().updateGameState("Finish Turn", true);
-			state = new PlayingState();
-			break;
-		case DISCARDING:
-			getView().updateGameState("Discard Cards", false);
-			state = new DiscardingState();
-			break;
-		case ROLLING:
-			getView().updateGameState("Roll the Dice", false);
-			state = new RollingState();
-			break;
-		case FIRSTROUND:
-			getView().updateGameState("Setting up Map", false);
-			state = new SetupState();
-			break;
-		case SECONDROUND:
-			getView().updateGameState("Setting up Map", false);
-			state = new SetupState();
-			break;
-		case WAITINGJOIN:
-			getView().updateGameState("Waiting for Other Players", false);
-			state = new SetupState();
-			break;
-		default:
-			System.out.println("RollController update() should never get here.");
+			case ROBBING:
+				getView().updateGameState("Place the Robber", false);
+				state = new RobbingState();
+				break;
+			case PLAYING:
+				getView().updateGameState("Finish Turn", true);
+				state = new PlayingState();
+				break;
+			case DISCARDING:
+				getView().updateGameState("Discard Cards", false);
+				state = new DiscardingState();
+				break;
+			case ROLLING:
+				getView().updateGameState("Roll the Dice", false);
+				state = new RollingState();
+				break;
+			case FIRSTROUND:
+				getView().updateGameState("Setting up Map", false);
+				state = new SetupState();
+				break;
+			case SECONDROUND:
+				getView().updateGameState("Setting up Map", false);
+				state = new SetupState();
+				break;
+			case WAITINGJOIN:
+				getView().updateGameState("Waiting for Other Players", false);
+				state = new SetupState();
+				break;
+			default:
+				System.out.println("RollController update() should never get here.");
 		}
 	}
 
