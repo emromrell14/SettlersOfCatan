@@ -12,7 +12,7 @@ public class TurnTracker implements ITurnTracker
 		try 
 		{
 			mCurrentTurn = new Index(0);
-			mStatus = Status.FIRSTROUND;
+			mStatus = Status.WAITINGJOIN;
 			mLongestRoad = new Index(-1);
 			mLargestArmy = new Index(-1);
 		} 
@@ -93,7 +93,7 @@ public class TurnTracker implements ITurnTracker
 			}
 			else
 			{
-				mCurrentTurn.setIndex(mCurrentTurn.value() - 1);
+				mCurrentTurn.setIndex(mCurrentTurn.value()-1);
 			}
 		}
 		else
@@ -105,5 +105,6 @@ public class TurnTracker implements ITurnTracker
 			}
 			mStatus = Status.ROLLING;
 		}
+		
 	}
 }

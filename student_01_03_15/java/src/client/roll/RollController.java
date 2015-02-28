@@ -11,6 +11,7 @@ import states.RobbingState;
 import states.RollingState;
 import states.SetupState;
 import client.base.*;
+import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -20,7 +21,7 @@ import facade.MasterManager;
 public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
-	private MasterManager master;
+	private IMasterManager master;
 	private IState state;
 	/**
 	 * RollController constructor
@@ -51,10 +52,15 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
+		
 		int die1 = (int)(Math.random() * 6) + 1;
 		int die2 = (int)(Math.random() * 6) + 1;
-		this.resultView.setRollValue(die1 + die2);
+		int rollNum = die1 + die2;
+		this.resultView.setRollValue(rollNum);
+		master.rollDice(master.getPlayerIndex(), rollNum);
 		getResultView().showModal();
+		master.getCurrentModel().turnTracker().setStatus(Status.PLAYING);
+
 	}
 
 	@Override
@@ -62,12 +68,6 @@ public class RollController extends Controller implements IRollController, Obser
 		// TODO Auto-generated method stub
 		System.out.println("\nState: " + state.getClass().getName());
 		System.out.println("\nTurnTrackerStatus: " + master.getCurrentModel().turnTracker().status());
-		
-		if (state.getClass() == RollingState.class &&
-				master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
-		{
-			getRollView().showModal();
-		}
 		
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
@@ -82,6 +82,10 @@ public class RollController extends Controller implements IRollController, Obser
 			state = new DiscardingState();
 			break;
 		case ROLLING:
+			if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
+			{
+				getRollView().showModal();
+			}
 			state = new RollingState();
 			break;
 		case FIRSTROUND:

@@ -627,7 +627,7 @@ public class MapComponent extends JComponent
 		drawDropShape(g2);
 	}
 	
-	private void drawHexes(Graphics2D g2)
+	private synchronized void drawHexes(Graphics2D g2)
 	{
 		if (!MapController.InitializedHexes)
 		{
@@ -651,10 +651,10 @@ public class MapComponent extends JComponent
 		}
 	}
 	
-	private void drawNumbers(Graphics2D g2)
+	private synchronized void drawNumbers(Graphics2D g2)
 	{
-		numbers = new HashMap(numbers);
-		for (Map.Entry<HexLocation, Integer> entry : numbers.entrySet())
+		HashMap<HexLocation, Integer> numbersCopy = new HashMap<HexLocation, Integer>(numbers);
+		for (Map.Entry<HexLocation, Integer> entry : numbersCopy.entrySet())
 		{
 			
 			BufferedImage numImage = getNumberImage(entry.getValue());
