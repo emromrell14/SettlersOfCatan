@@ -72,30 +72,33 @@ public class RollController extends Controller implements IRollController, Obser
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
 		{
-		case ROBBING:
-			state = new RobbingState();
-			break;
-		case PLAYING:
-			state = new PlayingState();
-			break;
-		case DISCARDING:
-			state = new DiscardingState();
-			break;
-		case ROLLING:
-			if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
-			{
-				getRollView().showModal();
-			}
-			state = new RollingState();
-			break;
-		case FIRSTROUND:
-			state = new SetupState();
-			break;
-		case SECONDROUND:
-			state = new SetupState();
-			break;
-		default:
-			System.out.println("RollController update() should never get here.");
+			case ROBBING:
+				state = new RobbingState();
+				break;
+			case PLAYING:
+				state = new PlayingState();
+				break;
+			case DISCARDING:
+				state = new DiscardingState();
+				break;
+			case ROLLING:
+				if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
+				{
+					if (!getRollView().isModalShowing())
+					{
+						getRollView().showModal();
+					}
+				}
+				state = new RollingState();
+				break;
+			case FIRSTROUND:
+				state = new SetupState();
+				break;
+			case SECONDROUND:
+				state = new SetupState();
+				break;
+			default:
+				System.out.println("RollController update() should never get here.");
 		}
 	}
 

@@ -8,6 +8,12 @@ import models.Player;
 import models.ResourceList;
 import models.Status;
 import shared.definitions.*;
+import states.DiscardingState;
+import states.IState;
+import states.PlayingState;
+import states.RobbingState;
+import states.RollingState;
+import states.SetupState;
 import client.base.*;
 import client.misc.*;
 import facade.IMasterManager;
@@ -20,7 +26,7 @@ import facade.MasterManager;
 public class DiscardController extends Controller implements IDiscardController, Observer {
 
 	private IWaitView waitView;
-	private IMasterManager master;
+	private MasterManager master;
 	private int cardsToDiscard = 0;
 	private int currentDiscardNum = 0;
 	private Player player;
@@ -34,7 +40,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	private int sheepDiscard = 0;
 	private int wheatDiscard = 0;
 	private int brickDiscard = 0;
-	
+	private IState state;
+
 	/**
 	 * DiscardController constructor	
 	 * 
@@ -325,12 +332,34 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		
 		Game game = this.master.getCurrentModel();
-		if (game != null)
+		if(master.hasJoinedGame)
 		{
-			if (game.turnTracker().status() == Status.DISCARDING)
+			Status status = master.getCurrentModel().turnTracker().status();
+			switch(status)
 			{
-				this.initialize();
+				case ROBBING:
+					state = new RobbingState();
+					break;
+				case PLAYING:
+					state = new PlayingState();
+					break;
+				case DISCARDING:
+					state = new DiscardingState();
+					
+					break;
+				case ROLLING:
+					state = new RollingState();
+					break;
+				case FIRSTROUND:
+					state = new SetupState();
+					break;
+				case SECONDROUND:
+					state = new SetupState();
+					break;
+				default:
+					System.out.println("MapController update() should never get here.");
 			}
 		}
 	}
