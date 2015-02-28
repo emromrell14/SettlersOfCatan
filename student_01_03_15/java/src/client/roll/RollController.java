@@ -57,10 +57,14 @@ public class RollController extends Controller implements IRollController, Obser
 		int die2 = (int)(Math.random() * 6) + 1;
 		int rollNum = die1 + die2;
 		this.resultView.setRollValue(rollNum);
+		
 		master.rollDice(master.getPlayerIndex(), rollNum);
 		getResultView().showModal();
-		master.getCurrentModel().turnTracker().setStatus(Status.PLAYING);
-
+//		master.getCurrentModel().turnTracker().setStatus(Status.PLAYING);
+//		if (rollNum == 7)
+//		{
+//			master.getCurrentModel().turnTracker().setStatus(Status.DISCARDING);
+//		}
 	}
 
 	@Override

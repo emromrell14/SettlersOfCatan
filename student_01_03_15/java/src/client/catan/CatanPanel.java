@@ -81,7 +81,7 @@ public class CatanPanel extends JPanel
 //			 false, false);
 //			 }
 			
-			int state = 0;
+			//int state = 0;
 			
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -102,6 +102,7 @@ public class CatanPanel extends JPanel
 				
 				discardView.setDiscardButtonEnabled(true);
 				
+				/*
 				if(state == 0)
 				{
 					discardView.showModal();
@@ -112,6 +113,7 @@ public class CatanPanel extends JPanel
 					discardWaitView.showModal();
 					state = 2;
 				}
+				*/
 			}
 		});
 		this.add(testButton, BorderLayout.SOUTH);

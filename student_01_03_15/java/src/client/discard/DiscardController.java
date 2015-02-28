@@ -333,7 +333,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
-		Game game = this.master.getCurrentModel();
+		//Game game = this.master.getCurrentModel();
 		if(master.hasJoinedGame)
 		{
 			Status status = master.getCurrentModel().turnTracker().status();
@@ -346,8 +346,8 @@ public class DiscardController extends Controller implements IDiscardController,
 					state = new PlayingState();
 					break;
 				case DISCARDING:
+					getDiscardView().showModal();
 					state = new DiscardingState();
-					
 					break;
 				case ROLLING:
 					state = new RollingState();
