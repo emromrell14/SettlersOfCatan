@@ -280,12 +280,17 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void playSoldierCard() 
 	{	
-		// Why do we need this, if it is already on the DevCardController?		
+		// Why do we need this, if it is already on the DevCardController?	
+		state = new RobbingState();
+		getView().startDrop(PieceType.ROBBER, master.getPlayer().color(), false);
 	}
 	
 	public void playRoadBuildingCard() 
 	{	
 		// Why do we need this, if it is already on the DevCardController?
+		state = new PlayingState();
+		startMove(PieceType.ROAD, true, false);			
+		startMove(PieceType.ROAD, true, false);			
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) 
@@ -350,13 +355,11 @@ public class MapController extends Controller implements IMapController, Observe
 						FirstRoundDone = true;
 						master.finishTurn(p.playerIndex());
 					}
-					
 					else if (roadsBuilt == 2 && !SecondRoundDone)
 					{
 						SecondRoundDone = true;
 						master.finishTurn(p.playerIndex());
 					}
-					
 					else if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
 					{
 						buildSettlementSetup();
@@ -368,13 +371,6 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 			}
 			//---------------------------------------------
-			
-			
-		
-		
-		
-			
-			
 		}
 	}
 

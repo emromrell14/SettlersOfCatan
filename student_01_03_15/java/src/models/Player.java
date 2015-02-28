@@ -192,7 +192,7 @@ public class Player implements IPlayer
 	{
 		// STILL NEED TO CHECK FOR SEA TILES AS NEIGHBOR HEXES ONCE WE GET THE GUI (just in case the GUI handles it)
 		loc = loc.getNormalizedLocation();
-		switch (loc.getDir())
+		switch (loc.getDir().getLengthendDirection())
 		{
 		case NorthWest:
 			if (

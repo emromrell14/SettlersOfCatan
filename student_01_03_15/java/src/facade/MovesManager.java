@@ -145,8 +145,8 @@ public class MovesManager
 		String response;
 		String body;
 		
-		body = "{type:\"Year_of_Plenty\", playerIndex:" + playerIndex.value() + ", resource1:\"" + res1 +
-					"\", resource2:\"" + res2 + "\"}";
+		body = "{type:\"Year_of_Plenty\", playerIndex:" + playerIndex.value() + ", resource1:\"" + res1.toString().toLowerCase() +
+					"\", resource2:\"" + res2.toString().toLowerCase() + "\"}";
 		
 		response = mProxy.post("/moves/Year_of_Plenty", body);
 		return jsonToGame(response);
@@ -201,7 +201,7 @@ public class MovesManager
 		String response;
 		String body;
 		
-		body = "{type:\"Monopoly\", resource:\"" + resource + "\", playerIndex:" + playerIndex.value() + "}";
+		body = "{type:\"Monopoly\", resource:\"" + resource.toString().toLowerCase() + "\", playerIndex:" + playerIndex.value() + "}";
 		
 		response = mProxy.post("/moves/Monopoly", body);
 		return jsonToGame(response);
@@ -364,7 +364,9 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"maritimeTrade\", playerIndex:" + playerIndex.value() + ", ratio:" + ratio + ", inputResource:\"" +
-					inputRes + "\", outputResource:\"" + outputRes +"\"}";
+					inputRes.toString().toLowerCase() + "\", outputResource:\"" + outputRes.toString().toLowerCase() +"\"}";
+		
+//		System.out.println("maritimeTrade body:"+body);
 		
 		response = mProxy.post("/moves/maritimeTrade", body);
 		return jsonToGame(response);
