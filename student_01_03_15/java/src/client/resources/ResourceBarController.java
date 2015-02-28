@@ -18,8 +18,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	private Map<ResourceBarElement, IAction> elementActions;
 	private MasterManager master;
 	private IState state;
+	private boolean FirstRoundDone = false;
+	private boolean SecondRoundDone = false;
 //	private IMapView mapView;
-	
+
 	public ResourceBarController(IResourceBarView view) 
 	{
 
@@ -111,26 +113,46 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		
+			
 		// TODO Auto-generated method stub
 		if(master.hasJoinedGame)
 		{
 			
+			// THIS IS FOR ROUNDS 1 AND 2------------------
 			if (state.isPlayingFree())
 			{
 				Player p = master.getPlayer();
-				int roadsBuilt = p.roads().size();
-				int settlementsBuilt = p.settlements().size();
-				
-				if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
+				if (master.getCurrentModel().turnTracker().currentTurn().value() == p.playerIndex().value())
 				{
-					buildSettlement();
-				}
-				else if ((roadsBuilt == 0 && settlementsBuilt == 1) || (roadsBuilt == 1 && settlementsBuilt == 2))
-				{
-					buildRoad();
+					int roadsBuilt = p.roads().size();
+					int settlementsBuilt = p.settlements().size();
+					
+					if (roadsBuilt == 1 && !FirstRoundDone)
+					{
+						FirstRoundDone = true;
+						master.finishTurn(p.playerIndex());
+					}
+					
+					else if (roadsBuilt == 2 && !SecondRoundDone)
+					{
+						SecondRoundDone = true;
+						master.finishTurn(p.playerIndex());
+					}
+					
+					else if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
+					{
+						buildSettlement();
+					}
+					else if ((roadsBuilt == 0 && settlementsBuilt == 1) || (roadsBuilt == 1 && settlementsBuilt == 2))
+					{
+						buildRoad();
+					}
 				}
 			}
+			//---------------------------------------------
+			
+			
+			
 			
 			
 			Status status = master.getCurrentModel().turnTracker().status();

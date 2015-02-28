@@ -135,14 +135,17 @@ public class MapView extends PanelView implements IMapView
 		@Override
 		public void placeRoad(EdgeLocation edgeLoc)
 		{	
-			closeModal();
+			//if(!getController().getState().isPlayingFree())
+			{
+				closeModal();
+			}
 			getController().placeRoad(edgeLoc);
 		}
 		
 		@Override
 		public void placeSettlement(VertexLocation vertLoc)
 		{
-			if(!getController().getState().isPlayingFree())
+			//if(!getController().getState().isPlayingFree())
 			{
 				closeModal();
 			} 

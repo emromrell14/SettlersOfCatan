@@ -3,6 +3,13 @@ package client.roll;
 import java.util.Observable;
 import java.util.Observer;
 
+import models.Status;
+import states.DiscardingState;
+import states.IState;
+import states.PlayingState;
+import states.RobbingState;
+import states.RollingState;
+import states.SetupState;
 import client.base.*;
 import facade.MasterManager;
 
@@ -14,7 +21,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 	private IRollResultView resultView;
 	private MasterManager master;
-
+	private IState state;
 	/**
 	 * RollController constructor
 	 * 
@@ -26,6 +33,7 @@ public class RollController extends Controller implements IRollController, Obser
 		super(view);
 		
 		setResultView(resultView);
+		this.state = new SetupState();
 		this.master = MasterManager.getInstance();
 		this.master.getModelManager().addObserver(this);
 	}
@@ -52,7 +60,39 @@ public class RollController extends Controller implements IRollController, Obser
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		System.out.println("\nState: " + state.getClass().getName());
+		System.out.println("\nTurnTrackerStatus: " + master.getCurrentModel().turnTracker().status());
 		
+		if (state.getClass() == RollingState.class &&
+				master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
+		{
+			getRollView().showModal();
+		}
+		
+		Status status = master.getCurrentModel().turnTracker().status();
+		switch(status)
+		{
+		case ROBBING:
+			state = new RobbingState();
+			break;
+		case PLAYING:
+			state = new PlayingState();
+			break;
+		case DISCARDING:
+			state = new DiscardingState();
+			break;
+		case ROLLING:
+			state = new RollingState();
+			break;
+		case FIRSTROUND:
+			state = new SetupState();
+			break;
+		case SECONDROUND:
+			state = new SetupState();
+			break;
+		default:
+			System.out.println("RollController update() should never get here.");
+		}
 	}
 
 }

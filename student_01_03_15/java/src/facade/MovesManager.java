@@ -163,8 +163,8 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"Road_Building\", playerIndex:" + playerIndex.value() + ", spot1:{x:" +
-					spot1.getHexLoc().getX() + ", y:" + spot1.getHexLoc().getY() + ", direction:\"" + spot1.getDir().getShortenedDirection() + "\"}, spot2:{x:" +
-					spot2.getHexLoc().getX() + ", y:" + spot2.getHexLoc().getY() + ", direction:\"" + spot2.getDir().getShortenedDirection() + "\"}}";
+					spot1.getHexLoc().getX() + ", y:" + spot1.getHexLoc().getY() + ", direction:\"" + spot1.getDir() + "\"}, spot2:{x:" +
+					spot2.getHexLoc().getX() + ", y:" + spot2.getHexLoc().getY() + ", direction:\"" + spot2.getDir() + "\"}}";
 		
 		response = mProxy.post("/moves/Road_Building", body);
 		return jsonToGame(response);
@@ -259,14 +259,41 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"buildSettlement\", playerIndex:" + playerIndex.value() + ", vertexLocation:" + 
-				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + vertexLoc.getDir().getShortenedDirection() + 
+				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + shorten(vertexLoc.getDir()) + 
 				"\"}, free:" + free + "}";
 		
-		System.out.println(body);
 		response = mProxy.post("/moves/buildSettlement", body);
 		return jsonToGame(response);
 	}
 	
+	private String shorten(VertexDirection dir)
+	{
+		switch (dir)
+		{
+			case West:
+			case W:
+				return "W";
+			case East:
+			case E: 
+				return "E";
+			case NorthWest:
+			case NW:
+				return "NW";
+			case NorthEast:
+			case NE: 
+				return "NE";
+			case SouthWest: 
+			case SW:
+				return "SW";
+			case SouthEast: 
+			case SE:
+				return "SE";				
+			default:
+				System.out.println("NULL!!!");
+				assert false;
+				return null;
+		} 			
+	}
 
 	/**
 	 * Builds a city at the specified location
@@ -284,7 +311,7 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"buildCity\", playerIndex:" + playerIndex.value() + ", vertexLocation:" + 
-				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc() + ", direction:\"" + vertexLoc.getDir().getShortenedDirection() + 
+				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc() + ", direction:\"" + vertexLoc.getDir() + 
 				"\"}, free:" + free + "}";
 		
 		response = mProxy.post("/moves/buildCity", body);
@@ -304,7 +331,7 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"offerTrade\", playerIndex:" + playerIndex.value() + ", offer:" + new ResourceListJSON(offer).toJSON() + ", receiver:" + 
-					receiverIndex.value() + "}";
+					receiverIndex + "}";
 		
 		response = mProxy.post("/moves/offerTrade", body);
 		return jsonToGame(response);

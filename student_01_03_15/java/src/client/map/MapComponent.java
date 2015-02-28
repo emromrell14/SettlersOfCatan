@@ -653,7 +653,7 @@ public class MapComponent extends JComponent
 	
 	private void drawNumbers(Graphics2D g2)
 	{
-		
+		numbers = new HashMap(numbers);
 		for (Map.Entry<HexLocation, Integer> entry : numbers.entrySet())
 		{
 			
