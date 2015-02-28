@@ -27,6 +27,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	ResourceType mGetType;
 	ResourceType mGiveType;
 	private Game gameModel;
+	private final int ONE_CARD = 1;
 	
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay)
 	{
@@ -73,7 +74,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		mGetType = null;
 		
 		Player player = master.getPlayer();
-		player.resources().addBrick(4);
+//		player.resources().addBrick(4);
+//		player.resources().addWood(3);
+//		player.resources().addOre(2);
+		
 		ArrayList<Building> temp = new ArrayList<Building>();
 		temp.addAll(player.cities());
 		temp.addAll(player.settlements());
@@ -153,8 +157,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGetResource(ResourceType resource)
 	{
 		mGetType = resource;
-		if(mGetType != null && mGiveType != null)
+		if(mGetType != null)
 		{
+			tradeOverlay.selectGetOption(resource, ONE_CARD);
 			tradeOverlay.setTradeEnabled(true);
 		}
 	}
@@ -202,6 +207,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void unsetGetValue()
 	{
 		mGetType = null;
+		tradeOverlay.showGetOptions(getAvailableResourcesInBank());
 		tradeOverlay.setTradeEnabled(false);
 	}
 
@@ -209,6 +215,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void unsetGiveValue() 
 	{
 		mGiveType = null;
+		tradeOverlay.showGiveOptions(this.availableTradeResources());
 		tradeOverlay.setTradeEnabled(false);
 	}
 
