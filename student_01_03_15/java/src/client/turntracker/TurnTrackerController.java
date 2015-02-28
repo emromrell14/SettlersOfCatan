@@ -62,7 +62,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		switch(status)
 		{
 		case ROBBING:
-			getView().updateGameState("Place the Robber", true);
+			getView().updateGameState("Place the Robber", false);
 			state = new RobbingState();
 			break;
 		case PLAYING:
