@@ -124,7 +124,12 @@ public class Board
 	{		
 		loc = loc.getNormalizedLocation();
 		
-			
+
+		// Check that vertex is not already taken
+		if (checkForBuilding(loc))
+		{
+			return false;
+		}	
 			
 		switch (loc.getDir())
 		{
@@ -139,6 +144,8 @@ public class Board
 				{
 					return false;
 				}
+				
+				// Check that this vertex is not adjacent to another vertex
 				if (
 					!checkForBuilding(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthEast)) &&
 					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),VertexDirection.NorthEast)) &&
@@ -150,6 +157,7 @@ public class Board
 				break;
 			case NorthEast:
 			case NE:
+				// Check that the vertex touches a resource
 				if (
 						getHexByLocation(loc.getHexLoc()).resource() == HexType.WATER &&
 						getHexByLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast)).resource() == HexType.WATER &&
@@ -158,6 +166,7 @@ public class Board
 				{
 					return false;
 				}
+				// Check that this vertex is not adjacent to another vertex
 				if (
 					!checkForBuilding(new VertexLocation(loc.getHexLoc(),VertexDirection.NorthWest)) &&
 					!checkForBuilding(new VertexLocation(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),VertexDirection.NorthWest)) &&

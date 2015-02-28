@@ -18,8 +18,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	private Map<ResourceBarElement, IAction> elementActions;
 	private MasterManager master;
 	private IState state;
-	private boolean FirstRoundDone = false;
-	private boolean SecondRoundDone = false;
 //	private IMapView mapView;
 
 	public ResourceBarController(IResourceBarView view) 
@@ -115,49 +113,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	{
 			
 		// TODO Auto-generated method stub
-		if(master.hasJoinedGame)
+		
+		Status status = master.getCurrentModel().turnTracker().status();
+		switch(status)
 		{
-			
-			// THIS IS FOR ROUNDS 1 AND 2------------------
-			if (state.isPlayingFree())
-			{
-				Player p = master.getPlayer();
-				if (master.getCurrentModel().turnTracker().currentTurn().value() == p.playerIndex().value())
-				{
-					int roadsBuilt = p.roads().size();
-					int settlementsBuilt = p.settlements().size();
-					
-					if (roadsBuilt == 1 && !FirstRoundDone)
-					{
-						FirstRoundDone = true;
-						master.finishTurn(p.playerIndex());
-					}
-					
-					else if (roadsBuilt == 2 && !SecondRoundDone)
-					{
-						SecondRoundDone = true;
-						master.finishTurn(p.playerIndex());
-					}
-					
-					else if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
-					{
-						buildSettlement();
-					}
-					else if ((roadsBuilt == 0 && settlementsBuilt == 1) || (roadsBuilt == 1 && settlementsBuilt == 2))
-					{
-						buildRoad();
-					}
-				}
-			}
-			//---------------------------------------------
-			
-			
-			
-			
-			
-			Status status = master.getCurrentModel().turnTracker().status();
-			switch(status)
-			{
 			case ROBBING:
 				state = new RobbingState();
 				break;
@@ -177,8 +136,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				state = new SetupState();
 				break;
 			default:
-				System.out.println("ResourceBarController update() should never get here.");
-			}
+				System.out.println("MapController update() should never get here.");
+		}
+			
+			
+			
 			
 			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
 			if (state.canAffordRoad())
@@ -217,7 +179,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
 			}
 			
-		}
+		
 	}
 
 }

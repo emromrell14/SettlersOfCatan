@@ -7,6 +7,7 @@ import models.Building;
 import models.Game;
 import models.Hex;
 import models.Index;
+import models.Player;
 import models.Port;
 import models.Road;
 import models.Robber;
@@ -17,6 +18,7 @@ import shared.locations.*;
 import states.*;
 import client.base.*;
 import client.data.*;
+import client.resources.ResourceBarElement;
 import facade.IMasterManager;
 import facade.MasterManager;
 
@@ -30,6 +32,8 @@ public class MapController extends Controller implements IMapController, Observe
 	private MasterManager master;
 	private IState state;
 	public static Boolean InitializedHexes = false;
+	private boolean FirstRoundDone = false;
+	private boolean SecondRoundDone = false;
 	
 	public MapController(IMapView view, IRobView robView) 
 	{
@@ -290,13 +294,12 @@ public class MapController extends Controller implements IMapController, Observe
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		
-			if(master.hasJoinedGame)
+		if(master.hasJoinedGame)
+		{
+			initFromModel();
+			Status status = master.getCurrentModel().turnTracker().status();
+			switch(status)
 			{
-				initFromModel();
-				Status status = master.getCurrentModel().turnTracker().status();
-				switch(status)
-				{
 				case ROBBING:
 					state = new RobbingState();
 					break;
@@ -318,7 +321,63 @@ public class MapController extends Controller implements IMapController, Observe
 				default:
 					System.out.println("MapController update() should never get here.");
 			}
+			
+			// THIS IS FOR ROUNDS 1 AND 2------------------
+			if (state.isPlayingFree())
+			{
+				Player p = master.getPlayer();
+				if (master.getCurrentModel().turnTracker().currentTurn().value() == p.playerIndex().value())
+				{
+					int roadsBuilt = p.roads().size();
+					int settlementsBuilt = p.settlements().size();
+					
+					if (roadsBuilt == 1 && !FirstRoundDone)
+					{
+						FirstRoundDone = true;
+						master.finishTurn(p.playerIndex());
+					}
+					
+					else if (roadsBuilt == 2 && !SecondRoundDone)
+					{
+						SecondRoundDone = true;
+						master.finishTurn(p.playerIndex());
+					}
+					
+					else if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
+					{
+						buildSettlementSetup();
+					}
+					else if ((roadsBuilt == 0 && settlementsBuilt == 1) || (roadsBuilt == 1 && settlementsBuilt == 2))
+					{
+						buildRoadSetup();
+					}
+				}
+			}
+			//---------------------------------------------
+			
+			
+		
+		
+		
+			
+			
 		}
+	}
+
+	private void buildRoadSetup() 
+	{
+		if (state.canAffordRoad())
+		{
+			startMove(PieceType.ROAD, state.isPlayingFree(), state.isDisconnectedPlayingAllowed());			
+		}
+	}
+
+	private void buildSettlementSetup() 
+	{
+		if (state.canAffordRoad())
+		{
+			startMove(PieceType.SETTLEMENT, state.isPlayingFree(), state.isDisconnectedPlayingAllowed());			
+		}		
 	}
 
 	@Override
