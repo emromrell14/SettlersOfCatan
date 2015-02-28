@@ -107,6 +107,20 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			action.execute();
 		}
 	}
+	
+	private void setResourceAmounts()
+	{
+		Player p = master.getPlayer();
+		getView().setElementAmount(ResourceBarElement.WOOD, p.resources().wood());
+		getView().setElementAmount(ResourceBarElement.SHEEP, p.resources().sheep());
+		getView().setElementAmount(ResourceBarElement.ORE, p.resources().ore());
+		getView().setElementAmount(ResourceBarElement.WHEAT, p.resources().wheat());
+		getView().setElementAmount(ResourceBarElement.BRICK, p.resources().brick());
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, p.soldierCount());
+		getView().setElementAmount(ResourceBarElement.CITY, p.cityCount());
+		getView().setElementAmount(ResourceBarElement.SETTLEMENT, p.settlementCount());
+		getView().setElementAmount(ResourceBarElement.ROAD, p.roadCount());
+	}
 
 	@Override
 	public void update(Observable o, Object arg)
@@ -175,9 +189,44 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		{
 			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
 		}
-		
-		
+			
+			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
+			if (state.canAffordRoad())
+			{
+				this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
+			}
+			//----------------------------------------------
+			if (state.canAffordSettlement())
+			{
+				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+			}
+			//----------------------------------------------
+			if (state.canAffordCity())
+			{
+				this.getView().setElementEnabled(ResourceBarElement.CITY, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.CITY, false);
+			}
+			//-----------------------------------------------
+			if (state.canBuyDevCard())
+			{
+				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+			}
+			else
+			{
+				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+			}
+			setResourceAmounts();
 	}
-
 }
 

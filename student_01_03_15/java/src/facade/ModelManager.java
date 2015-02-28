@@ -504,8 +504,14 @@ public class ModelManager extends Observable
 		if(mGameModel.turnTracker().status().equals(Status.ROBBING))
 		{
 			HexLocation currentRobberLocation = mGameModel.robber().location();
-			return !(currentRobberLocation.getX() == newRobberLocation.getX() 
-					&& currentRobberLocation.getY() == newRobberLocation.getY());
+			return!(currentRobberLocation.getX() == newRobberLocation.getX() 
+					&& currentRobberLocation.getY() == newRobberLocation.getY())
+					&& newRobberLocation.getX() < 3 && newRobberLocation.getX() > -3
+					&& newRobberLocation.getY() < 3 && newRobberLocation.getY() > -3
+			 		&& !(newRobberLocation.getX() == 1 && newRobberLocation.getY() == 2)
+			 		&& !(newRobberLocation.getX() == -1 && newRobberLocation.getY() == -2)
+			 		&& !(newRobberLocation.getX() == 2 && newRobberLocation.getY() == 1)
+			 		&& !(newRobberLocation.getX() == -2 && newRobberLocation.getY() == -1);
 		}
 		return false;
 	}
