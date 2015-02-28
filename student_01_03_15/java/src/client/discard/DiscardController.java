@@ -55,7 +55,6 @@ public class DiscardController extends Controller implements IDiscardController,
 		this.master.getModelManager().addObserver(this);
 		this.player = master.getPlayer();
 		this.waitView = waitView;
-		this.initialize();
 	}
 
 	public IDiscardView getDiscardView() {
@@ -67,6 +66,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	}
 	public void initialize()
 	{
+		this.player = master.getPlayer();
 		this.setCardsToDiscard();
 		this.setCardsTotals();
 		this.setMap();
@@ -77,6 +77,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void increaseAmount(ResourceType resource) 
 	{
+		
 		this.increaseType(resource);
 		this.getDiscardView().setResourceDiscardAmount(resource, this.getType(resource));
 		this.getDiscardView().setResourceAmountChangeEnabled(resource, this.canIncrease(resource), this.canDecrease(resource));
@@ -346,6 +347,7 @@ public class DiscardController extends Controller implements IDiscardController,
 					state = new PlayingState();
 					break;
 				case DISCARDING:
+					this.initialize();
 					getDiscardView().showModal();
 					state = new DiscardingState();
 					break;
