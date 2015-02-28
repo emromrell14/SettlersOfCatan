@@ -95,7 +95,7 @@ public class MovesManager
 		String response;
 		String body;
 		
-		body = "{type:\"robPlayer\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex + 
+		body = "{type:\"robPlayer\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex.value() + 
 					", location:{x:\"" + location.getX() + "\", y:\"" + location.getY() + "\"}}";
 		
 		response = mProxy.post("/moves/robPlayer", body);

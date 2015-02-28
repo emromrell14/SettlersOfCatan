@@ -1,5 +1,7 @@
 package facade;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import shared.definitions.CatanColor;
@@ -528,5 +530,10 @@ public class ModelManager extends Observable
 	public void setModelChanged() 
 	{
 		setChanged();		
+	}
+
+	public List<Player> getRobbingVictims(HexLocation hexLoc)
+	{
+		return mGameModel == null? new ArrayList<Player>() : mGameModel.getRobbingVictims(hexLoc);
 	}
 }

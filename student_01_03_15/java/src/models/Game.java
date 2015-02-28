@@ -2,8 +2,10 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import JSONmodels.MessageListJSON;
 import shared.definitions.CatanColor;
+import shared.locations.HexLocation;
 
 public class Game implements IGame
 {
@@ -300,5 +302,18 @@ public class Game implements IGame
 			}
 		}
 		return 0;
+	}
+
+	public List<Player> getRobbingVictims(HexLocation hexLoc) 
+	{
+		List<Player> victims = new ArrayList<Player>();
+		for(Player p : mPlayers)
+		{
+			if(p.isVictim(hexLoc))
+			{
+				victims.add(p);
+			}
+		}
+		return victims;
 	}	
 }
