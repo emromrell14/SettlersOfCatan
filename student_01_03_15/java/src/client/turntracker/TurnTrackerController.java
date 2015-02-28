@@ -3,6 +3,7 @@ package client.turntracker;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.definitions.CatanColor;
 import states.DiscardingState;
 import states.IState;
 import states.PlayingState;
@@ -10,6 +11,7 @@ import states.RobbingState;
 import states.RollingState;
 import states.SetupState;
 import models.Game;
+import models.Player;
 import models.Status;
 import client.base.*;
 import facade.IMasterManager;
@@ -20,7 +22,7 @@ import facade.MasterManager;
  * Implementation for the turn tracker controller
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
-	private IMasterManager master; 
+	private MasterManager master; 
 	private IState state;
 
 	public TurnTrackerController(ITurnTrackerView view) {
@@ -44,20 +46,22 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		master.finishTurn(master.getPlayerIndex());
 	}
 	
-	private void initFromModel() {
-		int playerID = master.getPlayerID();
-		Game game = master.getCurrentModel();
-		if(game != null && playerID >= 0)
-		{
-			getView().setLocalPlayerColor(master.getPlayer().color());
-		}
+	private void initFromModel() 
+	{
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		initFromModel();
-		
+		//initFromModel();
+		if(master.hasJoinedGame)
+		{
+			for (Player p: master.getCurrentModel().players())
+			{
+				getView().initializePlayer(p.playerIndex().value(), p.name(), p.color());
+			}
+			getView().setLocalPlayerColor(master.getPlayer().color());
+		}
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
 		{

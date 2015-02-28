@@ -110,16 +110,20 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	
 	private void setResourceAmounts()
 	{
+	
 		Player p = master.getPlayer();
-		getView().setElementAmount(ResourceBarElement.WOOD, p.resources().wood());
-		getView().setElementAmount(ResourceBarElement.SHEEP, p.resources().sheep());
-		getView().setElementAmount(ResourceBarElement.ORE, p.resources().ore());
-		getView().setElementAmount(ResourceBarElement.WHEAT, p.resources().wheat());
-		getView().setElementAmount(ResourceBarElement.BRICK, p.resources().brick());
-		getView().setElementAmount(ResourceBarElement.SOLDIERS, p.soldierCount());
-		getView().setElementAmount(ResourceBarElement.CITY, p.cityCount());
-		getView().setElementAmount(ResourceBarElement.SETTLEMENT, p.settlementCount());
-		getView().setElementAmount(ResourceBarElement.ROAD, p.roadCount());
+		if (p != null)
+		{
+			getView().setElementAmount(ResourceBarElement.WOOD, p.resources().wood());
+			getView().setElementAmount(ResourceBarElement.SHEEP, p.resources().sheep());
+			getView().setElementAmount(ResourceBarElement.ORE, p.resources().ore());
+			getView().setElementAmount(ResourceBarElement.WHEAT, p.resources().wheat());
+			getView().setElementAmount(ResourceBarElement.BRICK, p.resources().brick());
+			getView().setElementAmount(ResourceBarElement.SOLDIERS, p.soldierCount());
+			getView().setElementAmount(ResourceBarElement.CITY, p.cityCount());
+			getView().setElementAmount(ResourceBarElement.SETTLEMENT, p.settlementCount());
+			getView().setElementAmount(ResourceBarElement.ROAD, p.roadCount());
+		}
 	}
 
 	@Override
