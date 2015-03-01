@@ -10,6 +10,12 @@ public class ResourceList
 	private int mWheat = 0;
 	private int mWood = 0;
 	
+	
+	public ResourceList()
+	{
+		
+	}
+	
 	/**
 	 * Creates a ResourceList object
 	 * 
@@ -20,11 +26,6 @@ public class ResourceList
 	 * @param wood the amount of wood in the resource pile
 	 * @return a new ResourceList object
 	 */
-	public ResourceList()
-	{
-		
-	}
-	
 	public ResourceList(int brick, int ore, int sheep, int wheat, int wood)
 	{
 		this.mBrick = brick;
