@@ -1,22 +1,16 @@
 package client.discard;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import models.Game;
 import models.Player;
 import models.ResourceList;
 import models.Status;
 import shared.definitions.*;
-import states.DiscardingState;
-import states.IState;
-import states.PlayingState;
-import states.RobbingState;
-import states.RollingState;
-import states.SetupState;
 import client.base.*;
 import client.misc.*;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -27,20 +21,13 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	private IWaitView waitView;
 	private MasterManager master;
-	private int cardsToDiscard = 0;
-	private int currentDiscardNum = 0;
 	private Player player;
-	private int oreTotal = 0;
-	private int woodTotal = 0;
-	private int sheepTotal = 0;
-	private int wheatTotal = 0;
-	private int brickTotal = 0;
-	private int oreDiscard = 0;
-	private int woodDiscard = 0;
-	private int sheepDiscard = 0;
-	private int wheatDiscard = 0;
-	private int brickDiscard = 0;
-	private IState state;
+	
+	private int totalDiscarded;
+	private int totalResourcesToDiscard;
+	
+	private Map<ResourceType, Integer> totalResources = new HashMap<ResourceType, Integer>();
+	private Map<ResourceType, Integer> discardedResources = new HashMap<ResourceType, Integer>();
 
 	/**
 	 * DiscardController constructor	
@@ -51,10 +38,9 @@ public class DiscardController extends Controller implements IDiscardController,
 	public DiscardController(IDiscardView view, IWaitView waitView)
 	{		
 		super(view);
+		this.waitView = waitView;
 		this.master = MasterManager.getInstance();
 		this.master.getModelManager().addObserver(this);
-		this.player = master.getPlayer();
-		this.waitView = waitView;
 	}
 
 	public IDiscardView getDiscardView() {
@@ -64,304 +50,120 @@ public class DiscardController extends Controller implements IDiscardController,
 	public IWaitView getWaitView() {
 		return waitView;
 	}
-	public void initialize()
+	
+	private void initialize()
 	{
+		//Load up all of the players resources
 		this.player = master.getPlayer();
-		this.setCardsToDiscard();
-		this.setCardsTotals();
-		this.setMap();
-		String message = this.currentDiscardNum + "/" + this.cardsToDiscard;
-		this.getDiscardView().setStateMessage(message);
+		for(ResourceType resource : ResourceType.values())
+		{
+			this.discardedResources.put(resource, 0);
+			this.totalResources.put(resource, player.resources().getResource(resource));
+			this.getDiscardView().setResourceDiscardAmount(resource, 0);
+			this.getDiscardView().setResourceMaxAmount(resource, this.totalResources.get(resource));
+			this.getDiscardView().setResourceAmountChangeEnabled(resource, player.resources().getResource(resource) != 0, false);
+		}
+		
+		//Set the total amount of resources that they need to discard
+		this.totalResourcesToDiscard = player.resources().getTotal() / 2;
+		
+		//Set the button to say that they have discarded 0
+		this.totalDiscarded = 0;
+		
+		//Update the button text
+		this.updateStateMessage();
+	}
+	
+	private void updateStateMessage()
+	{
+		//If they have reached the total, allow them to click "DISCARD", otherwise show them how many more they need to discard
+		if(this.totalDiscarded == this.totalResourcesToDiscard)
+		{
+			this.getDiscardView().setStateMessage("DISCARD");
+			this.getDiscardView().setDiscardButtonEnabled(true);
+		}
+		else
+		{
+			this.getDiscardView().setStateMessage("Choose more cards to discard (" + this.totalDiscarded + "/" + this.totalResourcesToDiscard + ")");
+			this.getDiscardView().setDiscardButtonEnabled(false);
+		}
+	}
+	
+	private void updateAllIncreaseAndDecreaseButtons()
+	{
+		for(ResourceType resource : ResourceType.values())
+		{
+			int amountDiscarded = this.discardedResources.get(resource);
+			
+			boolean canIncrease = this.totalDiscarded != this.totalResourcesToDiscard && 
+					amountDiscarded < this.player.resources().getResource(resource);
+			boolean canDecrease = amountDiscarded != 0;
+			
+			this.getDiscardView().setResourceAmountChangeEnabled(resource, canIncrease, canDecrease);
+		}
 	}
 
 	@Override
 	public void increaseAmount(ResourceType resource) 
 	{
-		
-		this.increaseType(resource);
-		this.getDiscardView().setResourceDiscardAmount(resource, this.getType(resource));
-		this.getDiscardView().setResourceAmountChangeEnabled(resource, this.canIncrease(resource), this.canDecrease(resource));
-		String message = this.currentDiscardNum + "/" + this.cardsToDiscard;
-		this.getDiscardView().setStateMessage(message);
-		
-		if (this.discardReached())
-		{
-			this.discardNumReached();
-		}
+		//Update the map of discarded resources
+		int new_amount = this.discardedResources.get(resource) + 1;
+		this.discardedResources.put(resource, new_amount);
+
+		//Update the number discarded and update the view
+		this.totalDiscarded++;
+		this.updateStateMessage();
+		this.getDiscardView().setResourceDiscardAmount(resource, new_amount);
+		this.updateAllIncreaseAndDecreaseButtons();
 	}
 
 	@Override
 	public void decreaseAmount(ResourceType resource) 
 	{
-		this.decreaseType(resource);
-		this.getDiscardView().setResourceDiscardAmount(resource, this.getType(resource));
-		this.getDiscardView().setResourceAmountChangeEnabled(resource, this.canIncrease(resource), this.canDecrease(resource));
-		String message = this.currentDiscardNum + "/" + this.cardsToDiscard;
-		this.getDiscardView().setStateMessage(message);
+		//Update the map of discarded resources
+		int new_amount = this.discardedResources.get(resource) - 1;
+		this.discardedResources.put(resource, new_amount);
 		
+		//Update the number discarded and update the view
+		this.totalDiscarded--;
+		this.updateStateMessage();
+		this.getDiscardView().setResourceDiscardAmount(resource, new_amount);
+		this.updateAllIncreaseAndDecreaseButtons();
 	}
 
 	@Override
 	public void discard() {
-		if (this.discardReached() && this.player != null)
-		{
-			ResourceList rList = new ResourceList(this.brickDiscard, this.oreDiscard, this.sheepDiscard, this.wheatDiscard, this.woodDiscard);
-			this.master.discardCards(this.player.playerIndex(), rList);
-			getDiscardView().closeModal();
-		}
-	}
-
-	public void setCardsToDiscard()
-	{
-		if(player != null)
-		{
-			if (player.canDiscard())
-			{
-				cardsToDiscard = player.resources().getTotal()/2;
-			}
-		}
-	}
-	public void setCardsTotals()
-	{
-		if(player != null)
-		{
-			this.oreTotal = player.resources().ore();
-			this.woodTotal = player.resources().wood();
-			this.brickTotal = player.resources().brick();
-			this.sheepTotal = player.resources().sheep();
-			this.wheatTotal = player.resources().wheat();
-		}
-	}
-	public void discardNumReached()
-	{
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, false, this.canDecrease(ResourceType.ORE));
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, this.canDecrease(ResourceType.WOOD));
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, false, this.canDecrease(ResourceType.SHEEP));
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, false, this.canDecrease(ResourceType.WHEAT));
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, false, this.canDecrease(ResourceType.BRICK));
-		this.getDiscardView().setDiscardButtonEnabled(true);
-	}
-	public boolean canDecrease(ResourceType type)
-	{
-		if (type == ResourceType.ORE)
-		{
-			if (this.currentDiscardNum != 0 && this.oreDiscard > 0)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.WOOD)
-		{
-			if (this.currentDiscardNum != 0 && this.woodDiscard > 0)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.SHEEP)
-		{
-			if (this.currentDiscardNum != 0 && this.sheepDiscard > 0)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.WHEAT)
-		{
-			if (this.currentDiscardNum != 0 && this.wheatDiscard > 0)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.BRICK)
-		{
-			if (this.currentDiscardNum != 0 && this.brickDiscard > 0)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	public boolean canIncrease(ResourceType type)
-	{
-		if (type == ResourceType.ORE)
-		{
-			if (this.cardsToDiscard != this.currentDiscardNum && this.oreTotal > this.oreDiscard)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.WOOD)
-		{
-			if (this.cardsToDiscard != this.currentDiscardNum && this.woodTotal > this.woodDiscard)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.SHEEP)
-		{
-			if (this.cardsToDiscard != this.currentDiscardNum && this.sheepTotal > this.sheepDiscard)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.WHEAT)
-		{
-			if (this.cardsToDiscard != this.currentDiscardNum && this.wheatTotal > this.wheatDiscard)
-			{
-				return true;
-			}
-		}
-		if (type == ResourceType.BRICK)
-		{
-			if (this.cardsToDiscard != this.currentDiscardNum && this.brickTotal > this.brickDiscard)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	public void increaseType(ResourceType type)
-	{
-		if (type == ResourceType.ORE)
-		{
-			this.brickDiscard+=1;
-		}
-		if (type == ResourceType.WOOD)
-		{
-			this.woodDiscard+=1;
-		}
-		if (type == ResourceType.SHEEP)
-		{
-			this.sheepDiscard+=1;
-		}
-		if (type == ResourceType.WHEAT)
-		{
-			this.wheatDiscard+=1;
-		}
-		if (type == ResourceType.BRICK)
-		{
-			this.brickDiscard+=1;
-		}
-		this.currentDiscardNum+=1;
-	}
-	public void decreaseType(ResourceType type)
-	{
-		if (type == ResourceType.ORE)
-		{
-			this.brickDiscard-=1;
-		}
-		if (type == ResourceType.WOOD)
-		{
-			this.woodDiscard-=1;
-		}
-		if (type == ResourceType.SHEEP)
-		{
-			this.sheepDiscard-=1;
-		}
-		if (type == ResourceType.WHEAT)
-		{
-			this.wheatDiscard-=1;
-		}
-		if (type == ResourceType.BRICK)
-		{
-			this.brickDiscard-=1;
-		}
-		this.currentDiscardNum-=1;
-	}
-	public boolean discardReached()
-	{
-		if (this.currentDiscardNum == this.cardsToDiscard)
-		{
-			return true;
-		}
-		return false;
-	}
-	public void setMap()
-	{
-		//Ore SetUp
-		this.getDiscardView().setResourceMaxAmount(ResourceType.ORE, oreTotal);
-		this.getDiscardView().setResourceDiscardAmount(ResourceType.ORE, oreDiscard);
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, this.canIncrease(ResourceType.ORE), this.canDecrease(ResourceType.ORE));
+		//Get the amount of each resource
+		int brick = this.discardedResources.get(ResourceType.BRICK);
+		int ore = this.discardedResources.get(ResourceType.ORE);
+		int sheep = this.discardedResources.get(ResourceType.SHEEP);
+		int wheat = this.discardedResources.get(ResourceType.WHEAT);
+		int wood = this.discardedResources.get(ResourceType.WOOD);
 		
-		//Wood SetUp
-		this.getDiscardView().setResourceMaxAmount(ResourceType.WOOD, woodTotal);
-		this.getDiscardView().setResourceDiscardAmount(ResourceType.WOOD, woodDiscard);
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, this.canIncrease(ResourceType.WOOD), this.canDecrease(ResourceType.WOOD));
+		//Discard them
+		ResourceList resources = new ResourceList(brick, ore, sheep, wheat, wood);
+		this.master.discardCards(this.player.playerIndex(), resources);
 		
-		//Sheep SetUp
-		this.getDiscardView().setResourceMaxAmount(ResourceType.SHEEP, sheepTotal);
-		this.getDiscardView().setResourceDiscardAmount(ResourceType.SHEEP, sheepDiscard);
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, this.canIncrease(ResourceType.SHEEP), this.canDecrease(ResourceType.SHEEP));
-		
-		//Wheat SetUp
-		this.getDiscardView().setResourceMaxAmount(ResourceType.WHEAT, wheatTotal);
-		this.getDiscardView().setResourceDiscardAmount(ResourceType.WHEAT, wheatDiscard);
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, this.canIncrease(ResourceType.WHEAT), this.canDecrease(ResourceType.WHEAT));
-		
-		//Brick SetUp
-		this.getDiscardView().setResourceMaxAmount(ResourceType.BRICK, brickTotal);
-		this.getDiscardView().setResourceDiscardAmount(ResourceType.BRICK, brickDiscard);
-		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, this.canIncrease(ResourceType.BRICK), this.canDecrease(ResourceType.BRICK));
-		
+		//Close the modal
+		getDiscardView().closeModal();
 	}
-	
-	public int getType(ResourceType type)
-	{
-		if (type == ResourceType.ORE)
-		{
-			return this.brickDiscard;
-		}
-		if (type == ResourceType.WOOD)
-		{
-			return this.woodDiscard;
-		}
-		if (type == ResourceType.SHEEP)
-		{
-			return this.sheepDiscard;
-		}
-		if (type == ResourceType.WHEAT)
-		{
-			return this.wheatDiscard;
-		}
-		if (type == ResourceType.BRICK)
-		{
-			return this.brickDiscard;
-		}
-		return -1;
-	}
-	
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-		//Game game = this.master.getCurrentModel();
-		if(master.hasJoinedGame)
+		//If this player is in this game, and if they just hit the discarding state, show the modal and initialize
+		if(master.hasJoinedGame && master.getCurrentModel().turnTracker().status().equals(Status.DISCARDING))
 		{
-			Status status = master.getCurrentModel().turnTracker().status();
-			switch(status)
+			if(!this.getDiscardView().isModalShowing())
 			{
-				case ROBBING:
-					state = new RobbingState();
-					break;
-				case PLAYING:
-					state = new PlayingState();
-					break;
-				case DISCARDING:
-					this.initialize();
-					getDiscardView().showModal();
-					state = new DiscardingState();
-					break;
-				case ROLLING:
-					state = new RollingState();
-					break;
-				case FIRSTROUND:
-					state = new SetupState();
-					break;
-				case SECONDROUND:
-					state = new SetupState();
-					break;
-				default:
-					System.out.println("MapController update() should never get here.");
+				this.getDiscardView().showModal();				
+				this.initialize();
+			}
+		}
+		else
+		{
+			if(this.getDiscardView().isModalShowing())
+			{
+				this.getDiscardView().closeModal();
 			}
 		}
 	}
