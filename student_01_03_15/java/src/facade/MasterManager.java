@@ -732,4 +732,14 @@ public class MasterManager implements IMasterManager
 		return mModelManager.getRobbingVictims(hexLoc);
 	}
 
+	public int largestArmyIndex() 
+	{
+		return mModelManager.getLargestArmyIndex();
+	}
+
+	public int longestRoadIndex() 
+	{
+		return mModelManager.getLongestRoadIndex();
+	}
+
 }

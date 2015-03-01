@@ -155,12 +155,7 @@ public class MapController extends Controller implements IMapController, Observe
 			TokenValue num = h.number();
 			if (num != null && num.value() != 0)
 			{
-				System.out.println(num.value());
 				getView().addNumber(h.location(),num.value());
-			}
-			else
-			{
-				System.out.println("Should only get here when token value is 0");
 			}
 			
 		}

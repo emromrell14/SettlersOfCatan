@@ -536,4 +536,14 @@ public class ModelManager extends Observable
 	{
 		return mGameModel == null? new ArrayList<Player>() : mGameModel.getRobbingVictims(hexLoc);
 	}
+
+	public int getLargestArmyIndex()
+	{
+		return mGameModel == null? -1 : mGameModel.getLargestArmyIndex();
+	}
+
+	public int getLongestRoadIndex() 
+	{
+		return mGameModel == null? -1 : mGameModel.getLongestRoadIndex();
+	}
 }

@@ -309,11 +309,24 @@ public class Game implements IGame
 		List<Player> victims = new ArrayList<Player>();
 		for(Player p : mPlayers)
 		{
-			if(p.isVictim(hexLoc))
+			if(p.playerIndex().value() != mTurnTracker.currentTurn().value())
 			{
-				victims.add(p);
+				if(p.isVictim(hexLoc))
+				{
+					victims.add(p);
+				}
 			}
 		}
 		return victims;
+	}
+
+	public int getLargestArmyIndex() 
+	{
+		return mTurnTracker.largestArmy().value();
+	}
+
+	public int getLongestRoadIndex() 
+	{
+		return mTurnTracker.longestRoad().value();
 	}	
 }
