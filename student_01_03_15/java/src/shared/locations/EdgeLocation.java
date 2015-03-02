@@ -69,7 +69,7 @@ public class EdgeLocation
 		if(getClass() != obj.getClass())
 			return false;
 		EdgeLocation other = (EdgeLocation)obj;
-		if(dir != other.dir)
+		if(dir.getLengthendDirection() != other.dir.getLengthendDirection())
 			return false;
 		if(hexLoc == null)
 		{
