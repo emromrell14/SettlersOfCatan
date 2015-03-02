@@ -337,8 +337,6 @@ public class MovesManager
 		body = "{type:\"maritimeTrade\", playerIndex:" + playerIndex.value() + ", ratio:" + ratio + ", inputResource:\"" +
 					inputRes.toString().toLowerCase() + "\", outputResource:\"" + outputRes.toString().toLowerCase() +"\"}";
 		
-//		System.out.println("maritimeTrade body:"+body);
-		
 		response = mProxy.post("/moves/maritimeTrade", body);
 		return jsonToGame(response);
 	}
