@@ -137,8 +137,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		//Clear all of the resources
 		for(ResourceType resource : ResourceType.values())
 		{
-			this.resources.put(resource, 0);
-			this.options.put(resource, ResourceOption.NONE);
+//			this.resources.put(resource, 0);
+//			this.options.put(resource, ResourceOption.NONE);
 			this.unsetResource(resource);
 		}
 	}
