@@ -24,6 +24,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	private JLabel [] playerArmy;
 	private Image longestRoadImage;
 	private Image largestArmyImage;
+	private boolean [] initializedPlayers;
 
 	private final int NUM_PLAYERS = 4;
 	private final int FONT_SIZE = 13;
@@ -38,8 +39,10 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3)); 
 		
 		playerPanel = new JPanel[NUM_PLAYERS];
+		initializedPlayers = new boolean[NUM_PLAYERS];
 		for(int i = 0; i < NUM_PLAYERS; i++)
 		{
+			initializedPlayers[i] = false;
 			playerPanel[i] = new JPanel();
 			this.add(playerPanel[i]);
 		}
@@ -111,6 +114,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		playerPanel[playerIndex].setBackground(playerColor.getJavaColor());
 		playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		
+		initializedPlayers[playerIndex] = true;
 	}
 
 	@Override
@@ -131,6 +135,11 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	public void updateGameState(String stateMessage, boolean enable) {
 
 		gameStatePanel.updateGameState(stateMessage, enable);
+	}
+	
+	public boolean isPlayerInitialized(int playerIndex)
+	{
+		return initializedPlayers[playerIndex];
 	}
 	
 }

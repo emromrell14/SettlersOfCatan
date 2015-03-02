@@ -53,7 +53,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		for (Player p: master.getCurrentModel().players())
 		{
 			int playerIndex = p.playerIndex().value();
-			getView().initializePlayer(playerIndex, p.name(), p.color());
+			if(!getView().isPlayerInitialized(playerIndex))
+			{
+				getView().initializePlayer(playerIndex, p.name(), p.color());
+			}
 			getView().updatePlayer(playerIndex, p.victoryPointCount(), 
 					playerIndex == master.getCurrentModel().turnTracker().currentTurn().value(), 
 					playerIndex == master.largestArmyIndex(), 
