@@ -33,6 +33,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private IState state;
 	public static boolean InitializedHexes = false;
 	private static boolean buildingSettlement = false;
+	private static boolean buildingRoad = false;
 	private boolean FirstRoundDone = false;
 	private boolean SecondRoundDone = false;
 	private boolean soldierRob = false;
@@ -377,6 +378,7 @@ public class MapController extends Controller implements IMapController, Observe
 					{
 						//NOW allow them to place their second settlement (to avoid double fires)
 						MapController.buildingSettlement = false;
+						MapController.buildingRoad = false;
 						FirstRoundDone = true;
 						master.finishTurn(p.playerIndex());
 					}
@@ -396,7 +398,11 @@ public class MapController extends Controller implements IMapController, Observe
 					}
 					else if ((roadsBuilt == 0 && settlementsBuilt == 1) || (roadsBuilt == 1 && settlementsBuilt == 2))
 					{
-						buildRoadSetup();
+						if(!MapController.buildingRoad)
+						{
+							MapController.buildingRoad = true;
+							buildRoadSetup();
+						}
 					}
 				}
 			}
