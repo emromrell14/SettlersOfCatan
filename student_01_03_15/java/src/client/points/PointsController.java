@@ -53,7 +53,8 @@ public class PointsController extends Controller implements IPointsController, O
 	private void initFromModel() 
 	{
 		int playerID = master.getPlayerID();
-		getPointsView().setPoints(master.getPlayerPoints(playerID));
+		int points = master.getPlayerPoints(playerID);
+		getPointsView().setPoints(points > 10?10:points);
 	}
 	
 	public void showWinner()

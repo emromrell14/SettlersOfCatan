@@ -34,6 +34,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private Game gameModel;
 	private ArrayList<String> takenColors, newTakenColors;
 	private final int NUMBER_OF_PLAYERS = 4;
+	private boolean inGame = false;
 	
 	/**
 	 * JoinGameController constructor
@@ -213,6 +214,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		// Check for failure...it won't fail if same color is chosen
 		if(response.equals("Success"))
 		{
+			inGame = true;
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 			joinAction.execute();
@@ -278,51 +280,54 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		System.out.println("UPDATING joinGameController.");
-		ModelManager manager = (ModelManager) o;
-		gameModel = manager.getCurrentModel();
-		
-		int i = 0;
-		for(Player p : gameModel.players())
+		if(!inGame)
 		{
-			// Add colors the first time through, but not again
-			if(!takenColors.contains(p.color().name()) && takenColors.size() < NUMBER_OF_PLAYERS)
-				takenColors.add(p.color().name()); 
+			System.out.println("UPDATING joinGameController.");
+			ModelManager manager = (ModelManager) o;
+			gameModel = manager.getCurrentModel();
 			
-			for(int k = 0; k < takenColors.size(); ++k)
+			int i = 0;
+			for(Player p : gameModel.players())
 			{
-				System.out.print(takenColors.get(k) + " " );
-			}
-			// Check to replace a player's old color with their new one
-			if(takenColors.size() != 0 && i < takenColors.size())
-			{
-//				System.out.println(p.color().name() +"="+takenColors.get(i)+"--------------Taken colors" + takenColors.get(i) + " INDEX: " + i);
-				if(!takenColors.get(i).equals(p.color().name()))
+				// Add colors the first time through, but not again
+				if(!takenColors.contains(p.color().name()) && takenColors.size() < NUMBER_OF_PLAYERS)
+					takenColors.add(p.color().name()); 
+				
+				for(int k = 0; k < takenColors.size(); ++k)
 				{
-					System.out.println("$$$$$$$$$$$ enabling " + takenColors.get(i));
-					getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(i)), true); 
-					takenColors.set(i, p.color().name());
+					System.out.print(takenColors.get(k) + " " );
 				}
-			}
-			
-			
-			i++;
-		}
-		for(int j = 0; j < takenColors.size(); j++)
-		{
-			getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(j)), false);
-			
-			// for re-join, enable current player's old color so they can repick
-			if(master.getPlayer() != null)
-			{
-				if(takenColors.get(j).equalsIgnoreCase(master.getPlayer().color().toString()))
+				// Check to replace a player's old color with their new one
+				if(takenColors.size() != 0 && i < takenColors.size())
 				{
-					getSelectColorView().setColorEnabled(master.getPlayer().color(), true);
+	//				System.out.println(p.color().name() +"="+takenColors.get(i)+"--------------Taken colors" + takenColors.get(i) + " INDEX: " + i);
+					if(!takenColors.get(i).equals(p.color().name()))
+					{
+//						System.out.println("$$$$$$$$$$$ enabling " + takenColors.get(i));
+						getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(i)), true); 
+						takenColors.set(i, p.color().name());
+					}
 				}
+				
+				
+				i++;
 			}
-			else
+			for(int j = 0; j < takenColors.size(); j++)
 			{
-				System.out.println("NULLLLLLLLLLLL PLAYERRRRRRRRRRRR (joinGameController)");
+				getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(j)), false);
+				
+				// for re-join, enable current player's old color so they can repick
+				if(master.getPlayer() != null)
+				{
+					if(takenColors.get(j).equalsIgnoreCase(master.getPlayer().color().toString()))
+					{
+						getSelectColorView().setColorEnabled(master.getPlayer().color(), true);
+					}
+				}
+				else
+				{
+					System.out.println("NULLLLLLLLLLLL PLAYERRRRRRRRRRRR (joinGameController)");
+				}
 			}
 		}
 

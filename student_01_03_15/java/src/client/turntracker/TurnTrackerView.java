@@ -73,6 +73,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	public void setLocalPlayerColor(CatanColor value) {
 		
 		titlePanel.setLocalPlayerColor(value);
+		this.repaint();
 	}
 
 	@Override
@@ -123,8 +124,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		if(highlight)
 			playerPanel[playerIndex].setBorder(BorderFactory.createLineBorder(new Color(0,0,0), 3));
 		else
-			playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-		
+			playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));		
 	}
 
 	@Override

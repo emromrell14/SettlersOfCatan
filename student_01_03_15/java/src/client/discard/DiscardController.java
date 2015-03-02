@@ -134,6 +134,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard() {
 		//Get the amount of each resource
+		getDiscardView().closeModal();
 		int brick = this.discardedResources.get(ResourceType.BRICK);
 		int ore = this.discardedResources.get(ResourceType.ORE);
 		int sheep = this.discardedResources.get(ResourceType.SHEEP);
@@ -145,7 +146,6 @@ public class DiscardController extends Controller implements IDiscardController,
 		this.master.discardCards(this.player.playerIndex(), resources);
 		
 		//Close the modal
-		getDiscardView().closeModal();
 	}
 	
 	@Override
@@ -159,13 +159,13 @@ public class DiscardController extends Controller implements IDiscardController,
 				this.initialize();
 			}
 		}
-		else
-		{
-			if(this.getDiscardView().isModalShowing())
-			{
-				this.getDiscardView().closeModal();
-			}
-		}
+//		else if(master.hasJoinedGame && !master.getCurrentModel().turnTracker().status().equals(Status.ROLLING))
+//		{
+//			if(this.getDiscardView().isModalShowing())
+//			{
+//				this.getDiscardView().closeModal();
+//			}
+//		}
 	}
 
 }

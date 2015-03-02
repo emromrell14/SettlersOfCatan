@@ -158,79 +158,44 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		}
 		
 		// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-		if (state.canAffordRoad())
-		{
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
-		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
-		}
+//		if (state.canAffordRoad())
+//		{
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, state.canAffordRoad());
+//		}
+//		else
+//		{
+//			this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
+//		}
+//		//----------------------------------------------
+//		if (state.canAffordSettlement())
+//		{
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canAffordSettlement());
+//		}
+//		else
+//		{
+//			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+//		}
 		//----------------------------------------------
-		if (state.canAffordSettlement())
-		{
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
-		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
-		}
-		//----------------------------------------------
-		if (state.canAffordCity())
-		{
-			this.getView().setElementEnabled(ResourceBarElement.CITY, true);
-		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
-		}
+//		if (state.canAffordCity())
+//		{
+			this.getView().setElementEnabled(ResourceBarElement.CITY, state.canAffordCity());
+//		}
+//		else
+//		{
+//			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
+//		}
 		//-----------------------------------------------
-		if (state.canBuyDevCard())
-		{
-			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
-		}
-		else
-		{
-			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
-		}
+//		if (state.canBuyDevCard())
+//		{
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
+//		}
+//		else
+//		{
+//			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+//		}
 			
-			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-			if (state.canAffordRoad())
-			{
-				this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
-			}
-			else
-			{
-				this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
-			}
-			//----------------------------------------------
-			if (state.canAffordSettlement())
-			{
-				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
-			}
-			else
-			{
-				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
-			}
-			//----------------------------------------------
-			if (state.canAffordCity())
-			{
-				this.getView().setElementEnabled(ResourceBarElement.CITY, true);
-			}
-			else
-			{
-				this.getView().setElementEnabled(ResourceBarElement.CITY, false);
-			}
-			//-----------------------------------------------
-			if (state.canBuyDevCard())
-			{
-				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
-			}
-			else
-			{
-				this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
-			}
-			setResourceAmounts();
+			
+		setResourceAmounts();
 	}
 }
 
