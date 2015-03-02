@@ -150,6 +150,7 @@ public class PlayingState implements IState
 
 	@Override
 	public boolean canPlaceSettlement(VertexLocation loc) {
+//		System.out.println("PlayingState canPlaceSettlement");
 		// TODO Auto-generated method stub
 		return mMaster.canPlaceSettlement(mMaster.getPlayerIndex(), loc);
 	}

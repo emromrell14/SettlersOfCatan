@@ -785,12 +785,12 @@ public class Player implements IPlayer
 			{
 				return true;
 			}
-			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthWest 
+			else if(b.location().getNormalizedLocation().getDir().getLengthenedDirection() == VertexDirection.NorthWest 
 					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NorthWest)))
 			{
 				return true;
 			}
-			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthEast
+			else if(b.location().getNormalizedLocation().getDir().getLengthenedDirection() == VertexDirection.NorthEast
 					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NE)))
 			{
 				return true;
@@ -799,17 +799,17 @@ public class Player implements IPlayer
 		}
 		for(Building b : mCities)
 		{
-			HexLocation sLoc = b.location().getHexLoc();
+			HexLocation sLoc = b.location().getNormalizedLocation().getHexLoc();
 			if(robberHexLoc.equals(sLoc) || robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.N)))
 			{
 				return true;
 			}
-			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthWest 
+			else if(b.location().getNormalizedLocation().getDir().getLengthenedDirection() == VertexDirection.NorthWest 
 					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NorthWest)))
 			{
 				return true;
 			}
-			else if(b.location().getNormalizedLocation().getDir() == VertexDirection.NorthEast
+			else if(b.location().getNormalizedLocation().getDir().getLengthenedDirection() == VertexDirection.NorthEast
 					&& robberHexLoc.equals(sLoc.getNeighborLoc(EdgeDirection.NE)))
 			{
 				return true;

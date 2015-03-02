@@ -312,8 +312,8 @@ public class MapController extends Controller implements IMapController, Observe
 			
 			if(soldierRob)
 			{
-				master.playSoldier(master.getPlayerIndex(), victimIndex, robberLocation);
 				soldierRob = false;
+				master.playSoldier(master.getPlayerIndex(), victimIndex, robberLocation);
 			}
 			else
 			{
