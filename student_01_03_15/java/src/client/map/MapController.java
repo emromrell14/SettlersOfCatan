@@ -431,6 +431,15 @@ public class MapController extends Controller implements IMapController, Observe
 	{
 		return state;
 	}
+
+	@Override
+	public void robNoOne() {
+		// TODO Auto-generated method stub
+		master.getCurrentModel().turnTracker().setStatus(Status.PLAYING);
+		master.updateModel(master.getCurrentModel());
+		
+		
+	}
 	
 }
 

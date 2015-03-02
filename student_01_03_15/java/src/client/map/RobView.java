@@ -75,11 +75,14 @@ public class RobView extends OverlayView implements IRobView {
 			
 			if (e.getSource() == defaultButton) {
 				closeModal();
+				getController().robNoOne();
 			}
 			else{
 				
-				for(int i = 0; i < victimButtons.size(); i++){
-					if(e.getSource() == victimButtons.get(i)){
+				for(int i = 0; i < victimButtons.size(); i++)
+				{
+					if(e.getSource() == victimButtons.get(i))
+					{
 						closeModal();
 						getController().robPlayer(victims[i]);
 					}
@@ -96,21 +99,24 @@ public class RobView extends OverlayView implements IRobView {
 	}
 
 	@Override
-	public void setPlayers(RobPlayerInfo[] candidateVictims) {
+	public void setPlayers(RobPlayerInfo[] candidateVictims) 	//Find out if victimButton has no victims what happens
+	{
 		victims = candidateVictims;
 		
 		int numberOfPlayers = 0;
 		if(candidateVictims != null)
 			numberOfPlayers = candidateVictims.length;
 		
-		if(numberOfPlayers != 0){
+		if(numberOfPlayers != 0)
+		{
 			this.remove(buttonPanel);
 			buttonPanel = new JPanel();
 			buttonPanel.setBorder(BorderFactory.createEmptyBorder(25,0,25,0));
 			
 			victimButtons = new ArrayList<JButton>();
 			
-			for(int i=0; i < numberOfPlayers; i++){
+			for(int i=0; i < numberOfPlayers; i++)
+			{
 				JButton victimButton = new JButton("<html>"
 						+ "<body style=\"text-align:center\">"
 						+ "<p style=\"font-size:" + TOP_SIZE + "%\">" + victims[i].getName() + "</p>"
