@@ -20,6 +20,7 @@ public class Game implements IGame
 	private MessageListJSON mLog; //All the log messages.
 	private Robber mRobber;
 	private Trade mCurrentTrade = null;
+	private boolean soldierRob = false;
 	
 	public Game()
 	{
@@ -328,5 +329,5 @@ public class Game implements IGame
 	public int getLongestRoadIndex() 
 	{
 		return mTurnTracker.longestRoad().value();
-	}	
+	}
 }

@@ -182,7 +182,7 @@ public class MovesManager
 		String response;
 		String body;
 		
-		body = "{type:\"Soldier\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex + 
+		body = "{type:\"Soldier\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex.value() + 
 					", location:{x:\"" + location.getX() + "\", y:\"" + location.getY() + "\"}}";
 		
 		response = mProxy.post("/moves/Soldier", body);

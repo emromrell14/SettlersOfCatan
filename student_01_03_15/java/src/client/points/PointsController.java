@@ -3,6 +3,7 @@ package client.points;
 import java.util.Observable;
 import java.util.Observer;
 
+import models.Player;
 import client.base.*;
 import facade.IMasterManager;
 import facade.MasterManager;
@@ -54,11 +55,22 @@ public class PointsController extends Controller implements IPointsController, O
 		int playerID = master.getPlayerID();
 		getPointsView().setPoints(master.getPlayerPoints(playerID));
 	}
-
+	
+	public void showWinner()
+	{
+		Player winner = master.getWinner();
+		if(winner != null)
+		{
+			getFinishedView().setWinner(winner.name(), winner.playerID() == master.getPlayerID());
+			getFinishedView().showModal();
+		}
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) 
 	{
 		initFromModel();
+		showWinner();
 	}
 	
 }

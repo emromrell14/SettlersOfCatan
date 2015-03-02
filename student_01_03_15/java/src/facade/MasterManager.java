@@ -742,4 +742,10 @@ public class MasterManager implements IMasterManager
 		return mModelManager.getLongestRoadIndex();
 	}
 
+	@Override
+	public Player getWinner()
+	{
+		return mModelManager.getWinner();
+	}
+
 }

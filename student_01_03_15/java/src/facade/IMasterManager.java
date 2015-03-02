@@ -139,4 +139,7 @@ public interface IMasterManager
 	// Util Manager
 	public void changeLogLevel(String log);
 
+	public Player getWinner();
+
+
 }

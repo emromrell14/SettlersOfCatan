@@ -34,6 +34,11 @@ public class MapController extends Controller implements IMapController, Observe
 	public static Boolean InitializedHexes = false;
 	private boolean FirstRoundDone = false;
 	private boolean SecondRoundDone = false;
+	private boolean soldierRob = false;
+	private HexLocation robberLocation = null;
+	private boolean roadBuilding = false;
+	private EdgeLocation road1 = null;
+	private EdgeLocation road2 = null;
 	
 	public MapController(IMapView view, IRobView robView) 
 	{
@@ -71,7 +76,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 		if (game != null)
 		{
-			
+			robberLocation = game.robber().location();
 			Board b = game.board();
 			
 			for (int x = 0; x <= 3; ++x) 
@@ -185,14 +190,29 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeRoad(EdgeLocation edgeLoc) 
 	{
-		
-		//Status status = master.getCurrentModel().turnTracker().status();
-		//String type = status.toString();
-		//boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
 		try
 		{
 			Index playerIndex = master.getPlayerIndex();		
-			master.buildRoad(playerIndex, edgeLoc, state.isPlayingFree());
+			if(roadBuilding)
+			{
+				if(road1 == null)
+				{
+					road1 = edgeLoc;
+					master.getPlayer().addRoad(new Road(playerIndex,road1));
+				}
+				else
+				{
+					road2 = edgeLoc;
+					master.playRoadBuilding(playerIndex, road1, road2);
+					road1 = null;
+					road2 = null;
+					roadBuilding = false;
+				}
+			}
+			else
+			{
+				master.buildRoad(playerIndex, edgeLoc, state.isPlayingFree());
+			}
 			CatanColor color = master.getCurrentModel().getPlayer(playerIndex).color();
 			getView().placeRoad(edgeLoc, color);			
 		}
@@ -204,10 +224,6 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeSettlement(VertexLocation vertLoc) 
 	{
-		//Status status = master.getCurrentModel().turnTracker().status();
-		//String type = status.toString();
-		//boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
-		
 		try 
 		{
 			Index playerIndex = master.getPlayerIndex();
@@ -223,9 +239,6 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeCity(VertexLocation vertLoc) 
 	{
-		//Status status = master.getCurrentModel().turnTracker().status();
-		//String type = status.toString();
-		//boolean free = (status == Status.FIRSTROUND || status == Status.SECONDROUND);
 		try
 		{
 			Index playerIndex = master.getPlayerIndex();
@@ -240,6 +253,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeRobber(HexLocation hexLoc) 
 	{
+		robberLocation = hexLoc;
 		getView().placeRobber(hexLoc);
 		getRobView().setRobberLocation(hexLoc);
 		ArrayList<Player> v = (ArrayList<Player>) master.getRobbingVictims(hexLoc);
@@ -251,7 +265,7 @@ public class MapController extends Controller implements IMapController, Observe
 			r.setColor(v.get(i).color().toString());
 			r.setName(v.get(i).name());
 			victims[i] = r;
-		}
+		}		
 		getRobView().setPlayers(victims);
 		getRobView().showModal();
 	}
@@ -275,14 +289,14 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void playSoldierCard() 
 	{	
-		// Why do we need this, if it is already on the DevCardController?	
+		soldierRob = true;
 		state = new RobbingState();
 		getView().startDrop(PieceType.ROBBER, master.getPlayer().color(), false);
 	}
 	
 	public void playRoadBuildingCard() 
 	{	
-		// Why do we need this, if it is already on the DevCardController?
+		roadBuilding = true;
 		state = new PlayingState();
 		startMove(PieceType.ROAD, true, false);			
 		startMove(PieceType.ROAD, true, false);			
@@ -293,7 +307,16 @@ public class MapController extends Controller implements IMapController, Observe
 		try 
 		{
 			Index victimIndex = new Index(victim.getPlayerIndex());
-			master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
+			
+			if(soldierRob)
+			{
+				master.playSoldier(master.getPlayerIndex(), victimIndex, robberLocation);
+				soldierRob = false;
+			}
+			else
+			{
+				master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
+			}
 		} 
 		catch (Exception e) 
 		{
@@ -365,7 +388,6 @@ public class MapController extends Controller implements IMapController, Observe
 					}
 				}
 			}
-			//---------------------------------------------
 		}
 	}
 
@@ -386,7 +408,8 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	@Override
-	public IState getState() {
+	public IState getState() 
+	{
 		return state;
 	}
 	

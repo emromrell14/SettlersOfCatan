@@ -546,4 +546,10 @@ public class ModelManager extends Observable
 	{
 		return mGameModel == null? -1 : mGameModel.getLongestRoadIndex();
 	}
+
+	public Player getWinner()
+	{
+		Index winner = mGameModel.winner();
+		return winner.value() == -1? null : mGameModel.getPlayer(winner);
+	}
 }
