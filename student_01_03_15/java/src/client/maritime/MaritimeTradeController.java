@@ -121,7 +121,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				}
 			}
 		}
+		
 		tradeOverlay.showGiveOptions(this.availableTradeResources());
+		tradeOverlay.hideGetOptions();
+		
 		getTradeOverlay().showModal();
 	}
 
