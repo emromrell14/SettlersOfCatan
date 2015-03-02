@@ -6,9 +6,12 @@ import java.util.Observer;
 import models.DevCard;
 import models.Game;
 import models.Player;
+import models.ResourceList;
 import models.Status;
 import shared.definitions.ResourceType;
 import client.base.*;
+import client.misc.IMessageView;
+import client.misc.MessageView;
 import facade.MasterManager;
 import shared.definitions.*;
 
@@ -22,6 +25,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IAction soldierAction;
 	private IAction roadAction;
 	private MasterManager master;
+	private IMessageView error = new MessageView();
 	
 	/**
 	 * DevCardController constructor
@@ -116,7 +120,68 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		disableAllDevCardButtons();
-		master.playYearOfPlenty(master.getPlayerIndex(), resource1, resource2);
+		if(bankHasResources(resource1,resource2))
+		{
+			master.playYearOfPlenty(master.getPlayerIndex(), resource1, resource2);
+		}
+		else
+		{
+			error.setTitle("ERROR");
+			error.setMessage("Not enough resources in bank");
+			error.showModal();
+		}
+	}
+	
+	public boolean hasResourceAmount(ResourceType r1, int amount)
+	{
+		ResourceList bank = master.getCurrentModel().bank();
+		switch(r1)
+		{
+		case WOOD:
+			if(bank.wood() > amount)
+			{
+				return true;
+			}
+			break;
+		case SHEEP:
+			if(bank.sheep() > amount)
+			{
+				return true;
+			}
+			break;
+		case ORE:
+			if(bank.ore() > amount)
+			{
+				return true;
+			}
+			break;
+		case BRICK:
+			if(bank.brick() > amount)
+			{
+				return true;
+			}
+			break;
+		case WHEAT:
+			if(bank.wheat() > amount)
+			{
+				return true;
+			}
+			break;
+		default:
+			System.out.println("DevCardController.hasResourceAmount() should never get here");
+		}
+		return false;
+	}
+	
+	public boolean bankHasResources(ResourceType r1, ResourceType r2)
+	{
+		boolean same = r1 == r2;
+		if(same)
+		{
+			return hasResourceAmount(r1,1);
+		}
+		
+		return hasResourceAmount(r1,0) && hasResourceAmount(r2,0);
 	}
 	
 	public void disableAllDevCardButtons()
@@ -132,7 +197,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void update(Observable o, Object arg) 
 	{
 		Game game = master.getCurrentModel();
-		if(game != null)
+		if(game != null && master.hasJoinedGame)
 		{
 			disableAllDevCardButtons();
 			int monopoly = 0;

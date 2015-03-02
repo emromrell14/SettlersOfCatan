@@ -66,7 +66,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 		this.add(this.setupUserSelectPanel(), BorderLayout.SOUTH);		
 	}
 
-	private JPanel setupResourceTradePanel() {
+	public JPanel setupResourceTradePanel() {
 		// setup resource tiles
 		this.resourceButtonsMap = new HashMap<ResourceType, ArrayList<JButton>>();
 		this.upDownPanels = new ArrayList<JPanel>();
@@ -441,8 +441,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 		for(ResourceType resource : ResourceType.values()) 
 		{
 			upDownPanelByResourceType.get(resource).setVisible(false);
-			resourceCounts.get(resource).setText("0");
-			getController().unsetResource(resource);			
+			resourceCounts.get(resource).setText("0");			
 		}
 	}
 }

@@ -96,8 +96,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	{		
 		this.tradeOverlay.showModal();
 		
-		//Set the resources all to 0 and option to NONE
-		this.resetAllResources();
 		
 		//Set all resources to disabled (since they are in the "none" stage)
 		this.tradeOverlay.initializeVisibility();
@@ -108,6 +106,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			this.initializePlayers();
 			this.playersInitialized = true;
 		}
+		//Set the resources all to 0 and option to NONE
+		this.resetAllResources();
+		this.tradeOverlay.reset();
 	}
 	
 	private void initializePlayers()
@@ -137,9 +138,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		//Clear all of the resources
 		for(ResourceType resource : ResourceType.values())
 		{
-//			this.resources.put(resource, 0);
-//			this.options.put(resource, ResourceOption.NONE);
-			this.unsetResource(resource);
+			this.resources.put(resource, 0);
+			this.options.put(resource, ResourceOption.NONE);
+//			this.unsetResource(resource);
 		}
 	}
 	
@@ -299,7 +300,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void unsetResource(ResourceType resource) 
-	{		
+	{	
 		//Set the overlay to not allow them to increase or decrease
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, false, false);
 		
