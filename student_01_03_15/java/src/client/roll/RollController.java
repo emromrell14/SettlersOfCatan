@@ -86,16 +86,20 @@ public class RollController extends Controller implements IRollController, Obser
 				state = new DiscardingState();
 				break;
 			case ROLLING:
-				RollController.semaphore = true;
-				if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
+				if (!RollController.semaphore)
 				{
-					if (!getRollView().isModalShowing())
+					RollController.semaphore = true;
+					
+					if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
 					{
-						getRollView().showModal();
+						if (!getRollView().isModalShowing())
+						{
+							getRollView().showModal();
+						}
 					}
+					state = new RollingState();
+					RollController.semaphore = false;
 				}
-				state = new RollingState();
-				RollController.semaphore = false;
 				break;
 			case FIRSTROUND:
 				state = new SetupState();
