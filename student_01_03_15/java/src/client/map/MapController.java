@@ -286,6 +286,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public void cancelMove() 
 	{
 		// We somehow need to close the modal...
+		
 	}
 	
 	public void playSoldierCard() 
@@ -338,7 +339,10 @@ public class MapController extends Controller implements IMapController, Observe
 					state = new RobbingState();
 					if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
 					{
-						getView().startDrop(PieceType.ROBBER, master.getPlayer().color(), false);
+						if(!getView().isModalShowing())
+						{
+							getView().startDrop(PieceType.ROBBER, master.getPlayer().color(), false);
+						}
 					}
 					break;
 				case PLAYING:
@@ -363,7 +367,6 @@ public class MapController extends Controller implements IMapController, Observe
 			// THIS IS FOR ROUNDS 1 AND 2------------------
 			if (state.isPlayingFree())
 			{
-				System.out.print("I'm in the setup round...");
 				Player p = master.getPlayer();
 				if (master.getCurrentModel().turnTracker().currentTurn().value() == p.playerIndex().value())
 				{
@@ -372,7 +375,6 @@ public class MapController extends Controller implements IMapController, Observe
 					
 					if (roadsBuilt == 1 && !FirstRoundDone)
 					{
-						System.out.println(" finishing my first turn");
 						//NOW allow them to place their second settlement (to avoid double fires)
 						MapController.buildingSettlement = false;
 						FirstRoundDone = true;
@@ -380,14 +382,12 @@ public class MapController extends Controller implements IMapController, Observe
 					}
 					else if (roadsBuilt == 2 && !SecondRoundDone)
 					{
-						System.out.println(" finishing my second turn");
 						SecondRoundDone = true;
 						master.finishTurn(p.playerIndex());
 					}
 					else if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
 					{
 						//Only let them build a settlement if they're not already doing it! (to avoid double fires)
-						System.out.println(" building a settlement");
 						if(!MapController.buildingSettlement)
 						{
 							MapController.buildingSettlement = true;
@@ -396,8 +396,6 @@ public class MapController extends Controller implements IMapController, Observe
 					}
 					else if ((roadsBuilt == 0 && settlementsBuilt == 1) || (roadsBuilt == 1 && settlementsBuilt == 2))
 					{
-						System.out.println(" building a road");
-						
 						buildRoadSetup();
 					}
 				}

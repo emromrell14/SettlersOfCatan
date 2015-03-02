@@ -10,6 +10,8 @@ import client.base.*;
 public interface IMapView extends IView
 {
 	
+	boolean isModalShowing();
+	
 	/**
 	 * This method adds a hex to the map.
 	 * 

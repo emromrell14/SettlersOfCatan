@@ -21,6 +21,8 @@ public class MapView extends PanelView implements IMapView
 	private MapComponent map;
 	private MapOverlay overlay;
 	
+	private boolean modalShowing = false;
+	
 	public MapView()
 	{
 		
@@ -44,6 +46,12 @@ public class MapView extends PanelView implements IMapView
 		super.setController(controller);
 		
 		map.setController(controller);
+	}
+	
+	@Override
+	public boolean isModalShowing()
+	{
+		return modalShowing;
 	}
 	
 	@Override
@@ -92,7 +100,7 @@ public class MapView extends PanelView implements IMapView
 	public void startDrop(PieceType pieceType, CatanColor pieceColor,
 						  boolean isCancelAllowed)
 	{
-		
+		this.modalShowing = true;
 		overlay = new MapOverlay(map);
 		overlay.setController(overlayController);
 		overlay.startDrop(pieceType, pieceColor, isCancelAllowed);
@@ -134,7 +142,7 @@ public class MapView extends PanelView implements IMapView
 		
 		@Override
 		public void placeRoad(EdgeLocation edgeLoc)
-		{	
+		{
 			closeModal();
 			getController().placeRoad(edgeLoc);
 		}
@@ -197,6 +205,7 @@ public class MapView extends PanelView implements IMapView
 		
 		private void closeModal()
 		{
+			modalShowing = false;
 			overlay.cancelDrop();
 			overlay.closeModal();
 		}
