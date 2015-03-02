@@ -100,7 +100,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	
 	private void executeElementAction(ResourceBarElement element) 
 	{
-		
 		if (elementActions.containsKey(element)) 
 		{
 			IAction action = elementActions.get(element);
@@ -110,7 +109,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	
 	private void setResourceAmounts()
 	{
-	
 		Player p = master.getPlayer();
 		if (p != null)
 		{
@@ -129,7 +127,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg)
 	{
-			
 		// TODO Auto-generated method stub
 		
 		Status status = master.getCurrentModel().turnTracker().status();
@@ -158,43 +155,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		}
 		
 		// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-//		if (state.canAffordRoad())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, state.canAffordRoad());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
-//		}
-//		//----------------------------------------------
-//		if (state.canAffordSettlement())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canAffordSettlement());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
-//		}
-		//----------------------------------------------
-//		if (state.canAffordCity())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.CITY, state.canAffordCity());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
-//		}
-		//-----------------------------------------------
-//		if (state.canBuyDevCard())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
-//		}
-			
-			
+		this.getView().setElementEnabled(ResourceBarElement.ROAD, state.canAffordRoad());
+		this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canAffordSettlement());
+		this.getView().setElementEnabled(ResourceBarElement.CITY, state.canAffordCity());
+		this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
+		
 		setResourceAmounts();
 	}
 }

@@ -247,7 +247,7 @@ public class DevCardController extends Controller implements IDevCardController,
 					{
 						++roadBuilding;
 					}
-					roadBool = roadBool || (!d.isNew() && !d.hasBeenPlayed());
+					roadBool = roadBool || (!d.isNew() && !d.hasBeenPlayed() && p.roadCount() > 1);
 					break;
 				}
 			}
