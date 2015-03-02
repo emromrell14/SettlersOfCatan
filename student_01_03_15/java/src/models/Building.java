@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 import shared.definitions.BuildingType;
 import shared.locations.VertexLocation;
 
@@ -18,8 +20,6 @@ public class Building
 	/** Tells whether this is a settlement or a city */
 	private BuildingType mBuildingType = BuildingType.SETTLEMENT;
 	
-	private Port mPort;
-	
 	/** 
 	 * Creates a Building model object
 	 * 
@@ -32,17 +32,6 @@ public class Building
 	{
 		this.mOwner = owner;
 		this.mLocation = location;
-		this.mPort = null;
-	}
-	
-	public Port port()
-	{
-		return mPort;
-	}
-	
-	public void setPort(Port port)
-	{
-		mPort = port;
 	}
 	
 	/** 
@@ -77,5 +66,23 @@ public class Building
 	public BuildingType buildingType()
 	{
 		return mBuildingType;
+	}
+	
+	public Port getAttachedPort(List<Port> ports) {
+		VertexLocation buildingLocation = this.location().getNormalizedLocation();
+		for(Port port : ports)
+		{
+			//Each port should have 2 vertexes
+			for(VertexLocation vertex : port.vertices())
+			{
+				//If the building and vertex are the same hex and direction, return the port
+				vertex = vertex.getNormalizedLocation();
+				if(buildingLocation.equals(vertex))
+				{
+					return port;
+				}
+			}
+		}
+		return null;
 	}
 }

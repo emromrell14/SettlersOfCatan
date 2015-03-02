@@ -374,7 +374,7 @@ public class ModelManager extends Observable
 		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) &&
 				mGameModel.turnTracker().status() == Status.PLAYING) 
 		{
-			return player.canMaritimeTrade();
+			return player.canMaritimeTrade(mGameModel.board().ports());
 		}
 		return false;
 	}

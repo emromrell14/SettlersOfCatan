@@ -1,14 +1,21 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 public class Port 
 {
 	private PortType mResource; //What type resource this port trades for. If it's omitted, then it's for any resource.
 	private HexLocation mLocation; //What hex this port is on. This shows the ocean/non-existent hex to draw the port on.
 	private EdgeDirection mDirection; //Which edge this port is on.
+	
+	private List<VertexLocation> mVertices;
 	
 	/**
 	 * Creates a Port
@@ -24,6 +31,7 @@ public class Port
 		this.mResource = resource;
 		this.mLocation = location;
 		this.mDirection = direction;
+		this.calculateVertices();
 	}
 	/**
 	 * Gets the type of the resource for which this port trades
@@ -60,6 +68,45 @@ public class Port
 	public EdgeDirection direction()
 	{
 		return mDirection;
+	}
+	
+	public List<VertexLocation> vertices()
+	{
+		return mVertices;
+	}
+	
+	private void calculateVertices()
+	{
+		this.mVertices = new ArrayList<VertexLocation>();
+		switch(this.mDirection.getLengthendDirection())
+		{
+		case South:
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.South), VertexDirection.NorthEast));
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.South), VertexDirection.NorthWest));
+			break;
+		case SouthEast:
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.NorthWest));
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.West));
+			break;
+		case SouthWest:
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast));
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.East));
+			break;
+		case NorthEast:
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.NorthEast), VertexDirection.West));
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.NorthEast), VertexDirection.SouthWest));
+			break;
+		case NorthWest:
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.East));
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.SouthEast));
+			break;
+		case North:
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.North), VertexDirection.SouthEast));
+			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.North), VertexDirection.SouthWest));
+			break;
+		default:
+			System.out.println("Should never get to this. Port.calculateVertices");
+		}
 	}
 }
 
