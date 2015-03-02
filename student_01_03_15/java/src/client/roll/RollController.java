@@ -23,6 +23,7 @@ public class RollController extends Controller implements IRollController, Obser
 	private IRollResultView resultView;
 	private IMasterManager master;
 	private IState state;
+	private static boolean semaphore = false;
 	/**
 	 * RollController constructor
 	 * 
@@ -70,7 +71,6 @@ public class RollController extends Controller implements IRollController, Obser
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		System.out.println("\nState: " + state.getClass().getName());
 		System.out.println("\nTurnTrackerStatus: " + master.getCurrentModel().turnTracker().status());
 		
 		Status status = master.getCurrentModel().turnTracker().status();
@@ -86,6 +86,7 @@ public class RollController extends Controller implements IRollController, Obser
 				state = new DiscardingState();
 				break;
 			case ROLLING:
+				RollController.semaphore = true;
 				if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
 				{
 					if (!getRollView().isModalShowing())
@@ -94,6 +95,7 @@ public class RollController extends Controller implements IRollController, Obser
 					}
 				}
 				state = new RollingState();
+				RollController.semaphore = false;
 				break;
 			case FIRSTROUND:
 				state = new SetupState();
