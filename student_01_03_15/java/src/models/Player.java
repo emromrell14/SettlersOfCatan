@@ -713,7 +713,7 @@ public class Player implements IPlayer
 		return toReturn;
 	}
 
-	public boolean canMaritimeTrade()
+	public boolean canMaritimeTrade(List<Port> ports)
 	{			
 		if(mResources.brick() >= 4
 				|| mResources.ore() >= 4
@@ -728,9 +728,10 @@ public class Player implements IPlayer
 		
 		for(Building b : mCities)
 		{
-			if(b.port() != null)
+			Port port = b.getAttachedPort(ports);
+			if(port != null)
 			{
-				PortType portType = b.port().resource();
+				PortType portType = port.resource();
 				toReturn = haveResourceAmount(portType);
 				if(toReturn)
 				{
@@ -741,9 +742,10 @@ public class Player implements IPlayer
 		
 		for(Building b : mSettlements)
 		{
-			if(b.port() != null)
+			Port port = b.getAttachedPort(ports);
+			if(port != null)
 			{
-				PortType portType = b.port().resource();
+				PortType portType = port.resource();
 				toReturn = haveResourceAmount(portType);
 				if(toReturn)
 				{

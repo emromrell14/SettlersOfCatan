@@ -2,6 +2,7 @@ package client.maritime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -11,6 +12,7 @@ import models.Game;
 import models.Player;
 import models.Port;
 import shared.definitions.*;
+import shared.locations.VertexLocation;
 import client.base.*;
 import facade.MasterManager;
 import facade.ModelManager;
@@ -74,6 +76,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		mGetType = null;
 		
 		Player player = master.getPlayer();
+		List<Port> ports = master.getCurrentModel().board().ports();
 //		player.resources().addBrick(4);
 //		player.resources().addWood(3);
 //		player.resources().addOre(2);
@@ -83,7 +86,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		temp.addAll(player.settlements());
 		for(Building b : temp)
 		{
-			Port p = b.port();
+			Port p = b.getAttachedPort(ports);
 			if(p != null)
 			{
 				PortType pt = p.resource();
@@ -222,7 +225,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		System.out.println("UPDATING maritimeTradeController.");
+		//System.out.println("UPDATING maritimeTradeController.");
 		ModelManager manager = (ModelManager) o;
 		gameModel = manager.getCurrentModel();
 	}
