@@ -67,35 +67,35 @@ public enum EdgeDirection
 		return lengthened;
 	}	
 	
-	@Override
-	public String toString()
-	{
-		switch (this)
-		{
-			case NorthWest:
-			case NW:
-				return "NorthWest";
-			case North: 
-			case N: 
-				return "North";
-			case NorthEast:
-			case NE: 
-				return "NorthEast";
-			case SouthWest: 
-			case SW:
-				return "SouthWest";
-			case South:
-			case S:
-				return "South";
-			case SouthEast: 
-			case SE:
-				return "SouthEast";
-				
-			default:
-				System.out.println("NULL!!!");
-				assert false;
-				return null;
-		} 	
-	}
+//	@Override
+//	public String toString()
+//	{
+//		switch (this)
+//		{
+//			case NorthWest:
+//			case NW:
+//				return "NorthWest";
+//			case North: 
+//			case N: 
+//				return "North";
+//			case NorthEast:
+//			case NE: 
+//				return "NorthEast";
+//			case SouthWest: 
+//			case SW:
+//				return "SouthWest";
+//			case South:
+//			case S:
+//				return "South";
+//			case SouthEast: 
+//			case SE:
+//				return "SouthEast";
+//				
+//			default:
+//				System.out.println("NULL!!!");
+//				assert false;
+//				return null;
+//		} 	
+//	}
 }
 
