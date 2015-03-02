@@ -348,7 +348,7 @@ public class Player implements IPlayer
 	public boolean canPlaceSettlement(VertexLocation loc) 
 	{
 		loc = loc.getNormalizedLocation();
-		switch (loc.getDir())
+		switch (loc.getDir().getLengthenedDirection())
 		{
 			case NorthWest:
 				if 

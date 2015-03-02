@@ -131,10 +131,9 @@ public class Board
 			return false;
 		}	
 			
-		switch (loc.getDir())
+		switch (loc.getDir().getLengthenedDirection())
 		{
 			case NorthWest:
-			case NW:
 				// Check that the vertex touches a resource
 				if (
 						getHexByLocation(loc.getHexLoc()).resource() == HexType.WATER &&
@@ -156,7 +155,6 @@ public class Board
 				}
 				break;
 			case NorthEast:
-			case NE:
 				// Check that the vertex touches a resource
 				if (
 						getHexByLocation(loc.getHexLoc()).resource() == HexType.WATER &&
