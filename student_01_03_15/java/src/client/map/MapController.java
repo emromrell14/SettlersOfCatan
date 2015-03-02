@@ -265,6 +265,7 @@ public class MapController extends Controller implements IMapController, Observe
 			r.setNumCards(v.get(i).resources().getTotal());
 			r.setColor(v.get(i).color().toString());
 			r.setName(v.get(i).name());
+			r.setPlayerIndex(v.get(i).playerIndex().value());
 			victims[i] = r;
 		}		
 		getRobView().setPlayers(victims);
