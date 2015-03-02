@@ -139,6 +139,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		{
 			this.resources.put(resource, 0);
 			this.options.put(resource, ResourceOption.NONE);
+			this.unsetResource(resource);
 		}
 	}
 	
@@ -197,7 +198,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			case SEND:
 				//When requesting to send something, you can only send as much as you have.
 				int resourceAmount = this.getResourceCount(master.getPlayer(), resource);
-				this.tradeOverlay.setResourceAmountChangeEnabled(resource, resourceAmount < new_amount, true);
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, resourceAmount > new_amount, true);
 				break;
 			default:
 				//Should never get here, because the buttons shouldn't be visible	
@@ -216,7 +217,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		master.offerTrade(master.getPlayerIndex(), resourceList, this.sendOfferTo);
 
 		getTradeOverlay().closeModal();
-//		getWaitOverlay().showModal();
 	}
 	
 	private ResourceList createResourceList()
@@ -299,10 +299,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void unsetResource(ResourceType resource) 
-	{
-		//Give this player one of this resource... FOR TESTING ONLY! DELETE!!!!
-		master.getPlayer().addResourcesToList(1, 1, 1, 1, 1);
-		
+	{		
 		//Set the overlay to not allow them to increase or decrease
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, false, false);
 		
