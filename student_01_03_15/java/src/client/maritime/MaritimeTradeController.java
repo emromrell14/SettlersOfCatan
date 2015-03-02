@@ -108,11 +108,13 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 					mTradePrice.put(ResourceType.SHEEP, new Integer(2));
 					break;
 				case THREE:
-					mTradePrice.put(ResourceType.WOOD, new Integer(3));
-					mTradePrice.put(ResourceType.BRICK, new Integer(3));
-					mTradePrice.put(ResourceType.ORE, new Integer(3));
-					mTradePrice.put(ResourceType.SHEEP, new Integer(3));
-					mTradePrice.put(ResourceType.WHEAT, new Integer(3));
+					for(ResourceType t : ResourceType.values())
+					{
+						if(mTradePrice.get(t) > 3)
+						{
+							mTradePrice.put(t, new Integer(3));
+						}
+					}
 					break;
 				default:
 					System.out.println("MaritimeTradeController startTrade() it should never get here.");	
