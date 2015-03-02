@@ -259,40 +259,11 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"buildSettlement\", playerIndex:" + playerIndex.value() + ", vertexLocation:" + 
-				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + shorten(vertexLoc.getDir()) + 
+				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + vertexLoc.getDir().getShortenedDirection() + 
 				"\"}, free:" + free + "}";
 		
 		response = mProxy.post("/moves/buildSettlement", body);
 		return jsonToGame(response);
-	}
-	
-	private String shorten(VertexDirection dir)
-	{
-		switch (dir)
-		{
-			case West:
-			case W:
-				return "W";
-			case East:
-			case E: 
-				return "E";
-			case NorthWest:
-			case NW:
-				return "NW";
-			case NorthEast:
-			case NE: 
-				return "NE";
-			case SouthWest: 
-			case SW:
-				return "SW";
-			case SouthEast: 
-			case SE:
-				return "SE";				
-			default:
-				System.out.println("NULL!!!");
-				assert false;
-				return null;
-		} 			
 	}
 
 	/**
@@ -311,7 +282,7 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"buildCity\", playerIndex:" + playerIndex.value() + ", vertexLocation:" + 
-				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc() + ", direction:\"" + vertexLoc.getDir().getShortenedDirection() + 
+				"{x:" + vertexLoc.getHexLoc().getX() + ", y:" + vertexLoc.getHexLoc().getY() + ", direction:\"" + vertexLoc.getDir().getShortenedDirection() + 
 				"\"}, free:" + free + "}";
 		
 		response = mProxy.post("/moves/buildCity", body);
