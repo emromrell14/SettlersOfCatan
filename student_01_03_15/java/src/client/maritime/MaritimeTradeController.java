@@ -69,6 +69,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void startTrade()
 	{
+		tradeOverlay.reset();
 		tradeOverlay.setCancelEnabled(true);
 		tradeOverlay.setTradeEnabled(false);
 		
