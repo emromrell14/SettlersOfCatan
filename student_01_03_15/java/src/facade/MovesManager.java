@@ -302,7 +302,7 @@ public class MovesManager
 		String body;
 		
 		body = "{type:\"offerTrade\", playerIndex:" + playerIndex.value() + ", offer:" + new ResourceListJSON(offer).toJSON() + ", receiver:" + 
-					receiverIndex + "}";
+					receiverIndex.value() + "}";
 		
 		response = mProxy.post("/moves/offerTrade", body);
 		return jsonToGame(response);
