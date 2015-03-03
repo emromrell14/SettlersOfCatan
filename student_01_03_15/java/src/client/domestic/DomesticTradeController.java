@@ -13,6 +13,7 @@ import models.ResourceList;
 import models.Trade;
 import shared.definitions.*;
 import client.base.*;
+import client.catan.TradePanel;
 import client.data.PlayerInfo;
 import client.misc.*;
 import facade.IMasterManager;
@@ -28,6 +29,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private IMasterManager master;
+	private TradePanel waitingPanel;
 	
 	private boolean playersInitialized = false;
 	private Index sendOfferTo;
@@ -53,6 +55,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setAcceptOverlay(acceptOverlay);
 		this.master = MasterManager.getInstance();
 		this.master.getModelManager().addObserver(this);
+//		this.waitingPanel = new TradePanel();
 	}
 	
 	public IDomesticTradeView getTradeView() 
@@ -221,6 +224,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		sendOfferTo = null;
 		getTradeOverlay().reset();
 		getTradeOverlay().closeModal();
+		getWaitOverlay().showModal();
 	}
 	
 	private ResourceList createResourceList()
@@ -375,6 +379,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		System.out.println("Was the trade accepted? --> "+ willAccept);
 		master.acceptTrade(master.getPlayerIndex(), willAccept);
 		
+		// Need to check here for that receiver has sufficient resources:
+		
 		getAcceptOverlay().closeModal();
 		//Clear all the resources
 		this.resetAllResources();
@@ -393,8 +399,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				this.acceptOverlay.reset();
 				this.updateAcceptOverlayResourceList(trade);
 				this.acceptOverlay.showModal();
+				this.acceptOverlay.setAcceptEnabled(this.master.canAcceptTrade(master.getPlayerIndex()));
 				this.acceptOverlay.setPlayerName(master.getCurrentModel().players().get(trade.sender().value()).name());
 			}
+		}
+		else if(this.waitOverlay.isModalShowing())
+		{
+			this.waitOverlay.closeModal();
 		}
 	}
 	
