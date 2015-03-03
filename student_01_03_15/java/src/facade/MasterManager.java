@@ -9,6 +9,7 @@ import models.Game;
 import models.Index;
 import models.Player;
 import models.ResourceList;
+import models.Status;
 import proxy.*;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -27,6 +28,7 @@ public class MasterManager implements IMasterManager
 	protected IProxy mProxy;
 	public boolean hasJoinedGame = false;
 	private static MasterManager mInstance;
+	public boolean hasRolled = false;
 	
 	/**
 	 * Facade to manage all other managers. 
@@ -547,6 +549,7 @@ public class MasterManager implements IMasterManager
 	 */
 	public void finishTurn(Index playerIndex) 
 	{
+		hasRolled = false;
 		Game game = mMovesManager.finishTurn(playerIndex);
 		this.updateModel(game);
 	}
