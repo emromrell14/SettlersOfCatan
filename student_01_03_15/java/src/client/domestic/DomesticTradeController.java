@@ -214,36 +214,39 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	{
 		//Create the resourceList to offer
 		ResourceList resourceList = createResourceList();
-		System.out.println("Sending offer for " + resourceList.brick() + " brick, " + resourceList.ore() + " ore, " + resourceList.sheep() + " sheep, " + resourceList.wheat() + " wheat, and " + resourceList.wood() + " wood.");
+		System.out.println("Sending offer to playerIndex "+ this.sendOfferTo.value() + " for "+ resourceList.brick() + " brick, " + resourceList.ore() + " ore, " + resourceList.sheep() + " sheep, " + resourceList.wheat() + " wheat, and " + resourceList.wood() + " wood.");
 		master.offerTrade(master.getPlayerIndex(), resourceList, this.sendOfferTo);
-
+		
+		// Reset properties of tradeOverlay and who you are sending too
+		sendOfferTo = null;
+		getTradeOverlay().reset();
 		getTradeOverlay().closeModal();
 	}
 	
 	private ResourceList createResourceList()
 	{
 		int brick = resources.get(ResourceType.BRICK);
-		if(options.get(ResourceType.BRICK) == ResourceOption.SEND)
+		if(options.get(ResourceType.BRICK) == ResourceOption.RECEIVE)
 		{
 			brick = -brick;
 		}
 		int ore = resources.get(ResourceType.ORE);
-		if(options.get(ResourceType.ORE) == ResourceOption.SEND) 
+		if(options.get(ResourceType.ORE) == ResourceOption.RECEIVE) 
 		{
 			ore = -ore;
 		}
 		int sheep = resources.get(ResourceType.SHEEP);
-		if(options.get(ResourceType.SHEEP) == ResourceOption.SEND) 
+		if(options.get(ResourceType.SHEEP) == ResourceOption.RECEIVE) 
 		{
 			sheep = -sheep;
 		}
 		int wheat = resources.get(ResourceType.WHEAT);
-		if(options.get(ResourceType.WHEAT) == ResourceOption.SEND) 
+		if(options.get(ResourceType.WHEAT) == ResourceOption.RECEIVE) 
 		{
 			wheat = -wheat;
 		}
 		int wood = resources.get(ResourceType.WOOD);
-		if(options.get(ResourceType.WOOD) == ResourceOption.SEND)
+		if(options.get(ResourceType.WOOD) == ResourceOption.RECEIVE)
 		{
 			wood = -wood;
 		}
@@ -369,10 +372,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void acceptTrade(boolean willAccept) 
 	{
+		System.out.println("Was the trade accepted? --> "+ willAccept);
+		master.acceptTrade(master.getPlayerIndex(), willAccept);
+		
+		getAcceptOverlay().closeModal();
 		//Clear all the resources
 		this.resetAllResources();
-
-		getAcceptOverlay().closeModal();
+		
 	}
 
 	@Override
@@ -383,10 +389,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		{
 			if(trade.receiver().equals(this.master.getPlayerIndex()))
 			{
-				this.acceptOverlay.clearAllResources();
+				//this.acceptOverlay.clearAllResources();
+				this.acceptOverlay.reset();
 				this.updateAcceptOverlayResourceList(trade);
 				this.acceptOverlay.showModal();
-				this.acceptOverlay.setPlayerName(this.master.getPlayerName());
+				this.acceptOverlay.setPlayerName(master.getCurrentModel().players().get(trade.sender().value()).name());
 			}
 		}
 	}
