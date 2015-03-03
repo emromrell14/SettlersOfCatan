@@ -100,7 +100,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	
 	private void executeElementAction(ResourceBarElement element) 
 	{
-		
 		if (elementActions.containsKey(element)) 
 		{
 			IAction action = elementActions.get(element);
@@ -110,7 +109,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	
 	private void setResourceAmounts()
 	{
-	
 		Player p = master.getPlayer();
 		if (p != null)
 		{
@@ -129,72 +127,42 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg)
 	{
-			
 		// TODO Auto-generated method stub
-		
-		Status status = master.getCurrentModel().turnTracker().status();
-		switch(status)
+		if (master.hasJoinedGame)
 		{
-			case ROBBING:
-				state = new RobbingState();
-				break;
-			case PLAYING:
-				state = new PlayingState();
-				break;
-			case DISCARDING:
-				state = new DiscardingState();
-				break;
-			case ROLLING:
-				state = new RollingState();
-				break;
-			case FIRSTROUND:
-				state = new SetupState();
-				break;
-			case SECONDROUND:
-				state = new SetupState();
-				break;
-			default:
-				System.out.println("MapController update() should never get here.");
-		}
-		
-		// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-//		if (state.canAffordRoad())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, state.canAffordRoad());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
-//		}
-//		//----------------------------------------------
-//		if (state.canAffordSettlement())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canAffordSettlement());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
-//		}
-		//----------------------------------------------
-//		if (state.canAffordCity())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.CITY, state.canAffordCity());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
-//		}
-		//-----------------------------------------------
-//		if (state.canBuyDevCard())
-//		{
-			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
-//		}
-//		else
-//		{
-//			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
-//		}
+			boolean isPlayersTurn = master.getCurrentModel().turnTracker().isPlayersTurn(master.getPlayerIndex());
+	
+			Status status = master.getCurrentModel().turnTracker().status();
+			switch(status)
+			{
+				case ROBBING:
+					state = new RobbingState();
+					break;
+				case PLAYING:
+					state = new PlayingState();
+					break;
+				case DISCARDING:
+					state = new DiscardingState();
+					break;
+				case ROLLING:
+					state = new RollingState();
+					break;
+				case FIRSTROUND:
+					state = new SetupState();
+					break;
+				case SECONDROUND:
+					state = new SetupState();
+					break;
+				default:
+					System.out.println("MapController update() should never get here.");
+			}
 			
-			
+			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, isPlayersTurn && state.canAffordRoad());
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, isPlayersTurn && state.canAffordSettlement());
+			this.getView().setElementEnabled(ResourceBarElement.CITY, isPlayersTurn && state.canAffordCity());
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, isPlayersTurn && state.canBuyDevCard());
+		}		
 		setResourceAmounts();
 	}
 }

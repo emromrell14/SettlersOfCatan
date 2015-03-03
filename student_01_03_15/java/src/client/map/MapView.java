@@ -216,6 +216,12 @@ public class MapView extends PanelView implements IMapView
 			assert false;
 			return null;
 		}
+
+		@Override
+		public void robNoOne() {
+			// TODO Auto-generated method stub
+			getController().robNoOne();
+		}
 	};
 	
 	private static class MapOverlay extends OverlayView

@@ -574,7 +574,8 @@ public class Player implements IPlayer
 		{
 			if(devCard.type() == DevCardType.ROAD_BUILD 
 					&& !devCard.isNew()
-					&& !devCard.hasBeenPlayed())
+					&& !devCard.hasBeenPlayed()
+					&& mRoadCount > 1)
 			{
 				return true;
 			}

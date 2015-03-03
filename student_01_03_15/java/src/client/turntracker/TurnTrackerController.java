@@ -71,31 +71,42 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		if(master.hasJoinedGame)
 		{
 			initFromModel();
+			boolean isPlayersTurn = master.getCurrentModel().turnTracker().isPlayersTurn(master.getPlayerIndex());
+			String playingMessage = "Waiting for Other Players";
+			String rollingMessage = "Waiting for Other Players";
+			String discardMessage = "Waiting for Other Players";
+			String setupMessage = "Waiting for Other Players";
+			String robbingMessage = "Waiting for Other Players";
+			if (isPlayersTurn)
+			{
+				playingMessage = "Finish Turn";
+				rollingMessage = "Roll the Dice";
+				discardMessage = "Discard Cards";
+				setupMessage = "Setting up Map";
+				robbingMessage = "Place the Robber";
+			}
 			Status status = master.getCurrentModel().turnTracker().status();
 			switch(status)
 			{
 				case ROBBING:
-					getView().updateGameState("Place the Robber", false);
+					getView().updateGameState(robbingMessage, false);
 					state = new RobbingState();
 					break;
 				case PLAYING:
-					getView().updateGameState("Finish Turn", true);
+					getView().updateGameState(playingMessage, isPlayersTurn);
 					state = new PlayingState();
 					break;
 				case DISCARDING:
-					getView().updateGameState("Discard Cards", false);
+					getView().updateGameState(discardMessage, false);
 					state = new DiscardingState();
 					break;
 				case ROLLING:
-					getView().updateGameState("Roll the Dice", false);
+					getView().updateGameState(rollingMessage, false);
 					state = new RollingState();
 					break;
 				case FIRSTROUND:
-					getView().updateGameState("Setting up Map", false);
-					state = new SetupState();
-					break;
 				case SECONDROUND:
-					getView().updateGameState("Setting up Map", false);
+					getView().updateGameState(setupMessage, false);
 					state = new SetupState();
 					break;
 				case WAITINGJOIN:

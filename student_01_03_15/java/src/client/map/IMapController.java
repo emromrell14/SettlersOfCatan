@@ -144,5 +144,7 @@ public interface IMapController extends IController
 	 * 
 	 */
 	IState getState();
+	
+	void robNoOne();
 }
 
