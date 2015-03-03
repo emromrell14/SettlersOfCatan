@@ -72,11 +72,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		{
 			initFromModel();
 			boolean isPlayersTurn = master.getCurrentModel().turnTracker().isPlayersTurn(master.getPlayerIndex());
-			String playingMessage = "Waiting for Other Players";
-			String rollingMessage = "Waiting for Other Players";
-			String discardMessage = "Waiting for Other Players";
-			String setupMessage = "Waiting for Other Players";
-			String robbingMessage = "Waiting for Other Players";
+			String waitingMessage = "Waiting for Other Players";
+			String playingMessage = waitingMessage;
+			String rollingMessage = waitingMessage;
+			String discardMessage = waitingMessage;
+			String setupMessage = waitingMessage;
+			String robbingMessage = waitingMessage;
 			if (isPlayersTurn)
 			{
 				playingMessage = "Finish Turn";
@@ -89,28 +90,28 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			switch(status)
 			{
 				case ROBBING:
-					getView().updateGameState(robbingMessage, false);
+					getView().updateGameState(master.getPlayer().color(), robbingMessage, false);
 					state = new RobbingState();
 					break;
 				case PLAYING:
-					getView().updateGameState(playingMessage, isPlayersTurn);
+					getView().updateGameState(master.getPlayer().color(), playingMessage, isPlayersTurn);
 					state = new PlayingState();
 					break;
 				case DISCARDING:
-					getView().updateGameState(discardMessage, false);
+					getView().updateGameState(master.getPlayer().color(), discardMessage, false);
 					state = new DiscardingState();
 					break;
 				case ROLLING:
-					getView().updateGameState(rollingMessage, false);
+					getView().updateGameState(master.getPlayer().color(), rollingMessage, false);
 					state = new RollingState();
 					break;
 				case FIRSTROUND:
 				case SECONDROUND:
-					getView().updateGameState(setupMessage, false);
+					getView().updateGameState(master.getPlayer().color(), setupMessage, false);
 					state = new SetupState();
 					break;
 				case WAITINGJOIN:
-					getView().updateGameState("Waiting for Other Players", false);
+					getView().updateGameState(master.getPlayer().color(), waitingMessage, false);
 					state = new SetupState();
 					break;
 				default:
