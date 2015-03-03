@@ -212,7 +212,7 @@ public class MapView extends PanelView implements IMapView
 
 		@Override
 		public IState getState() {
-			System.out.println("DON'T CALL THIS MAP VIEW GETSTATE METHOD");
+			//System.out.println("DON'T CALL THIS MAP VIEW GETSTATE METHOD");
 			assert false;
 			return null;
 		}

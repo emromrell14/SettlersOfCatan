@@ -331,7 +331,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	}
 
 	private JButton getButtonForColor(CatanColor color) {
-//		System.out.println("SelectColorView: " + color);
+//		//System.out.println("SelectColorView: " + color);
 		switch (color) {
 		case BLUE:
 			return btnBlue;

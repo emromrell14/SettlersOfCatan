@@ -92,7 +92,7 @@ public enum EdgeDirection
 //				return "SouthEast";
 //				
 //			default:
-//				System.out.println("NULL!!!");
+//				//System.out.println("NULL!!!");
 //				assert false;
 //				return null;
 //		} 	

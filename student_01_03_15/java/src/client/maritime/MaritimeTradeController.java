@@ -118,7 +118,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 					}
 					break;
 				default:
-					System.out.println("MaritimeTradeController startTrade() it should never get here.");	
+					//System.out.println("MaritimeTradeController startTrade() it should never get here.");	
 				}
 			}
 		}
@@ -231,7 +231,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		//System.out.println("UPDATING maritimeTradeController.");
+		////System.out.println("UPDATING maritimeTradeController.");
 		ModelManager manager = (ModelManager) o;
 		gameModel = manager.getCurrentModel();
 	}

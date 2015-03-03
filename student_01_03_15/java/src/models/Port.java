@@ -105,7 +105,7 @@ public class Port
 			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.North), VertexDirection.SouthWest));
 			break;
 		default:
-			System.out.println("Should never get to this. Port.calculateVertices");
+			//System.out.println("Should never get to this. Port.calculateVertices");
 		}
 	}
 }

@@ -59,7 +59,7 @@ public class Poller implements Runnable
 	    	// if they havent joined a game then switch version back to -1
 	    	version = (mMasterManager.hasJoinedGame) ? version : -1;
 			mMasterManager.getGameModel(version);
-//			System.out.println("Poller version: " + version );
+//			//System.out.println("Poller version: " + version );
 			
 			
 //			int finalV = -1;
@@ -89,7 +89,7 @@ public class Poller implements Runnable
 		 // And From your main() method or any other method
 		 timer = new Timer();
 		 timer.schedule(new PollTimer(), 0, mSecondsBetweenPolls * 1000);
-		 System.out.println("Starting Timer");
+		 //System.out.println("Starting Timer");
 	}
 	
 	/**

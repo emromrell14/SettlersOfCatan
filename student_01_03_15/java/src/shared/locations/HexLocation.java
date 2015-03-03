@@ -95,7 +95,7 @@ public class HexLocation
 			case SE:	
 				return new HexLocation(x + 1, y);
 			default:
-				System.out.println("NULL HEXLOC Dir!!!");
+				//System.out.println("NULL HEXLOC Dir!!!");
 				assert false;
 				return null;
 		}

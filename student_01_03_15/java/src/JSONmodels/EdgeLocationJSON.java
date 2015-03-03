@@ -43,7 +43,7 @@ public class EdgeLocationJSON
 				return "SE";
 				
 			default:
-				System.out.println("NULL!!!");
+				//System.out.println("NULL!!!");
 				assert false;
 				return null;
 		}

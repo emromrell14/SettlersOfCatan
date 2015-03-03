@@ -154,7 +154,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 					state = new SetupState();
 					break;
 				default:
-					System.out.println("MapController update() should never get here.");
+					//System.out.println("MapController update() should never get here.");
 			}
 			
 			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM

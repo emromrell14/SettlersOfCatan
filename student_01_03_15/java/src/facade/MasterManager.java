@@ -442,7 +442,7 @@ public class MasterManager implements IMasterManager
 		}
 		else
 		{
-			//System.out.println("Game was null");
+			////System.out.println("Game was null");
 			assert false;
 		}
 //		return mModelManager.gameModel().version();

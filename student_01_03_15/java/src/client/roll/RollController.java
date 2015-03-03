@@ -72,7 +72,7 @@ public class RollController extends Controller implements IRollController, Obser
 	public void update(Observable o, Object arg) 
 	{
 		// TODO Auto-generated method stub
-//		System.out.println("\nRollController update status: " + master.getCurrentModel().turnTracker().status());
+//		//System.out.println("\nRollController update status: " + master.getCurrentModel().turnTracker().status());
 		
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
@@ -109,7 +109,7 @@ public class RollController extends Controller implements IRollController, Obser
 				state = new SetupState();
 				break;
 			default:
-				System.out.println("RollController update() should never get here.");
+				//System.out.println("RollController update() should never get here.");
 		}
 	}
 

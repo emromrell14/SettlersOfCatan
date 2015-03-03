@@ -20,7 +20,7 @@ public class RobbingState implements IState
 	@Override
 	public boolean isPlayingFree()
 	{
-		System.out.println("Can't play during a RollingState!");
+		//System.out.println("Can't play during a RollingState!");
 		return false;
 	}
 

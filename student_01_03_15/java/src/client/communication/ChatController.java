@@ -43,7 +43,7 @@ public class ChatController extends Controller implements IChatController, Obser
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		System.out.println("ChatController update");
+		//System.out.println("ChatController update");
 		MessageListJSON chat = master.getCurrentModel().chat();
 		
 		

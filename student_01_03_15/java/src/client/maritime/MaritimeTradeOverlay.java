@@ -346,8 +346,8 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 	}
 
 	private JPanel createGetPane() {
-		//System.out.println(resourceImageFolder+"wheat.png");
-		//System.out.println(new File(resourceImageFolder).getAbsolutePath());
+		////System.out.println(resourceImageFolder+"wheat.png");
+		////System.out.println(new File(resourceImageFolder).getAbsolutePath());
 		//create the buttons
 		getreload = new JButton();
 		getreload.setPreferredSize(new Dimension(40,40));

@@ -364,7 +364,7 @@ public class MapController extends Controller implements IMapController, Observe
 					state = new SetupState();
 					break;
 				default:
-					System.out.println("MapController update() should never get here.");
+					//System.out.println("MapController update() should never get here.");
 			}
 			
 			// THIS IS FOR ROUNDS 1 AND 2------------------

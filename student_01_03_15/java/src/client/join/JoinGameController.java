@@ -235,7 +235,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void generateGameList()
 	{
 		String JSON = master.getGameList();
-		System.out.println("JoinGameController json:" + JSON + ":");
+//		System.out.println("JoinGameController json:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;
@@ -298,10 +298,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				if(!takenColors.contains(p.color().name()) && takenColors.size() < NUMBER_OF_PLAYERS)
 					takenColors.add(p.color().name()); 
 				
-				for(int k = 0; k < takenColors.size(); ++k)
-				{
-					System.out.print(takenColors.get(k) + " " );
-				}
+//				for(int k = 0; k < takenColors.size(); ++k)
+//				{
+//					System.out.print(takenColors.get(k) + " " );
+//				}
 				// Check to replace a player's old color with their new one
 				if(takenColors.size() != 0 && i < takenColors.size())
 				{

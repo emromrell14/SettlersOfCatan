@@ -44,7 +44,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void endTurn() 
 	{
-		System.out.println("Called endTurn() in TurnTrackerController");
+		//System.out.println("Called endTurn() in TurnTrackerController");
 		master.finishTurn(master.getPlayerIndex());
 	}
 	
@@ -115,7 +115,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					state = new SetupState();
 					break;
 				default:
-					System.out.println("RollController update() should never get here.");
+					//System.out.println("RollController update() should never get here.");
 			}
 		}
 	}

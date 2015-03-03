@@ -70,7 +70,7 @@ public class Proxy implements IProxy
 			}
 			
 			in.close();
-//			System.out.println("PROXY POST RESPONSE BODY:"+response);
+//			//System.out.println("PROXY POST RESPONSE BODY:"+response);
 			if(requestPath.equalsIgnoreCase("/user/login") || requestPath.equalsIgnoreCase("/user/register"))
 			{
 				String cookieResponse = mCon.getHeaderField("Set-cookie");
