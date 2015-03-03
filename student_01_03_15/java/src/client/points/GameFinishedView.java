@@ -7,6 +7,7 @@ import java.awt.image.*;
 import javax.swing.*;
 
 import client.base.*;
+import client.join.JoinGameController;
 import client.utils.*;
 
 
@@ -77,7 +78,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == okButton) {
-				closeModal();
+				System.exit(0);
+				//closeModal();
 			}
 		}	
 	};
