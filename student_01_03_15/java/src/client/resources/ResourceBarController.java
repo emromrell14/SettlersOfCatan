@@ -128,38 +128,41 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void update(Observable o, Object arg)
 	{
 		// TODO Auto-generated method stub
-		
-		Status status = master.getCurrentModel().turnTracker().status();
-		switch(status)
+		if (master.hasJoinedGame)
 		{
-			case ROBBING:
-				state = new RobbingState();
-				break;
-			case PLAYING:
-				state = new PlayingState();
-				break;
-			case DISCARDING:
-				state = new DiscardingState();
-				break;
-			case ROLLING:
-				state = new RollingState();
-				break;
-			case FIRSTROUND:
-				state = new SetupState();
-				break;
-			case SECONDROUND:
-				state = new SetupState();
-				break;
-			default:
-				System.out.println("MapController update() should never get here.");
-		}
-		
-		// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-		this.getView().setElementEnabled(ResourceBarElement.ROAD, state.canAffordRoad());
-		this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canAffordSettlement());
-		this.getView().setElementEnabled(ResourceBarElement.CITY, state.canAffordCity());
-		this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
-		
+			boolean isPlayersTurn = master.getCurrentModel().turnTracker().isPlayersTurn(master.getPlayerIndex());
+	
+			Status status = master.getCurrentModel().turnTracker().status();
+			switch(status)
+			{
+				case ROBBING:
+					state = new RobbingState();
+					break;
+				case PLAYING:
+					state = new PlayingState();
+					break;
+				case DISCARDING:
+					state = new DiscardingState();
+					break;
+				case ROLLING:
+					state = new RollingState();
+					break;
+				case FIRSTROUND:
+					state = new SetupState();
+					break;
+				case SECONDROUND:
+					state = new SetupState();
+					break;
+				default:
+					System.out.println("MapController update() should never get here.");
+			}
+			
+			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, isPlayersTurn && state.canAffordRoad());
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, isPlayersTurn && state.canAffordSettlement());
+			this.getView().setElementEnabled(ResourceBarElement.CITY, isPlayersTurn && state.canAffordCity());
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, isPlayersTurn && state.canBuyDevCard());
+		}		
 		setResourceAmounts();
 	}
 }

@@ -153,10 +153,13 @@ public class DiscardController extends Controller implements IDiscardController,
 		//If this player is in this game, and if they just hit the discarding state, show the modal and initialize
 		if(master.hasJoinedGame && master.getCurrentModel().turnTracker().status().equals(Status.DISCARDING))
 		{
-			if(!this.getDiscardView().isModalShowing())
+			if (master.getPlayer().canDiscard())
 			{
-				this.getDiscardView().showModal();				
-				this.initialize();
+				if(!this.getDiscardView().isModalShowing())
+				{
+					this.getDiscardView().showModal();				
+					this.initialize();
+				}
 			}
 		}
 //		else if(master.hasJoinedGame && !master.getCurrentModel().turnTracker().status().equals(Status.ROLLING))

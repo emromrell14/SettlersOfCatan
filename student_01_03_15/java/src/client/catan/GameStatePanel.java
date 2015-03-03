@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import shared.definitions.CatanColor;
 import client.base.IAction;
 
 
@@ -30,13 +31,21 @@ public class GameStatePanel extends JPanel
 		
 		this.add(button);
 		
-		updateGameState("Waiting for other Players", false);
+		updateGameState(null, "Waiting for other Players", false);
 	}
 	
-	public void updateGameState(String stateMessage, boolean enable)
+	public void updateGameState(CatanColor color, String stateMessage, boolean enable)
 	{
 		button.setText(stateMessage);
 		button.setEnabled(enable);
+		if (button.isEnabled() && color != null)
+		{
+			button.setBackground(color.getJavaColor());
+		}
+		else
+		{
+			button.setBackground(null);
+		}
 	}
 	
 	public void setButtonAction(final IAction action)
