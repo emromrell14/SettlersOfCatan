@@ -27,6 +27,7 @@ public class GameManager
 	 */
 	public Game getGameModel(int version)
 	{
+		System.out.println("getGameModel");
 		String response;
 		String urlPath = "/game/model?version="+version;
 		

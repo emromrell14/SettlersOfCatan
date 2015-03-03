@@ -440,11 +440,11 @@ public class MasterManager implements IMasterManager
 		{
 			mModelManager.updateModel(game);
 		}
-		else
-		{
-			////System.out.println("Game was null");
-			assert false;
-		}
+//		else
+//		{
+//			////System.out.println("Game was null");
+//			assert false;
+//		}
 //		return mModelManager.gameModel().version();
 	}
 	

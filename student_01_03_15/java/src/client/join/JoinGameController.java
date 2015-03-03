@@ -115,6 +115,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start()
 	{
+		System.out.println("joinGameController.start()");
 		this.generateGameList();
 		getJoinGameView().showModal();
 	}
@@ -235,7 +236,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void generateGameList()
 	{
 		String JSON = master.getGameList();
-//		System.out.println("JoinGameController json:" + JSON + ":");
+		System.out.println("JoinGameController json:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;

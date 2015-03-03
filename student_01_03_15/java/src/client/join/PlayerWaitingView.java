@@ -130,7 +130,6 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		//the center panel contains the individual player panels
 		center.removeAll();
 		center.setPreferredSize(new Dimension(400,200));
-		center.revalidate();
 		
 		//build an individual player panel and add it to the center panel
 		for(int i = 0; i < value.length; i++){
@@ -139,7 +138,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 			playerPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); //left justify the text in the panel
 			playerPanel.setMaximumSize(new Dimension(600,50));
 			playerPanel.setBackground(value[i].getColorCatan().getJavaColor()); //set the background color of the player
-//			//System.out.println("-----------In playerWaitingView: " + builtString + "--" + value[i].getColorCatan().name());
+//			System.out.println("-----------In playerWaitingView: " + builtString + "--" + value[i].getColorCatan().name());
 			JLabel playerLabel = new JLabel(builtString, SwingConstants.LEFT); //justify the text left
 			FontUtils.setFont(playerLabel, LABEL_TEXT_SIZE);
 			playerPanel.add(playerLabel);
@@ -151,6 +150,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 			Dimension maxSize = new Dimension(Short.MAX_VALUE, 10);
 			center.add(new Box.Filler(minSize, prefSize, maxSize));			
 		}
+		center.revalidate();
 	}
 
 	@Override

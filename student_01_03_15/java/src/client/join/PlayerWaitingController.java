@@ -43,7 +43,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start()
 	{
-		//System.out.println("----> start() called in playerWaitingController");
+		System.out.println("----> start() called in playerWaitingController");
 
 		Game gameModel = master.getCurrentModel();
 		this.controllerStarted = true;
@@ -63,10 +63,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void update(Observable o, Object arg) 
 	{
+		System.out.println("UPDATING playerWaitingController.");
 		// TODO Auto-generated method stub
 		if(!master.hasJoinedGame)
 		{
-			//System.out.println("UPDATING playerWaitingController.");
 			ModelManager manager = (ModelManager) o;
 			Game gameModel = manager.getCurrentModel();
 			
@@ -100,6 +100,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		// Hack to work around current player not showing up on Waiting list. Will be true first time start() is called.
 		if(showModal)
 		{
+			System.out.println("PlayerWaitingController showModal");
 			getView().showModal();
 			showModal = false;
 		}

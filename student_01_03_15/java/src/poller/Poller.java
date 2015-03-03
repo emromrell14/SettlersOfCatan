@@ -89,7 +89,7 @@ public class Poller implements Runnable
 		 // And From your main() method or any other method
 		 timer = new Timer();
 		 timer.schedule(new PollTimer(), 0, mSecondsBetweenPolls * 1000);
-		 //System.out.println("Starting Timer");
+		 System.out.println("Starting Timer");
 	}
 	
 	/**
