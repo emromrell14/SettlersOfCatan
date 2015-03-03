@@ -128,7 +128,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void update(Observable o, Object arg)
 	{
 		// TODO Auto-generated method stub
-		
+		boolean isPlayersTurn = master.getCurrentModel().turnTracker().isPlayersTurn(master.getPlayerIndex());
+
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
 		{
@@ -155,10 +156,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		}
 		
 		// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
-		this.getView().setElementEnabled(ResourceBarElement.ROAD, state.canAffordRoad());
-		this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canAffordSettlement());
-		this.getView().setElementEnabled(ResourceBarElement.CITY, state.canAffordCity());
-		this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
+		this.getView().setElementEnabled(ResourceBarElement.ROAD, isPlayersTurn && state.canAffordRoad());
+		this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, isPlayersTurn && state.canAffordSettlement());
+		this.getView().setElementEnabled(ResourceBarElement.CITY, isPlayersTurn && state.canAffordCity());
+		this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, isPlayersTurn && state.canBuyDevCard());
 		
 		setResourceAmounts();
 	}
