@@ -190,7 +190,12 @@ public class Player implements IPlayer
 
 	public boolean canPlaceRoad(EdgeLocation loc) 
 	{
-		// STILL NEED TO CHECK FOR SEA TILES AS NEIGHBOR HEXES ONCE WE GET THE GUI (just in case the GUI handles it)
+		//Check if we are in the sea first
+		if(loc.isInSea())
+		{
+			return false;
+		}
+
 		loc = loc.getNormalizedLocation();
 		switch (loc.getDir().getLengthendDirection())
 		{
