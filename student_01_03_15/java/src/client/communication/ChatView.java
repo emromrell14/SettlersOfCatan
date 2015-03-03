@@ -1,10 +1,13 @@
 package client.communication;
 
 import client.base.PanelView;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -23,7 +26,8 @@ public class ChatView extends PanelView implements IChatView {
     /**
      * Creates a new chat view component.
      */
-    public ChatView() {
+    public ChatView() 
+    {
         // Create the components
         chatPanel = new LogComponent();
         chatScrollPane = new JScrollPane(chatPanel);
@@ -70,27 +74,44 @@ public class ChatView extends PanelView implements IChatView {
     }
 
     @Override
-    public IChatController getController() {
+    public IChatController getController() 
+    {
         return (IChatController) super.getController();
     }
 
     @Override
-    public void setEntries(final List<LogEntry> entries) {
+    public void setEntries(final List<LogEntry> entries) 
+    {
         chatPanel.setEntries(entries);
     }
     
     /**
      * Calls the send message function on the registered IChatController.
      */
-    private void sendMessage() {
+    private void sendMessage() 
+    {
         String message = chatTextInput.getText();
-        if (!message.isEmpty()) {
+        if (!message.isEmpty() && message.matches(".*\\w.*") && isAlphaNumPunctuation(message)) 
+        {
             getController().sendMessage(message);
             
             // Clear the text area so we are ready for the next message
             chatTextInput.setText("");
         }
+        else
+        {
+        	//custom title, error icon
+        	JOptionPane.showMessageDialog(this,
+        	    "Bad input",
+        	    "Bad input",
+        	    JOptionPane.ERROR_MESSAGE);
+        }
     }
+    
+    private boolean isAlphaNumPunctuation(String word) 
+	{
+		return (word.matches("[a-zA-Z0-9,./;:'!@#$%^&*()-_=+{}?>< ]+"));	
+	}
     
     /**
      * Handles events that occur on the chat view.

@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import models.Player;
 import client.base.*;
+import client.join.JoinGameController;
 import facade.IMasterManager;
 import facade.MasterManager;
 
@@ -16,7 +17,7 @@ public class PointsController extends Controller implements IPointsController, O
 {
 
 	private IGameFinishedView finishedView;
-	private IMasterManager master;
+	private MasterManager master;
 	
 	/**
 	 * PointsController constructor
@@ -70,8 +71,11 @@ public class PointsController extends Controller implements IPointsController, O
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		initFromModel();
-		showWinner();
+		if(master.hasJoinedGame)
+		{
+			initFromModel();
+			showWinner();
+		}
 	}
 	
 }
