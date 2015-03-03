@@ -90,12 +90,12 @@ public class MovesManager
 	 * @post player is given opportunity to choose which player to steal from
 	 * @return JSON String with the client model
 	 */
-	public Game robPlayer(Index playerIndex, Index victimIndex, HexLocation location) 
+	public Game robPlayer(Index playerIndex, int victimIndex, HexLocation location) 
 	{
 		String response;
 		String body;
 		
-		body = "{type:\"robPlayer\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex.value() + 
+		body = "{type:\"robPlayer\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex + 
 					", location:{x:\"" + location.getX() + "\", y:\"" + location.getY() + "\"}}";
 		
 		response = mProxy.post("/moves/robPlayer", body);
@@ -177,12 +177,12 @@ public class MovesManager
 	 * @post gives player option to move Robber
 	 * @return JSON String with the client model
 	 */
-	public Game playSoldier(Index playerIndex, Index victimIndex, HexLocation location)
+	public Game playSoldier(Index playerIndex, int victimIndex, HexLocation location)
 	{
 		String response;
 		String body;
 		
-		body = "{type:\"Soldier\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex.value() + 
+		body = "{type:\"Soldier\", playerIndex:" + playerIndex.value() + ", victimIndex:" + victimIndex + 
 					", location:{x:\"" + location.getX() + "\", y:\"" + location.getY() + "\"}}";
 		
 		response = mProxy.post("/moves/Soldier", body);

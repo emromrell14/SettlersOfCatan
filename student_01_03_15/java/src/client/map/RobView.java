@@ -35,7 +35,12 @@ public class RobView extends OverlayView implements IRobView {
 	private ArrayList<JButton> victimButtons;
 
 	public RobView() {
-		
+		initialize();
+	
+	}
+	
+	private void initialize()
+	{
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
@@ -75,7 +80,9 @@ public class RobView extends OverlayView implements IRobView {
 			
 			if (e.getSource() == defaultButton) {
 				closeModal();
-				getController().robNoOne();
+				RobPlayerInfo r = new RobPlayerInfo();
+				r.setPlayerIndex(-1);
+				getController().robPlayer(r);
 			}
 			else{
 				
@@ -87,7 +94,6 @@ public class RobView extends OverlayView implements IRobView {
 						getController().robPlayer(victims[i]);
 					}
 				}
-				
 			}
 		}	
 	};
@@ -136,6 +142,11 @@ public class RobView extends OverlayView implements IRobView {
 				this.add(buttonPanel, BorderLayout.CENTER);
 				revalidate();
 			}
+		}
+		else
+		{
+			this.removeAll();
+			this.initialize();
 		}
 	}
 

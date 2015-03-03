@@ -259,18 +259,21 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().placeRobber(hexLoc);
 		getRobView().setRobberLocation(hexLoc);
 		ArrayList<Player> v = (ArrayList<Player>) master.getRobbingVictims(hexLoc);
-		RobPlayerInfo[] victims = new RobPlayerInfo[v.size()];
-		for(int i = 0; i < v.size(); ++i)
+//		if(v.size() > 0)
 		{
-			RobPlayerInfo r = new RobPlayerInfo();
-			r.setNumCards(v.get(i).resources().getTotal());
-			r.setColor(v.get(i).color().toString());
-			r.setName(v.get(i).name());
-			r.setPlayerIndex(v.get(i).playerIndex().value());
-			victims[i] = r;
-		}		
-		getRobView().setPlayers(victims);
-		getRobView().showModal();
+			RobPlayerInfo[] victims = new RobPlayerInfo[v.size()];
+			for(int i = 0; i < v.size(); ++i)
+			{
+				RobPlayerInfo r = new RobPlayerInfo();
+				r.setNumCards(v.get(i).resources().getTotal());
+				r.setColor(v.get(i).color().toString());
+				r.setName(v.get(i).name());
+				r.setPlayerIndex(v.get(i).playerIndex().value());
+				victims[i] = r;
+			}		
+			getRobView().setPlayers(victims);
+			getRobView().showModal();
+		}
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
@@ -309,17 +312,15 @@ public class MapController extends Controller implements IMapController, Observe
 	public void robPlayer(RobPlayerInfo victim) 
 	{
 		try 
-		{
-			Index victimIndex = new Index(victim.getPlayerIndex());
-			
+		{			
 			if(soldierRob)
 			{
 				soldierRob = false;
-				master.playSoldier(master.getPlayerIndex(), victimIndex, robberLocation);
+				master.playSoldier(master.getPlayerIndex(), victim.getPlayerIndex(), robberLocation);
 			}
 			else
 			{
-				master.robPlayer(master.getPlayerIndex(), victimIndex, getRobView().getRobberLocation());
+				master.robPlayer(master.getPlayerIndex(), victim.getPlayerIndex(), getRobView().getRobberLocation());
 			}
 		} 
 		catch (Exception e) 
