@@ -21,7 +21,7 @@ import facade.MasterManager;
 public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
-	private IMasterManager master;
+	private MasterManager master;
 	private IState state;
 	private static boolean semaphore = false;
 	/**
@@ -53,7 +53,7 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-		
+		master.hasRolled = true;
 		int die1 = (int)(Math.random() * 6) + 1;
 		int die2 = (int)(Math.random() * 6) + 1;
 		int rollNum = die1 + die2;
@@ -72,7 +72,7 @@ public class RollController extends Controller implements IRollController, Obser
 	public void update(Observable o, Object arg) 
 	{
 		// TODO Auto-generated method stub
-		System.out.println("\nTurnTrackerStatus: " + master.getCurrentModel().turnTracker().status());
+//		System.out.println("\nRollController update status: " + master.getCurrentModel().turnTracker().status());
 		
 		Status status = master.getCurrentModel().turnTracker().status();
 		switch(status)
@@ -93,7 +93,7 @@ public class RollController extends Controller implements IRollController, Obser
 					
 					if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
 					{
-						if (!getRollView().isModalShowing())
+						if (!getRollView().isModalShowing() && !master.hasRolled)
 						{
 							getRollView().showModal();
 						}
