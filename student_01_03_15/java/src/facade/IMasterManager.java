@@ -104,7 +104,7 @@ public interface IMasterManager
 
 	public void rollDice(Index playerIndex, int rollNum);
 
-	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation location);
+	public void robPlayer(Index playerIndex, int victimIndex, HexLocation location);
 
 	public void finishTurn(Index playerIndex);
 
@@ -114,7 +114,7 @@ public interface IMasterManager
 
 	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 
-	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location);
+	public void playSoldier(Index playerIndex, int victimIndex, HexLocation location);
 
 	public void playMonopoly(ResourceType resource, Index playerIndex);
 

@@ -69,7 +69,8 @@ public class RollController extends Controller implements IRollController, Obser
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg) 
+	{
 		// TODO Auto-generated method stub
 		System.out.println("\nTurnTrackerStatus: " + master.getCurrentModel().turnTracker().status());
 		

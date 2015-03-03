@@ -49,7 +49,8 @@ public class Player implements IPlayer
 	
 	public Player(CatanColor color, boolean discarded, Number monuments, 
 			String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, 
-			int playerID, ResourceList resources, int soldiers, int victoryPoints, int numSettlements,int numCities, int numRoads)
+			int playerID, ResourceList resources, int soldiers, int victoryPoints, int numSettlements,int numCities, int numRoads,
+			boolean playedDevCard)
 	{
 		this.mColor = color;
 		this.mName = name;
@@ -67,6 +68,7 @@ public class Player implements IPlayer
 		this.mDevCards = new ArrayList<DevCard>();
 		this.mDevCards.addAll(newDevCards);
 		this.mDevCards.addAll(oldDevCards);
+		this.mHasPlayedDevCard = playedDevCard;
 	}
 	
 	public void addRoad(Road r)

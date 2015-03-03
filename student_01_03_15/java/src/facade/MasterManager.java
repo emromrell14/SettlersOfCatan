@@ -534,7 +534,7 @@ public class MasterManager implements IMasterManager
 	 * @post player is given opportunity to choose which player to steal from
 	 * @return JSON String with the client model
 	 */
-	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation location) 
+	public void robPlayer(Index playerIndex, int victimIndex, HexLocation location) 
 	{
 		Game game = mMovesManager.robPlayer(playerIndex, victimIndex, location);
 		this.updateModel(game);
@@ -592,7 +592,7 @@ public class MasterManager implements IMasterManager
 	 * @post gives player option to move Robber
 	 * @return JSON String with the client model
 	 */
-	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location)
+	public void playSoldier(Index playerIndex, int victimIndex, HexLocation location)
 	{
 		Game game = mMovesManager.playSoldier(playerIndex, victimIndex, location);
 		this.updateModel(game);

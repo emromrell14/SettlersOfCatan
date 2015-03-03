@@ -44,7 +44,7 @@ public class PlayerJSON
 		{
 			player = new models.Player(CatanColor.valueOf(color.toUpperCase()), discarded, victoryPoints, name, newList, oldList,
 										new Index(playerIndex), playerID, resources.getModel(),this.soldiers, this.victoryPoints,
-										this.settlements, this.cities, this.roads);			
+										this.settlements, this.cities, this.roads,this.playedDevCard);			
 		} 
 		catch (Exception e) 
 		{
