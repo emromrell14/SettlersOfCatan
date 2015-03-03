@@ -104,7 +104,8 @@ public class LoginController extends Controller implements ILoginController, Obs
 		String username = getLoginView().getRegisterUsername();
 		String password = getLoginView().getRegisterPassword();
 		String password2 = getLoginView().getRegisterPasswordRepeat();
-		boolean success = !username.isEmpty() && !password.isEmpty() && !password2.isEmpty() && password.contentEquals(password2);
+		boolean success = !username.isEmpty() && !password.isEmpty() && !password2.isEmpty() 
+				&& password.contentEquals(password2) && isAscii(username) && isAscii(password);
 		if(success)
 		{
 			success = master.register(username, password2);
@@ -124,6 +125,10 @@ public class LoginController extends Controller implements ILoginController, Obs
 //			getLoginView().closeModal();
 			messageView.showModal();
 		}
+	}
+
+	private boolean isAscii(String word) {
+		return (word.matches("[a-zA-Z0-9]+"));	
 	}
 
 	@Override

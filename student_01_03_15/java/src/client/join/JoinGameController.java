@@ -144,7 +144,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 //		System.out.println("Title-" + title + "-");
 		
 		// Check that title has at least 1 non-whitespace character
-		if(title.matches(".*\\w.*"))
+		if(title.matches(".*\\w.*") && isAscii(title))
 		{
 			String response = master.createGame(randHexes, randNums, randPorts, title);
 			GameInfoJSON newGame = new GameInfoJSON();
@@ -225,6 +225,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			messageView.setMessage("Something went wrong when trying to join the game!");
 			messageView.showModal();
 		}
+	}
+	
+	private boolean isAscii(String word) 
+	{
+		return (word.matches("[a-zA-Z0-9]+"));	
 	}
 	
 	public void generateGameList()
