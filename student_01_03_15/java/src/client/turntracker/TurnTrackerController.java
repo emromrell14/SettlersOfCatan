@@ -60,7 +60,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			getView().updatePlayer(playerIndex, p.victoryPointCount(), 
 					playerIndex == master.getCurrentModel().turnTracker().currentTurn().value(), 
 					playerIndex == master.largestArmyIndex(), 
-					playerIndex == master.longestRoadIndex());
+					playerIndex == master.longestRoadIndex(),
+					p.color());
 		}
 		getView().setLocalPlayerColor(master.getPlayer().color());
 	}

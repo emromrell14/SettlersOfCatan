@@ -487,6 +487,10 @@ public class Player implements IPlayer
 	
 	public boolean canPlayDevCard() 
 	{
+		if (this.hasMonument())
+		{
+			return true;
+		}
 		if (
 				this.devCards().isEmpty() || // Checks that this player has a dev card
 				this.hasPlayedDevCard() // Checks that player hasn't already played a dev card
@@ -503,6 +507,17 @@ public class Player implements IPlayer
 			}
 		}
 		
+		return false;
+	}
+	public boolean hasMonument()
+	{
+		for (DevCard d : this.devCards())
+		{
+			if (d.type() == DevCardType.MONUMENT)
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -681,11 +696,12 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		return mResources.brick() >= tradeOffer.offer().brick()
-				&& mResources.ore() >= tradeOffer.offer().ore()
-				&& mResources.sheep() >= tradeOffer.offer().sheep()
-				&& mResources.wheat() >= tradeOffer.offer().wheat()
-				&& mResources.wood() >= tradeOffer.offer().wood();
+		
+		return mResources.brick() >= -tradeOffer.offer().brick()
+				&& mResources.ore() >= -tradeOffer.offer().ore()
+				&& mResources.sheep() >= -tradeOffer.offer().sheep()
+				&& mResources.wheat() >= -tradeOffer.offer().wheat()
+				&& mResources.wood() >= -tradeOffer.offer().wood();
 	}
 	public boolean haveResourceAmount(PortType type)
 	{

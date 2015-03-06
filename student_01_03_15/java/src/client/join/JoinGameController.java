@@ -230,7 +230,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	
 	private boolean isAscii(String word) 
 	{
-		return (word.matches("[a-zA-Z0-9 ]+"));	
+		return (word.matches("[a-zA-Z0-9<,>.?/:;\"\'\\!@#$%^&*()_~`]+"));
 	}
 	
 	public void generateGameList()

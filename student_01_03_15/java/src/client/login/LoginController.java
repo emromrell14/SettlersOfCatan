@@ -128,7 +128,7 @@ public class LoginController extends Controller implements ILoginController, Obs
 	}
 
 	private boolean isAscii(String word) {
-		return (word.matches("[a-zA-Z0-9]+"));	
+		return (word.matches("[a-zA-Z0-9<,>.?/:;\"\'\\!@#$%^&*()_~`]+"));	
 	}
 
 	@Override

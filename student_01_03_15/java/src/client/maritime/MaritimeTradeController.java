@@ -231,9 +231,20 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		//////System.out.println("UPDATING maritimeTradeController.");
-		ModelManager manager = (ModelManager) o;
-		gameModel = manager.getCurrentModel();
+		////System.out.println("UPDATING maritimeTradeController.");
+		if (master.hasJoinedGame)
+		{
+			if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
+			{
+				this.getTradeView().enableMaritimeTrade(true);
+			}
+			else
+			{
+				this.getTradeView().enableMaritimeTrade(false);
+			}
+			ModelManager manager = (ModelManager) o;
+			gameModel = manager.getCurrentModel();
+		}
 	}
 }
 

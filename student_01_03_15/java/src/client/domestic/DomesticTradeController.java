@@ -28,7 +28,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
-	private IMasterManager master;
+	private MasterManager master;
 	private TradePanel waitingPanel;
 	
 	private boolean playersInitialized = false;
@@ -287,6 +287,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		//Set the overlay. They should always be able to increase, but never decrease to start off with
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, false);
+		
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
 	}
 
 	@Override
@@ -303,6 +306,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		//Set the overlay. They should only be able to increase if they have the resource
 		int resourceAmount = this.getResourceCount(master.getPlayer(), resource);
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, resourceAmount > 0, false);
+		
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
 	}
 
 	@Override
@@ -390,6 +396,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update(Observable o, Object arg) 
 	{
+		if (!master.hasJoinedGame)
+		{
+			return;
+		}
+		if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
+		{
+			this.getTradeView().enableDomesticTrade(true);
+			if(this.waitOverlay.isModalShowing())
+			{
+				this.waitOverlay.closeModal();
+			}
+			master.getCurrentModel().setVersion((int)(Math.random()));
+		}
+		else
+		{
+			this.getTradeView().enableDomesticTrade(false);
+		}
 		Trade trade = this.master.getCurrentModel().trade();
 		if(trade != null)
 		{
@@ -415,55 +438,55 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int brick = trade.offer().brick();
 		if(brick < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.BRICK, -brick);
+			this.acceptOverlay.addGiveResource(ResourceType.BRICK, -brick);
 		}
 		else if(brick > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.BRICK, brick);
+			this.acceptOverlay.addGetResource(ResourceType.BRICK, brick);
 		}
 		
 		//ORE
 		int ore = trade.offer().ore();
 		if(ore < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.ORE, -ore);
+			this.acceptOverlay.addGiveResource(ResourceType.ORE, -ore);
 		}
 		else if(ore > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.ORE, ore);
+			this.acceptOverlay.addGetResource(ResourceType.ORE, ore);
 		}
 		
 		//SHEEP
 		int sheep = trade.offer().sheep();
 		if(sheep < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.SHEEP, -sheep);
+			this.acceptOverlay.addGiveResource(ResourceType.SHEEP, -sheep);
 		}
 		else if(sheep > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.SHEEP, sheep);
+			this.acceptOverlay.addGetResource(ResourceType.SHEEP, sheep);
 		}
 
 		//WHEAT
 		int wheat = trade.offer().wheat();
 		if(wheat < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.WHEAT, -wheat);
+			this.acceptOverlay.addGiveResource(ResourceType.WHEAT, -wheat);
 		}
 		else if(wheat > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.WHEAT, wheat);
+			this.acceptOverlay.addGetResource(ResourceType.WHEAT, wheat);
 		}
 
 		//WOOD
 		int wood = trade.offer().wood();
 		if(wood < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.WOOD, -wood);
+			this.acceptOverlay.addGiveResource(ResourceType.WOOD, -wood);
 		}
 		else if(wood > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.WOOD, wood);
+			this.acceptOverlay.addGetResource(ResourceType.WOOD, wood);
 		}
 	}
 
