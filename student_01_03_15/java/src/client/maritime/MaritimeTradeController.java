@@ -232,6 +232,14 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void update(Observable o, Object arg) 
 	{
 		////System.out.println("UPDATING maritimeTradeController.");
+		if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
+		{
+			this.getTradeView().enableMaritimeTrade(true);
+		}
+		else
+		{
+			this.getTradeView().enableMaritimeTrade(false);
+		}
 		ModelManager manager = (ModelManager) o;
 		gameModel = manager.getCurrentModel();
 	}

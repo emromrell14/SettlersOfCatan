@@ -390,6 +390,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update(Observable o, Object arg) 
 	{
+		if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
+		{
+			this.getTradeView().enableDomesticTrade(true);
+		}
+		else
+		{
+			this.getTradeView().enableDomesticTrade(false);
+		}
 		Trade trade = this.master.getCurrentModel().trade();
 		if(trade != null)
 		{
