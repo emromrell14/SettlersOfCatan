@@ -696,11 +696,12 @@ public class Player implements IPlayer
 		{
 			return false;
 		}
-		return mResources.brick() >= tradeOffer.offer().brick()
-				&& mResources.ore() >= tradeOffer.offer().ore()
-				&& mResources.sheep() >= tradeOffer.offer().sheep()
-				&& mResources.wheat() >= tradeOffer.offer().wheat()
-				&& mResources.wood() >= tradeOffer.offer().wood();
+		
+		return mResources.brick() >= -tradeOffer.offer().brick()
+				&& mResources.ore() >= -tradeOffer.offer().ore()
+				&& mResources.sheep() >= -tradeOffer.offer().sheep()
+				&& mResources.wheat() >= -tradeOffer.offer().wheat()
+				&& mResources.wood() >= -tradeOffer.offer().wood();
 	}
 	public boolean haveResourceAmount(PortType type)
 	{
