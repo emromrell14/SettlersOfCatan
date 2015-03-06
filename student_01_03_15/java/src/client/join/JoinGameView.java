@@ -185,7 +185,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 			{
 				try
 				{
-					////System.out.println(e.getActionCommand());
+					//////System.out.println(e.getActionCommand());
 					int gameId = Integer.parseInt(e.getActionCommand());
 					GameInfo game = null;
 					for (GameInfo g : games)

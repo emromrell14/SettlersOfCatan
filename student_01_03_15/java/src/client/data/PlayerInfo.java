@@ -82,7 +82,7 @@ public class PlayerInfo
 		this.color = color;
 		if(color != null)
 			this.colorCatan = CatanColor.valueOf(color.toUpperCase());
-		////System.out.println("PLAYER info: " + this.colorCatan);
+		//////System.out.println("PLAYER info: " + this.colorCatan);
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class OverlayView extends PanelView implements IOverlayView
 //		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 //		for(StackTraceElement s : stackTraceElements)
 //		{
-//			System.out.println(s.toString());
+//			//System.out.println(s.toString());
 //		}
 		// Open the new overlay
 		JPanel overlayPanel = new JPanel();
