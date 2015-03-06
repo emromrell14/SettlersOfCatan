@@ -438,55 +438,55 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int brick = trade.offer().brick();
 		if(brick < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.BRICK, -brick);
+			this.acceptOverlay.addGiveResource(ResourceType.BRICK, -brick);
 		}
 		else if(brick > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.BRICK, brick);
+			this.acceptOverlay.addGetResource(ResourceType.BRICK, brick);
 		}
 		
 		//ORE
 		int ore = trade.offer().ore();
 		if(ore < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.ORE, -ore);
+			this.acceptOverlay.addGiveResource(ResourceType.ORE, -ore);
 		}
 		else if(ore > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.ORE, ore);
+			this.acceptOverlay.addGetResource(ResourceType.ORE, ore);
 		}
 		
 		//SHEEP
 		int sheep = trade.offer().sheep();
 		if(sheep < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.SHEEP, -sheep);
+			this.acceptOverlay.addGiveResource(ResourceType.SHEEP, -sheep);
 		}
 		else if(sheep > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.SHEEP, sheep);
+			this.acceptOverlay.addGetResource(ResourceType.SHEEP, sheep);
 		}
 
 		//WHEAT
 		int wheat = trade.offer().wheat();
 		if(wheat < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.WHEAT, -wheat);
+			this.acceptOverlay.addGiveResource(ResourceType.WHEAT, -wheat);
 		}
 		else if(wheat > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.WHEAT, wheat);
+			this.acceptOverlay.addGetResource(ResourceType.WHEAT, wheat);
 		}
 
 		//WOOD
 		int wood = trade.offer().wood();
 		if(wood < 0)
 		{
-			this.acceptOverlay.addGetResource(ResourceType.WOOD, -wood);
+			this.acceptOverlay.addGiveResource(ResourceType.WOOD, -wood);
 		}
 		else if(wood > 0)
 		{
-			this.acceptOverlay.addGiveResource(ResourceType.WOOD, wood);
+			this.acceptOverlay.addGetResource(ResourceType.WOOD, wood);
 		}
 	}
 
