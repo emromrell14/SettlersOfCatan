@@ -117,6 +117,7 @@ public class ClientModelJSON
 		g.setResourceList(bank.getModelResourceList());
 		g.setVersion(version);
 		g.setWinner(winner);
+		System.out.println("Index of winner coming from server: " + winner);
 		g.setRobber(map.getModelRobber());
 		g.setBoard(map.getModelBoard());
 		g.setChat(chat);
