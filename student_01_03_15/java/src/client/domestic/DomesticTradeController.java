@@ -287,6 +287,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		//Set the overlay. They should always be able to increase, but never decrease to start off with
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, false);
+		
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
 	}
 
 	@Override
@@ -303,6 +306,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		//Set the overlay. They should only be able to increase if they have the resource
 		int resourceAmount = this.getResourceCount(master.getPlayer(), resource);
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, resourceAmount > 0, false);
+		
+		//Update the button
+		this.tradeOverlay.setTradeEnabled(areWeReadyToTrade());
 	}
 
 	@Override
