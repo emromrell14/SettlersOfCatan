@@ -28,7 +28,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
-	private IMasterManager master;
+	private MasterManager master;
 	private TradePanel waitingPanel;
 	
 	private boolean playersInitialized = false;
@@ -390,9 +390,18 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update(Observable o, Object arg) 
 	{
+		if (!master.hasJoinedGame)
+		{
+			return;
+		}
 		if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
 		{
 			this.getTradeView().enableDomesticTrade(true);
+			if(this.waitOverlay.isModalShowing())
+			{
+				this.waitOverlay.closeModal();
+			}
+			master.getCurrentModel().setVersion((int)(Math.random()));
 		}
 		else
 		{
