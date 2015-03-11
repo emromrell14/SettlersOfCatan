@@ -7,6 +7,9 @@ import shared.definitions.DevCardType;
 public class Monument extends DevCard
 {
 
+	/**
+	 * Default constructor. Sets the card's type to Monument and declares it as an old card
+	 */
 	public Monument() 
 	{
 		this.setType(DevCardType.MONUMENT);

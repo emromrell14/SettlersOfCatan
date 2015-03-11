@@ -28,11 +28,20 @@ public class Index
 		return mValue;
 	}
 
+	/**
+	 * Sets the Index value
+	 * @param mValue an integer value between 0 and 3 inclusive
+	 */
 	public void setIndex(int mValue) 
 	{
 		this.mValue = mValue;
 	}
 	
+	/**
+	 * Checks the equality of the Indices based upon the values contained
+	 * @param index
+	 * @return
+	 */
 	public boolean equals(Index index)
 	{
 		if (this.mValue == index.value())
