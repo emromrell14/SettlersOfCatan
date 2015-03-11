@@ -114,7 +114,7 @@ public class ClientModelJSON
 	{
 		Game g = new Game();
 		g.setTurnTracker(turnTracker.getModelTurnTracker());
-		g.setResourceList(bank.getModelResourceList());
+		g.setBank(bank.getModelResourceList());
 		g.setVersion(version);
 		g.setWinner(winner);
 		System.out.println("Index of winner coming from server: " + winner);
