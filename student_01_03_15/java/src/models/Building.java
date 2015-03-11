@@ -36,7 +36,7 @@ public class Building
 	
 	/** 
 	 * Gets index of player that owns this piece.
-	 * 
+	 * @pre none
 	 * @return an integer id corresponding to the player that owns this piece
 	 */
 	public Index owner()
@@ -46,7 +46,7 @@ public class Building
 	
 	/** 
 	 * Gets building location.
-	 * 
+	 * @pre none
 	 * @return the location of this building on the grid
 	 */
 	public VertexLocation location()
@@ -67,7 +67,13 @@ public class Building
 	{
 		return mBuildingType;
 	}
-	
+	/**
+	 * 
+	 * @param ports
+	 * @pre building has a location
+	 * @post none
+	 * @return List of ports that the building touches
+	 */
 	public Port getAttachedPort(List<Port> ports) {
 		VertexLocation buildingLocation = this.location().getNormalizedLocation();
 		for(Port port : ports)
