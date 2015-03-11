@@ -910,7 +910,7 @@ public class MapComponent extends JComponent
 	
 	private double getPortRotation(EdgeLocation edgeLoc)
 	{
-//		//System.out.println(edgeLoc.getDir());
+//		////System.out.println(edgeLoc.getDir());
 		
 		return PORT_ROTATIONS.get(Lengthen(edgeLoc.getDir()));
 	}
@@ -938,7 +938,7 @@ public class MapComponent extends JComponent
 			case SE:
 				return EdgeDirection.SouthEast;				
 			default:
-				//System.out.println("NULL!!!");
+				////System.out.println("NULL!!!");
 				assert false;
 				return null;
 		} 	
@@ -1012,7 +1012,7 @@ public class MapComponent extends JComponent
 				loc = EdgeDirection.SouthEast;
 				break;				
 			default:
-				//System.out.println("NULL!!!");
+				////System.out.println("NULL!!!");
 				assert false;
 				loc = null;
 		}
@@ -1058,7 +1058,7 @@ public class MapComponent extends JComponent
 				loc = VertexDirection.East;
 				break;				
 			default:
-				//System.out.println("NULL!!!");
+				////System.out.println("NULL!!!");
 				assert false;
 				return null;
 		}

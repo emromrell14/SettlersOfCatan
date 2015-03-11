@@ -217,7 +217,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	{
 		//Create the resourceList to offer
 		ResourceList resourceList = createResourceList();
-		System.out.println("Sending offer to playerIndex "+ this.sendOfferTo.value() + " for "+ resourceList.brick() + " brick, " + resourceList.ore() + " ore, " + resourceList.sheep() + " sheep, " + resourceList.wheat() + " wheat, and " + resourceList.wood() + " wood.");
+		//System.out.println("Sending offer to playerIndex "+ this.sendOfferTo.value() + " for "+ resourceList.brick() + " brick, " + resourceList.ore() + " ore, " + resourceList.sheep() + " sheep, " + resourceList.wheat() + " wheat, and " + resourceList.wood() + " wood.");
 		master.offerTrade(master.getPlayerIndex(), resourceList, this.sendOfferTo);
 		
 		// Reset properties of tradeOverlay and who you are sending too
@@ -382,7 +382,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void acceptTrade(boolean willAccept) 
 	{
-		System.out.println("Was the trade accepted? --> "+ willAccept);
+		//System.out.println("Was the trade accepted? --> "+ willAccept);
 		master.acceptTrade(master.getPlayerIndex(), willAccept);
 		
 		// Need to check here for that receiver has sufficient resources:

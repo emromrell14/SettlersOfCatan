@@ -247,7 +247,7 @@ public class Player implements IPlayer
 			}
 			break;
 		default:
-			System.out.println("Invalid Edge Direction");
+			//System.out.println("Invalid Edge Direction");
 		}
 		return false;
 	}
@@ -589,7 +589,7 @@ public class Player implements IPlayer
 	{
 		if(this.hasPlayedDevCard())
 		{
-			System.out.println("hasPlayedDevCard");
+			//System.out.println("hasPlayedDevCard");
 			return false;
 		}
 		for(DevCard devCard : this.devCards())

@@ -115,7 +115,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start()
 	{
-		System.out.println("joinGameController.start()");
+		//System.out.println("joinGameController.start()");
 		this.generateGameList();
 		getJoinGameView().showModal();
 	}
@@ -141,8 +141,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		Boolean randPorts = this.newGameView.getUseRandomPorts();
 		
 		// for testing
-//		System.out.println("Checkboxes: " + randHexes + " " + randNums +  " " + randPorts);
-//		System.out.println("Title-" + title + "-");
+//		//System.out.println("Checkboxes: " + randHexes + " " + randNums +  " " + randPorts);
+//		//System.out.println("Title-" + title + "-");
 		
 		// Check that title has at least 1 non-whitespace character
 		if(title.matches(".*\\w.*") && isAscii(title))
@@ -210,7 +210,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		localPlayer.setColorCatan(color);
 		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
-//		System.out.println("joinGameController RESPONSE: " + response);
+//		//System.out.println("joinGameController RESPONSE: " + response);
 		
 		// Check for failure...it won't fail if same color is chosen
 		if(response.equals("Success"))
@@ -236,12 +236,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void generateGameList()
 	{
 		String JSON = master.getGameList();
-		System.out.println("JoinGameController json:" + JSON + ":");
+		//System.out.println("JoinGameController json:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;
 		
-//		System.out.println("JoinGameController json2:" + JSON + ":");
+//		//System.out.println("JoinGameController json2:" + JSON + ":");
 
 		gameInfoArray = gameInfo.getGamesArrayFromJSON(JSON);
 		for(GameInfoJSON gameJSON : gameInfoArray)
@@ -288,6 +288,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		if(!inGame)
 		{
+			//This is quite a hack. Just shut down any left over modals when the game is joined
+			if(this.getJoinGameView().isModalShowing()) {
+				this.getJoinGameView().closeModal();
+			}
 			System.out.println("UPDATING joinGameController.");
 			ModelManager manager = (ModelManager) o;
 			gameModel = manager.getCurrentModel();
@@ -301,15 +305,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				
 //				for(int k = 0; k < takenColors.size(); ++k)
 //				{
-//					System.out.print(takenColors.get(k) + " " );
+//					//System.out.print(takenColors.get(k) + " " );
 //				}
 				// Check to replace a player's old color with their new one
 				if(takenColors.size() != 0 && i < takenColors.size())
 				{
-	//				System.out.println(p.color().name() +"="+takenColors.get(i)+"--------------Taken colors" + takenColors.get(i) + " INDEX: " + i);
+	//				//System.out.println(p.color().name() +"="+takenColors.get(i)+"--------------Taken colors" + takenColors.get(i) + " INDEX: " + i);
 					if(!takenColors.get(i).equals(p.color().name()))
 					{
-//						System.out.println("$$$$$$$$$$$ enabling " + takenColors.get(i));
+//						//System.out.println("$$$$$$$$$$$ enabling " + takenColors.get(i));
 						getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(i)), true); 
 						takenColors.set(i, p.color().name());
 					}
@@ -332,7 +336,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				}
 				else
 				{
-					System.out.println("NULLLLLLLLLLLL PLAYERRRRRRRRRRRR (joinGameController)");
+					//System.out.println("NULLLLLLLLLLLL PLAYERRRRRRRRRRRR (joinGameController)");
 				}
 			}
 		}

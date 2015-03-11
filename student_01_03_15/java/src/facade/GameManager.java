@@ -27,12 +27,12 @@ public class GameManager
 	 */
 	public Game getGameModel(int version)
 	{
-		System.out.println("getGameModel");
+		//System.out.println("getGameModel");
 		String response;
 		String urlPath = "/game/model?version="+version;
 		
 		response = mProxy.get(urlPath);
-		////System.out.println("Game Manager JSON: " + response);
+		//////System.out.println("Game Manager JSON: " + response);
 		return (response.equals("\"true\"")) ? null : jsonToGame(response);
 		
 //		Hack for something paul did

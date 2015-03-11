@@ -43,7 +43,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start()
 	{
-		System.out.println("----> start() called in playerWaitingController");
+		//System.out.println("----> start() called in playerWaitingController");
 
 		Game gameModel = master.getCurrentModel();
 		this.controllerStarted = true;
@@ -63,7 +63,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		System.out.println("UPDATING playerWaitingController.");
+		//System.out.println("UPDATING playerWaitingController.");
 		// TODO Auto-generated method stub
 		if(!master.hasJoinedGame)
 		{
@@ -86,7 +86,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				info.setId(p.playerID());
 				info.setPlayerIndex(p.playerIndex().value());
 				info.setColorCatan(p.color());
-				//System.out.println("playerwaiting--->"+ p.color().name());
+				////System.out.println("playerwaiting--->"+ p.color().name());
 				players.add(info);
 			}
 		}
@@ -100,7 +100,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		// Hack to work around current player not showing up on Waiting list. Will be true first time start() is called.
 		if(showModal)
 		{
-			System.out.println("PlayerWaitingController showModal");
+			//System.out.println("PlayerWaitingController showModal");
 			getView().showModal();
 			showModal = false;
 		}
@@ -113,7 +113,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	
 	public void startGame()
 	{
-		//System.out.println("------> startGame() called in PlayerWaiting...closing modal");
+		////System.out.println("------> startGame() called in PlayerWaiting...closing modal");
 		master.hasJoinedGame = true;
 		getView().closeModal();
 	}

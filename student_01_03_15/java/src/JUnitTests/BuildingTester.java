@@ -61,31 +61,31 @@ public class BuildingTester
 	@Test
 	public void testBuildings() 
 	{
-		//System.out.println("\nBUILDING OBJECTS AND MEMBERS TEST:\n");
+		////System.out.println("\nBUILDING OBJECTS AND MEMBERS TEST:\n");
 		//testings buildingType
-		//System.out.print("Testing building types");
+		////System.out.print("Testing building types");
 		assertTrue(buildingZero.buildingType().equals(BuildingType.SETTLEMENT));
-		//System.out.print(" . ");
+		////System.out.print(" . ");
 		assertTrue(buildingSettle.buildingType().equals(BuildingType.SETTLEMENT));
-		//System.out.print(" . ");
+		////System.out.print(" . ");
 		assertTrue(buildingCity.buildingType().equals(BuildingType.CITY));
-		//System.out.println(" - PASSED");
+		////System.out.println(" - PASSED");
 		
-		//System.out.print("Testing building location");
+		////System.out.print("Testing building location");
 		//testing buildingLocation
 		assertTrue(buildingZero.location().equals(locationZero));
-		//System.out.print(" . ");
+		////System.out.print(" . ");
 		assertFalse(buildingCity.location().equals(locationZero));
-		//System.out.print(" . ");
+		////System.out.print(" . ");
 		assertTrue(buildingSettle.location().equals(locationTwo));
-		//System.out.print(" . ");
+		////System.out.print(" . ");
 		//testing building owner
 		assertTrue(buildingZero.owner().equals(indexZero));
-		//System.out.print(" . ");
+		////System.out.print(" . ");
 		assertFalse(buildingCity.owner().equals(indexOne));
-		//System.out.print(" . ");
+		////System.out.print(" . ");
 		assertTrue(buildingSettle.owner().equals(indexOne));
-		//System.out.println(" - PASSED");		
+		////System.out.println(" - PASSED");		
 	}
 
 	
