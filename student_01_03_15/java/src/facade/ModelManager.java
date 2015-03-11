@@ -520,12 +520,12 @@ public class ModelManager extends Observable
 
 	public int getPlayerPoints(int playerID) 
 	{
-		return mGameModel == null? 0 : mGameModel.getPlayerPoints(playerID);
+		return mGameModel == null? 0 : mGameModel.getPlayer(playerID).victoryPointCount();
 	}
 	
 	public MessageListJSON getLog()
 	{
-		return mGameModel == null? null : mGameModel.getLog();
+		return mGameModel == null? null : mGameModel.log();
 	}
 	public void setModelChanged() 
 	{
