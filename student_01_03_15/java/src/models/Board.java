@@ -16,14 +16,16 @@ import shared.locations.VertexLocation;
 */
 public class Board 
 {
-	/** A list of all the hexes on the grid */
-	private List<Hex> mHexes; //A list of all the hexes on the grid - it's only land tiles.
+	/** A list of all the hexes(land tiles only) on the grid */
+	private List<Hex> mHexes; 
 	
 	/** A list of all the ports (harbors) on the grid */
 	private List<Port> mPorts;
-	
+	/** A list of all the roads on the grid */
 	private List<Road> mRoads;
+	/** A list of all the settlements on the grid */
 	private List<Building> mSettlements;
+	/** A list of all the cities on the grid */
 	private List<Building> mCities;
 	
 
@@ -40,42 +42,66 @@ public class Board
 		mSettlements = new ArrayList<Building>();
 		mCities = new ArrayList<Building>();
 	}
-	
+	/**
+	 * Gets list of settlements
+	 * @return List<Building> settlements
+	 */
 	public List<Building> settlements()
 	{
 		return mSettlements;
 	}
-	
+	/**
+	 * Gets list of cities
+	 * @return List<Building> cities
+	 */
 	public List<Building> cities()
 	{
 		return mCities;
 	}
-	
+	/**
+	 * Gets list of roads
+	 * @return List<Road> roads
+	 */
 	public List<Road> roads()
 	{
 		return mRoads;
 	}
-	
+	/**
+	 * Adds a settlement to board's list
+	 * @param b   building to add(Settlement)
+	 */
 	public void addSettlement(Building b)
 	{
 		mSettlements.add(b);
 	}
-	
+	/**
+	 * Adds a city to board's list
+	 * @param b   building to add(City)
+	 */
 	public void addCity(Building b)
 	{
 		mCities.add(b);
 	}
-	
+	/**
+	 * Adds a road to board's list
+	 * @param r   road to add(road)
+	 */
 	public void addRoad(Road r)
 	{
 		mRoads.add(r);
 	}
-	
+	/**
+	 * Add's hex to board
+	 * @param h    hex to add
+	 */
 	public void addHex(Hex h)
 	{
 		mHexes.add(h);
 	}
-	
+	/**
+	 * Add's port to board
+	 * @param p   port to add
+	 */
 	public void addPort(Port p)
 	{
 		mPorts.add(p);
@@ -101,6 +127,11 @@ public class Board
 		return mPorts;
 	}
 
+	/**
+	 * if Player can place road in location
+	 * @param loc   location of where the player wants to place road
+	 * @return boolean if player can/can't place road
+	 */
 	public boolean canPlaceRoad(EdgeLocation loc)
 	{
 		loc = loc.getNormalizedLocation();
@@ -115,11 +146,21 @@ public class Board
 		return true;
 	}
 
+	/**
+	 * Builds road in location
+	 * @param playerIndex	player's Index of who's building the road
+	 * @param loc	location to build road
+	 */
 	public void buildRoad(Index playerIndex, EdgeLocation loc) 
 	{
 		this.mRoads.add(new Road(playerIndex, loc));
 	}
 
+	/**
+	 * If player can place settlement in location
+	 * @param loc	vertex location of where player wants to build settlement
+	 * @return boolean if player can place settlement in location
+	 */
 	public boolean canPlaceSettlement(VertexLocation loc) 
 	{		
 		loc = loc.getNormalizedLocation();
@@ -180,7 +221,11 @@ public class Board
 			
 		return false;	
 	}
-	
+	/**
+	 * Checks vertex location to see if a building exists
+	 * @param loc	location to check for builing
+	 * @return boolean 		if location is taken or not by building
+	 */
 	public boolean checkForBuilding(VertexLocation loc)
 	{
 		loc = loc.getNormalizedLocation();
@@ -202,12 +247,20 @@ public class Board
 		}
 		return false;
 	}
-	
+	/**
+	 * Builds settlement in location
+	 * @param playerIndex	Index of player building the settlement
+	 * @param loc	vertex location of where the settlement is going to be built
+	 */
 	public void buildSettlement(Index playerIndex, VertexLocation loc) 
 	{
 		this.mSettlements.add(new Building(playerIndex, loc));
 	}
-	
+	/**
+	 * Builds city over settlement in location
+	 * @param playerIndex	Index of player building the city
+	 * @param loc	location of the settlement the player is building(new city) over
+	 */
 	public void buildCity(Index playerIndex, VertexLocation loc)
 	{
 		loc = loc.getNormalizedLocation();
@@ -224,7 +277,11 @@ public class Board
 			}
 		}
 	}
-	
+	/**
+	 * Gets hex from hexLocation
+	 * @param loc	hexLocation, coordinates
+	 * @return	hex from the coordinates, or new hex type water(blank hex)
+	 */
 	private Hex getHexByLocation(HexLocation loc)
 	{
 		for (Hex h : mHexes)
