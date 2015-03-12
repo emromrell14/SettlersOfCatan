@@ -35,6 +35,7 @@ public class Hex
 	/** 
 	 * Gets hex location
 	 * @pre none
+	 * @post see @return
 	 * @return the location of this hex on the grid
 	 */
 	public HexLocation location()
@@ -44,6 +45,7 @@ public class Hex
 	/** 
 	 * Gets hex resource type
 	 * @pre none
+	 * @post see @return
 	 * @return the type of resource this hex gives.
 	 */
 	public HexType resource()
@@ -53,6 +55,7 @@ public class Hex
 	/** 
 	 * Gets hex token number
 	 * @pre none
+	 * @post see @return
 	 * @return the number associated with this hex
 	 */
 	public TokenValue number()

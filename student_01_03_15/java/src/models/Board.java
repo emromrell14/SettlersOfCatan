@@ -44,6 +44,7 @@ public class Board
 	}
 	/**
 	 * Gets list of settlements
+	 * @pre none
 	 * @return List<Building> settlements
 	 */
 	public List<Building> settlements()
@@ -52,6 +53,7 @@ public class Board
 	}
 	/**
 	 * Gets list of cities
+	 * @pre none
 	 * @return List<Building> cities
 	 */
 	public List<Building> cities()
@@ -60,6 +62,7 @@ public class Board
 	}
 	/**
 	 * Gets list of roads
+	 * @pre none
 	 * @return List<Road> roads
 	 */
 	public List<Road> roads()
@@ -68,6 +71,7 @@ public class Board
 	}
 	/**
 	 * Adds a settlement to board's list
+	 * @pre none
 	 * @param b   building to add(Settlement)
 	 */
 	public void addSettlement(Building b)
@@ -76,6 +80,7 @@ public class Board
 	}
 	/**
 	 * Adds a city to board's list
+	 * @pre none
 	 * @param b   building to add(City)
 	 */
 	public void addCity(Building b)
@@ -84,6 +89,7 @@ public class Board
 	}
 	/**
 	 * Adds a road to board's list
+	 * @pre none
 	 * @param r   road to add(road)
 	 */
 	public void addRoad(Road r)
@@ -92,6 +98,7 @@ public class Board
 	}
 	/**
 	 * Add's hex to board
+	 * @pre none
 	 * @param h    hex to add
 	 */
 	public void addHex(Hex h)
@@ -100,6 +107,7 @@ public class Board
 	}
 	/**
 	 * Add's port to board
+	 * @pre none
 	 * @param p   port to add
 	 */
 	public void addPort(Port p)
@@ -109,7 +117,7 @@ public class Board
 	
 	/** 
 	 * Gets hexes of grid
-	 * 
+	 * @pre none
 	 * @return a list of all the hexes on the grid
 	 */
 	public List<Hex> hexes()
@@ -119,7 +127,7 @@ public class Board
 	
 	/** 
 	 * Gets ports (harbors) of grid
-	 * 
+	 * @pre none
 	 * @return a list of all the ports on the grid
 	 */
 	public List<Port> ports()
@@ -129,6 +137,7 @@ public class Board
 
 	/**
 	 * if Player can place road in location
+	 * @pre loc is not null
 	 * @param loc   location of where the player wants to place road
 	 * @return boolean if player can/can't place road
 	 */
@@ -148,6 +157,7 @@ public class Board
 
 	/**
 	 * Builds road in location
+	 * @pre playerIndex is not null
 	 * @param playerIndex	player's Index of who's building the road
 	 * @param loc	location to build road
 	 */
@@ -158,6 +168,8 @@ public class Board
 
 	/**
 	 * If player can place settlement in location
+	 * @pre loc is not null
+	 * @post true if the settlement can be placed
 	 * @param loc	vertex location of where player wants to build settlement
 	 * @return boolean if player can place settlement in location
 	 */
@@ -223,6 +235,8 @@ public class Board
 	}
 	/**
 	 * Checks vertex location to see if a building exists
+	 * @pre loc is not null
+	 * @post true if building exists at loc
 	 * @param loc	location to check for builing
 	 * @return boolean 		if location is taken or not by building
 	 */
@@ -249,6 +263,8 @@ public class Board
 	}
 	/**
 	 * Builds settlement in location
+	 * @pre playerIndex and loc are not null
+	 * @post settlement is built at loc
 	 * @param playerIndex	Index of player building the settlement
 	 * @param loc	vertex location of where the settlement is going to be built
 	 */
@@ -258,6 +274,8 @@ public class Board
 	}
 	/**
 	 * Builds city over settlement in location
+	 * @pre playerIndex and loc are not null
+	 * @post city is built at loc and settlement is added back to player
 	 * @param playerIndex	Index of player building the city
 	 * @param loc	location of the settlement the player is building(new city) over
 	 */
@@ -279,6 +297,8 @@ public class Board
 	}
 	/**
 	 * Gets hex from hexLocation
+	 * @pre loc is not null
+	 * @post the hex at loc
 	 * @param loc	hexLocation, coordinates
 	 * @return	hex from the coordinates, or new hex type water(blank hex)
 	 */
