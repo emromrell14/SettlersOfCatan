@@ -70,11 +70,18 @@ public class Port
 		return mDirection;
 	}
 	
+	/**
+	 * Gets the vertices adjacent to this port
+	 * @return A list of vertices adjacent to this port
+	 */
 	public List<VertexLocation> vertices()
 	{
 		return mVertices;
 	}
 	
+	/**
+	 * Adds all vertices adjacent to this port to the list of vertices
+	 */
 	private void calculateVertices()
 	{
 		this.mVertices = new ArrayList<VertexLocation>();

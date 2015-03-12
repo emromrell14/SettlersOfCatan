@@ -35,6 +35,17 @@ public class ResourceList
 		this.mWood = wood;
 	}
 	
+	/**
+	 * Adjusts all resources by their given amounts
+	 * Pre: all values must be integers.
+	 * Post: values will be added to the resource list
+	 * @param brick number of brick to add
+	 * @param ore number of ore to add
+	 * @param sheep number of sheep to add
+	 * @param wheat number of wheat to add
+	 * @param wood number of wood to add
+	 * @return the updated resource list
+	 */
 	public ResourceList updateResourceList(int brick, int ore, int sheep, int wheat, int wood)
 	{
 		this.mBrick+=brick;
@@ -107,32 +118,66 @@ public class ResourceList
 		return mWood;
 	}
 
+	/**
+	 * Adjusts the amount of Brick by the given value (increases if value is positive, 
+	 * decreases if value is negative).
+	 * 
+	 * @param value the amount to be added to/subtracted from the brick stock pile
+	 */
 	public void addBrick(int value)
 	{
 		mBrick += value;
 	}
 	
+	/**
+	 * Adjusts the amount of Ore by the given value (increases if value is positive, 
+	 * decreases if value is negative).
+	 * 
+	 * @param value the amount to be added to/subtracted from the ore stock pile
+	 */
 	public void addOre(int value)
 	{
 		mOre += value;
 	}
 	
+	/**
+	 * Adjusts the amount of Sheep by the given value (increases if value is positive, 
+	 * decreases if value is negative).
+	 * 
+	 * @param value the amount to be added to/subtracted from the sheep stock pile
+	 */
 	public void addSheep(int value)
 	{
 		mSheep += value;
 	}
 	
+	/**
+	 * Adjusts the amount of Wheat by the given value (increases if value is positive, 
+	 * decreases if value is negative).
+	 * 
+	 * @param value the amount to be added to/subtracted from the wheat stock pile
+	 */
 	public void addWheat(int value)
 	{
 		mWheat += value;
 	}
 	
+	/**
+	 * Adjusts the amount of Wood by the given value (increases if value is positive, 
+	 * decreases if value is negative).
+	 * 
+	 * @param value the amount to be added to/subtracted from the wood stock pile
+	 */
 	public void addWood(int value)
 	{
 		mWood += value;
 	}
 	
-	
+	/**
+	 * Gets the specified resource's amount
+	 * @param type the type of resource (Brick, Wood, Sheep, Wheat, Ore)
+	 * @return
+	 */
 	public int getResource(ResourceType type)
 	{
 		switch (type)
@@ -154,7 +199,11 @@ public class ResourceList
 	}
 	
 	
-
+	/**
+	 * Checks if there are no resources
+	 * 
+	 * @return true if there are no resources, false otherwise
+	 */
 	public boolean isEmpty() 
 	{
 		if (this.brick() == 0 && this.ore() == 0 && this.wheat() == 0 && this.wood() == 0 && this.sheep() == 0)

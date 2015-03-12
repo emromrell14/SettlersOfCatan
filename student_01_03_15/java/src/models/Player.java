@@ -33,6 +33,13 @@ public class Player implements IPlayer
 	private List<Building> mCities;
 	private List<DevCard> mDevCards;
 	
+	/**
+	 * Constructs a player Object with few arguments
+	 * @param color
+	 * @param name
+	 * @param index
+	 * @param playerID
+	 */
 	public Player(CatanColor color, String name, Index index, int playerID)
 	{
 		this.mColor = color;
@@ -47,6 +54,24 @@ public class Player implements IPlayer
 		this.mDevCards = new ArrayList<DevCard>();
 	}
 	
+	/**
+	 * Constructs a player Object with many arguments
+	 * @param color
+	 * @param discarded
+	 * @param monuments
+	 * @param name
+	 * @param newDevCards
+	 * @param oldDevCards
+	 * @param playerIndex
+	 * @param playerID
+	 * @param resources
+	 * @param soldiers
+	 * @param victoryPoints
+	 * @param numSettlements
+	 * @param numCities
+	 * @param numRoads
+	 * @param playedDevCard
+	 */
 	public Player(CatanColor color, boolean discarded, Number monuments, 
 			String name, List<DevCard> newDevCards, List<DevCard> oldDevCards, Index playerIndex, 
 			int playerID, ResourceList resources, int soldiers, int victoryPoints, int numSettlements,int numCities, int numRoads,
@@ -71,98 +96,183 @@ public class Player implements IPlayer
 		this.mHasPlayedDevCard = playedDevCard;
 	}
 	
+	/**
+	 * Adds a road to the players list of roads
+	 * Pre: player is not null, player has joined a game
+	 * @param r Road to be added
+	 */
 	public void addRoad(Road r)
 	{
 		mRoads.add(r);
 	}
 	
+	/**
+	 * Adds a city to the players list of cities
+	 * Pre: player is not null, player has joined a game
+	 * @param b city (inheriting from Building) object to be added
+	 */
 	public void addCity(Building b)
 	{
 		mCities.add(b);
 	}
 	
+	/**
+	 * Adds a settlement to the players list of settlements
+	 * Pre: player is not null, player has joined a game
+	 * @param b settlement (inheriting from Building) object to be added
+	 */
 	public void addSettlement(Building b)
 	{
 		mSettlements.add(b);
 	}
 	
-//	public void setRoads(List<Road> roads)
-//	{
-//		this.mRoads = roads;
-//	}
-//	public void setSettlements(List<Building> settlements)
-//	{
-//		this.mSettlements = settlements;
-//	}
-//	public void setCities(List<Building> cities)
-//	{
-//		this.mCities = cities;
-//	}
-	
+	/**
+	 * Gets the number of soldiers this player has
+	 * @return the number of soldiers this player has
+	 */
 	public int soldierCount()
 	{
 		return mSoldierCount;
 	}
+	/**
+	 * Gets the number of victory points this player has
+	 * @return the number of victory points this player has
+	 */
 	public int victoryPointCount()
 	{
 		return mVictoryPointCount;
 	}
+	
+	/**
+	 * Gets the number of roads this player has left to build
+	 * @return the number of roads this player has left to build
+	 */
 	public int roadCount()
 	{
 		return mRoadCount;
 	}
+	
+	/**
+	 * Gets the number of settlements this player has left to build
+	 * @return the number of settlements this player has left to build
+	 */
 	public int settlementCount()
 	{
 		return mSettlementCount;
 	}
+	
+	/**
+	 * Gets the number of cities this player has left to build
+	 * @return the number of cities this player has left to build
+	 */
 	public int cityCount()
 	{
 		return mCityCount;
 	}
+	
+	/**
+	 * Gets the color corresponding to this player
+	 * @return the color corresponding to this player
+	 */
 	public CatanColor color()
 	{
 		return mColor;
 	}
+	
+	/**
+	 * Checks to see if this player has discarded
+	 * @return true if the player has discarded, false otherwise
+	 */
 	public boolean hasDiscarded()
 	{
 		return mDiscarded;
 	}
+	
+	/**
+	 * Gets the number of monuments this player has
+	 * @return the number of monuments this player has
+	 */
 	public int monumentCount()
 	{
 		return mMonuments;
 	}
+	
+	/**
+	 * Gets the name associated with this player
+	 * @return the name associated with this player
+	 */
 	public String name()
 	{
 		return mName;
 	}
+	
+	/**
+	 * Gets this player's list of dev cards
+	 * @return the list of dev cards belonging to this player
+	 */
 	public List<DevCard> devCards()
 	{
 		return mDevCards;
 	}
+	
+	/**
+	 * Gets the Index (for turn taking purposes) corresponding to this player
+	 * @return the Index object corresponding to this player
+	 */
 	public Index playerIndex()
 	{
 		return mPlayerIndex;
 	}
+	
+	/**
+	 * Checks to see whether a player has already played a dev card this round
+	 * @return true if the player has already played a dev card this round, false otherwise
+	 */
 	public boolean hasPlayedDevCard()
 	{
 		return mHasPlayedDevCard;
 	}
+	
+	/**
+	 * Gets the unique id associated with a player
+	 * @return the unique id associated with this player
+	 */
 	public int playerID()
 	{
 		return mPlayerID;
 	}
+	
+	/**
+	 * Gets the resources belonging to this player
+	 * @return the list of resources belonging to this player
+	 */
 	public ResourceList resources()
 	{
 		return mResources;
 	}
+	
+	/**
+	 * Gets the list of roads belonging to this player (that have been built)
+	 * @return the list of road objects belonging to this player
+	 */
 	public List<Road> roads()
 	{
 		return mRoads;
 	}
+	
+	/**
+	 * Gets the list of settlements belonging to this player (that have been built)
+	 * @return the list of settlement objects belonging to this player
+	 */
 	public List<Building> settlements()
 	{
 		return mSettlements;
 	}
+	
+	/**
+	 * Gets the list of cities belonging to this player (that have been built)
+	 * @return the list of city objects belonging to this player
+	 */
 	public List<Building> cities()
 	{
 		return mCities;
@@ -190,6 +300,14 @@ public class Player implements IPlayer
 		return true;
 	}
 
+	/** 
+	 * This is to be called during the regular playing rounds of the game (See the overloaded function below for special first and 
+	 * second round cases)
+	 * Checks to see that this road to be built is next to a road already belonging to a player
+	 * @param loc the edge location we are hoping to build a road on
+	 * @return true if this road to be built is next to a road belonging to the player and 
+	 * the location is not already taken by another player, false otherwise
+	 */
 	public boolean canPlaceRoad(EdgeLocation loc) 
 	{
 		//Check if we are in the sea first
@@ -252,7 +370,12 @@ public class Player implements IPlayer
 		return false;
 	}
 	
-	public boolean checkForRoad(EdgeLocation loc)
+	/**
+	 * Looks through a players roads to see if this location is touching another of the player's road (in order for it to be built)
+	 * @param loc the edge location to check for an existing adjacent road by.
+	 * @return true if this location is next to one of the player's existing roads, false otherwise
+	 */
+	private boolean checkForRoad(EdgeLocation loc)
 	{
 		loc = loc.getNormalizedLocation();
 		for (Road road : this.roads())
@@ -268,9 +391,11 @@ public class Player implements IPlayer
 	
 	/** 
 	 * This is to be called on the first and second rounds of the game (Special Cases)
-	 * @param loc
-	 * @param settlement
-	 * @return
+	 * Checks to see that this road to be built is next to a settlement belonging to the player
+	 * @param loc the edge location we are hoping to build a road on
+	 * @param the location of the last settlement built by this player (because the road needs to be next to it)
+	 * @return true if this road to be built is next to the given settlement and 
+	 * the edge location is not already taken by another player, false otherwise
 	 */
 	public boolean canPlaceRoad(EdgeLocation loc, VertexLocation settlement) 
 	{
@@ -321,6 +446,8 @@ public class Player implements IPlayer
 	
 	/**
 	 * Decreases a player's brick and wood by 1 each
+	 * Pre: loc is not null, player has joined a game
+	 * Post: decreases the player's resources accordingly
 	 * adds a road at specified location to player's list of roads
 	 * @param loc
 	 */
@@ -352,6 +479,13 @@ public class Player implements IPlayer
 		return true;
 	}
 	
+	/**
+	 * Checks to see if a player can place a settlement on a given vertex location
+	 * Pre: player can afford to buy a settlement, player still has at least one settlement left to build
+	 * Post: checks if the settlement can be built on the given spot
+	 * @param loc the place to potentially build a settlement
+	 * @return true if the location doesn't already have a settlement, is connecting to one of the player's roads, false otherwise
+	 */
 	public boolean canPlaceSettlement(VertexLocation loc) 
 	{
 		loc = loc.getNormalizedLocation();
@@ -392,6 +526,13 @@ public class Player implements IPlayer
 		return false;	
 	}
 	
+	/**
+	 * Builds a settlement in the players color on the given location
+	 * Pre: loc is not null, player is not null, player has joined game, location doesn't already have a settlement,
+	 * is touching a road belonging to the player, player can afford to buy a settlement
+	 * Post: builds a settlement in the given location
+	 * @param loc the location to build a settlement
+	 */
 	public void buildSettlement(VertexLocation loc)
 	{
 		ResourceList r = this.resources();
@@ -402,6 +543,7 @@ public class Player implements IPlayer
 		this.mSettlementCount -= 1;
 		this.mSettlements.add(new Building(this.mPlayerIndex, loc));
 	}
+	
 	/**
 	 * Checks all preconditions for building a city.
 	 * @pre Player is logged in, has joined a game, has a city, 3 ore 2 wheat, a settlement to build on, and it is their turn. 
@@ -421,6 +563,14 @@ public class Player implements IPlayer
 		}
 		return true;
 	}
+	
+	/**
+	 * Checks to see if a player can place a city on a given vertex location
+	 * Pre: player can afford to buy a city, player still has at least one city left to build
+	 * Post: checks if the city can be built on the given spot
+	 * @param loc the place to potentially build a city
+	 * @return true if the player already has a settlement on the given location, false otherwise
+	 */
 	public boolean canPlaceCity(VertexLocation loc) 
 	{
 		//Return true for locations where a settlement is already placed
@@ -436,6 +586,13 @@ public class Player implements IPlayer
 		return false;
 	}
 	
+	/**
+	 * Builds a city in the players color on the given location
+	 * Pre: loc is not null, player is not null, player has joined game, location already has a settlement
+	 * on in belonging to the player, player can afford to buy a city
+	 * Post: builds a city in the given location
+	 * @param loc the location to build a city
+	 */
 	public void buildCity(VertexLocation loc)
 	{
 		loc = loc.getNormalizedLocation();
@@ -509,6 +666,13 @@ public class Player implements IPlayer
 		
 		return false;
 	}
+	
+	/**
+	 * Checks to see if a player has a monument in their dev cards
+	 * Pre: player is not null, has joined game
+	 * Post checks to see if a player has a monument
+	 * @return true if a player has a monument, false otherwise
+	 */
 	public boolean hasMonument()
 	{
 		for (DevCard d : this.devCards())
@@ -530,6 +694,11 @@ public class Player implements IPlayer
 		
 		//this.addDevCard(m);
 	}
+	
+	/**
+	 * Adds a given dev card to this players list of dev cards
+	 * @param card the card to be added to the player's list of dev cards
+	 */
 	public void addDevCard(DevCard card)
 	{
 		this.mDevCards.add(card);
@@ -548,6 +717,12 @@ public class Player implements IPlayer
 		}
 		return true;
 	}
+	
+	/**
+	 * Discard function
+	 * Does nothing
+	 * @return returns true
+	 */
 	public boolean discard()		//what does this dooooooo
 	{
 		return true;
@@ -575,6 +750,10 @@ public class Player implements IPlayer
 		}
 		return false;
 	}
+	
+	/**
+	 * Does nothing ;)
+	 */
 	public void playYearOfPlenty()
 	{
 		
@@ -604,6 +783,10 @@ public class Player implements IPlayer
 		}
 		return false;
 	}
+	
+	/**
+	 * Does nothing ;)
+	 */
 	public void playRoadBuilder()
 	{
 		
@@ -658,6 +841,10 @@ public class Player implements IPlayer
 		}
 		return false;
 	}
+	
+	/** 
+	 * Does nothing
+	 */
 	public void playMonopoly()
 	{
 		
@@ -680,16 +867,39 @@ public class Player implements IPlayer
 		}
 		return false;
 	}
+	
+	/**
+	 * Does nothing ;)
+	 */
 	public void playMonument()
 	{
 		
 	}
 	
+	
+	/**
+	 * Adds given resources to a player's resource list
+	 * Pre: Player is not null, has joined a game, resources below are not null
+	 * Post: Adds given resources to a player's resource list
+	 * @param brick
+	 * @param ore
+	 * @param sheep
+	 * @param wheat
+	 * @param wood
+	 */
 	public void addResourcesToList(int brick, int ore, int sheep, int wheat, int wood)
 	{
 		this.mResources = this.resources().updateResourceList(brick, ore, sheep, wheat, wood);
 	}
 	
+	
+	/**
+	 * Checks to see if a player can accept a trade given the amount of resources they have
+	 * Pre: Player has joined game, tradeOffer is not null
+	 * Post: tells whether a player has the requested resources
+	 * @param tradeOffer the resources that another player has offered as well as what they are requesting
+	 * @return true if the player has the requested resources, false otherwise
+	 */
 	public boolean canAcceptTrade(Trade tradeOffer)
 	{
 		if (tradeOffer.offer().isEmpty())
@@ -703,6 +913,17 @@ public class Player implements IPlayer
 				&& mResources.wheat() >= -tradeOffer.offer().wheat()
 				&& mResources.wood() >= -tradeOffer.offer().wood();
 	}
+	
+	/**
+	 * Checks to see if the person can trade at a given port, given the amount of
+	 * resources they have
+	 * Pre: Player is not null, has joined game, port type is one of the resource types
+	 * or three
+	 * Post: tells whether a player has enough resources
+	 * 
+	 * @param type trading type for this port
+	 * @return true if they have enough of at least one resource to trade in, false otherwise
+	 */
 	public boolean haveResourceAmount(PortType type)
 	{
 		boolean toReturn = false;
@@ -737,6 +958,11 @@ public class Player implements IPlayer
 		return toReturn;
 	}
 
+	/**
+	 * Checks whether a player has resources enough to maritime trade
+	 * @param ports the ports that the player has
+	 * @return true player has enough resources, false otherwise
+	 */
 	public boolean canMaritimeTrade(List<Port> ports)
 	{			
 		if(mResources.brick() >= 4
@@ -789,6 +1015,11 @@ public class Player implements IPlayer
 		}
 	}
 
+	/**
+	 * Checks to see if a given settlement is attached to a road
+	 * @param settlement
+	 * @return true if it is attached to a road, false otherwise
+	 */
 	public boolean doesSettlementHaveRoadAttached(Building settlement) {
 		for(Road road : this.roads())
 		{
@@ -800,6 +1031,15 @@ public class Player implements IPlayer
 		return false;
 	}
 
+	
+	/**
+	 * Checks whether this player is a potential victim to be robbed,
+	 * given a hex location where the robber sits
+	 * Pre: game is in play, this player has joined, robberHexLoc is part of the board
+	 * Post: find out if this player can be robbed given the location
+	 * @param robberHexLoc the location of the robber
+	 * @return true if this player has a settlement/city touching the robber location hex, false otherwise
+	 */
 	public boolean isVictim(HexLocation robberHexLoc)
 	{
 		for(Building b : mSettlements)

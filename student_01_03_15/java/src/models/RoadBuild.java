@@ -5,6 +5,9 @@ import shared.definitions.DevCardType;
 public class RoadBuild extends DevCard
 {
 
+	/**
+	 * Constructs a new RoadBuild Object
+	 */
 	public RoadBuild()
 	{
 		this.setType(DevCardType.ROAD_BUILD);
