@@ -7,7 +7,7 @@ public class TokenValue
 	/**
 	 * Creates a TokenValue
 	 * 
-	 * @param value an integer representing the number to be associated with a hexagon
+	 * @param value an integer representing the number to be associated with a hex
 	 * @return a new TokenValue object
 	 */
 	public TokenValue(int value)
@@ -16,7 +16,7 @@ public class TokenValue
 	}
 	
 	/**
-	 * Gets an integer representing the number to be associated with a hexagon
+	 * Gets an integer representing the number(chip) to be associated with a hex
 	 * @return an integer 2-12
 	 */
 	public int value()
