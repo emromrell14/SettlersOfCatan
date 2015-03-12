@@ -1,10 +1,12 @@
 package server.handlers;
 
+import server.IServer;
+
 public class LoginHandler extends Handler
 {
-	public LoginHandler()
+	public LoginHandler(IServer server)
 	{
-		
+		super.server = server;
 	}
 
 	/**

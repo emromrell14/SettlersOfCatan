@@ -1,7 +1,14 @@
 package server.handlers;
 
-public class RegisterHandler  extends Handler
+import server.IServer;
+
+public class RegisterHandler extends Handler
 {
+	public RegisterHandler(IServer server)
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Creates a new player account.

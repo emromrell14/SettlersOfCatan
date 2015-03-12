@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class LoadGamesHandler extends Handler
 {
+	public LoadGamesHandler(IServer server) 
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Load a previously saved game file to restore the state of a game.

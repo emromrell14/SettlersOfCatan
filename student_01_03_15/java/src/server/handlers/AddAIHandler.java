@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class AddAIHandler  extends Handler
 {
+	public AddAIHandler(IServer server) 
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Adds an AI player to the current game.

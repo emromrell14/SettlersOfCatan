@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class ResetHandler extends Handler
 {
+	public ResetHandler(IServer server) 
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Clears out the command history of the current game.

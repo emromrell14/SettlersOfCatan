@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class CreateGamesHandler  extends Handler
 {
+	public CreateGamesHandler(IServer server)
+	{
+		super.server = server; 
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Creates a new game.

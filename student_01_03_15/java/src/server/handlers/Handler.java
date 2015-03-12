@@ -2,11 +2,14 @@ package server.handlers;
 
 import java.io.IOException;
 
+import server.IServer;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public abstract class Handler implements HttpHandler
 {
+	protected IServer server;
 	/**
 	 * @pre none
 	 * @post Handles the HTTP request sent from the Proxy.

@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class CommandsHandler extends Handler
 {
+	public CommandsHandler(IServer server) 
+	{
+		super.server = server;
+	}
+
 	@Override
 	public Response processRequest(Request req) 
 	{
