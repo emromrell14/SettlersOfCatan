@@ -20,7 +20,6 @@ public class Game implements IGame
 	private MessageListJSON mLog; //All the log messages.
 	private Robber mRobber;
 	private Trade mCurrentTrade = null;
-	private boolean soldierRob = false;
 	
 	public Game()
 	{
@@ -45,6 +44,7 @@ public class Game implements IGame
 		}
 	}
 	
+	@Override
 	public CatanColor getPlayerColor(int playerID)
 	{
 		for(Player p: mPlayers)
@@ -57,6 +57,7 @@ public class Game implements IGame
 		return null;
 	}
 	
+	@Override
 	public CatanColor getPlayerColor(String playerName)
 	{
 		for(Player p: mPlayers)
@@ -69,6 +70,7 @@ public class Game implements IGame
 		return null;
 	}
 	
+	@Override
 	public void endTurn()
 	{
 		Index currentPlayer = mTurnTracker.currentTurn();
@@ -88,74 +90,27 @@ public class Game implements IGame
 	{
 		return 0;
 	}
-	
-	public MessageListJSON getLog()
-	{
-		return mLog;
-	}
 
+	@Override
 	public Board board() 
 	{
 		return mBoard;
 	}
-	
-	public void addPlayer(Player p)
-	{
-		mPlayers.add(p);
-	}
-	
-	public void setLog(MessageListJSON m)
-	{
-		mLog = m;
-	}
-	
-	public void setChat(MessageListJSON m)
-	{
-		mChat = m;
-	}
-	
+
+	@Override
 	public void setBoard(Board b)
 	{
 		mBoard = b;
 	}
-	
-	public void setRobber(Robber r)
-	{
-		mRobber = r;
-	}
-	
-	public void setResourceList(ResourceList r)
-	{
-		mBank = r;
-	}
-	
-	public void setVersion(int v)
-	{
-		mVersion = v;
-	}
-	
-	public void setWinner(int w)
-	{
-		try 
-		{
-			mWinner = new Index(w);
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	public void setTurnTracker(TurnTracker t)
-	{
-		mTurnTracker = t;
-	}
 
+	@Override
 	public List<Player> players() 
 	{
 		
 		return mPlayers;
 	}
+	
+	@Override
 	public Player getPlayer(int playerID)
 	{
 		for(Player player : this.mPlayers)
@@ -167,6 +122,8 @@ public class Game implements IGame
 		}
 		return null;
 	}
+	
+	@Override
 	public Player getPlayer(Index playerIndex)
 	{
 		for(Player player : this.mPlayers)
@@ -187,6 +144,8 @@ public class Game implements IGame
 		}
 		return null;
 	}
+	
+	@Override
 	public Index getPlayerIndex(int playerID)
 	{
 		Index playerIndex = null;
@@ -205,6 +164,7 @@ public class Game implements IGame
 		return playerIndex;
 	}
 
+	@Override
 	public int getPlayerID(Index playerIndex)
 	{
 		for(Player player : this.mPlayers)
@@ -217,46 +177,130 @@ public class Game implements IGame
 		return -1;
 	}
 	
+	@Override
+	public void addPlayer(Player p)
+	{
+		mPlayers.add(p);
+	}
+
+	@Override
 	public TurnTracker turnTracker() 
 	{
 		return mTurnTracker;
 	}
 
+	@Override
+	public void setTurnTracker(TurnTracker t)
+	{
+		mTurnTracker = t;
+	}
+
+	@Override
 	public ResourceList bank() 
 	{
 		return mBank;
 	}
 
+	@Override
+	public void setBank(ResourceList r)
+	{
+		mBank = r;
+	}
+
+	@Override
 	public List<DevCard> devCards() 
 	{
 		return mDevCards;
 	}
+	
+	@Override
+	public void setDevCards(List<DevCard> devCards) 
+	{
+		mDevCards = devCards;
+	}
 
+	@Override
 	public int version() 
 	{
 		return mVersion;
 	}
+	
+	@Override
+	public void setVersion(int v)
+	{
+		mVersion = v;
+	}
 
+
+	@Override
 	public Index winner() 
 	{
 		return mWinner;
 	}
 
+	@Override
+	public void setWinner(int w)
+	{
+		try 
+		{
+			mWinner = new Index(w);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public MessageListJSON chat()
 	{
 		return mChat;
 	}
+	
+	@Override
+	public void setChat(MessageListJSON m)
+	{
+		mChat = m;
+	}
 
+	@Override
 	public MessageListJSON log() 
 	{
 		return mLog;
 	}
+	
+	@Override
+	public void setLog(MessageListJSON m)
+	{
+		mLog = m;
+	}
 
+	@Override
 	public Robber robber() 
 	{
 		return mRobber;
 	}
+	
 
+	@Override
+	public void setRobber(Robber r)
+	{
+		mRobber = r;
+	}
+
+	@Override
+	public Trade trade()
+	{
+		return mCurrentTrade;
+	}
+
+	@Override
+	public void setTrade(Trade model) 
+	{
+		mCurrentTrade = model;
+	}
+	
+	@Override
 	public boolean canOfferTrade(Index playerIndex) 
 	{
 		boolean playerHasCards = false;
@@ -282,29 +326,8 @@ public class Game implements IGame
 		
 		return playerHasCards && othersHaveCards;
 	}
-	
-	public Trade trade()
-	{
-		return mCurrentTrade;
-	}
 
-	public void setTrade(Trade model) 
-	{
-		mCurrentTrade = model;
-	}
-
-	public int getPlayerPoints(int playerID) 
-	{
-		for(Player p : mPlayers)
-		{
-			if(p.playerID() == playerID)
-			{
-				return p.victoryPointCount();
-			}
-		}
-		return 0;
-	}
-
+	@Override
 	public List<Player> getRobbingVictims(HexLocation hexLoc) 
 	{
 		List<Player> victims = new ArrayList<Player>();
@@ -321,11 +344,13 @@ public class Game implements IGame
 		return victims;
 	}
 
+	@Override
 	public int getLargestArmyIndex() 
 	{
 		return mTurnTracker.largestArmy().value();
 	}
 
+	@Override
 	public int getLongestRoadIndex() 
 	{
 		return mTurnTracker.longestRoad().value();

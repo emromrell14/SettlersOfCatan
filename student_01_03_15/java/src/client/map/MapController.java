@@ -172,7 +172,16 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) 
 	{
-		return state.canPlaceRoad(edgeLoc);
+		boolean toReturn = state.canPlaceRoad(edgeLoc);
+		if(roadBuilding && road1 != null)
+		{
+			toReturn = toReturn && 
+					!(edgeLoc.getNormalizedLocation().getHexLoc().getX() == road1.getNormalizedLocation().getHexLoc().getX() && 
+					edgeLoc.getNormalizedLocation().getHexLoc().getY() == road1.getNormalizedLocation().getHexLoc().getY() &&
+					edgeLoc.getNormalizedLocation().getDir().getLengthendDirection() == road1.getNormalizedLocation().getDir().getLengthendDirection());
+		}
+		
+		return  toReturn;
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) 
@@ -199,7 +208,7 @@ public class MapController extends Controller implements IMapController, Observe
 			{
 				if(road1 == null)
 				{
-					road1 = edgeLoc;
+					road1 = edgeLoc.getNormalizedLocation();
 					master.getPlayer().addRoad(new Road(playerIndex,road1));
 				}
 				else
@@ -305,8 +314,12 @@ public class MapController extends Controller implements IMapController, Observe
 	{	
 		roadBuilding = true;
 		state = new PlayingState();
-		startMove(PieceType.ROAD, true, false);			
-		startMove(PieceType.ROAD, true, false);			
+		int roadsLeft = master.getPlayer().roadCount();
+		startMove(PieceType.ROAD, true, false);	
+		if(roadsLeft > 1)
+		{
+			startMove(PieceType.ROAD, true, false);	
+		}
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) 
@@ -364,7 +377,7 @@ public class MapController extends Controller implements IMapController, Observe
 					state = new SetupState();
 					break;
 				default:
-					//System.out.println("MapController update() should never get here.");
+					////System.out.println("MapController update() should never get here.");
 			}
 			
 			// THIS IS FOR ROUNDS 1 AND 2------------------

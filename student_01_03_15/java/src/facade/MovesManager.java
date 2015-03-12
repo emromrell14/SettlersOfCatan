@@ -303,7 +303,7 @@ public class MovesManager
 		
 		body = "{type:\"offerTrade\", playerIndex:" + playerIndex.value() + ", offer:" + new ResourceListJSON(offer).toJSON() + ", receiver:" + 
 					receiverIndex.value() + "}";
-		//System.out.println("MovesManger offerTrade: " + body);
+		////System.out.println("MovesManger offerTrade: " + body);
 		response = mProxy.post("/moves/offerTrade", body);
 		return jsonToGame(response);
 	}

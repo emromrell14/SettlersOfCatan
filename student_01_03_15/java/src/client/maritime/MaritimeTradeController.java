@@ -118,7 +118,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 					}
 					break;
 				default:
-					//System.out.println("MaritimeTradeController startTrade() it should never get here.");	
+					////System.out.println("MaritimeTradeController startTrade() it should never get here.");	
 				}
 			}
 		}

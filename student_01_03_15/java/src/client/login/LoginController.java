@@ -85,13 +85,13 @@ public class LoginController extends Controller implements ILoginController, Obs
 		// If log in succeeded
 		if(success)
 		{
-//			System.out.println("login succeeded");
+//			//System.out.println("login succeeded");
 			getLoginView().closeModal();
 			loginAction.execute();
 		}
 		else
 		{
-//			System.out.println("login failed");
+//			//System.out.println("login failed");
 			messageView.setTitle("ERROR");
 			messageView.setMessage("Invalid Login Credentials");
 //			getLoginView().closeModal();
