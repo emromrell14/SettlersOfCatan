@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class ModelHandler  extends Handler
 {
+	public ModelHandler(IServer server)
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Returns the current state of the game in JSON format.

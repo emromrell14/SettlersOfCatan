@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class SaveGamesHandler extends Handler
 {
+	public SaveGamesHandler(IServer server)
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Saves the current state of the specified game to a file.

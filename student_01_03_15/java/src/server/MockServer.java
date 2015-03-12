@@ -3,6 +3,9 @@ package server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+
+import models.IGame;
+
 //import server.handlers.AddAIHandler;
 //import server.handlers.CommandsHandler;
 //import server.handlers.CreateGamesHandler;
@@ -174,5 +177,29 @@ public class MockServer implements IServer
 	public String getHost() 
 	{
 		return mHost;
+	}
+
+	@Override
+	public IGame getGame(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IUser getUser(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void createGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerUser() {
+		// TODO Auto-generated method stub
+		
 	}
 }

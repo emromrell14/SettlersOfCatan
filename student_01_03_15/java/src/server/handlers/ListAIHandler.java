@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class ListAIHandler  extends Handler
 {
+	public ListAIHandler(IServer server) 
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Returns a list of supported AI player types.

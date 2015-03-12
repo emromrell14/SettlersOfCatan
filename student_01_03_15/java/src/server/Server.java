@@ -2,7 +2,10 @@ package server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 
+import models.IGame;
 import server.handlers.*;
 
 import com.sun.net.httpserver.HttpServer;
@@ -12,6 +15,8 @@ public class Server implements IServer
 	private HttpServer server;
 	private static int portNumber;
 	private String host = "localhost";
+	private Map<Integer,IGame> games = new HashMap<Integer,IGame>();
+	private Map<Integer,IUser> users = new HashMap<Integer,IUser>();
 	
 	public static void main(String[] args)
 	{
@@ -39,23 +44,23 @@ public class Server implements IServer
 		}
 		server.setExecutor(null);
 		
-		server.createContext("/user/login",new LoginHandler());
-		server.createContext("/user/register",new RegisterHandler());
+		server.createContext("/user/login",new LoginHandler(this));
+		server.createContext("/user/register",new RegisterHandler(this));
 		
-		server.createContext("/games/list",new ListGamesHandler());
-		server.createContext("/games/create",new CreateGamesHandler());
-		server.createContext("/games/join",new JoinGamesHandler());
-		server.createContext("/games/save",new SaveGamesHandler());
-		server.createContext("/games/load",new LoadGamesHandler());
+		server.createContext("/games/list",new ListGamesHandler(this));
+		server.createContext("/games/create",new CreateGamesHandler(this));
+		server.createContext("/games/join",new JoinGamesHandler(this));
+		server.createContext("/games/save",new SaveGamesHandler(this));
+		server.createContext("/games/load",new LoadGamesHandler(this));
 
-		server.createContext("/game/model",new ModelHandler());
-		server.createContext("/game/reset",new ResetHandler());
-		server.createContext("/game/commands",new CommandsHandler());
-		server.createContext("/game/addAI",new AddAIHandler());
-		server.createContext("/game/listAI",new ListAIHandler());
+		server.createContext("/game/model",new ModelHandler(this));
+		server.createContext("/game/reset",new ResetHandler(this));
+		server.createContext("/game/commands",new CommandsHandler(this));
+		server.createContext("/game/addAI",new AddAIHandler(this));
+		server.createContext("/game/listAI",new ListAIHandler(this));
 		
 		//since all of the moves requests return the same thing, we only need one object for all of the differen requests
-		MovesHandler movesHandler = new MovesHandler();
+		MovesHandler movesHandler = new MovesHandler(this);
 		server.createContext("/moves/sendChat", movesHandler);
 		server.createContext("/moves/rollNumber", movesHandler);
 		server.createContext("/moves/robPlayer", movesHandler);
@@ -74,7 +79,7 @@ public class Server implements IServer
 		server.createContext("/moves/maritimeTrad", movesHandler);
 		server.createContext("/moves/discardCards", movesHandler);
 		
-		server.createContext("/util/changeLogLevel", new LogHandler());
+		server.createContext("/util/changeLogLevel", new LogHandler(this));
 		
 		server.start();
 	}
@@ -89,5 +94,29 @@ public class Server implements IServer
 	public String getHost()
 	{
 		return host;
+	}
+
+	@Override
+	public IGame getGame(int id) 
+	{
+		return null;
+	}
+
+	@Override
+	public IUser getUser(int id) 
+	{
+		return null;
+	}
+
+	@Override
+	public void createGame() 
+	{
+		
+	}
+
+	@Override
+	public void registerUser()
+	{
+		
 	}
 }

@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class ListGamesHandler extends Handler
 {
+	public ListGamesHandler(IServer server)
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Get a list of all games in progress.

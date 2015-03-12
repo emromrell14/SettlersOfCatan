@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class LogHandler  extends Handler
 {
+	public LogHandler(IServer server) 
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Sets the server's log level (ALL, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, OFF).

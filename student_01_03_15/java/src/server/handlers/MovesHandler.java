@@ -1,7 +1,14 @@
 package server.handlers;
 
+import server.IServer;
+
 public class MovesHandler extends Handler
 {
+	public MovesHandler(IServer server)
+	{
+		super.server = server;
+	}
+
 	/**
 	 * @pre Request != null
 	 * @post Depending on the requested move, the move will be executed. All of the moves are handled by one class because
