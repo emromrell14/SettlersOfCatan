@@ -115,7 +115,7 @@ public class Server implements IServer
 	}
 
 	@Override
-	public void registerUser()
+	public void registerUser(User user)
 	{
 		
 	}

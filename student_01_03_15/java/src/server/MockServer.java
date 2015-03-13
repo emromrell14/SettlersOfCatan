@@ -198,7 +198,7 @@ public class MockServer implements IServer
 	}
 
 	@Override
-	public void registerUser() {
+	public void registerUser(User user) {
 		// TODO Auto-generated method stub
 		
 	}
