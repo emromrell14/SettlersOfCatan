@@ -8,8 +8,9 @@ public class Soldier extends DevCard
 	
 	/**
 	 * Default constructor. Sets the card's type to Soldier
-	 * 
+	 * @pre must be in playing state
 	 * @return a new Soldier object
+	 * @post see return
 	 */
 	public Soldier()
 	{
