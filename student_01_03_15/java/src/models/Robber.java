@@ -13,7 +13,6 @@ public class Robber
 	 * @return a new Robber object
 	 * @post see return
 	 */
-	
 	public Robber(HexLocation l) 
 	{
 		mLocation = l;
@@ -26,8 +25,6 @@ public class Robber
 	 * @return new HexLocation for the robber
 	 * @post robber is moved to location
 	 */
-	
-	
 	public HexLocation location()
 	{
 		return mLocation;
