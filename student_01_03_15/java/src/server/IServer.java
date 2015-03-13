@@ -6,7 +6,6 @@ public interface IServer
 {
 	/**
 	 * Get the server's port number.
-	 * 
 	 * @return the port number
 	 */
 	int getPortNumber();
@@ -18,6 +17,7 @@ public interface IServer
 	String getHost();
 	
 	/**
+	 * Runs the server
 	 * @pre none
 	 * @post Runs the server on a specific port.
 	 */
@@ -40,6 +40,7 @@ public interface IServer
 	IUser getUser(int id);
 	
 	/**
+	 * Creates a new game and adds it to the list of games on the server
 	 * @pre none
 	 * @post create a new game and store it in the server
 	 */
@@ -47,6 +48,9 @@ public interface IServer
 	
 	/**
 	 * create a new user and store it in the server
+	 * @pre none (see user class for rules about characters)
+	 * @post New user will be registered with this server
+	 * @param user new user
 	 */
-	void registerUser();
+	void registerUser(User user);
 }
