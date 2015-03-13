@@ -11,6 +11,7 @@ public class Robber
 	 * 
 	 * @param l the HexLocation of where the robber should be
 	 * @return a new Robber object
+	 * @post see return
 	 */
 	
 	public Robber(HexLocation l) 
@@ -23,6 +24,7 @@ public class Robber
 	 * @pre Game is in RobbingState
 	 * 
 	 * @return new HexLocation for the robber
+	 * @post robber is moved to location
 	 */
 	
 	

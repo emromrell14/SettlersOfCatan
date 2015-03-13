@@ -10,11 +10,11 @@ public class Trade
 	private ResourceList mOffer;
 	
 	/**
-	 * 
+	 * @pre must be in playing state
 	 * @param sender    of the trade
 	 * @param receiver   of the trade
 	 * @param offer   resource list representing items offered and requested
-	 * 
+	 * @post see return
 	 * @return a new Trade object
 	 */
 	
@@ -27,6 +27,8 @@ public class Trade
 
 	/**
 	 * Gets the sender's player Index
+	 * @pre must be in playing state
+	 * @post see return
 	 * @return (player's) Index of the person sending the trade
 	 */
 	public Index sender() 
@@ -35,7 +37,9 @@ public class Trade
 	}
 
 	/**
+	 * @pre must be in playing state
 	 * Gets the receiver's player Index
+	 * @post see return
 	 * @return (player's) Index of the person being offered the trade
 	 */
 	public Index receiver() 
@@ -44,7 +48,9 @@ public class Trade
 	}
 
 	/**
+	 * @pre must be in playing state
 	 * Gets the RecourceList of the trade
+	 * @post see return
 	 * @return ResourceList of the trade being offered. Negative values represent resources asked for, positive: offered
 	 */
 	public ResourceList offer() 
