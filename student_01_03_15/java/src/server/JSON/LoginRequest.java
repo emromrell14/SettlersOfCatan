@@ -8,8 +8,13 @@ public class LoginRequest {
 	
 	public LoginRequest() {
 		
+	}	
+
+	public static LoginRequest fromJSON(String JSON) {
+		Gson gson = new Gson();
+		return gson.fromJson(JSON, LoginRequest.class);
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
