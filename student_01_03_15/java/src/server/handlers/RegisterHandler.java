@@ -1,6 +1,13 @@
 package server.handlers;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Iterator;
+import java.util.Map;
+
 import server.IServer;
+import server.User;
+import server.JSON.RegisterRequest;
 
 public class RegisterHandler extends Handler
 {
@@ -18,10 +25,58 @@ public class RegisterHandler extends Handler
 	 * @return 		The Response created as a result of the given Request.
 	 */
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Response processRequest(Request req) 
 	{
-		return null;
+		Response resp = new Response();
+		String urlEncoded;
+		String body = req.getBody();
+		RegisterRequest rr = RegisterRequest.fromJSON(body);
+		String registerUsername = rr.getUsername();
+		String registerPassword = rr.getPassword();
+		int largestPlayerID = -1;
+		
+		Iterator it = server.getUsers().entrySet().iterator();
+		while(it.hasNext())
+		{
+			Map.Entry pair = (Map.Entry)it.next();
+			largestPlayerID = (int) pair.getKey();
+			
+			if(registerUsername.equals(((User) pair.getValue()).getUsername()))
+			{
+				// Set fail response
+				resp.setStatusCode(400);
+				resp.setBody("Failed to register - duplicate username.");
+				return resp;
+			}
+		}
+		User u = new User(largestPlayerID+1);
+		u.setPassword(registerPassword);
+		u.setUsername(registerUsername);
+		server.registerUser(u);
+		
+		String jsonText = toString(registerUsername, registerPassword, u.getID());
+		try 
+		{
+			urlEncoded = URLEncoder.encode(jsonText, "UTF-8");
+			resp.setCookie("catan.user", urlEncoded);
+			resp.setStatusCode(200);
+			resp.setBody("Success");
+		} 
+		catch (UnsupportedEncodingException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return resp;
 	}
 
+	public String toString(String username, String password, int playerId)
+	{
+		String body;
+		body = "{username:\"" + username + "\",password:\"" + password + "\",\"playerID\":" + playerId + "}";
+		
+		return body;
+	}
 }

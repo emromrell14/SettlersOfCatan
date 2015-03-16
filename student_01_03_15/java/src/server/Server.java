@@ -117,7 +117,7 @@ public class Server implements IServer
 	@Override
 	public void registerUser(User user)
 	{
-		
+		users.put(user.getID(), user);
 	}
 
 	public Map<Integer, IUser> getUsers() {
