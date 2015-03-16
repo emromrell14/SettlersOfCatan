@@ -1,5 +1,7 @@
 package server;
 
+import java.util.Map;
+
 import models.IGame;
 
 public interface IServer 
@@ -53,4 +55,7 @@ public interface IServer
 	 * @param user new user
 	 */
 	void registerUser(User user);
+	public Map<Integer, IUser> getUsers();
+	public void setUsers(Map<Integer, IUser> users);
+	
 }

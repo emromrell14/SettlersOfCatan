@@ -119,4 +119,14 @@ public class Server implements IServer
 	{
 		
 	}
+
+	public Map<Integer, IUser> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Map<Integer, IUser> users) {
+		this.users = users;
+	}
+	
+	
 }
