@@ -1,6 +1,7 @@
 package server.handlers;
 
 import server.IServer;
+import server.JSON.LoginRequest;
 
 public class LoginHandler extends Handler
 {
@@ -20,6 +21,9 @@ public class LoginHandler extends Handler
 	@Override
 	public Response processRequest(Request req) 
 	{
+		String body = req.getBody();
+		LoginRequest loginRequest = LoginRequest.fromJSON(body);
+		
 		return null;
 	}
 
