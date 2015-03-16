@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.IUser;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
@@ -27,6 +28,7 @@ public class Player implements IPlayer
 	private boolean mDiscarded = false;
 	private boolean mHasPlayedDevCard = false;
 	private int mMonuments = 0;
+	private IUser mUser;
 	
 	private List<Road> mRoads;
 	private List<Building> mSettlements;
@@ -96,6 +98,16 @@ public class Player implements IPlayer
 		this.mHasPlayedDevCard = playedDevCard;
 	}
 	
+	
+	
+	public IUser getUser() {
+		return mUser;
+	}
+
+	public void setUser(IUser user) {
+		this.mUser = user;
+	}
+
 	/**
 	 * Adds a road to the players list of roads
 	 * Pre: player is not null, player has joined a game
