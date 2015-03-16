@@ -18,8 +18,6 @@ public class Request
 		method = req.getRequestMethod();
 		requestURI = req.getRequestURI().toString();
 		headers = req.getRequestHeaders();
-		
-		
 	}
 	
 	/**

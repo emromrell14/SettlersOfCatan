@@ -2,9 +2,10 @@ package server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-
+import java.util.Map;
 
 import models.IGame;
+
 
 //import server.handlers.AddAIHandler;
 //import server.handlers.CommandsHandler;
@@ -199,6 +200,18 @@ public class MockServer implements IServer
 
 	@Override
 	public void registerUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<Integer, IUser> getUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setUsers(Map<Integer, IUser> users) {
 		// TODO Auto-generated method stub
 		
 	}
