@@ -19,7 +19,10 @@ public class ListGamesHandler extends Handler
 	@Override
 	public Response processRequest(Request req) 
 	{
-		return null;
+		Response res = new Response();
+		res.setBody("{}");
+		res.setStatusCode(200);
+		return res;
 	}
 
 }

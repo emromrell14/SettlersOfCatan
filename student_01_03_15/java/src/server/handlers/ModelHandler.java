@@ -19,7 +19,10 @@ public class ModelHandler  extends Handler
 	@Override
 	public Response processRequest(Request req)
 	{
-		return null;
+		Response res = new Response();
+		res.setBody("Failed - ModelHandler is not implemented yet");
+		res.setStatusCode(400);
+		return res;
 	}
 
 }

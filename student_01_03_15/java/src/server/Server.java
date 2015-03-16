@@ -22,7 +22,7 @@ public class Server implements IServer
 	{
 		if(args.length == 0)
 		{
-			portNumber = 8898;
+			portNumber = 8081;
 		}
 		else
 		{
@@ -37,6 +37,7 @@ public class Server implements IServer
 		try 
 		{
 			server = HttpServer.create(new InetSocketAddress(portNumber),10);
+			System.out.println("Server running on port "+portNumber);
 		} 
 		catch (IOException e) 
 		{

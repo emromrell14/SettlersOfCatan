@@ -236,32 +236,33 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void generateGameList()
 	{
 		String JSON = master.getGameList();
-		//System.out.println("JoinGameController json:" + JSON + ":");
+		System.out.println("JoinGameController json:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;
 		
 //		//System.out.println("JoinGameController json2:" + JSON + ":");
-
-		gameInfoArray = gameInfo.getGamesArrayFromJSON(JSON);
-		for(GameInfoJSON gameJSON : gameInfoArray)
+		if(!JSON.contains("Failed") && !JSON.equals("{}"))
 		{
-			GameInfo game = new GameInfo();
-			game.setId(gameJSON.getId());
-			game.setTitle(gameJSON.getTitle());
-			for(PlayerInfo p : gameJSON.getPlayers())
+			gameInfoArray = gameInfo.getGamesArrayFromJSON(JSON);
+			for(GameInfoJSON gameJSON : gameInfoArray)
 			{
-				// Set the CatanColor if the player has a color
-				if(p.getColor() != null)
-					p.setColor(p.getColor());
-				if(!p.getName().equals("") || p.getId() != -1)
+				GameInfo game = new GameInfo();
+				game.setId(gameJSON.getId());
+				game.setTitle(gameJSON.getTitle());
+				for(PlayerInfo p : gameJSON.getPlayers())
 				{
-					game.addPlayer(p);
+					// Set the CatanColor if the player has a color
+					if(p.getColor() != null)
+						p.setColor(p.getColor());
+					if(!p.getName().equals("") || p.getId() != -1)
+					{
+						game.addPlayer(p);
+					}
 				}
+				games.add(game);
 			}
-			games.add(game);
 		}
-		
 		// Set info for current player
 		this.localPlayer.setId(master.getPlayerID());
 		this.localPlayer.setName(master.getPlayerName());
