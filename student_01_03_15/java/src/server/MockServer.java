@@ -7,6 +7,7 @@ import java.util.Map;
 import models.IGame;
 
 
+
 //import server.handlers.AddAIHandler;
 //import server.handlers.CommandsHandler;
 //import server.handlers.CreateGamesHandler;
@@ -212,6 +213,18 @@ public class MockServer implements IServer
 
 	@Override
 	public void setUsers(Map<Integer, IUser> users) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<Integer, IGame> getGames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setGames(Map<Integer, IGame> games) {
 		// TODO Auto-generated method stub
 		
 	}

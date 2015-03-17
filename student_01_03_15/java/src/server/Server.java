@@ -128,6 +128,14 @@ public class Server implements IServer
 	public void setUsers(Map<Integer, IUser> users) {
 		this.users = users;
 	}
+
+	public Map<Integer, IGame> getGames() {
+		return games;
+	}
+
+	public void setGames(Map<Integer, IGame> games) {
+		this.games = games;
+	}
 	
 	
 }

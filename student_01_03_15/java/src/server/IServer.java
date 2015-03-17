@@ -57,5 +57,7 @@ public interface IServer
 	void registerUser(User user);
 	public Map<Integer, IUser> getUsers();
 	public void setUsers(Map<Integer, IUser> users);
+	public Map<Integer, IGame> getGames();
+	public void setGames(Map<Integer, IGame> games);
 	
 }
