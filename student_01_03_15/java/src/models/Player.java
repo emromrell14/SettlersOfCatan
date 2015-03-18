@@ -636,7 +636,7 @@ public class Player implements IPlayer
 	 * @post none 
 	 * @return true if a card can be bought, false otherwise
 	 */
-	public boolean canBuyDevCard()
+	public boolean canAffordDevCard()
 	{
 		ResourceList r = this.resources();
 		if (
