@@ -3,6 +3,8 @@ package models;
 import java.util.List;
 
 import shared.definitions.BuildingType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 /** Building class (for settlements or cities)
@@ -93,6 +95,25 @@ public class Building
 	}
 
 	public boolean isOnHex(Hex h) {
-		return false;
+		VertexLocation loc = this.mLocation.getNormalizedLocation();
+		switch (loc.getDir().getLengthenedDirection())
+		{
+		case NorthWest:
+		case NorthEast:
+			return h.getHexLocation().equals(loc.getHexLoc());
+			
+		case SouthWest:			
+		case SouthEast:
+			return h.getHexLocation().equals(loc.getHexLoc().getNeighborLoc(EdgeDirection.North));
+				
+		case West:
+			return h.getHexLocation().equals(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast));
+		
+		case East:
+			return h.getHexLocation().equals(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest));
+			
+		default:
+			return false;
+		}
 	}
 }
