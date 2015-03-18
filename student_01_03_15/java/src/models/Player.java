@@ -329,7 +329,7 @@ public class Player implements IPlayer
 		}
 
 		loc = loc.getNormalizedLocation();
-		switch (loc.getDir().getLengthendDirection())
+		switch (loc.getDir().getLengthenedDirection())
 		{
 		case NorthWest:
 			if (

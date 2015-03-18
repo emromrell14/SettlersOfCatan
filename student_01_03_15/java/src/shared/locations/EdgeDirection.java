@@ -62,7 +62,7 @@ public enum EdgeDirection
 	{
 		return shortened;
 	}	
-	public EdgeDirection getLengthendDirection()
+	public EdgeDirection getLengthenedDirection()
 	{
 		return lengthened;
 	}	
