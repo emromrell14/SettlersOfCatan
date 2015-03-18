@@ -7,6 +7,7 @@ import java.util.Observable;
 
 import models.Game;
 import models.Index;
+import models.Message;
 import models.Player;
 import models.ResourceList;
 import models.Status;
@@ -81,7 +82,7 @@ public class MasterManager implements IMasterManager
 		return this.getCurrentModel().getPlayerIndex(mProxy.getPlayerID());
 	}
 	
-	public MessageListJSON getLog()
+	public List<Message> getLog()
 	{
 		return mModelManager.getLog();
 	}

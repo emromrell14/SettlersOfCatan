@@ -9,6 +9,7 @@ import shared.definitions.CatanColor;
 import JSONmodels.MessageLineJSON;
 import JSONmodels.MessageListJSON;
 import models.Index;
+import models.Message;
 import client.base.*;
 import facade.IMasterManager;
 import facade.MasterManager;
@@ -44,17 +45,17 @@ public class ChatController extends Controller implements IChatController, Obser
 	public void update(Observable o, Object arg)
 	{
 		////System.out.println("ChatController update");
-		MessageListJSON chat = master.getCurrentModel().chat();
+		List<Message> chat = master.getCurrentModel().chat();
 		
 		
 		if(chat != null)
 		{
 			List<LogEntry> entries = new ArrayList<LogEntry>();
-			for(MessageLineJSON m : chat.getLines())
+			for(Message m : chat)
 			{
-				String name = m.getSource();
+				String name = m.playerName();
 				CatanColor color = master.getCurrentModel().getPlayerColor(name);
-				entries.add(new LogEntry(color,m.getMessage()));
+				entries.add(new LogEntry(color,m.message()));
 			}
 			getView().setEntries(entries);
 		}

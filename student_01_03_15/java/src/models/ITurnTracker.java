@@ -2,6 +2,7 @@ package models;
 
 public interface ITurnTracker
 {
+	
 	/**
 	 * Gets Index of player who has the current turn
 	 * 

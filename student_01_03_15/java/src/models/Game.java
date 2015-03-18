@@ -139,7 +139,7 @@ public class Game implements IGame
 		}
 	}
 
-	public void robPlayer(int playerIndexInt, int victimIndexInt, HexLocation loc)
+	public void robPlayer(int playerIndexInt, int victimIndexInt, HexLocation loc) throws IllegalStateException
 	{
 		if (!this.mTurnTracker.status().equals(Status.ROBBING))
 		{
@@ -184,9 +184,41 @@ public class Game implements IGame
 		this.mTurnTracker.setStatus(Status.PLAYING);
 	}
 	
-	public void finishTurn(int playerIndex)
+	public void finishTurn(int playerIndexInt) throws IllegalStateException
 	{
+		if (this.mTurnTracker.currentTurn().value() != playerIndexInt)
+		{
+			throw new IllegalStateException("It's not your turn");
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			throw new IllegalStateException("You arent' in the PLAYING state");
+		}
+				
+		// cycle turntracker
+		this.mTurnTracker.endTurn();
 		
+		// change status to rolling
+		this.mTurnTracker.setStatus(Status.ROLLING);
+
+		// set new dev cards to be old
+		Index playerIndex;
+		try 
+		{
+			playerIndex = new Index(playerIndexInt);
+		} 
+		catch (Exception e) 
+		{
+			throw new IllegalStateException("Invalid index");
+		}
+		
+		for (DevCard d : this.getPlayer(playerIndex).devCards())
+		{
+			if (d.isNew())
+			{
+				d.setNew(false);
+			}
+		}
 		
 	}
 

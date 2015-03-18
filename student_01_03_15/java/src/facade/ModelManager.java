@@ -11,6 +11,7 @@ import shared.locations.VertexLocation;
 import models.Building;
 import models.Game;
 import models.Index;
+import models.Message;
 import models.Player;
 import models.ResourceList;
 import models.Status;
@@ -522,7 +523,7 @@ public class ModelManager extends Observable
 		return mGameModel == null? 0 : mGameModel.getPlayer(playerID).victoryPointCount();
 	}
 	
-	public MessageListJSON getLog()
+	public List<Message> getLog()
 	{
 		return mGameModel == null? null : mGameModel.log();
 	}

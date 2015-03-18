@@ -1,6 +1,10 @@
 package JSONmodels;
 
+import java.util.List;
+
 import models.Game;
+import models.Message;
+
 import com.google.gson.Gson;
 
 public class ClientModelJSON 
@@ -120,8 +124,8 @@ public class ClientModelJSON
 		System.out.println("Index of winner coming from server: " + winner);
 		g.setRobber(map.getModelRobber());
 		g.setBoard(map.getModelBoard());
-		g.setChat(chat);
-		g.setLog(log);
+		g.setChat(this.getModelChat());
+		g.setLog(this.getModelLog());
 		if(tradeOffer != null)
 		{
 			g.setTrade(tradeOffer.getModel());
@@ -133,5 +137,14 @@ public class ClientModelJSON
 		}
 		
 		return g;
+	}
+	
+	public List<Message> getModelChat() 
+	{
+		return this.chat.getMessages();
+	}
+	public List<Message> getModelLog() 
+	{
+		return this.log.getMessages();
 	}
 }

@@ -2,6 +2,7 @@ package client.communication;
 
 import java.util.*;
 
+import models.Message;
 import JSONmodels.MessageLineJSON;
 import JSONmodels.MessageListJSON;
 import client.base.*;
@@ -33,16 +34,16 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	
 	private void initFromModel()
 	{
-		MessageListJSON log = master.getLog();
+		List<Message> log = master.getLog();
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		
 		if(log != null)
 		{
-			for(MessageLineJSON m : log.getLines())
+			for(Message m : log)
 			{
-				String name = m.getSource();
+				String name = m.playerName();
 				CatanColor playerColor = master.getCurrentModel().getPlayerColor(name);
-				entries.add(new LogEntry(playerColor,m.getMessage()));
+				entries.add(new LogEntry(playerColor,m.message()));
 			}
 		}
 		

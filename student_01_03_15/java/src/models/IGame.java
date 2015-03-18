@@ -35,6 +35,7 @@ public interface IGame
 	/**
 	 * changes turn tracker's current turn to next player
 	 * sets status to rolling
+	 * sets new dev cards to old
 	 * 
 	 * @param playerIndex
 	 */
