@@ -222,6 +222,43 @@ public class Game implements IGame
 		
 	}
 
+	public void buyDevCard(int playerIndexInt){
+		if (this.mTurnTracker.currentTurn().value() != playerIndexInt)
+		{
+			throw new IllegalStateException("It's not your turn");
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			throw new IllegalStateException("You arent' in the PLAYING state");
+		}
+		
+		Index playerIndex;
+		Player player;
+		try 
+		{
+			playerIndex = new Index(playerIndexInt);
+			player = this.getPlayer(playerIndex);
+		} 
+		catch (Exception e) 
+		{
+			throw new IllegalStateException("Invalid index");
+		}
+		
+		if (!this.canBuyDevCard(playerIndex))
+		{
+			throw new IllegalStateException("Player can't buy dev card");			
+		}
+		
+		// Player gains a new card, if monument it will be old, new otherwise
+		DevCard d = this.mDevCards.get((int)(Math.random() * this.mDevCards.size()));
+		this.mDevCards.remove(d);
+		player.addDevCard(d);
+		
+		// Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
+		player.addResourcesToList(0, -1, -1, -1, 0);
+		
+	}
+
 	
 	private void giveResourcesToPlayers(Hex h) {
 		for (Player p : mPlayers)
@@ -523,5 +560,13 @@ public class Game implements IGame
 
 	public void setName(String mName) {
 		this.mName = mName;
+	}
+
+	public boolean canBuyDevCard(Index playerIndex) {
+		if (!this.devCards().isEmpty())
+		{
+			return this.getPlayer(playerIndex).canBuyDevCard();
+		}
+		return false;
 	}
 }

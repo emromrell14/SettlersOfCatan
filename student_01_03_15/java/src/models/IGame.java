@@ -29,7 +29,7 @@ public interface IGame
 	 * @param victimIndex
 	 * @param loc
 	 */
-	public void robPlayer(int playerIndex, int victimIndex, HexLocation loc);
+	public void robPlayer(int playerIndexInt, int victimIndex, HexLocation loc);
 
 	
 	/**
@@ -39,7 +39,15 @@ public interface IGame
 	 * 
 	 * @param playerIndex
 	 */
-	public void finishTurn(int playerIndex);
+	public void finishTurn(int playerIndexInt);
+
+	/**
+	 * Player gains a new card, if monument it will be old, new otherwise
+	 * Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
+	 * 
+	 * @param playerIndex
+	 */
+	public void buyDevCard(int playerIndexInt);
 
 	
 	/**

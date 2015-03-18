@@ -284,7 +284,7 @@ public class ModelManager extends Observable
 		{
 			return false;
 		}
-		return p.canBuyDevCard();
+		return mGameModel.canBuyDevCard(playerIndex);
 	}
 
 	/**
