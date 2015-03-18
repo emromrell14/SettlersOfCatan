@@ -85,7 +85,7 @@ public class Port
 	private void calculateVertices()
 	{
 		this.mVertices = new ArrayList<VertexLocation>();
-		switch(this.mDirection.getLengthendDirection())
+		switch(this.mDirection.getLengthenedDirection())
 		{
 		case South:
 			mVertices.add(new VertexLocation(this.mLocation.getNeighborLoc(EdgeDirection.South), VertexDirection.NorthEast));

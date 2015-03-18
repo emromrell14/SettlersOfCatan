@@ -178,7 +178,7 @@ public class MapController extends Controller implements IMapController, Observe
 			toReturn = toReturn && 
 					!(edgeLoc.getNormalizedLocation().getHexLoc().getX() == road1.getNormalizedLocation().getHexLoc().getX() && 
 					edgeLoc.getNormalizedLocation().getHexLoc().getY() == road1.getNormalizedLocation().getHexLoc().getY() &&
-					edgeLoc.getNormalizedLocation().getDir().getLengthendDirection() == road1.getNormalizedLocation().getDir().getLengthendDirection());
+					edgeLoc.getNormalizedLocation().getDir().getLengthenedDirection() == road1.getNormalizedLocation().getDir().getLengthenedDirection());
 		}
 		
 		return  toReturn;

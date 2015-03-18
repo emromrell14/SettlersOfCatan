@@ -8,10 +8,17 @@ import shared.locations.HexLocation;
 
 public interface IGame
 {
-	/** 
-	 * Initiates rolling of game dice
-	 * 
-	 *
+	/**
+	 * Adds a chat message to the message board
+	 * @param message
+	 * @param playerIndex
+	 */
+	void sendChat(String message, Index playerIndex);
+	
+	/**
+	 * Allocates resources and changes turntracker status
+	 * @param playerIndex
+	 * @param number
 	 */
 	void rollDice(Index playerIndex, int number);
 
@@ -111,13 +118,13 @@ public interface IGame
 
 	void setWinner(int w);
 
-	MessageListJSON chat();
+	List<Message> chat();
 
-	void setChat(MessageListJSON m);
+	void setChat(List<Message> m);
 
-	MessageListJSON log();
+	List<Message> log();
 
-	void setLog(MessageListJSON m);
+	void setLog(List<Message> m);
 
 	Robber robber();
 

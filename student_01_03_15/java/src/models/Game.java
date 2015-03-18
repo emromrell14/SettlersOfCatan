@@ -3,7 +3,6 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import JSONmodels.MessageListJSON;
 import shared.definitions.CatanColor;
 import shared.locations.HexLocation;
 
@@ -16,8 +15,8 @@ public class Game implements IGame
 	private List<DevCard> mDevCards;
 	private int mVersion;
 	private Index mWinner;
-	private MessageListJSON mChat; //All the chat messages.
-	private MessageListJSON mLog; //All the log messages.
+	private List<Message> mChat; //All the chat messages.
+	private List<Message> mLog; //All the log messages.
 	private Robber mRobber;
 	private Trade mCurrentTrade = null;
 	private int mId;
@@ -99,6 +98,13 @@ public class Game implements IGame
 	}
 	
 	@Override
+	public void sendChat(String message, Index playerIndex) {
+		String name = this.getPlayer(playerIndex).name();
+		// add chat to message list
+		this.mChat.add(new Message(message,name));
+	}
+	
+	@Override
 	public void rollDice(Index playerIndex, int number) throws IllegalStateException
 	{
 		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
@@ -122,6 +128,14 @@ public class Game implements IGame
 		}
 		
 		// Change Turn Tracker status
+		if (number == 7)
+		{
+			this.mTurnTracker.setStatus(Status.DISCARDING);
+		}
+		else
+		{
+			this.mTurnTracker.setStatus(Status.PLAYING);
+		}
 	}
 
 	private void giveResourcesToPlayers(Hex h) {
@@ -138,7 +152,10 @@ public class Game implements IGame
 			for (Building b : p.cities())
 			{
 				// give two resources for each city on this hex		
-				p.resources().addResource(h.resource(), 2);
+				if (b.isOnHex(h))
+				{
+					p.resources().addResource(h.resource(), 2);
+				}
 			}
 		}
 	}
@@ -303,29 +320,28 @@ public class Game implements IGame
 		}
 	}
 
+
+
 	@Override
-	public MessageListJSON chat()
-	{
+	public List<Message> chat() {
 		return mChat;
 	}
-	
+
 	@Override
-	public void setChat(MessageListJSON m)
-	{
+	public void setChat(List<Message> m) {
 		mChat = m;
 	}
 
 	@Override
-	public MessageListJSON log() 
-	{
+	public List<Message> log() {
 		return mLog;
 	}
-	
+
 	@Override
-	public void setLog(MessageListJSON m)
-	{
+	public void setLog(List<Message> m) {
 		mLog = m;
 	}
+
 
 	@Override
 	public Robber robber() 
@@ -423,5 +439,4 @@ public class Game implements IGame
 	public void setName(String mName) {
 		this.mName = mName;
 	}
-	
 }
