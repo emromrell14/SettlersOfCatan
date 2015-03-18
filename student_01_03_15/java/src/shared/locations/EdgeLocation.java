@@ -1,9 +1,5 @@
 package shared.locations;
 
-import models.Hex;
-import models.TokenValue;
-import shared.definitions.HexType;
-
 /**
  * Represents the location of an edge on a hex map
  */
