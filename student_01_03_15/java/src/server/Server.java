@@ -3,8 +3,10 @@ package server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import models.Game;
 import models.IGame;
 import server.handlers.*;
 
@@ -110,9 +112,12 @@ public class Server implements IServer
 	}
 
 	@Override
-	public void createGame() 
+	public void createGame(String name, int id, boolean randomTiles, boolean randomNumbers, boolean randomPorts) 
 	{
-		
+		Game g = new Game();
+		g.setName(name);
+		g.setId(id);
+		games.put(games.size(), g);
 	}
 
 	@Override
@@ -135,6 +140,27 @@ public class Server implements IServer
 
 	public void setGames(Map<Integer, IGame> games) {
 		this.games = games;
+	}
+
+	@Override
+	public void createGame() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public IUser getCurrentUser(String username)
+	{
+		Iterator it = games.entrySet().iterator();
+		while(it.hasNext())
+		{
+			Map.Entry pair = (Map.Entry)it.next();
+			
+			if(username.equals(((User)pair.getValue()).getUsername()))
+			{
+				return (IUser)pair.getValue();
+			}
+		}
+		return null;
 	}
 	
 	

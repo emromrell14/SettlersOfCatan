@@ -4,11 +4,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import models.Game;
+import models.Index;
 import models.Player;
 import server.IServer;
 import server.User;
 import server.JSON.JoinGamesRequest;
 import server.JSON.RegisterRequest;
+import shared.definitions.CatanColor;
 
 public class JoinGamesHandler  extends Handler
 {
@@ -29,12 +31,12 @@ public class JoinGamesHandler  extends Handler
 	@Override
 	public Response processRequest(Request req)
 	{
-		Response resp = new Response();
-		String urlEncoded;
+		System.out.println("Paslfjaslkdjfalskdf.");
 		String body = req.getBody();
 		JoinGamesRequest jgr = JoinGamesRequest.fromJSON(body);
 		int id = jgr.getId();
 		String color = jgr.getColor();
+		String playerName = req.getCookie().getPlayerName();
 		
 		Iterator it = server.getGames().entrySet().iterator();
 		while(it.hasNext())
@@ -54,11 +56,13 @@ public class JoinGamesHandler  extends Handler
 				// Check color isn't already taken by a different player
 				for(Player p : game.players())
 				{
+					System.out.println(p.color().name() + " " + color);
 					if(p.color().name().equals(color))
 					{
-						// Check names for case rejoin
-						if(p.name().equals(req.getCookie().getPlayerName()))
+						// Check names if rejoin
+						if(p.name().equals(playerName))
 						{
+							game.setPlayersColor(playerName, color);
 							return new Response(200,"Player added.");
 						}
 						else
@@ -68,13 +72,27 @@ public class JoinGamesHandler  extends Handler
 						 
 					}
 				}
-				// If this point is reached, color was not taken
+				// If this point is reached, color was not taken and player is joining for first time
+				try 
+				{
+					game.addPlayer(new Player(CatanColor.valueOf(color), playerName, 
+							new Index(game.players().size()), server.getCurrentUser(playerName).getID()));
+					System.out.println("Player added to new game.");
+				} 
+				catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				return new Response(200,"Player added.");
 			}
 		}
+		System.out.println("Player NOTTT added to game.");
 		// Set fail response
 		return new Response(400,"The player could not be added to the specified game.");
 	}
 	
-
+	public void addPlayer(Game game)
+	{
+	}
 }
