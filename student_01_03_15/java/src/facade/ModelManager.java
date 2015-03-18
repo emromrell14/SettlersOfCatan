@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -13,9 +12,7 @@ import models.Game;
 import models.Index;
 import models.Message;
 import models.Player;
-import models.ResourceList;
 import models.Status;
-import JSONmodels.MessageListJSON;
 
 public class ModelManager extends Observable
 {
