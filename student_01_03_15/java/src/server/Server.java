@@ -122,8 +122,8 @@ public class Server implements IServer
 		g.setId(id);
 		g.setVersion(0);
 		g.setWinner(-1);
-		List m = new ArrayList<Message>();
-		List log = new ArrayList<Message>();
+		List<Message> m = new ArrayList<Message>();
+		List<Message> log = new ArrayList<Message>();
 		g.setChat(m);
 		g.setLog(log);
 		//TODO: set other values found in clientModelJSON or the dejsonifying breaks client when poller grabs game
