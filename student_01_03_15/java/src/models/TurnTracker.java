@@ -46,9 +46,20 @@ public class TurnTracker implements ITurnTracker
 	{
 		return mLongestRoad;
 	}
+	
+	public void setLongestRoad(Index playerIndex)
+	{
+		this.mLongestRoad = playerIndex;
+	}
+	
 	public Index largestArmy()
 	{
 		return mLargestArmy;
+	}
+	
+	public void setLargestArmy(Index playerIndex)
+	{
+		this.mLargestArmy = playerIndex;
 	}
 	
 	public boolean isPlayersTurn(Index playerIndex)

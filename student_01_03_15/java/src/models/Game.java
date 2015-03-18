@@ -446,6 +446,8 @@ public class Game implements IGame
 			throw new IllegalStateException("Failed pre-conditions");
 		}
 		
+		Player player = this.getPlayer(playerIndex);
+		
 		// cycle turntracker
 		this.mTurnTracker.endTurn();
 		
@@ -453,14 +455,15 @@ public class Game implements IGame
 		this.mTurnTracker.setStatus(Status.ROLLING);
 
 		// set new dev cards to be old		
-		for (DevCard d : this.getPlayer(playerIndex).devCards())
+		for (DevCard d : player.devCards())
 		{
 			if (d.isNew())
 			{
 				d.setNew(false);
 			}
 		}
-		
+		// resetting has played dev card for next turn
+		player.setHasPlayedDevCard(false);
 	}
 
 	public boolean canBuyDevCard(Index playerIndex)
@@ -558,15 +561,31 @@ public class Game implements IGame
 		
 		//Remove their year of plenty card
 		player.removeDevCard(DevCardType.YEAR_OF_PLENTY);
+
+		// setting played dev card to true
+		this.getPlayer(playerIndex).setHasPlayedDevCard(true);
+
 	}
 	
 	public boolean canPlayRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)
 	{
+		Player player = this.getPlayer(playerIndex);
 		//Check if spot1 and spot2 are connected to your roads
-		
-		//Check if you have two roads to give
-		
+		if (!player.canPlaceRoad(spot1) || !player.canPlaceRoad(spot2))
+		{
+			return false;
+		}
 		//Check if either of the roads are in the water
+		if (spot1.isInSea() || spot2.isInSea())
+		{
+			return false;
+		}
+		
+		// Check if player can play it
+		if (!player.canPlayRoadBuilder())
+		{
+			return false;
+		}
 		
 		return true;
 	}
@@ -577,14 +596,32 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+			
+		// build both roads
+		this.buildRoad(playerIndex, spot1, true);
+		this.buildRoad(playerIndex, spot2, true);
 		
-		Player player = this.getPlayer(playerIndex);
-		
-		//
-	}
+		// setting played dev card to true
+		this.getPlayer(playerIndex).setHasPlayedDevCard(true);	}
 	
 	public boolean canPlaySoldier(Index playerIndex, Index victimIndex, HexLocation location)
 	{
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+		
+		if (!player.canPlaySoldier())
+		{
+			return false;
+		}
+		
 		return true;
 	}
 	@Override
@@ -594,6 +631,20 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		try
+		{
+			this.robPlayer(playerIndex, victimIndex, location);			
+			
+			// setting played dev card to true
+			this.getPlayer(playerIndex).setHasPlayedDevCard(true);
+			
+			this.validateLargestArmy(playerIndex);
+		}
+		catch (IllegalStateException e)
+		{
+			throw e;
+		}
+	
 	}
 
 	public boolean canPlayMonopoly(Index playerIndex, ResourceType resource)
@@ -633,7 +684,11 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		// Check for longest road
+		this.validateLongestRoad(playerIndex);
 	}
+
 
 	public boolean canBuildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free)
 	{
@@ -795,6 +850,28 @@ public class Game implements IGame
 		}
 		return victims;
 	}
+	
+	private void validateLargestArmy(Index playerIndex) 
+	{
+		Player contendingPlayer = this.getPlayer(playerIndex);
+		Player largestArmyPlayer = this.getPlayer(this.getLargestArmyIndex());
+		if (contendingPlayer.soldierCount() > largestArmyPlayer.soldierCount())
+		{
+			this.mTurnTracker.setLargestArmy(playerIndex);
+		}
+		
+	}
+	
+	private void validateLongestRoad(Index playerIndex) 
+	{
+		Player contendingPlayer = this.getPlayer(playerIndex);
+		Player longestRoadPlayer = this.getPlayer(this.getLongestRoadIndex());
+		if (contendingPlayer.roads().size() > longestRoadPlayer.roads().size())
+		{
+			this.mTurnTracker.setLongestRoad(playerIndex);
+		}		
+	}
+	
 	//END MISC FUNCTIONS
 
 }

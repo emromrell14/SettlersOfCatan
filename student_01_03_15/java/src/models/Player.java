@@ -247,6 +247,15 @@ public class Player implements IPlayer
 	}
 	
 	/**
+	 * sets that player has played Dev Card for this turn
+	 */
+	public void setHasPlayedDevCard(boolean hasPlayed) 
+	{
+		this.mHasPlayedDevCard = hasPlayed;	
+	}
+
+	
+	/**
 	 * Gets the unique id associated with a player
 	 * @return the unique id associated with this player
 	 */
@@ -827,10 +836,6 @@ public class Player implements IPlayer
 		}
 		return false;
 	}
-	public void playSoldier()
-	{
-		
-	}
 	
 	/**
 	 * Returns whether a player can play a monopoly card
@@ -1095,15 +1100,18 @@ public class Player implements IPlayer
 		return false;
 	}
 
-	public CatanColor getColor() {
+	public CatanColor getColor() 
+	{
 		return mColor;
 	}
 
-	public void setColor(CatanColor mColor) {
+	public void setColor(CatanColor mColor) 
+	{
 		this.mColor = mColor;
 	}
 
-	public List<ResourceType> getHand() {
+	public List<ResourceType> getHand() 
+	{
 		List<ResourceType> cards = new ArrayList<ResourceType>();
 		for (ResourceType type : ResourceType.values())
 		{	
@@ -1115,7 +1123,8 @@ public class Player implements IPlayer
 		return cards;
 	}
 
-	public void removeDevCard(DevCardType devCardType) {
+	public void removeDevCard(DevCardType devCardType) 
+	{
 		for (DevCard d : this.mDevCards)
 		{
 			if (d.type() == devCardType && !d.hasBeenPlayed() && !d.isNew())
@@ -1124,6 +1133,5 @@ public class Player implements IPlayer
 			}
 		}
 	}
-
 	
 }
