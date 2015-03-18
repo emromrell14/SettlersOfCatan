@@ -79,7 +79,6 @@ public class Response
 		this.cookieValue = value;
 	}
 	
-
 	/**
 	 * @return the body
 	 */
@@ -95,10 +94,14 @@ public class Response
 	{
 		return statusCode;
 	}
-	public void setBody(String body) {
+	
+	public void setBody(String body)
+	{
 		this.body = body;
 	}
-	public void setStatusCode(int statusCode) {
+	
+	public void setStatusCode(int statusCode) 
+	{
 		this.statusCode = statusCode;
 	}
 }

@@ -24,11 +24,13 @@ public class Request
 		
 		//Parse the cookies into objects.
 		
+		System.out.println(headers.toString());
 		
 		//Read in the request body...
 		
 		final char[] buffer = new char[1024];
 		final StringBuilder out = new StringBuilder();
+		
 		try 
 		{
 			final InputStreamReader in = new InputStreamReader(req.getRequestBody(), "UTF-8");
