@@ -2,7 +2,6 @@ package models;
 
 import java.util.List;
 
-import JSONmodels.MessageListJSON;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -39,6 +38,8 @@ public interface IGame
 	void setBoard(Board b);
 
 	List<Player> players();
+	
+	void setPlayers(List<Player> players);
 
 	/**
 	 * Returns the player with the specified ID
@@ -122,6 +123,14 @@ public interface IGame
 	Trade trade();
 
 	void setTrade(Trade model);
+	
+	int id();
+	
+	void setId(int id);
+	
+	String name();
+	
+	void setName(String name);
 
 	/**
 	 * Returns whether or not a player can offer a trade
@@ -235,8 +244,4 @@ public interface IGame
 	public void maritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource);
 	
 	public void discardCards(Index playerIndex, ResourceList discardedCards);
-
-	public String name();
-	
-	public int id();
 }
