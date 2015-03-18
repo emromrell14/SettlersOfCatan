@@ -1,5 +1,7 @@
 package server.handlers;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -32,6 +34,7 @@ public class JoinGamesHandler  extends Handler
 	public Response processRequest(Request req)
 	{
 		String body = req.getBody();
+		Response resp = new Response();
 		JoinGamesRequest jgr = JoinGamesRequest.fromJSON(body);
 		int id = jgr.getId();
 		String color = jgr.getColor().toUpperCase();
@@ -62,7 +65,8 @@ public class JoinGamesHandler  extends Handler
 						if(p.name().equals(playerName))
 						{
 							game.setPlayersColor(playerName, color);
-							return new Response(200,"Player added.");
+							resp = setCookie(game, resp);
+							return resp;
 						}
 						else
 						{
@@ -76,6 +80,7 @@ public class JoinGamesHandler  extends Handler
 				{
 					game.addPlayer(new Player(CatanColor.valueOf(color), playerName, 
 							new Index(game.players().size()), server.getCurrentUser(playerName).getID()));
+					resp = setCookie(game, resp);
 					System.out.println("Player added to new game.");
 				} 
 				catch (Exception e) {
@@ -83,7 +88,7 @@ public class JoinGamesHandler  extends Handler
 					e.printStackTrace();
 				}
 				
-				return new Response(200,"Player added.");
+				return resp;
 			}
 		}
 		System.out.println("Player NOTTT added to game.");
@@ -91,7 +96,12 @@ public class JoinGamesHandler  extends Handler
 		return new Response(400,"The player could not be added to the specified game.");
 	}
 	
-	public void addPlayer(Game game)
+	public Response setCookie(Game g, Response resp)
 	{
+		resp.setCookie("catan.game", g.id()+"");
+		resp.setStatusCode(200);
+		resp.setBody("Success");
+		return resp;
 	}
+	
 }

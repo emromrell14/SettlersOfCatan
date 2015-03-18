@@ -2,12 +2,15 @@ package server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import models.Game;
 import models.IGame;
+import models.Message;
 import server.handlers.*;
 
 import com.sun.net.httpserver.HttpServer;
@@ -117,6 +120,12 @@ public class Server implements IServer
 		Game g = new Game();
 		g.setName(name);
 		g.setId(id);
+		g.setVersion(0);
+		g.setWinner(-1);
+		List m = new ArrayList<Message>();
+		List log = new ArrayList<Message>();
+		g.setChat(m);
+		g.setLog(log);
 		//TODO: set other values found in clientModelJSON or the dejsonifying breaks client when poller grabs game
 		games.put(games.size(), g);
 	}
