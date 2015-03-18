@@ -11,7 +11,6 @@ import states.RobbingState;
 import states.RollingState;
 import states.SetupState;
 import client.base.*;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -22,6 +21,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 	private IRollResultView resultView;
 	private MasterManager master;
+	@SuppressWarnings("unused")
 	private IState state;
 	private static boolean semaphore = false;
 	/**

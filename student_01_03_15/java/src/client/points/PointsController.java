@@ -5,8 +5,6 @@ import java.util.Observer;
 
 import models.Player;
 import client.base.*;
-import client.join.JoinGameController;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 

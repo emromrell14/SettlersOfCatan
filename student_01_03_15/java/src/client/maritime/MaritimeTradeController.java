@@ -12,7 +12,6 @@ import models.Game;
 import models.Player;
 import models.Port;
 import shared.definitions.*;
-import shared.locations.VertexLocation;
 import client.base.*;
 import facade.MasterManager;
 import facade.ModelManager;

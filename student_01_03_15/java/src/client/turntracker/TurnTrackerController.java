@@ -2,19 +2,15 @@ package client.turntracker;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import shared.definitions.CatanColor;
 import states.DiscardingState;
 import states.IState;
 import states.PlayingState;
 import states.RobbingState;
 import states.RollingState;
 import states.SetupState;
-import models.Game;
 import models.Player;
 import models.Status;
 import client.base.*;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -23,6 +19,7 @@ import facade.MasterManager;
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
 	private MasterManager master; 
+	@SuppressWarnings("unused")
 	private IState state;
 
 	public TurnTrackerController(ITurnTrackerView view) {
