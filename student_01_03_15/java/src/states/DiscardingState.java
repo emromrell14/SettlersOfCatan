@@ -1,8 +1,6 @@
 package states;
 
 import facade.MasterManager;
-import models.Index;
-import models.ResourceList;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;

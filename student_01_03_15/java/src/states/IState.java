@@ -1,6 +1,5 @@
 package states;
 
-import models.ResourceList;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
