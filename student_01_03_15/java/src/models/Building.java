@@ -91,4 +91,8 @@ public class Building
 		}
 		return null;
 	}
+
+	public boolean isOnHex(Hex h) {
+		return false;
+	}
 }
