@@ -225,23 +225,88 @@ public interface IGame
 	 */
 	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 	
+	/**
+	 * Moves the robber, steals a resource from another player, removes soldier card, adds to soldier count, and check largest army
+	 * 
+	 * @param playerIndex
+	 * @param victimIndex
+	 * @param location
+	 */
 	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location);
 	
+	/**
+	 * Removes monopoly card, steals all resources of specified types from players
+	 * 
+	 * @param playerIndex
+	 * @param resource
+	 */
 	public void playMonopoly(Index playerIndex, ResourceType resource);
 	
+	/**
+	 * Removes monument card, gains one victory point
+	 * 
+	 * @param playerIndex
+	 */
 	public void playMonument(Index playerIndex);
 	
+	/**
+	 * Removes a road from player, adds a road to the board, removes resources from player (if not free), checks for longest road
+	 * 
+	 * @param playerIndex
+	 * @param roadLocation
+	 * @param free
+	 */
 	public void buildRoad(Index playerIndex, EdgeLocation roadLocation, boolean free);
 	
+	/**
+	 * Removes a settlement from player, adds a settlement to the board, removes resources from player (if not free), adds victory point
+	 * 
+	 * @param playerIndex
+	 * @param vertexLocation
+	 * @param free
+	 */
 	public void buildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free);
 	
+	/**
+	 * Removes a city from player, removes a settlement from the board, adds a city to the board, removes resources from player, adds victory point
+	 * 
+	 * @param playerIndex
+	 * @param vertexLocation
+	 */
 	public void buildCity(Index playerIndex, VertexLocation vertexLocation);
 	
+	/**
+	 * Puts the trade in the turn tracker
+	 * 
+	 * @param playerIndex
+	 * @param receiverIndex
+	 * @param offer
+	 */
 	public void offerTrade(Index playerIndex, Index receiverIndex, ResourceList offer);
 	
+	/**
+	 * Swaps the specified resources (if accepted), and trade offer is reset
+	 * 
+	 * @param playerIndex
+	 * @param willAccept
+	 */
 	public void acceptTrade(Index playerIndex, boolean willAccept);
 	
+	/**
+	 * Gives up amount of input resources, and gets back one outputResource
+	 * 
+	 * @param playerIndex
+	 * @param ratio
+	 * @param inputResource What the player is GIVING
+	 * @param outputResource What the player is GETTING
+	 */
 	public void maritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource);
 	
+	/**
+	 * Give up the discarded resources to the bank, and if you're the last one to discard- change to ROBBING state
+	 * 
+	 * @param playerIndex
+	 * @param discardedCards
+	 */
 	public void discardCards(Index playerIndex, ResourceList discardedCards);
 }
