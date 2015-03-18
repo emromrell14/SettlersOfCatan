@@ -31,11 +31,10 @@ public class JoinGamesHandler  extends Handler
 	@Override
 	public Response processRequest(Request req)
 	{
-		System.out.println("Paslfjaslkdjfalskdf.");
 		String body = req.getBody();
 		JoinGamesRequest jgr = JoinGamesRequest.fromJSON(body);
 		int id = jgr.getId();
-		String color = jgr.getColor();
+		String color = jgr.getColor().toUpperCase();
 		String playerName = req.getCookie().getPlayerName();
 		
 		Iterator it = server.getGames().entrySet().iterator();

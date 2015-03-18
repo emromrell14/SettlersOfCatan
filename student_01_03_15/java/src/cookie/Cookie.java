@@ -37,7 +37,7 @@ public class Cookie
 	}
 	public String getPlayerName()
 	{
-		return mUserMap == null ? null : (String)mUserMap.get("name");
+		return mUserMap == null ? null : (String)mUserMap.get("username");
 	}
 	
 	public void setCatanGame(int gameID)
@@ -63,6 +63,7 @@ public class Cookie
 		this.mCatanUser = catanUser;
 		String json = URLDecoder.decode(catanUser);
 		mUserMap = new Gson().fromJson(json, Map.class);
+//		System.out.println("setCatanUser in Cookie " + mUserMap);
 	}
 
 	/**

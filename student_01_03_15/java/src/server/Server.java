@@ -117,6 +117,7 @@ public class Server implements IServer
 		Game g = new Game();
 		g.setName(name);
 		g.setId(id);
+		//TODO: set other values found in clientModelJSON or the dejsonifying breaks client when poller grabs game
 		games.put(games.size(), g);
 	}
 
@@ -150,11 +151,11 @@ public class Server implements IServer
 	
 	public IUser getCurrentUser(String username)
 	{
-		Iterator it = games.entrySet().iterator();
+		Iterator it = users.entrySet().iterator();
 		while(it.hasNext())
 		{
 			Map.Entry pair = (Map.Entry)it.next();
-			
+			System.out.println(username + " " +((User)pair.getValue()).getUsername() );
 			if(username.equals(((User)pair.getValue()).getUsername()))
 			{
 				return (IUser)pair.getValue();
