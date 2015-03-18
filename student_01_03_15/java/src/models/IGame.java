@@ -11,9 +11,9 @@ public interface IGame
 	/** 
 	 * Initiates rolling of game dice
 	 * 
-	 * @return value between 2 and 12 inclusive.  This is the simulation of rolling two dice.
+	 *
 	 */
-	int rollDice();
+	void rollDice(Index playerIndex, int number);
 
 	/**
 	 * Return the color of player with the specified playerID

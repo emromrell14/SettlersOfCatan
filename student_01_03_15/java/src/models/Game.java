@@ -86,9 +86,48 @@ public class Game implements IGame
 	}
 	
 	@Override
-	public int rollDice()
+	public void rollDice(Index playerIndex, int number) throws IllegalStateException
 	{
-		return 0;
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			throw new IllegalStateException("not current player's turn");
+		}
+		if (this.mTurnTracker.status() != Status.ROLLING)
+		{
+			throw new IllegalStateException("not in the rolling state");
+		}
+		
+		// Allocate resources
+		for (Hex h : mBoard.hexes())
+		{
+			if (h.number().value() == number)
+			{
+				// give resources to players with settlements or cities on this hex
+				giveResourcesToPlayers(h);
+			}
+			
+		}
+		
+		// Change Turn Tracker status
+	}
+
+	private void giveResourcesToPlayers(Hex h) {
+		for (Player p : mPlayers)
+		{
+			for (Building b : p.settlements())
+			{
+				// give one resource for each settlement on this hex
+				if (b.isOnHex(h))
+				{
+					p.resources().addResource(h.resource(), 1);
+				}
+			}
+			for (Building b : p.cities())
+			{
+				// give two resources for each city on this hex		
+				p.resources().addResource(h.resource(), 2);
+			}
+		}
 	}
 
 	@Override

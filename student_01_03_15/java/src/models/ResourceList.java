@@ -1,5 +1,6 @@
 package models;
 
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 
 public class ResourceList 
@@ -212,4 +213,27 @@ public class ResourceList
 		}
 		return false;
 	}
+
+	public void addResource(HexType resource, int num) {
+		switch (resource)
+		{
+			case BRICK:
+				this.addBrick(num);
+				return;
+			case WOOD:
+				this.addWood(num);
+				return;
+			case SHEEP:
+				this.addSheep(num);
+				return;
+			case WHEAT:
+				this.addWheat(num);
+				return;
+			case ORE:
+				this.addOre(num);
+				return;
+			default:
+				return;
+			}
+		}
 }
