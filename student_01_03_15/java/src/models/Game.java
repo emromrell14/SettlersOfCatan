@@ -5,6 +5,7 @@ import java.util.List;
 
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 
 public class Game implements IGame
@@ -98,23 +99,42 @@ public class Game implements IGame
 		mTurnTracker.endTurn();
 	}
 	
+	private boolean canSendChat() 
+	{
+		return true;
+	}
 	@Override
-	public void sendChat(String message, Index playerIndex) {
+	public void sendChat(String message, Index playerIndex) throws IllegalStateException 
+	{
+		if(!this.canSendChat())
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
 		String name = this.getPlayer(playerIndex).name();
+		
 		// add chat to message list
 		this.mChat.add(new Message(message,name));
 	}
 	
-	@Override
-	public void rollDice(Index playerIndex, int number) throws IllegalStateException
+	private boolean canRollDice(Index playerIndex)
 	{
 		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
-			throw new IllegalStateException("not current player's turn");
+			return false;
 		}
 		if (this.mTurnTracker.status() != Status.ROLLING)
 		{
-			throw new IllegalStateException("not in the rolling state");
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public void rollDice(Index playerIndex, int number) throws IllegalStateException
+	{
+		if(!this.canRollDice(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
 		}
 		
 		// Allocate resources
@@ -139,35 +159,34 @@ public class Game implements IGame
 		}
 	}
 
-	public void robPlayer(int playerIndexInt, int victimIndexInt, HexLocation loc) throws IllegalStateException
+	private boolean canRobPlayer(Player player, Player victim, HexLocation loc)
 	{
 		if (!this.mTurnTracker.status().equals(Status.ROBBING))
 		{
-			throw new IllegalStateException("You arent' in the robbing state");
+			return false;
 		}
 		if (this.mRobber.location().equals(loc))
 		{
-			throw new IllegalStateException("Can't move robber to same location");
+			return false;
 		}
-		Index playerIndex = null;
-		Index victimIndex = null;
-		Player victim;
-		Player player;		
-		try 
+		
+		if (victim.resources().isEmpty())
 		{
-			playerIndex = new Index(playerIndexInt);
-			victimIndex = new Index(victimIndexInt);
-			player = this.getPlayer(playerIndex);
-			victim = this.getPlayer(victimIndex);
-		} 
-		catch (Exception e) 
-		{
-			throw new IllegalStateException("Invalid index");
+			return false;
 		}
-		if (this.getPlayer(victimIndex).resources().isEmpty())
+		return true;
+	}
+	@Override
+	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation loc) throws IllegalStateException
+	{
+		Player player = this.getPlayer(playerIndex);		
+		Player victim = this.getPlayer(victimIndex);
+		
+		if(!this.canRobPlayer(player, victim, loc))
 		{
-			throw new IllegalStateException("Victim has no resources. Can't rob him");
+			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
 		
 		// move robber
 		this.mRobber.setLocation(loc);
@@ -184,34 +203,33 @@ public class Game implements IGame
 		this.mTurnTracker.setStatus(Status.PLAYING);
 	}
 	
-	public void finishTurn(int playerIndexInt) throws IllegalStateException
+	private boolean canFinishTurn(Index playerIndex)
 	{
-		if (this.mTurnTracker.currentTurn().value() != playerIndexInt)
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
-			throw new IllegalStateException("It's not your turn");
+			return false;
 		}
 		if (!this.mTurnTracker.status().equals(Status.PLAYING))
 		{
-			throw new IllegalStateException("You arent' in the PLAYING state");
+			return false;
 		}
-				
+		return true;
+	}
+	@Override
+	public void finishTurn(Index playerIndex) throws IllegalStateException
+	{
+		if(!canFinishTurn(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
 		// cycle turntracker
 		this.mTurnTracker.endTurn();
 		
 		// change status to rolling
 		this.mTurnTracker.setStatus(Status.ROLLING);
 
-		// set new dev cards to be old
-		Index playerIndex;
-		try 
-		{
-			playerIndex = new Index(playerIndexInt);
-		} 
-		catch (Exception e) 
-		{
-			throw new IllegalStateException("Invalid index");
-		}
-		
+		// set new dev cards to be old		
 		for (DevCard d : this.getPlayer(playerIndex).devCards())
 		{
 			if (d.isNew())
@@ -222,32 +240,35 @@ public class Game implements IGame
 		
 	}
 
-	public void buyDevCard(int playerIndexInt){
-		if (this.mTurnTracker.currentTurn().value() != playerIndexInt)
+	private boolean canBuyDevCard(Index playerIndex)
+	{
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
-			throw new IllegalStateException("It's not your turn");
+			return false;
 		}
 		if (!this.mTurnTracker.status().equals(Status.PLAYING))
 		{
-			throw new IllegalStateException("You arent' in the PLAYING state");
+			return false;
+		}
+		if (this.devCards().isEmpty())
+		{
+			return false;
+		}
+		if(!this.getPlayer(playerIndex).canAffordDevCard())
+		{
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public void buyDevCard(Index playerIndex)
+	{
+		if(!this.canBuyDevCard(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
 		}
 		
-		Index playerIndex;
-		Player player;
-		try 
-		{
-			playerIndex = new Index(playerIndexInt);
-			player = this.getPlayer(playerIndex);
-		} 
-		catch (Exception e) 
-		{
-			throw new IllegalStateException("Invalid index");
-		}
-		
-		if (!this.canBuyDevCard(playerIndex))
-		{
-			throw new IllegalStateException("Player can't buy dev card");			
-		}
+		Player player = this.getPlayer(playerIndex);
 		
 		// Player gains a new card, if monument it will be old, new otherwise
 		DevCard d = this.mDevCards.get((int)(Math.random() * this.mDevCards.size()));
@@ -259,6 +280,61 @@ public class Game implements IGame
 		
 	}
 
+	private boolean canPlayYearOfPlenty(Index playerIndex) 
+	{
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		
+		//Check for resources being in the bank
+		
+		return true;
+	}
+	@Override
+	public void playYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) 
+	{
+		if(!this.canPlayYearOfPlenty(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+				
+		//Subtract resources from bank
+		
+		//Give resources to player
+		
+		//Remove their year of plenty card
+		
+	}
+	
+	private boolean canPlayRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+	{
+		//Check if spot1 and spot2 are connected to your roads
+		
+		//Check if you have two roads to give
+		
+		//Check if either of the roads are in the water
+		
+		return true;
+	}
+	@Override
+	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+	{
+		if(!this.canPlayRoadBuilding(playerIndex, spot1, spot2))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+		
+		//
+	}
 	
 	private void giveResourcesToPlayers(Hex h) {
 		for (Player p : mPlayers)
@@ -560,13 +636,5 @@ public class Game implements IGame
 
 	public void setName(String mName) {
 		this.mName = mName;
-	}
-
-	public boolean canBuyDevCard(Index playerIndex) {
-		if (!this.devCards().isEmpty())
-		{
-			return this.getPlayer(playerIndex).canBuyDevCard();
-		}
-		return false;
 	}
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import JSONmodels.MessageListJSON;
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 
 public interface IGame
@@ -13,14 +15,14 @@ public interface IGame
 	 * @param message
 	 * @param playerIndex
 	 */
-	void sendChat(String message, Index playerIndex);
+	void sendChat(String message, Index playerIndex) throws IllegalStateException;
 	
 	/**
 	 * Allocates resources and changes turntracker status
 	 * @param playerIndex
 	 * @param number
 	 */
-	void rollDice(Index playerIndex, int number);
+	void rollDice(Index playerIndex, int number) throws IllegalStateException;
 
 	/**
 	 * moves robber, take resource from victim, give resource to player
@@ -29,7 +31,7 @@ public interface IGame
 	 * @param victimIndex
 	 * @param loc
 	 */
-	public void robPlayer(int playerIndexInt, int victimIndex, HexLocation loc);
+	public void robPlayer(Index playerIndexInt, Index victimIndex, HexLocation loc) throws IllegalStateException;
 
 	
 	/**
@@ -39,7 +41,7 @@ public interface IGame
 	 * 
 	 * @param playerIndex
 	 */
-	public void finishTurn(int playerIndexInt);
+	public void finishTurn(Index playerIndexInt) throws IllegalStateException;
 
 	/**
 	 * Player gains a new card, if monument it will be old, new otherwise
@@ -47,7 +49,28 @@ public interface IGame
 	 * 
 	 * @param playerIndex
 	 */
-	public void buyDevCard(int playerIndexInt);
+	public void buyDevCard(Index playerIndex);
+	
+	/**
+	 * Player will gain one of each of the specified cards types
+	 * Gets rid of their year of plenty card
+	 * 
+	 * @param playerIndex
+	 * @param resource1
+	 * @param resource2
+	 */
+	public void playYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2);
+	
+	/**
+	 * Plays two of the player's unused roads on the specified location
+	 * Adds the two roads to the map
+	 * Checks for longest road
+	 * 
+	 * @param playerIndex
+	 * @param spot1
+	 * @param spot2
+	 */
+	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 
 	
 	/**
