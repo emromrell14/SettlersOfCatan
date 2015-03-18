@@ -68,10 +68,7 @@ public class Request
 			if(key.equals("Cookie"))
 			{
 //				catan.user=%7Busername%3A%22seamane%22%2Cpassword%3A%22seamane%22%2C%22playerID%22%3A0%7D; catan.game=2
-//				System.out.println(headers.getFirst(key));
 				cookie.parseServerCookie(headers.getFirst(key));
-//				System.out.println("userID:"+cookie.getPlayerID());
-//				System.out.println("gameID:"+cookie.getGameID());
 			}
 		}
 	}

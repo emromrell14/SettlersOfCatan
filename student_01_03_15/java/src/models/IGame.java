@@ -236,4 +236,7 @@ public interface IGame
 	
 	public void discardCards(Index playerIndex, ResourceList discardedCards);
 
+	public String name();
+	
+	public int id();
 }
