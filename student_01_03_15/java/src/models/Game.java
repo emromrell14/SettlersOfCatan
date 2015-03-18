@@ -20,6 +20,8 @@ public class Game implements IGame
 	private MessageListJSON mLog; //All the log messages.
 	private Robber mRobber;
 	private Trade mCurrentTrade = null;
+	private int mId;
+	private String mName;
 	
 	public Game()
 	{
@@ -41,6 +43,17 @@ public class Game implements IGame
 		for(int i=0; i<14; i++)
 		{
 			mDevCards.add(new Soldier());
+		}
+	}
+	
+	public void setPlayersColor(String name, String color)
+	{
+		for(Player p: mPlayers)
+		{
+			if(name.equals(p.name()))
+			{
+				p.setColor(CatanColor.valueOf(color)); 
+			}
 		}
 	}
 	
@@ -394,4 +407,21 @@ public class Game implements IGame
 	{
 		return mTurnTracker.longestRoad().value();
 	}
+
+	public int getId() {
+		return mId;
+	}
+
+	public void setId(int mId) {
+		this.mId = mId;
+	}
+
+	public String getName() {
+		return mName;
+	}
+
+	public void setName(String mName) {
+		this.mName = mName;
+	}
+	
 }

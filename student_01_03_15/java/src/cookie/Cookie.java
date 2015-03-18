@@ -100,4 +100,17 @@ public class Cookie
 		}
 		return cookie;
 	}
+	
+	public void parseServerCookie(String encodedCookie)
+	{
+		String[] parts = encodedCookie.split(";");
+		String userCookie = parts[0].replace("catan.user=", "");
+		setCatanUser(userCookie.trim());
+		
+		if(parts.length > 1)
+		{
+			String gameCookie = parts[1].replace("catan.game=", "");
+			setCatanGame(gameCookie.trim());
+		}
+	}
 }

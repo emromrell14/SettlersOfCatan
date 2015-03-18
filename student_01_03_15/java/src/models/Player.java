@@ -1094,5 +1094,13 @@ public class Player implements IPlayer
 		return false;
 	}
 
+	public CatanColor getColor() {
+		return mColor;
+	}
+
+	public void setColor(CatanColor mColor) {
+		this.mColor = mColor;
+	}
+
 	
 }

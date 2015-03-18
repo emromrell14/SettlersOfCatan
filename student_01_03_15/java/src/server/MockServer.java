@@ -8,6 +8,7 @@ import models.IGame;
 
 
 
+
 //import server.handlers.AddAIHandler;
 //import server.handlers.CommandsHandler;
 //import server.handlers.CreateGamesHandler;
@@ -227,5 +228,18 @@ public class MockServer implements IServer
 	public void setGames(Map<Integer, IGame> games) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void createGame(String name, int id, boolean randomTiles,
+			boolean randomNumbers, boolean randomPorts) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IUser getCurrentUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

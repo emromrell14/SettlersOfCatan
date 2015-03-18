@@ -59,5 +59,7 @@ public interface IServer
 	public void setUsers(Map<Integer, IUser> users);
 	public Map<Integer, IGame> getGames();
 	public void setGames(Map<Integer, IGame> games);
+	void createGame(String name, int id, boolean randomTiles, boolean randomNumbers, boolean randomPorts);
+	public IUser getCurrentUser(String username);
 	
 }
