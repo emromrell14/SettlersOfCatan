@@ -141,6 +141,10 @@ public class Game implements IGame
 
 	public void robPlayer(int playerIndexInt, int victimIndexInt, HexLocation loc)
 	{
+		if (!this.mTurnTracker.status().equals(Status.ROBBING))
+		{
+			throw new IllegalStateException("You arent' in the robbing state");
+		}
 		if (this.mRobber.location().equals(loc))
 		{
 			throw new IllegalStateException("Can't move robber to same location");
@@ -179,6 +183,13 @@ public class Game implements IGame
 		// change turn tracker status
 		this.mTurnTracker.setStatus(Status.PLAYING);
 	}
+	
+	public void finishTurn(int playerIndex)
+	{
+		
+		
+	}
+
 	
 	private void giveResourcesToPlayers(Hex h) {
 		for (Player p : mPlayers)

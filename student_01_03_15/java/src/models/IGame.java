@@ -33,6 +33,15 @@ public interface IGame
 
 	
 	/**
+	 * changes turn tracker's current turn to next player
+	 * sets status to rolling
+	 * 
+	 * @param playerIndex
+	 */
+	public void finishTurn(int playerIndex);
+
+	
+	/**
 	 * Return the color of player with the specified playerID
 	 * @pre playerID is valid
 	 * @post CatanColor is valid
