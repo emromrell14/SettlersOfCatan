@@ -1,16 +1,12 @@
 package facade;
 
-import JSONmodels.MessageListJSON;
 
 import java.util.List;
-import java.util.Observable;
-
 import models.Game;
 import models.Index;
 import models.Message;
 import models.Player;
 import models.ResourceList;
-import models.Status;
 import proxy.*;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;

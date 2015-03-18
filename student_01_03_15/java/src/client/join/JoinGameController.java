@@ -1,13 +1,9 @@
 package client.join;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
-import cookie.Cookie;
 import JSONmodels.GameInfoJSON;
-import JSONmodels.GamesInfoJSON;
 import models.Game;
 import models.Player;
 import shared.definitions.CatanColor;
@@ -32,7 +28,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private PlayerInfo localPlayer;
 	private GameInfo localGame;
 	private Game gameModel;
-	private ArrayList<String> takenColors, newTakenColors;
+	private ArrayList<String> takenColors;
 	private final int NUMBER_OF_PLAYERS = 4;
 	private boolean inGame = false;
 	
@@ -55,8 +51,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		master = MasterManager.getInstance();
 		localPlayer = new PlayerInfo();
 		this.master.getModelManager().addObserver(this);
-		takenColors = new ArrayList();
-		newTakenColors = new ArrayList();
+		takenColors = new ArrayList<String>();
+		//newTakenColors = new ArrayList<String>();
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -149,10 +145,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			String response = master.createGame(randHexes, randNums, randPorts, title);
 			GameInfoJSON newGame = new GameInfoJSON();
-			newGame = newGame.fromJSON(response);
+			newGame = GameInfoJSON.fromJSON(response);
 
 			// Add the creator of the game to the game
-			String responseJoin = master.joinGame(newGame.getId(), "white");
+			master.joinGame(newGame.getId(), "white");
 			
 			// get the newest list of games
 			this.generateGameList();
@@ -169,7 +165,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game)
 	{
-		takenColors = new ArrayList();
+		takenColors = new ArrayList<String>();
 		localGame = game;
 		
 //		I need to add the game id to the cookie here
@@ -238,13 +234,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		String JSON = master.getGameList();
 		System.out.println("JoinGameController json:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
-		GameInfoJSON gameInfo = new GameInfoJSON();
+		//GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;
 		
 //		//System.out.println("JoinGameController json2:" + JSON + ":");
 		if(!JSON.contains("Failed") && !JSON.equals("{}"))
 		{
-			gameInfoArray = gameInfo.getGamesArrayFromJSON(JSON);
+			gameInfoArray = GameInfoJSON.getGamesArrayFromJSON(JSON);
 			for(GameInfoJSON gameJSON : gameInfoArray)
 			{
 				GameInfo game = new GameInfo();

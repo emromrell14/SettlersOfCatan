@@ -8,10 +8,8 @@ import models.Index;
 import models.ResourceList;
 import proxy.IProxy;
 import shared.definitions.ResourceType;
-import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class MovesManager

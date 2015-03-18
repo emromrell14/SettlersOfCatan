@@ -6,8 +6,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
-import JSONmodels.MessageLineJSON;
-import JSONmodels.MessageListJSON;
 import models.Index;
 import models.Message;
 import client.base.*;

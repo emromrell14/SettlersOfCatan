@@ -3,8 +3,6 @@ package client.communication;
 import java.util.*;
 
 import models.Message;
-import JSONmodels.MessageLineJSON;
-import JSONmodels.MessageListJSON;
 import client.base.*;
 import facade.IMasterManager;
 import facade.MasterManager;

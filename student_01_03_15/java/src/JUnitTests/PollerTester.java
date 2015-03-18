@@ -22,13 +22,9 @@ public class PollerTester
 	@Test
 	public void test() 
 	{
-		////System.out.println("POLLER TEST:\n");
-		int beforeVersion = poller.getVersion();
-
 		poller.run();
 		try 
 		{
-			////System.out.println("Going to sleep, version:" + beforeVersion);
 		    Thread.sleep(5000);                 //1000 milliseconds is one second.
 		} 
 		catch(InterruptedException ex)

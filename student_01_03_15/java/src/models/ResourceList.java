@@ -1,6 +1,5 @@
 package models;
 
-import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 
 public class ResourceList 

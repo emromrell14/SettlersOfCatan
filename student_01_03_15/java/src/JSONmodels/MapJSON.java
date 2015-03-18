@@ -1,10 +1,6 @@
 package JSONmodels;
 
-import java.util.List;
-
 import models.Board;
-import models.Message;
-
 import com.google.gson.Gson;
 
 public class MapJSON 

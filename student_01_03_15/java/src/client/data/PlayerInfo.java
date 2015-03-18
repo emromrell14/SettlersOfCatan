@@ -1,7 +1,5 @@
 package client.data;
 
-import java.awt.Color;
-
 import shared.definitions.*;
 
 /**

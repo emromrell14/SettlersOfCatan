@@ -2,7 +2,6 @@ package facade;
 
 import java.util.List;
 
-import JSONmodels.MessageListJSON;
 import shared.definitions.*;
 import shared.locations.*;
 import models.*;

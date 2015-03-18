@@ -1,8 +1,5 @@
 package JSONmodels;
 
-import models.Building;
-import models.Index;
-
 import com.google.gson.Gson;
 
 public class VertexLocationJSON 

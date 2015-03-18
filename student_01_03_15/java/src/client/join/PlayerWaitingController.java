@@ -6,11 +6,8 @@ import java.util.Observer;
 
 import models.Game;
 import models.Player;
-import shared.definitions.CatanColor;
 import client.base.*;
-import client.data.GameInfo;
 import client.data.PlayerInfo;
-import facade.IMasterManager;
 import facade.MasterManager;
 import facade.ModelManager;
 
@@ -45,7 +42,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	{
 		//System.out.println("----> start() called in playerWaitingController");
 
-		Game gameModel = master.getCurrentModel();
+		master.getCurrentModel();
 		this.controllerStarted = true;
 		this.showModal = true;
 //		this.setupPlayerInfo(gameModel);
@@ -76,7 +73,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	
 	public void setupPlayerInfo(Game gameModel)
 	{
-		ArrayList<PlayerInfo> players = new ArrayList();
+		ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
 		for(Player p : gameModel.players())
 		{
 			if(p != null)

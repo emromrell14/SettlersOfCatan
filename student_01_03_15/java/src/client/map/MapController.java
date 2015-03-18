@@ -10,7 +10,6 @@ import models.Index;
 import models.Player;
 import models.Port;
 import models.Road;
-import models.Robber;
 import models.Status;
 import models.TokenValue;
 import shared.definitions.*;
@@ -18,8 +17,6 @@ import shared.locations.*;
 import states.*;
 import client.base.*;
 import client.data.*;
-import client.resources.ResourceBarElement;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 

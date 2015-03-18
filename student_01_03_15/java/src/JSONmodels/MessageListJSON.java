@@ -43,7 +43,7 @@ public class MessageListJSON
 	
 	public List<Message> getMessages()
 	{
-		 List<Message> list = new ArrayList();
+		 List<Message> list = new ArrayList<Message>();
 		 for (MessageLineJSON m : lines)
 		 {
 			 list.add(new Message(m.getMessage(),m.getSource()));

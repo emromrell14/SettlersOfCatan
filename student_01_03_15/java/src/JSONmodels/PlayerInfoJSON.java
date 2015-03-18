@@ -2,8 +2,6 @@ package JSONmodels;
 
 import com.google.gson.Gson;
 
-import shared.definitions.CatanColor;
-
 public class PlayerInfoJSON
 {
 	private int id;

@@ -13,10 +13,8 @@ import models.ResourceList;
 import models.Trade;
 import shared.definitions.*;
 import client.base.*;
-import client.catan.TradePanel;
 import client.data.PlayerInfo;
 import client.misc.*;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 
@@ -29,7 +27,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private MasterManager master;
-	private TradePanel waitingPanel;
 	
 	private boolean playersInitialized = false;
 	private Index sendOfferTo;

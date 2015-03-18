@@ -6,17 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.*;
-
 import javax.swing.*;
-
 import client.base.*;
-import client.discard.DiscardController;
-import client.discard.DiscardView;
-import client.discard.IDiscardView;
-import client.misc.IWaitView;
-import client.misc.WaitView;
 import client.utils.*;
-import facade.MasterManager;
 import shared.definitions.*;
 import shared.locations.*;
 

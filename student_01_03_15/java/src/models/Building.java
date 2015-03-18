@@ -4,7 +4,6 @@ import java.util.List;
 
 import shared.definitions.BuildingType;
 import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 /** Building class (for settlements or cities)
