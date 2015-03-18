@@ -23,6 +23,16 @@ public interface IGame
 	void rollDice(Index playerIndex, int number);
 
 	/**
+	 * moves robber, take resource from victim, give resource to player
+	 * change turn tracker status to PLAYING
+	 * @param playerIndex
+	 * @param victimIndex
+	 * @param loc
+	 */
+	public void robPlayer(int playerIndex, int victimIndex, HexLocation loc);
+
+	
+	/**
 	 * Return the color of player with the specified playerID
 	 * @pre playerID is valid
 	 * @post CatanColor is valid

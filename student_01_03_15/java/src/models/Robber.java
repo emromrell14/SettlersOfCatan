@@ -30,4 +30,9 @@ public class Robber
 		return mLocation;
 	}
 	
+	public void setLocation (HexLocation loc)
+	{
+		mLocation = loc;
+	}
+	
 }

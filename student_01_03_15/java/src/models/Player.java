@@ -7,6 +7,7 @@ import server.IUser;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -1100,6 +1101,18 @@ public class Player implements IPlayer
 
 	public void setColor(CatanColor mColor) {
 		this.mColor = mColor;
+	}
+
+	public List<ResourceType> getHand() {
+		List<ResourceType> cards = new ArrayList<ResourceType>();
+		for (ResourceType type : ResourceType.values())
+		{	
+			for (int i = 0; i < mResources.getResource(type); i++)
+			{
+				cards.add(type);
+			}
+		}
+		return cards;
 	}
 
 	

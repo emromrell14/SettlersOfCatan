@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 
 public class Game implements IGame
@@ -138,6 +139,47 @@ public class Game implements IGame
 		}
 	}
 
+	public void robPlayer(int playerIndexInt, int victimIndexInt, HexLocation loc)
+	{
+		if (this.mRobber.location().equals(loc))
+		{
+			throw new IllegalStateException("Can't move robber to same location");
+		}
+		Index playerIndex = null;
+		Index victimIndex = null;
+		Player victim;
+		Player player;		
+		try 
+		{
+			playerIndex = new Index(playerIndexInt);
+			victimIndex = new Index(victimIndexInt);
+			player = this.getPlayer(playerIndex);
+			victim = this.getPlayer(victimIndex);
+		} 
+		catch (Exception e) 
+		{
+			throw new IllegalStateException("Invalid index");
+		}
+		if (this.getPlayer(victimIndex).resources().isEmpty())
+		{
+			throw new IllegalStateException("Victim has no resources. Can't rob him");
+		}
+		
+		// move robber
+		this.mRobber.setLocation(loc);
+		
+		// steal from victim
+		List<ResourceType> hand = victim.getHand();
+		ResourceType stolenCard = hand.get((int)(Math.random() * hand.size()));
+		victim.resources().addResource(stolenCard, -1);
+		
+		// give to player
+		player.resources().addResource(stolenCard, 1);
+		
+		// change turn tracker status
+		this.mTurnTracker.setStatus(Status.PLAYING);
+	}
+	
 	private void giveResourcesToPlayers(Hex h) {
 		for (Player p : mPlayers)
 		{
@@ -146,7 +188,7 @@ public class Game implements IGame
 				// give one resource for each settlement on this hex
 				if (b.isOnHex(h))
 				{
-					p.resources().addResource(h.resource(), 1);
+					p.resources().addResource(h.resource().resourceType(), 1);
 				}
 			}
 			for (Building b : p.cities())
@@ -154,7 +196,7 @@ public class Game implements IGame
 				// give two resources for each city on this hex		
 				if (b.isOnHex(h))
 				{
-					p.resources().addResource(h.resource(), 2);
+					p.resources().addResource(h.resource().resourceType(), 2);
 				}
 			}
 		}
