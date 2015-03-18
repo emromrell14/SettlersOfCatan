@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -346,15 +347,7 @@ public class Game implements IGame
 	
 	public boolean canRollDice(Index playerIndex)
 	{
-		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
-		{
-			return false;
-		}
-		if (this.mTurnTracker.status() != Status.ROLLING)
-		{
-			return false;
-		}
-		return true;
+		return (this.mTurnTracker.currentTurn().equals(playerIndex) && this.mTurnTracker.status() == Status.ROLLING);
 	}
 	@Override
 	public void rollDice(Index playerIndex, int number) throws IllegalStateException
@@ -387,6 +380,10 @@ public class Game implements IGame
 
 	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
 	{
+		if (!this.mTurnTracker.currentTurn().equals(player.playerIndex()))
+		{
+			return false;
+		}
 		if (!this.mTurnTracker.status().equals(Status.ROBBING))
 		{
 			return false;
@@ -506,7 +503,7 @@ public class Game implements IGame
 		
 	}
 
-	public boolean canPlayYearOfPlenty(Index playerIndex) 
+	public boolean canPlayYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) 
 	{
 		if (this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
@@ -518,13 +515,33 @@ public class Game implements IGame
 		}
 		
 		//Check for resources being in the bank
+		if (resource1 != resource2)
+		{
+			if (this.mBank.getResource(resource1) < 1 || this.mBank.getResource(resource2) < 1)
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if (this.mBank.getResource(resource1) < 2)
+			{
+				return false;
+			}
+		}
+		
+		// Checking if the player has a YOP dev card that can be played
+		if (!this.getPlayer(playerIndex).canPlayYearOfPlenty())
+		{
+			return false;
+		}
 		
 		return true;
 	}
 	@Override
 	public void playYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) throws IllegalStateException 
 	{
-		if(!this.canPlayYearOfPlenty(playerIndex))
+		if(!this.canPlayYearOfPlenty(playerIndex, resource1, resource2))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
@@ -532,11 +549,15 @@ public class Game implements IGame
 		Player player = this.getPlayer(playerIndex);
 				
 		//Subtract resources from bank
+		this.mBank.addResource(resource1, -1);
+		this.mBank.addResource(resource2, -1);
 		
 		//Give resources to player
+		player.resources().addResource(resource1, 1);
+		player.resources().addResource(resource2, 1);
 		
 		//Remove their year of plenty card
-		
+		player.removeDevCard(DevCardType.YEAR_OF_PLENTY);
 	}
 	
 	public boolean canPlayRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)

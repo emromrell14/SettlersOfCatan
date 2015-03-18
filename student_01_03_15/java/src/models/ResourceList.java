@@ -214,8 +214,8 @@ public class ResourceList
 		return false;
 	}
 
-	public void addResource(ResourceType stolenCard, int num) {
-		switch (stolenCard)
+	public void addResource(ResourceType resource, int num) {
+		switch (resource)
 		{
 			case BRICK:
 				this.addBrick(num);

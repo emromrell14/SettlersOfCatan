@@ -1115,5 +1115,15 @@ public class Player implements IPlayer
 		return cards;
 	}
 
+	public void removeDevCard(DevCardType devCardType) {
+		for (DevCard d : this.mDevCards)
+		{
+			if (d.type() == devCardType && !d.hasBeenPlayed() && !d.isNew())
+			{
+				d.setPlayed();
+			}
+		}
+	}
+
 	
 }
