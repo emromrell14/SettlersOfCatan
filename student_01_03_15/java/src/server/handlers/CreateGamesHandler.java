@@ -63,7 +63,7 @@ public class CreateGamesHandler  extends Handler
 		while(it.hasNext())
 		{
 			Map.Entry pair = (Map.Entry)it.next();
-			if(name.equals(((Game) pair.getValue()).getName()))
+			if(name.equals(((Game) pair.getValue()).name()))
 			{
 				return true;
 			}

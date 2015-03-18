@@ -7,6 +7,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 public class Game implements IGame
 {
@@ -46,318 +47,8 @@ public class Game implements IGame
 			mDevCards.add(new Soldier());
 		}
 	}
-	
-	public void setPlayersColor(String name, String color)
-	{
-		for(Player p: mPlayers)
-		{
-			if(name.equals(p.name()))
-			{
-				p.setColor(CatanColor.valueOf(color)); 
-			}
-		}
-	}
-	
-	@Override
-	public CatanColor getPlayerColor(int playerID)
-	{
-		for(Player p: mPlayers)
-		{
-			if(p.playerID() == playerID)
-			{
-				return p.color();
-			}
-		}
-		return null;
-	}
-	
-	@Override
-	public CatanColor getPlayerColor(String playerName)
-	{
-		for(Player p: mPlayers)
-		{
-			if(p.name().equals(playerName))
-			{
-				return p.color();
-			}
-		}
-		return null;
-	}
-	
-	@Override
-	public void endTurn()
-	{
-		Index currentPlayer = mTurnTracker.currentTurn();
-		for(Player p: mPlayers)
-		{
-			if(p.playerIndex().value() == currentPlayer.value())
-			{
-				p.endTurn();
-				break;
-			}
-		}
-		mTurnTracker.endTurn();
-	}
-	
-	private boolean canSendChat() 
-	{
-		return true;
-	}
-	@Override
-	public void sendChat(String message, Index playerIndex) throws IllegalStateException 
-	{
-		if(!this.canSendChat())
-		{
-			throw new IllegalStateException("Failed pre-conditions");
-		}
-		
-		String name = this.getPlayer(playerIndex).name();
-		
-		// add chat to message list
-		this.mChat.add(new Message(message,name));
-	}
-	
-	private boolean canRollDice(Index playerIndex)
-	{
-		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
-		{
-			return false;
-		}
-		if (this.mTurnTracker.status() != Status.ROLLING)
-		{
-			return false;
-		}
-		return true;
-	}
-	@Override
-	public void rollDice(Index playerIndex, int number) throws IllegalStateException
-	{
-		if(!this.canRollDice(playerIndex))
-		{
-			throw new IllegalStateException("Failed pre-conditions");
-		}
-		
-		// Allocate resources
-		for (Hex h : mBoard.hexes())
-		{
-			if (h.number().value() == number)
-			{
-				// give resources to players with settlements or cities on this hex
-				giveResourcesToPlayers(h);
-			}
-			
-		}
-		
-		// Change Turn Tracker status
-		if (number == 7)
-		{
-			this.mTurnTracker.setStatus(Status.DISCARDING);
-		}
-		else
-		{
-			this.mTurnTracker.setStatus(Status.PLAYING);
-		}
-	}
 
-	private boolean canRobPlayer(Player player, Player victim, HexLocation loc)
-	{
-		if (!this.mTurnTracker.status().equals(Status.ROBBING))
-		{
-			return false;
-		}
-		if (this.mRobber.location().equals(loc))
-		{
-			return false;
-		}
-		
-		if (victim.resources().isEmpty())
-		{
-			return false;
-		}
-		return true;
-	}
-	@Override
-	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation loc) throws IllegalStateException
-	{
-		Player player = this.getPlayer(playerIndex);		
-		Player victim = this.getPlayer(victimIndex);
-		
-		if(!this.canRobPlayer(player, victim, loc))
-		{
-			throw new IllegalStateException("Failed pre-conditions");
-		}
-		
-		
-		// move robber
-		this.mRobber.setLocation(loc);
-		
-		// steal from victim
-		List<ResourceType> hand = victim.getHand();
-		ResourceType stolenCard = hand.get((int)(Math.random() * hand.size()));
-		victim.resources().addResource(stolenCard, -1);
-		
-		// give to player
-		player.resources().addResource(stolenCard, 1);
-		
-		// change turn tracker status
-		this.mTurnTracker.setStatus(Status.PLAYING);
-	}
-	
-	private boolean canFinishTurn(Index playerIndex)
-	{
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
-		{
-			return false;
-		}
-		if (!this.mTurnTracker.status().equals(Status.PLAYING))
-		{
-			return false;
-		}
-		return true;
-	}
-	@Override
-	public void finishTurn(Index playerIndex) throws IllegalStateException
-	{
-		if(!canFinishTurn(playerIndex))
-		{
-			throw new IllegalStateException("Failed pre-conditions");
-		}
-		
-		// cycle turntracker
-		this.mTurnTracker.endTurn();
-		
-		// change status to rolling
-		this.mTurnTracker.setStatus(Status.ROLLING);
-
-		// set new dev cards to be old		
-		for (DevCard d : this.getPlayer(playerIndex).devCards())
-		{
-			if (d.isNew())
-			{
-				d.setNew(false);
-			}
-		}
-		
-	}
-
-	private boolean canBuyDevCard(Index playerIndex)
-	{
-		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
-		{
-			return false;
-		}
-		if (!this.mTurnTracker.status().equals(Status.PLAYING))
-		{
-			return false;
-		}
-		if (this.devCards().isEmpty())
-		{
-			return false;
-		}
-		if(!this.getPlayer(playerIndex).canAffordDevCard())
-		{
-			return false;
-		}
-		return true;
-	}
-	@Override
-	public void buyDevCard(Index playerIndex)
-	{
-		if(!this.canBuyDevCard(playerIndex))
-		{
-			throw new IllegalStateException("Failed pre-conditions");
-		}
-		
-		Player player = this.getPlayer(playerIndex);
-		
-		// Player gains a new card, if monument it will be old, new otherwise
-		DevCard d = this.mDevCards.get((int)(Math.random() * this.mDevCards.size()));
-		this.mDevCards.remove(d);
-		player.addDevCard(d);
-		
-		// Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
-		player.addResourcesToList(0, -1, -1, -1, 0);
-		
-	}
-
-	private boolean canPlayYearOfPlenty(Index playerIndex) 
-	{
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
-		{
-			return false;
-		}
-		if (!this.mTurnTracker.status().equals(Status.PLAYING))
-		{
-			return false;
-		}
-		
-		//Check for resources being in the bank
-		
-		return true;
-	}
-	@Override
-	public void playYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) 
-	{
-		if(!this.canPlayYearOfPlenty(playerIndex))
-		{
-			throw new IllegalStateException("Failed pre-conditions");
-		}
-		
-		Player player = this.getPlayer(playerIndex);
-				
-		//Subtract resources from bank
-		
-		//Give resources to player
-		
-		//Remove their year of plenty card
-		
-	}
-	
-	private boolean canPlayRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)
-	{
-		//Check if spot1 and spot2 are connected to your roads
-		
-		//Check if you have two roads to give
-		
-		//Check if either of the roads are in the water
-		
-		return true;
-	}
-	@Override
-	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)
-	{
-		if(!this.canPlayRoadBuilding(playerIndex, spot1, spot2))
-		{
-			throw new IllegalStateException("Failed pre-conditions");
-		}
-		
-		Player player = this.getPlayer(playerIndex);
-		
-		//
-	}
-	
-	private void giveResourcesToPlayers(Hex h) {
-		for (Player p : mPlayers)
-		{
-			for (Building b : p.settlements())
-			{
-				// give one resource for each settlement on this hex
-				if (b.isOnHex(h))
-				{
-					p.resources().addResource(h.resource().resourceType(), 1);
-				}
-			}
-			for (Building b : p.cities())
-			{
-				// give two resources for each city on this hex		
-				if (b.isOnHex(h))
-				{
-					p.resources().addResource(h.resource().resourceType(), 2);
-				}
-			}
-		}
-	}
-
+	//GETTERS AND SETTERS
 	@Override
 	public Board board() 
 	{
@@ -377,6 +68,140 @@ public class Game implements IGame
 		return mPlayers;
 	}
 	
+	public void setPlayers(List<Player> players)
+	{
+		this.mPlayers = players;
+	}
+
+	@Override
+	public TurnTracker turnTracker() 
+	{
+		return mTurnTracker;
+	}
+
+	@Override
+	public void setTurnTracker(TurnTracker t)
+	{
+		mTurnTracker = t;
+	}
+
+	@Override
+	public ResourceList bank() 
+	{
+		return mBank;
+	}
+
+	@Override
+	public void setBank(ResourceList r)
+	{
+		mBank = r;
+	}
+
+	@Override
+	public List<DevCard> devCards() 
+	{
+		return mDevCards;
+	}
+	
+	@Override
+	public void setDevCards(List<DevCard> devCards) 
+	{
+		mDevCards = devCards;
+	}
+
+	@Override
+	public int version() 
+	{
+		return mVersion;
+	}
+	
+	@Override
+	public void setVersion(int v)
+	{
+		mVersion = v;
+	}
+
+	@Override
+	public Index winner() 
+	{
+		return mWinner;
+	}
+
+	@Override
+	public void setWinner(int w)
+	{
+		try 
+		{
+			mWinner = new Index(w);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<Message> chat() {
+		return mChat;
+	}
+
+	@Override
+	public void setChat(List<Message> m) {
+		mChat = m;
+	}
+
+	@Override
+	public List<Message> log() {
+		return mLog;
+	}
+
+	@Override
+	public void setLog(List<Message> m) {
+		mLog = m;
+	}
+
+	@Override
+	public Robber robber() 
+	{
+		return mRobber;
+	}
+
+	@Override
+	public void setRobber(Robber r)
+	{
+		mRobber = r;
+	}
+
+	@Override
+	public Trade trade()
+	{
+		return mCurrentTrade;
+	}
+
+	@Override
+	public void setTrade(Trade model) 
+	{
+		mCurrentTrade = model;
+	}
+	
+	public int id() {
+		return mId;
+	}
+
+	public void setId(int mId) {
+		this.mId = mId;
+	}
+
+	public String name() {
+		return mName;
+	}
+
+	public void setName(String mName) {
+		this.mName = mName;
+	}
+	//END GETTERS AND SETTERS
+	
+	//EXTENDED GETTERS AND SETTERS
 	@Override
 	public Player getPlayer(int playerID)
 	{
@@ -449,121 +274,461 @@ public class Game implements IGame
 	{
 		mPlayers.add(p);
 	}
-
-	@Override
-	public TurnTracker turnTracker() 
+	
+	public void setPlayersColor(String name, String color)
 	{
-		return mTurnTracker;
-	}
-
-	@Override
-	public void setTurnTracker(TurnTracker t)
-	{
-		mTurnTracker = t;
-	}
-
-	@Override
-	public ResourceList bank() 
-	{
-		return mBank;
-	}
-
-	@Override
-	public void setBank(ResourceList r)
-	{
-		mBank = r;
-	}
-
-	@Override
-	public List<DevCard> devCards() 
-	{
-		return mDevCards;
+		for(Player p: mPlayers)
+		{
+			if(name.equals(p.name()))
+			{
+				p.setColor(CatanColor.valueOf(color)); 
+			}
+		}
 	}
 	
 	@Override
-	public void setDevCards(List<DevCard> devCards) 
+	public CatanColor getPlayerColor(int playerID)
 	{
-		mDevCards = devCards;
-	}
-
-	@Override
-	public int version() 
-	{
-		return mVersion;
+		for(Player p: mPlayers)
+		{
+			if(p.playerID() == playerID)
+			{
+				return p.color();
+			}
+		}
+		return null;
 	}
 	
 	@Override
-	public void setVersion(int v)
+	public CatanColor getPlayerColor(String playerName)
 	{
-		mVersion = v;
+		for(Player p: mPlayers)
+		{
+			if(p.name().equals(playerName))
+			{
+				return p.color();
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public int getLargestArmyIndex() 
+	{
+		return mTurnTracker.largestArmy().value();
 	}
 
-
 	@Override
-	public Index winner() 
+	public int getLongestRoadIndex() 
 	{
-		return mWinner;
+		return mTurnTracker.longestRoad().value();
 	}
-
-	@Override
-	public void setWinner(int w)
+	//END EXTENDED GETTERS AND SETTERS
+	
+	//API FUNCTIONS
+	public boolean canSendChat() 
 	{
-		try 
+		return true;
+	}
+	@Override
+	public void sendChat(String message, Index playerIndex) throws IllegalStateException 
+	{
+		if(!this.canSendChat())
 		{
-			mWinner = new Index(w);
-		} 
-		catch (Exception e) 
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		String name = this.getPlayer(playerIndex).name();
+		
+		// add chat to message list
+		this.mChat.add(new Message(message,name));
+	}
+	
+	public boolean canRollDice(Index playerIndex)
+	{
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
-			e.printStackTrace();
+			return false;
+		}
+		if (this.mTurnTracker.status() != Status.ROLLING)
+		{
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public void rollDice(Index playerIndex, int number) throws IllegalStateException
+	{
+		if(!this.canRollDice(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		// Allocate resources
+		for (Hex h : mBoard.hexes())
+		{
+			if (h.number().value() == number)
+			{
+				// give resources to players with settlements or cities on this hex
+				giveResourcesToPlayers(h);
+			}
+		}
+		
+		// Change Turn Tracker status
+		if (number == 7)
+		{
+			this.mTurnTracker.setStatus(Status.DISCARDING);
+		}
+		else
+		{
+			this.mTurnTracker.setStatus(Status.PLAYING);
 		}
 	}
 
-
-
-	@Override
-	public List<Message> chat() {
-		return mChat;
-	}
-
-	@Override
-	public void setChat(List<Message> m) {
-		mChat = m;
-	}
-
-	@Override
-	public List<Message> log() {
-		return mLog;
-	}
-
-	@Override
-	public void setLog(List<Message> m) {
-		mLog = m;
-	}
-
-
-	@Override
-	public Robber robber() 
+	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
 	{
-		return mRobber;
+		if (!this.mTurnTracker.status().equals(Status.ROBBING))
+		{
+			return false;
+		}
+		if (this.mRobber.location().equals(loc))
+		{
+			return false;
+		}
+		
+		if (victim.resources().isEmpty())
+		{
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation loc) throws IllegalStateException
+	{
+		Player player = this.getPlayer(playerIndex);		
+		Player victim = this.getPlayer(victimIndex);
+		
+		if(!this.canRobPlayer(player, victim, loc))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		
+		// move robber
+		this.mRobber.setLocation(loc);
+		
+		// steal from victim
+		List<ResourceType> hand = victim.getHand();
+		ResourceType stolenCard = hand.get((int)(Math.random() * hand.size()));
+		victim.resources().addResource(stolenCard, -1);
+		
+		// give to player
+		player.resources().addResource(stolenCard, 1);
+		
+		// change turn tracker status
+		this.mTurnTracker.setStatus(Status.PLAYING);
 	}
 	
-
-	@Override
-	public void setRobber(Robber r)
+	public boolean canFinishTurn(Index playerIndex)
 	{
-		mRobber = r;
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public void finishTurn(Index playerIndex) throws IllegalStateException
+	{
+		if(!canFinishTurn(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		// cycle turntracker
+		this.mTurnTracker.endTurn();
+		
+		// change status to rolling
+		this.mTurnTracker.setStatus(Status.ROLLING);
+
+		// set new dev cards to be old		
+		for (DevCard d : this.getPlayer(playerIndex).devCards())
+		{
+			if (d.isNew())
+			{
+				d.setNew(false);
+			}
+		}
+		
 	}
 
-	@Override
-	public Trade trade()
+	public boolean canBuyDevCard(Index playerIndex)
 	{
-		return mCurrentTrade;
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		if (this.devCards().isEmpty())
+		{
+			return false;
+		}
+		if(!this.getPlayer(playerIndex).canAffordDevCard())
+		{
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public void buyDevCard(Index playerIndex) throws IllegalStateException
+	{
+		if(!this.canBuyDevCard(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+		
+		// Player gains a new card, if monument it will be old, new otherwise
+		DevCard d = this.mDevCards.get((int)(Math.random() * this.mDevCards.size()));
+		this.mDevCards.remove(d);
+		player.addDevCard(d);
+		
+		// Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
+		player.addResourcesToList(0, -1, -1, -1, 0);
+		
 	}
 
-	@Override
-	public void setTrade(Trade model) 
+	public boolean canPlayYearOfPlenty(Index playerIndex) 
 	{
-		mCurrentTrade = model;
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		
+		//Check for resources being in the bank
+		
+		return true;
+	}
+	@Override
+	public void playYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) throws IllegalStateException 
+	{
+		if(!this.canPlayYearOfPlenty(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+				
+		//Subtract resources from bank
+		
+		//Give resources to player
+		
+		//Remove their year of plenty card
+		
+	}
+	
+	public boolean canPlayRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+	{
+		//Check if spot1 and spot2 are connected to your roads
+		
+		//Check if you have two roads to give
+		
+		//Check if either of the roads are in the water
+		
+		return true;
+	}
+	@Override
+	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws IllegalStateException
+	{
+		if(!this.canPlayRoadBuilding(playerIndex, spot1, spot2))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+		
+		//
+	}
+	
+	public boolean canPlaySoldier(Index playerIndex, Index victimIndex, HexLocation location)
+	{
+		return true;
+	}
+	@Override
+	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location) throws IllegalStateException 
+	{
+		if(!this.canPlaySoldier(playerIndex, victimIndex, location))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canPlayMonopoly(Index playerIndex, ResourceType resource)
+	{
+		return true;
+	}
+	@Override
+	public void playMonopoly(Index playerIndex, ResourceType resource) throws IllegalStateException
+	{
+		if(!this.canPlayMonopoly(playerIndex, resource))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canPlayMonument(Index playerIndex)
+	{
+		return true;
+	}
+	@Override
+	public void playMonument(Index playerIndex) throws IllegalStateException
+	{
+		if(!this.canPlayMonument(playerIndex))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canBuildRoad(Index playerIndex, EdgeLocation roadLocation, boolean free)
+	{
+		return true;
+	}
+	@Override
+	public void buildRoad(Index playerIndex, EdgeLocation roadLocation,	boolean free) throws IllegalStateException
+	{
+		if(!this.canBuildRoad(playerIndex, roadLocation, free))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canBuildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free)
+	{
+		return true;
+	}
+	@Override
+	public void buildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free) throws IllegalStateException
+	{
+		if(!this.canBuildSettlement(playerIndex, vertexLocation, free))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canBuildCity(Index playerIndex, VertexLocation vertexLocation)
+	{
+		return true;
+	}
+	@Override
+	public void buildCity(Index playerIndex, VertexLocation vertexLocation) throws IllegalStateException
+	{
+		if(!this.canBuildCity(playerIndex, vertexLocation))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canOfferTrade(Index playerIndex, Index receiverIndex, ResourceList offer)
+	{
+		return true;
+	}
+	@Override
+	public void offerTrade(Index playerIndex, Index receiverIndex, ResourceList offer) throws IllegalStateException
+	{
+		if(!this.canOfferTrade(playerIndex, receiverIndex, offer))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canAcceptTrade(Index playerIndex, boolean willAccept)
+	{
+		return true;
+	}
+	@Override
+	public void acceptTrade(Index playerIndex, boolean willAccept) throws IllegalStateException
+	{
+		if(!this.canAcceptTrade(playerIndex, willAccept))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canMaritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource)
+	{
+		return true;
+	}
+	@Override
+	public void maritimeTrade(Index playerIndex, int ratio,	ResourceType inputResource, ResourceType outputResource) throws IllegalStateException
+	{
+		if(!this.canMaritimeTrade(playerIndex, ratio, inputResource, outputResource))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+
+	public boolean canDiscardCards(Index playerIndex, ResourceList discardedCards)
+	{
+		return true;
+	}
+	@Override
+	public void discardCards(Index playerIndex, ResourceList discardedCards) throws IllegalStateException
+	{
+		if(!this.canDiscardCards(playerIndex, discardedCards))
+		{
+			throw new IllegalStateException("Failed pre-conditions");
+		}
+	}
+	//END API FUNCTIONS
+	
+	//MISC FUNCTIONS
+	@Override
+	public void endTurn()
+	{
+		Index currentPlayer = mTurnTracker.currentTurn();
+		for(Player p: mPlayers)
+		{
+			if(p.playerIndex().value() == currentPlayer.value())
+			{
+				p.endTurn();
+				break;
+			}
+		}
+		mTurnTracker.endTurn();
+	}
+
+	private void giveResourcesToPlayers(Hex h) {
+		for (Player p : mPlayers)
+		{
+			for (Building b : p.settlements())
+			{
+				// give one resource for each settlement on this hex
+				if (b.isOnHex(h))
+				{
+					p.resources().addResource(h.resource().resourceType(), 1);
+				}
+			}
+			for (Building b : p.cities())
+			{
+				// give two resources for each city on this hex		
+				if (b.isOnHex(h))
+				{
+					p.resources().addResource(h.resource().resourceType(), 2);
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -609,32 +774,6 @@ public class Game implements IGame
 		}
 		return victims;
 	}
+	//END MISC FUNCTIONS
 
-	@Override
-	public int getLargestArmyIndex() 
-	{
-		return mTurnTracker.largestArmy().value();
-	}
-
-	@Override
-	public int getLongestRoadIndex() 
-	{
-		return mTurnTracker.longestRoad().value();
-	}
-
-	public int getId() {
-		return mId;
-	}
-
-	public void setId(int mId) {
-		this.mId = mId;
-	}
-
-	public String getName() {
-		return mName;
-	}
-
-	public void setName(String mName) {
-		this.mName = mName;
-	}
 }
