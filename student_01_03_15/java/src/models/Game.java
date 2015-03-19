@@ -649,6 +649,21 @@ public class Game implements IGame
 
 	public boolean canPlayMonopoly(Index playerIndex, ResourceType resource)
 	{
+		Player player = this.getPlayer(playerIndex);
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		// Check if player can play it
+		if (!player.canPlayMonopoly())
+		{
+			return false;
+		}
+		
 		return true;
 	}
 	@Override
@@ -658,10 +673,36 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		Player currentPlayer = this.getPlayer(playerIndex);
+		// steal all of a particular resource from every player
+		for (Player p : this.players())
+		{
+			if (p.playerID() != currentPlayer.playerID())
+			{
+				int toAdd = p.resources().getResource(resource);
+				currentPlayer.resources().addResource(resource, toAdd);
+				p.resources().addResource(resource, (-1)*toAdd);
+			}
+		}
 	}
 
 	public boolean canPlayMonument(Index playerIndex)
 	{
+		Player player = this.getPlayer(playerIndex);
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		// Check if player can play it
+		if (!player.canPlayMonument())
+		{
+			return false;
+		}
 		return true;
 	}
 	@Override
@@ -671,10 +712,46 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		this.getPlayer(playerIndex).addVictoryPoint(1);
 	}
 
 	public boolean canBuildRoad(Index playerIndex, EdgeLocation roadLocation, boolean free)
 	{
+		Player player = this.getPlayer(playerIndex);
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			if (this.mTurnTracker.status().equals(Status.FIRSTROUND) || this.mTurnTracker.status().equals(Status.SECONDROUND))
+			{
+				// if no settlements return false
+				for (Building b : player.settlements())
+				{
+					if (!player.doesSettlementHaveRoadAttached(b))
+					{
+						if (!this.board().canPlaceRoad(roadLocation))
+						{
+							return false;
+						}
+						if (!player.canPlaceRoad(roadLocation))
+						{
+							return false;
+						}
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		
+		// Check if player can play it
+		if (!this.board().canPlaceRoad(roadLocation) || !player.canAffordRoad() || !player.canPlaceRoad(roadLocation))
+		{
+			return false;
+		}
 		return true;
 	}
 	@Override
@@ -685,6 +762,21 @@ public class Game implements IGame
 			throw new IllegalStateException("Failed pre-conditions");
 		}
 		
+		// resources are decremented and added to bank
+		Player player = this.getPlayer(playerIndex);
+		player.addResourcesToList(-1, 0, 0, 0, -1);
+		this.mBank.addBrick(1);
+		this.mBank.addWood(1);
+		
+		// decrement number of roads player can build
+		player.addToRoadCount(-1);
+		
+		// Adds road to player's list of roads and the board
+		Road road = new Road(playerIndex, roadLocation);
+		player.addRoad(road);
+		this.board().addRoad(road);
+		
+		
 		// Check for longest road
 		this.validateLongestRoad(playerIndex);
 	}
@@ -692,6 +784,34 @@ public class Game implements IGame
 
 	public boolean canBuildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free)
 	{
+		Player player = this.getPlayer(playerIndex);
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			if (this.mTurnTracker.status().equals(Status.FIRSTROUND) || this.mTurnTracker.status().equals(Status.SECONDROUND))
+			{
+				// if first or second round don't check afford method
+				if (!this.board().canPlaceSettlement(vertexLocation))
+				{
+					return false;
+				}
+				if (!player.canPlaceSettlement(vertexLocation))
+				{
+					return false;
+				}
+				return true;
+			}
+			return false;
+		}
+		
+		// Check if player can play it
+		if (!this.board().canPlaceSettlement(vertexLocation) || !player.canAffordSettlement() || !player.canPlaceSettlement(vertexLocation))
+		{
+			return false;
+		}
 		return true;
 	}
 	@Override
@@ -701,10 +821,30 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		// resources are decremented and added to bank
+		Player player = this.getPlayer(playerIndex);
+		player.addResourcesToList(-1, 0, -1, -1, -1);
+		this.mBank.addBrick(1);
+		this.mBank.addWood(1);
+		this.mBank.addSheep(1);
+		this.mBank.addWheat(1);
+
+		// decrement number of settlements player can build
+		player.addToSettlementCount(-1);
+		
+		// Adds road to player's list of roads and the board
+		Building settlement = new Building(playerIndex, vertexLocation);
+		player.addSettlement(settlement);
+		this.board().addSettlement(settlement);
+		
+		// add a victory point
+		player.addVictoryPoint(1);
 	}
 
 	public boolean canBuildCity(Index playerIndex, VertexLocation vertexLocation)
 	{
+		
 		return true;
 	}
 	@Override
@@ -858,6 +998,8 @@ public class Game implements IGame
 		if (contendingPlayer.soldierCount() > largestArmyPlayer.soldierCount())
 		{
 			this.mTurnTracker.setLargestArmy(playerIndex);
+			largestArmyPlayer.addVictoryPoint(-2);
+			contendingPlayer.addVictoryPoint(2);
 		}
 		
 	}
@@ -869,7 +1011,9 @@ public class Game implements IGame
 		if (contendingPlayer.roads().size() > longestRoadPlayer.roads().size())
 		{
 			this.mTurnTracker.setLongestRoad(playerIndex);
-		}		
+			longestRoadPlayer.addVictoryPoint(-2);
+			contendingPlayer.addVictoryPoint(2);
+		}	
 	}
 	
 	//END MISC FUNCTIONS

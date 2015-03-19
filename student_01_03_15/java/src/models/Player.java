@@ -156,6 +156,15 @@ public class Player implements IPlayer
 		return mVictoryPointCount;
 	}
 	
+	/** 
+	 * Adds the specified number to the victory point count
+	 * @param num
+	 */
+	public void addVictoryPoint(int num) 
+	{
+		this.mVictoryPointCount += num;
+	}
+	
 	/**
 	 * Gets the number of roads this player has left to build
 	 * @return the number of roads this player has left to build
@@ -166,12 +175,30 @@ public class Player implements IPlayer
 	}
 	
 	/**
+	 * adds(or subtracts) the number of roads to road count
+	 * @param num
+	 */
+	public void addToRoadCount(int num) 
+	{
+		this.mRoadCount += num;	
+	}
+	
+	/**
 	 * Gets the number of settlements this player has left to build
 	 * @return the number of settlements this player has left to build
 	 */
 	public int settlementCount()
 	{
 		return mSettlementCount;
+	}
+	
+	/**
+	 * Adds the number of settlements to our settlement count
+	 * @param num
+	 */
+	public void addToSettlementCount(int num) 
+	{
+		this.mSettlementCount += num;
 	}
 	
 	/**
