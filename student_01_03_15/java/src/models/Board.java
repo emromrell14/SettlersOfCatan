@@ -78,6 +78,23 @@ public class Board
 	{
 		mSettlements.add(b);
 	}
+	
+	/**
+	 * removes the settlement at the specified location from the board
+	 * @param vertexLocation
+	 */
+	public void removeSettlement(VertexLocation vertexLocation) 
+	{
+		for (Building b : this.mSettlements)
+		{
+			if (b.location().equals(vertexLocation))
+			{
+				this.mSettlements.remove(b);
+				return;
+			}
+		}
+	}
+	
 	/**
 	 * Adds a city to board's list
 	 * @pre none
@@ -313,4 +330,5 @@ public class Board
 		}
 		return new Hex(loc, HexType.WATER, new TokenValue(-1));
 	}
+	
 }

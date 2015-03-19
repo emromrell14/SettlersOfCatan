@@ -345,14 +345,37 @@ public class Game implements IGame
 		this.mChat.add(new Message(message,name));
 	}
 	
-	public boolean canRollDice(Index playerIndex)
+	public boolean canRollDice(Index playerIndex, int number)
 	{
-		return (this.mTurnTracker.currentTurn().equals(playerIndex) && this.mTurnTracker.status() == Status.ROLLING);
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (this.mTurnTracker.status() != Status.ROLLING)
+		{
+			return false;
+		}
+		// if ratio, inputResource, and outputResource are all null don't even check the bank.  
+		// This is being called from the client to check if the button should be enabled				
+		if (number != 0)
+		{
+			ResourceList rl = this.getAllResourcesToBeGiven(number);
+			
+			// check if the bank has enough to give everyone their resources
+			for (ResourceType r : ResourceType.values())
+			{
+				if (this.mBank.getResource(r) < rl.getResource(r))
+				{
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	@Override
 	public void rollDice(Index playerIndex, int number) throws IllegalStateException
 	{
-		if(!this.canRollDice(playerIndex))
+		if(!this.canRollDice(playerIndex, number))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
@@ -380,7 +403,7 @@ public class Game implements IGame
 
 	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
 	{
-		if (!this.mTurnTracker.currentTurn().equals(player.playerIndex()))
+		if (player != null && !this.mTurnTracker.currentTurn().equals(player.playerIndex()))
 		{
 			return false;
 		}
@@ -393,7 +416,7 @@ public class Game implements IGame
 			return false;
 		}
 		
-		if (victim.resources().isEmpty())
+		if (victim != null && victim.resources().isEmpty())
 		{
 			return false;
 		}
@@ -517,21 +540,26 @@ public class Game implements IGame
 			return false;
 		}
 		
-		//Check for resources being in the bank
-		if (resource1 != resource2)
+		
+		if (resource1 != null && resource2 != null)
 		{
-			if (this.mBank.getResource(resource1) < 1 || this.mBank.getResource(resource2) < 1)
+			//Check for resources being in the bank
+			if (resource1 != resource2)
 			{
-				return false;
+				if (this.mBank.getResource(resource1) < 1 || this.mBank.getResource(resource2) < 1)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (this.mBank.getResource(resource1) < 2)
+				{
+					return false;
+				}
 			}
 		}
-		else
-		{
-			if (this.mBank.getResource(resource1) < 2)
-			{
-				return false;
-			}
-		}
+		
 		
 		// Checking if the player has a YOP dev card that can be played
 		if (!this.getPlayer(playerIndex).canPlayYearOfPlenty())
@@ -570,17 +598,19 @@ public class Game implements IGame
 	public boolean canPlayRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2)
 	{
 		Player player = this.getPlayer(playerIndex);
-		//Check if spot1 and spot2 are connected to your roads
-		if (!player.canPlaceRoad(spot1) || !player.canPlaceRoad(spot2))
+		if (spot1 != null && spot2 != null)
 		{
-			return false;
+			//Check if spot1 and spot2 are connected to your roads
+			if (!player.canPlaceRoad(spot1) || !player.canPlaceRoad(spot2))
+			{
+				return false;
+			}
+			//Check if either of the roads are in the water
+			if (spot1.isInSea() || spot2.isInSea())
+			{
+				return false;
+			}
 		}
-		//Check if either of the roads are in the water
-		if (spot1.isInSea() || spot2.isInSea())
-		{
-			return false;
-		}
-		
 		// Check if player can play it
 		if (!player.canPlayRoadBuilder())
 		{
@@ -604,7 +634,7 @@ public class Game implements IGame
 		// setting played dev card to true
 		this.getPlayer(playerIndex).setHasPlayedDevCard(true);	}
 	
-	public boolean canPlaySoldier(Index playerIndex, Index victimIndex, HexLocation location)
+	public boolean canPlaySoldier(Index playerIndex)
 	{
 		if (this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
@@ -627,7 +657,7 @@ public class Game implements IGame
 	@Override
 	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location) throws IllegalStateException 
 	{
-		if(!this.canPlaySoldier(playerIndex, victimIndex, location))
+		if(!this.canPlaySoldier(playerIndex))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
@@ -647,7 +677,7 @@ public class Game implements IGame
 	
 	}
 
-	public boolean canPlayMonopoly(Index playerIndex, ResourceType resource)
+	public boolean canPlayMonopoly(Index playerIndex)
 	{
 		Player player = this.getPlayer(playerIndex);
 		if (this.mTurnTracker.currentTurn().equals(playerIndex))
@@ -669,7 +699,7 @@ public class Game implements IGame
 	@Override
 	public void playMonopoly(Index playerIndex, ResourceType resource) throws IllegalStateException
 	{
-		if(!this.canPlayMonopoly(playerIndex, resource))
+		if(!this.canPlayMonopoly(playerIndex))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
@@ -833,7 +863,7 @@ public class Game implements IGame
 		// decrement number of settlements player can build
 		player.addToSettlementCount(-1);
 		
-		// Adds road to player's list of roads and the board
+		// Adds settlement to player's list of settlements and the board
 		Building settlement = new Building(playerIndex, vertexLocation);
 		player.addSettlement(settlement);
 		this.board().addSettlement(settlement);
@@ -844,7 +874,21 @@ public class Game implements IGame
 
 	public boolean canBuildCity(Index playerIndex, VertexLocation vertexLocation)
 	{
+		Player player = this.getPlayer(playerIndex);
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
 		
+		if (!player.canAffordCity() || !player.canPlaceCity(vertexLocation))
+		{
+			return false;
+		}
+
 		return true;
 	}
 	@Override
@@ -854,10 +898,50 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		// resources are decremented and added to bank
+		Player player = this.getPlayer(playerIndex);
+		player.addResourcesToList(0, -3, 0, -2, 0);
+		this.mBank.addOre(3);
+		this.mBank.addWheat(2);
+
+		// decrement number of cities player can build
+		// increment number of settlements they can build
+		player.addToSettlementCount(1);
+		player.addToCityCount(-1);
+		
+		// Adds city to player's list of cities and the board
+		// and Takes a settlement off of the board and adds to player
+		Building city = new Building(playerIndex, vertexLocation);
+		player.removeSettlement(vertexLocation);
+		this.board().removeSettlement(vertexLocation);
+		player.addCity(city);
+		this.board().addCity(city);
+		
+		// add a victory point
+		player.addVictoryPoint(1);		
 	}
 
 	public boolean canOfferTrade(Index playerIndex, Index receiverIndex, ResourceList offer)
 	{
+		Player player = this.getPlayer(playerIndex);
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		
+		// checking to see if player has all resources they are offering
+		for (ResourceType r : ResourceType.values())
+		{
+			if (player.resources().getResource(r) < (-1)*offer.getResource(r))
+			{
+				return false;
+			}
+		}
 		return true;
 	}
 	@Override
@@ -867,23 +951,82 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		// Store trade in turn tracker
+		this.setTrade(new Trade(playerIndex, receiverIndex, offer));		
 	}
 
-	public boolean canAcceptTrade(Index playerIndex, boolean willAccept)
+	public boolean canAcceptTrade(Index playerIndex)
 	{
+		// check if the trade offer is empty
+		if (this.trade().offer().isEmpty())
+		{
+			return false;
+		}
+		
+		// check if the trade is for this player
+		if (!this.trade().receiver().equals(playerIndex))
+		{
+			return false;
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+		// must have requested resources
+		for (ResourceType r : ResourceType.values())
+		{
+			if (player.resources().getResource(r) < this.trade().offer().getResource(r))
+			{
+				return false;
+			}
+		}
+		
 		return true;
 	}
 	@Override
 	public void acceptTrade(Index playerIndex, boolean willAccept) throws IllegalStateException
 	{
-		if(!this.canAcceptTrade(playerIndex, willAccept))
+		if(!this.canAcceptTrade(playerIndex))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		Player acceptingPlayer = this.getPlayer(playerIndex);
+		Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
+		ResourceList offer = this.mCurrentTrade.offer();
+		acceptingPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
+		offeringPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
+		
+		this.mCurrentTrade = null;
 	}
 
 	public boolean canMaritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource)
 	{
+		Player player = this.getPlayer(playerIndex);
+		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		{
+			return false;
+		}
+		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		{
+			return false;
+		}
+		
+		// if ratio, inputResource, and outputResource are all null don't even check the bank.  
+		// This is being called from the client to check if the button should be enabled
+		if (ratio != 0 && inputResource != null && outputResource != null)
+		{
+			if (this.mBank.getResource(outputResource) < 1)
+			{
+				return false;
+			}
+		}
+		
+		// Check that a player can maritime trade
+		if (!player.canMaritimeTrade(this.board().ports()))
+		{
+			return false;
+		}
+		
 		return true;
 	}
 	@Override
@@ -893,10 +1036,41 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
+		
+		Player player = this.getPlayer(playerIndex);
+
+		// Give resources to the bank
+		player.resources().addResource(inputResource, -ratio);
+		this.mBank.addResource(inputResource, ratio);
+		
+		// Get resource back from the bank
+		player.resources().addResource(outputResource, 1);
+		this.mBank.addResource(outputResource, -1);
 	}
 
 	public boolean canDiscardCards(Index playerIndex, ResourceList discardedCards)
 	{
+		if (!this.mTurnTracker.status().equals(Status.DISCARDING))
+		{
+			return false;
+		}
+		Player player = this.getPlayer(playerIndex);
+		
+		// Check that a player has more than 7 cards
+		if (!player.canDiscard())
+		{
+			return false;
+		}
+		
+		// Check that you have the cards you're trying to discard
+		for (ResourceType r : ResourceType.values())
+		{
+			if (player.resources().getResource(r) < discardedCards.getResource(r))
+			{
+				return false;
+			}
+		}
+		
 		return true;
 	}
 	@Override
@@ -905,6 +1079,13 @@ public class Game implements IGame
 		if(!this.canDiscardCards(playerIndex, discardedCards))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
+		}
+		
+		Player player = this.getPlayer(playerIndex);
+
+		for (ResourceType r : ResourceType.values())
+		{
+			player.resources().addResource(r, -discardedCards.getResource(r));
 		}
 	}
 	//END API FUNCTIONS
@@ -945,6 +1126,37 @@ public class Game implements IGame
 				}
 			}
 		}
+	}
+	
+	private ResourceList getAllResourcesToBeGiven(int number)
+	{
+		ResourceList rl = new ResourceList();
+		for (Hex h : mBoard.hexes())
+		{
+			if (h.number().value() == number)
+			{
+				for (Player p : mPlayers)
+				{
+					for (Building b : p.settlements())
+					{
+						// give one resource for each settlement on this hex
+						if (b.isOnHex(h))
+						{
+							rl.addResource(h.resource().resourceType(), 1);
+						}
+					}
+					for (Building b : p.cities())
+					{
+						// give two resources for each city on this hex		
+						if (b.isOnHex(h))
+						{
+							rl.addResource(h.resource().resourceType(), 2);
+						}
+					}
+				}
+			}
+		}
+		return rl;
 	}
 	
 	@Override

@@ -140,6 +140,22 @@ public class Player implements IPlayer
 	}
 	
 	/**
+	 * removes the settlement at the specified location from the players list of settlements
+	 * @param vertexLocation
+	 */
+	public void removeSettlement(VertexLocation vertexLocation) 
+	{
+		for (Building b : this.mSettlements)
+		{
+			if (b.location().equals(vertexLocation))
+			{
+				this.mSettlements.remove(b);
+				return;
+			}
+		}
+	}
+	
+	/**
 	 * Gets the number of soldiers this player has
 	 * @return the number of soldiers this player has
 	 */
@@ -208,6 +224,15 @@ public class Player implements IPlayer
 	public int cityCount()
 	{
 		return mCityCount;
+	}
+	
+	/**
+	 * adds number of cities to city count
+	 * @param num
+	 */
+	public void addToCityCount(int num) 
+	{
+		this.mCityCount += num;
 	}
 	
 	/**

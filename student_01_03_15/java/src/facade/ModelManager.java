@@ -61,17 +61,7 @@ public class ModelManager extends Observable
 	public boolean canAffordRoad(Index playerIndex) 
 	{
 		Player p = this.mGameModel.getPlayer(playerIndex);
-		
-		/*  THIS IS A HACK TO SHOW THAT THE OBSERVER PATTERN IS IN EFFECT WHILE OUR POLLER ISN'T FUNCTIONING
-		// DELETE FOLLOWING TRY CATCH
-		try {
-			p = new Player(CatanColor.BLUE, "Paul", new Index(1), 0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		
+				
 		if (mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) && // Checks that this player is in the game
 			(mGameModel.turnTracker().status().equals(Status.FIRSTROUND) || // Checks that it is this player's turn
 			mGameModel.turnTracker().status().equals(Status.SECONDROUND))) 
@@ -269,8 +259,11 @@ public class ModelManager extends Observable
 	 * @post none
 	 * @return true if a card can be bought, false otherwise
 	 */
+	
+	
 	public boolean canBuyDevCard(Index playerIndex)
 	{
+		/*
 		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
@@ -281,6 +274,7 @@ public class ModelManager extends Observable
 		{
 			return false;
 		}
+		*/
 		return mGameModel.canBuyDevCard(playerIndex);
 	}
 
@@ -319,6 +313,7 @@ public class ModelManager extends Observable
 	 */
 	public boolean canOfferTrade(Index playerIndex) 
 	{
+		/*
 		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
@@ -328,6 +323,7 @@ public class ModelManager extends Observable
 		{
 			return false;
 		}
+		*/
 		return mGameModel.canOfferTrade(playerIndex);
 	}
 
@@ -345,6 +341,7 @@ public class ModelManager extends Observable
 	 */
 	public boolean canAcceptTrade(Index playerIndex) 
 	{
+		/*
 		Player p = mGameModel.getPlayer(playerIndex);
 		if (
 				!mGameModel.players().contains(p) || // Checks that this player is in this game
@@ -355,6 +352,8 @@ public class ModelManager extends Observable
 			return false;
 		}
 		return p.canAcceptTrade(mGameModel.trade());
+		*/
+		return this.mGameModel.canAcceptTrade(playerIndex);
 	}
 
 	/**
@@ -367,6 +366,7 @@ public class ModelManager extends Observable
 	 */
 	public boolean canMaritimeTrade(Index playerIndex) 
 	{
+		/*
 		Player player = mGameModel.getPlayer(playerIndex);
 		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) &&
 				mGameModel.turnTracker().status() == Status.PLAYING) 
@@ -374,6 +374,8 @@ public class ModelManager extends Observable
 			return player.canMaritimeTrade(mGameModel.board().ports());
 		}
 		return false;
+		*/
+		return this.mGameModel.canMaritimeTrade(playerIndex, 0, null, null);
 	}
 
 	/**
@@ -387,8 +389,11 @@ public class ModelManager extends Observable
 	 */
 	public boolean canRollDice(Index playerIndex) 
 	{
+		/*
 		return mGameModel.turnTracker().canRollDice(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.ROLLING);
+				*/
+		return this.mGameModel.canRollDice(playerIndex, 0);
 	}
 
 	/**
@@ -400,8 +405,11 @@ public class ModelManager extends Observable
 	 */
 	public boolean canDiscard(Index playerIndex) 
 	{
+		/*
 		return this.mGameModel.getPlayer(playerIndex).canDiscard()
 				&& mGameModel.turnTracker().status().equals(Status.DISCARDING);
+				*/
+		return this.canDiscard(playerIndex);
 	}
 
 	/**
@@ -411,8 +419,11 @@ public class ModelManager extends Observable
 	 */
 	public boolean canFinishTurn(Index playerIndex) 
 	{
-		return this.mGameModel.turnTracker().status() == Status.PLAYING
+		/*
+		 return this.mGameModel.turnTracker().status() == Status.PLAYING
 				&& mGameModel.turnTracker().isPlayersTurn(playerIndex);
+				*/
+		return this.mGameModel.canFinishTurn(playerIndex);
 	}
 
 	/**
@@ -422,12 +433,15 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayYearOfPlenty(Index playerIndex) 
 	{
+		/*
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerIndex).canPlayYearOfPlenty();
 		}
 		return false;
+		*/
+		return this.mGameModel.canPlayYearOfPlenty(playerIndex, null, null);
 	}
 
 	/**
@@ -437,12 +451,15 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayRoadBuilder(Index playerIndex) 
 	{
+		/*
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerIndex).canPlayRoadBuilder();
 		}
 		return false;
+		*/
+		return this.mGameModel.canPlayRoadBuilding(playerIndex, null, null);
 	}
 
 	/**
@@ -452,12 +469,15 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlaySoldier(Index playerIndex) 
 	{
+		/*
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerIndex).canPlaySoldier();
 		}
 		return false;
+		*/
+		return this.mGameModel.canPlaySoldier(playerIndex);
 	}
 
 	/**
@@ -467,12 +487,15 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayMonopoly(Index playerIndex) 
 	{
+		/*
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerIndex).canPlayMonopoly();
 		}
 		return false;
+		*/
+		return this.mGameModel.canPlayMonopoly(playerIndex);
 	}
 
 	/**
@@ -482,12 +505,15 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayMonument(Index playerIndex) 
 	{
+		/*
 		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
 				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
 		{
 			return this.mGameModel.getPlayer(playerIndex).canPlayMonument();
 		}
 		return false;
+		*/
+		return this.mGameModel.canPlayMonument(playerIndex);
 	}
 
 	/**
@@ -500,6 +526,7 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
+		/*
 		if(mGameModel.turnTracker().status().equals(Status.ROBBING))
 		{
 			HexLocation currentRobberLocation = mGameModel.robber().location();
@@ -513,6 +540,8 @@ public class ModelManager extends Observable
 			 		&& !(newRobberLocation.getX() == -2 && newRobberLocation.getY() == -1);
 		}
 		return false;
+		*/
+		return this.mGameModel.canRobPlayer(null, null, newRobberLocation);
 	}
 
 	public int getPlayerPoints(int playerID) 
