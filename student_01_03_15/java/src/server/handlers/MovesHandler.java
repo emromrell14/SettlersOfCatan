@@ -1,5 +1,6 @@
 package server.handlers;
 
+import models.IGame;
 import server.IServer;
 import server.IServerFacade;
 import server.ServerFacade;
@@ -34,12 +35,72 @@ public class MovesHandler extends Handler
 			return res;
 		}
 		
-		serverFacade.parseBody(req.getRequestURI(), req.getBody(),server.getGame(gameID));
+		serverFacade.setGame(server.getGame(gameID));
+		parseBody(req.getRequestURI(), req.getBody());
 		
 		res.setStatusCode(200);
 		res.setBody(server.getGameModelJSON(0, gameID));
 		server.updateVersion(gameID);
 		return res;
 	}
-
+	
+	public void parseBody(String url, String jsonBody)
+	{
+		switch(url)
+		{
+		case "moves/rollNumber":
+			
+			break;
+		case "moves/sendChat":
+			
+			break;
+		case "moves/robPlayer":
+			
+			break;
+		case "moves/finishTurn":
+			
+			break;
+		case "moves/buyDevCard":
+			
+			break;
+		case "moves/Year_of_Plenty":
+			
+			break;
+		case "moves/Road_Building":
+			
+			break;
+		case "moves/Soldier":
+			
+			break;
+		case "moves/Monopoly":
+			
+			break;
+		case "moves/Monument":
+			
+			break;
+		case "moves/buildRoad":
+			
+			break;
+		case "moves/buildSettlement":
+			
+			break;
+		case "moves/buildCity":
+			
+			break;
+		case "moves/offerTrade":
+			
+			break;
+		case "moves/acceptTrade":
+			
+			break;
+		case "moves/maritimeTrade":
+			
+			break;
+		case "moves/discardCards":
+			
+			break;
+		default:
+			System.out.println("ServerFacade - should never get here. url=" + url);
+		}
+	}
 }
