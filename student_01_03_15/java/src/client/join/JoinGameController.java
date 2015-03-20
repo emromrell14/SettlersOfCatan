@@ -144,6 +144,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(title.matches(".*\\w.*") && isAscii(title))
 		{
 			String response = master.createGame(randHexes, randNums, randPorts, title);
+			System.out.println("joinGameResponse:"+response);
 			GameInfoJSON newGame = new GameInfoJSON();
 			newGame = GameInfoJSON.fromJSON(response);
 

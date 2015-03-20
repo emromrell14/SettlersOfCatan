@@ -12,6 +12,7 @@ import models.Game;
 import models.IGame;
 import models.Message;
 import server.handlers.*;
+import JSONmodels.ClientModelJSON;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -103,19 +104,19 @@ public class Server implements IServer
 	}
 
 	@Override
-	public IGame getGame(int id) 
+	public synchronized IGame getGame(int id) 
 	{
 		return games.get(id);
 	}
 
 	@Override
-	public IUser getUser(int id) 
+	public synchronized IUser getUser(int id) 
 	{
 		return null;
 	}
 
 	@Override
-	public void createGame(String name, int id, boolean randomTiles, boolean randomNumbers, boolean randomPorts) 
+	public synchronized void createGame(String name, int id, boolean randomTiles, boolean randomNumbers, boolean randomPorts) 
 	{
 		Game g = new Game();
 		g.setName(name);
@@ -131,34 +132,34 @@ public class Server implements IServer
 	}
 
 	@Override
-	public void registerUser(User user)
+	public synchronized void registerUser(User user)
 	{
 		users.put(user.getID(), user);
 	}
 
-	public Map<Integer, IUser> getUsers() {
+	public synchronized Map<Integer, IUser> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Map<Integer, IUser> users) {
+	public synchronized void setUsers(Map<Integer, IUser> users) {
 		this.users = users;
 	}
 
-	public Map<Integer, IGame> getGames() {
+	public synchronized Map<Integer, IGame> getGames() {
 		return games;
 	}
 
-	public void setGames(Map<Integer, IGame> games) {
+	public synchronized void setGames(Map<Integer, IGame> games) {
 		this.games = games;
 	}
 
 	@Override
-	public void createGame() {
+	public synchronized void createGame() {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	public IUser getCurrentUser(String username)
+	public synchronized IUser getCurrentUser(String username)
 	{
 		Iterator it = users.entrySet().iterator();
 		while(it.hasNext())
@@ -174,20 +175,21 @@ public class Server implements IServer
 	}
 
 	@Override
-	public String getGameModelJSON(int version, int gameID) 
+	public synchronized String getGameModelJSON(int version, int gameID) 
 	{
-		String json = "";
+		String json = "\"true\"";
 		IGame game = games.get(gameID);
 		if(game.version() > version)
 		{
-//			json = 
+			ClientModelJSON c = new ClientModelJSON(game);
+			json = c.toJSON();
 		}
 		
 		return json;
 	}
 
 	@Override
-	public void updateVersion(int gameID) 
+	public synchronized void updateVersion(int gameID) 
 	{
 		games.get(gameID).incrementVersion();
 	}
