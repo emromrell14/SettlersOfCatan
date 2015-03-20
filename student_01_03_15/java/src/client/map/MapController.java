@@ -38,6 +38,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private boolean roadBuilding = false;
 	private EdgeLocation road1 = null;
 	private EdgeLocation road2 = null;
+	public static boolean hasPlacedRobber = false;
 	
 	public MapController(IMapView view, IRobView robView) 
 	{
@@ -352,8 +353,9 @@ public class MapController extends Controller implements IMapController, Observe
 					state = new RobbingState();
 					if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
 					{
-						if(!getView().isModalShowing())
+						if(!getView().isModalShowing() && !hasPlacedRobber )
 						{
+							hasPlacedRobber = true;
 							getView().startDrop(PieceType.ROBBER, master.getPlayer().color(), false);
 						}
 					}
@@ -448,8 +450,6 @@ public class MapController extends Controller implements IMapController, Observe
 		// TODO Auto-generated method stub
 		master.getCurrentModel().turnTracker().setStatus(Status.PLAYING);
 		master.updateModel(master.getCurrentModel());
-		
-		
 	}
 	
 }

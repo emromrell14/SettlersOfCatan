@@ -331,7 +331,7 @@ public class SerializeJSONTester {
 			playerDevCards.add(monopoly);
 			playerDevCards.add(soldier);
 			
-			Index index = new Index(1);
+			Index index = new Index(2);
 			int id = 4444;
 			
 			int soldiers = 55;
@@ -374,7 +374,7 @@ public class SerializeJSONTester {
 			game.setChat(messageList);
 			game.setLog(logList);
 			game.setName("testing game 2");
-			game.setRobber(new Robber(new HexLocation(3,3)));
+			//game.setRobber(new Robber(new HexLocation(3,3)));
 			game.setVersion(2000);
 			game.setWinner(1);
 			game.setTurnTracker(turnTracker);
