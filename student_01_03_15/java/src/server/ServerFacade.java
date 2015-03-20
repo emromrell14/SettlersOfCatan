@@ -1,5 +1,7 @@
 package server;
 
+import commands.ICommand;
+import models.Game;
 import models.IGame;
 import models.Index;
 import models.ResourceList;
@@ -10,65 +12,7 @@ import shared.locations.VertexLocation;
 
 public class ServerFacade implements IServerFacade 
 {	
-	public void parseBody(String url, String jsonBody, IGame game)
-	{
-		switch(url)
-		{
-		case "moves/rollNumber":
-			
-			break;
-		case "moves/sendChat":
-			
-			break;
-		case "moves/robPlayer":
-			
-			break;
-		case "moves/finishTurn":
-			
-			break;
-		case "moves/buyDevCard":
-			
-			break;
-		case "moves/Year_of_Plenty":
-			
-			break;
-		case "moves/Road_Building":
-			
-			break;
-		case "moves/Soldier":
-			
-			break;
-		case "moves/Monopoly":
-			
-			break;
-		case "moves/Monument":
-			
-			break;
-		case "moves/buildRoad":
-			
-			break;
-		case "moves/buildSettlement":
-			
-			break;
-		case "moves/buildCity":
-			
-			break;
-		case "moves/offerTrade":
-			
-			break;
-		case "moves/acceptTrade":
-			
-			break;
-		case "moves/maritimeTrade":
-			
-			break;
-		case "moves/discardCards":
-			
-			break;
-		default:
-			System.out.println("ServerFacade - should never get here. url=" + url);
-		}
-	}
+	private IGame game = new Game();
 	
 	@Override
 	public void executeRollDiceCommand(Index playerIndex, int rollNum)
@@ -170,6 +114,12 @@ public class ServerFacade implements IServerFacade
 	public void executeDiscardCommand(Index playerIndex, ResourceList cards) 
 	{
 
+	}
+
+	@Override
+	public void setGame(IGame game)
+	{
+		this.game = game;
 	}
 
 

@@ -9,6 +9,7 @@ import models.IGame;
 
 
 
+
 //import server.handlers.AddAIHandler;
 //import server.handlers.CommandsHandler;
 //import server.handlers.CreateGamesHandler;
@@ -248,5 +249,9 @@ public class MockServer implements IServer
 		return mHost;
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void updateVersion(int gameID) {
+		// TODO Auto-generated method stub
 	}
 }
