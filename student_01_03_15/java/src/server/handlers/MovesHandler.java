@@ -1,9 +1,11 @@
 package server.handlers;
 
+import JSONmodels.ResourceListJSON;
 import models.IGame;
 import server.IServer;
 import server.IServerFacade;
 import server.ServerFacade;
+import server.JSON.*;
 
 public class MovesHandler extends Handler
 {
@@ -97,7 +99,7 @@ public class MovesHandler extends Handler
 			
 			break;
 		case "moves/discardCards":
-			
+ 
 			break;
 		default:
 			System.out.println("ServerFacade - should never get here. url=" + url);
