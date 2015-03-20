@@ -103,25 +103,33 @@ public class MovesHandler extends Handler
 			serverFacade.executePlayMonumentCommand(new Index(mr.getPlayerIndex()));
 			break;
 		case "moves/buildRoad":
-			
+			BuildRoadRequest brr = new BuildRoadRequest().fromJSON(jsonBody);
+			serverFacade.executeBuildRoadCommand(new Index(brr.getPlayerIndex()), brr.getRoadLocation().getModelEdgeLocation(), brr.isFree());
 			break;
 		case "moves/buildSettlement":
-			
+			BuildSettlementRequest bsr = new BuildSettlementRequest().fromJSON(jsonBody);
+			serverFacade.executeBuildSettlementCommand(new Index(bsr.getPlayerIndex()), bsr.getVertexLocation().getModelVertexLocation(), bsr.isFree());
 			break;
 		case "moves/buildCity":
-			
+			BuildCityRequest bcr = new BuildCityRequest().fromJSON(jsonBody);
+			serverFacade.executeBuildCityCommand(new Index(bcr.getPlayerIndex()), bcr.getVertexLocation().getModelVertexLocation(), false);
 			break;
 		case "moves/offerTrade":
-			
+			OfferTradeRequest otr = new OfferTradeRequest().fromJSON(jsonBody);
+			serverFacade.executeOfferTradeCommand(new Index(otr.getPlayerIndex()), new Index(otr.getReceiver()), otr.getOffer().getModelResourceList());
 			break;
 		case "moves/acceptTrade":
-			
+			AcceptTradeRequest atr = new AcceptTradeRequest().fromJSON(jsonBody);
+			serverFacade.executeAcceptTradeCommand(new Index(atr.getPlayerIndex()), atr.isWillAccept());
 			break;
 		case "moves/maritimeTrade":
-			
+			MaritimeTradeRequest mtr = new MaritimeTradeRequest().fromJSON(jsonBody);
+			serverFacade.executeMaritimeTradeCommand(new Index(mtr.getPlayerIndex()), mtr.getRatio(), 
+					ResourceType.valueOf(mtr.getInputResource()), ResourceType.valueOf(mtr.getOutputResource()));
 			break;
 		case "moves/discardCards":
- 
+			DiscardRequest dr = new DiscardRequest().fromJSON(jsonBody);
+			serverFacade.executeDiscardCommand(new Index(dr.getPlayerIndex()), dr.getDiscardedCards().getModelResourceList());
 			break;
 		default:
 			System.out.println("MovesHandler - should never get here. url=" + url);
