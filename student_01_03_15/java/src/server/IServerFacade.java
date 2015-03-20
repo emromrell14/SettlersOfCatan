@@ -10,6 +10,8 @@ import models.ResourceList;
 
 public interface IServerFacade {
 	
+	void setGame(IGame game);
+	
 	/**
 	 * Creates a command object, then executes the command
 	 * @pre Game has started
@@ -184,6 +186,4 @@ public interface IServerFacade {
 	 * @param cards
 	 */
 	void executeDiscardCommand(Index playerIndex, ResourceList cards);
-
-	void parseBody(String requestURI, String body, IGame game);
 }
