@@ -1,5 +1,9 @@
 package JSONmodels;
 
+import java.util.List;
+
+import models.DevCard;
+
 import com.google.gson.Gson;
 
 public class DevCardListJSON 
@@ -10,6 +14,26 @@ public class DevCardListJSON
 	private int soldier;
 	private int yearOfPlenty;
 	
+	public DevCardListJSON(List<DevCard> newDevCards) 
+	{
+		for(DevCard d : newDevCards)
+		{
+			switch (d.type())
+			{
+				case MONOPOLY:
+					monopoly++;
+				case MONUMENT:
+					monopoly++;
+				case ROAD_BUILD:
+					roadBuilding++;
+				case SOLDIER:
+					soldier++;
+				case YEAR_OF_PLENTY:
+					yearOfPlenty++;
+			}
+		}
+	}
+
 	/**
 	 * Creates a DevCardList object from a JSON string
 	 * 

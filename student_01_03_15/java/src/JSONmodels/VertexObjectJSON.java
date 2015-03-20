@@ -8,8 +8,14 @@ import com.google.gson.Gson;
 public class VertexObjectJSON 
 {
 	private int owner; //The index (not id) of the player who owns the piece (0-3).
-	private EdgeLocationJSON location; //The location of this object.
+	private VertexLocationJSON location; //The location of this object.
 	
+	public VertexObjectJSON(Building building) 
+	{
+		this.owner = building.owner().value();
+		this.location = new VertexLocationJSON(building.location());
+	}
+
 	/**
 	 * Creates a VertexObject object from a JSON string
 	 * 
@@ -43,7 +49,7 @@ public class VertexObjectJSON
 	/**
 	 * @return the location
 	 */
-	public EdgeLocationJSON getLocation() {
+	public VertexLocationJSON getLocation() {
 		return location;
 	}
 	

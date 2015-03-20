@@ -1,5 +1,6 @@
 package JSONmodels;
 
+import models.Port;
 import shared.definitions.PortType;
 
 import com.google.gson.Gson;
@@ -11,6 +12,14 @@ public class PortJSON
 	private String direction; //Which edge this port is on.
 	private int ratio; //The ratio for trade in (ie., if this is 2, then it's a 2:1 port)
 	
+	public PortJSON(Port port) 
+	{
+		this.resource = port.resource().toString().toLowerCase();
+		this.location = new HexLocationJSON(port.location());
+		this.direction = port.direction().getShortenedDirection().toString();
+		this.ratio = port.calculateRatio();
+	}
+
 	/**
 	 * Creates a Port object from a JSON string
 	 * 

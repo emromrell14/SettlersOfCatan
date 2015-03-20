@@ -97,9 +97,4 @@ public class EdgeLocationJSON
 	{
 		return new EdgeLocation(new shared.locations.HexLocation(x,y), EdgeDirection.valueOf(direction));
 	}
-	
-	public VertexLocation getModelVertexLocation()
-	{
-		return new VertexLocation(new shared.locations.HexLocation(x, y), VertexDirection.valueOf(direction));
-	}
 }

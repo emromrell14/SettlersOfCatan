@@ -10,6 +10,12 @@ public class EdgeValueJSON
 	private int owner; //The index (not ID) of the player who owns this piece (0-3).
 	private EdgeLocationJSON location; //The location of this road.
 	
+	public EdgeValueJSON(Road road) 
+	{
+		this.owner = road.owner().value();
+		this.location = new EdgeLocationJSON(road.location());
+	}
+
 	/**
 	 * Creates a EdgeValue object from a JSON string
 	 * 

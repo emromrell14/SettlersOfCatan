@@ -7,6 +7,7 @@ import models.Board;
 import models.Building;
 import models.DevCard;
 import models.Index;
+import models.Player;
 import models.Road;
 import shared.definitions.CatanColor;
 
@@ -16,7 +17,7 @@ public class PlayerJSON
 {
 	private String color; //The color of this player
 	private boolean discarded; //Whether this player has discarded or not already this discard phase
-	private Number monuments; //How many monuments this player has played.
+	private int monuments; //How many monuments this player has played.
 	private String name;
 	private DevCardListJSON newDevCards; //The dev cards the player bought this turn
 	private DevCardListJSON oldDevCards; //The dev cards the player had when the turn started
@@ -31,6 +32,25 @@ public class PlayerJSON
 	private int victoryPoints;
 	
 	
+	public PlayerJSON(Player player) 
+	{
+		this.color = player.color().toString().toLowerCase();
+		this.discarded = player.hasDiscarded();
+		this.monuments = player.monumentCount();
+		this.name = player.name();
+		this.newDevCards = new DevCardListJSON(player.getNewDevCards());
+		this.oldDevCards = new DevCardListJSON(player.getOldDevCards());
+		this.playerIndex = player.playerIndex().value();
+		this.playedDevCard = player.hasPlayedDevCard();
+		this.playerID = player.playerID();
+		this.resources = new ResourceListJSON(player.resources());
+		this.roads = player.roadCount();
+		this.settlements = player.settlementCount();
+		this.cities = player.cityCount();
+		this.soldiers = player.soldierCount();
+		this.victoryPoints = player.victoryPointCount();		
+	}
+
 	public models.Player getModel(Board board)
 	{
 		List<Road> boardRoads = board.roads();
@@ -149,7 +169,7 @@ public class PlayerJSON
 	/**
 	 * @return the monuments
 	 */
-	public Number getMonuments() {
+	public int getMonuments() {
 		return monuments;
 	}
 

@@ -1,5 +1,7 @@
 package JSONmodels;
 
+import shared.locations.HexLocation;
+
 import com.google.gson.Gson;
 
 /**
@@ -10,6 +12,12 @@ public class HexLocationJSON
 	private int x;
 	private int y;
 	
+	public HexLocationJSON(HexLocation location) 
+	{
+		this.x = location.getX();
+		this.y = location.getY();
+	}
+
 	/**
 	 * Creates a HexLocation object from a JSON string
 	 * 

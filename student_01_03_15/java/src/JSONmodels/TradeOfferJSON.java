@@ -12,6 +12,13 @@ public class TradeOfferJSON
 	private int receiver; //The index of the person the trade was offered to.
 	private ResourceListJSON offer; //Positive numbers are resources being offered. Negative are resources being asked for.
 	
+	public TradeOfferJSON(Trade trade) 
+	{
+		this.sender = trade.sender().value();
+		this.receiver = trade.receiver().value();
+		this.offer = new ResourceListJSON(trade.offer());
+	}
+
 	/**
 	 * Creates a TradeOffer object from a JSON string
 	 * 

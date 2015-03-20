@@ -11,6 +11,15 @@ public class MessageListJSON
 {
 	private MessageLineJSON[] lines;
 	
+	public MessageListJSON(List<Message> chat) 
+	{
+		this.lines = new MessageLineJSON[chat.size()];
+		for(int i=0; i < lines.length; i++)
+		{
+			this.lines[i] = new MessageLineJSON(chat.get(i));
+		}
+	}
+
 	/**
 	 * Creates a MessageList object from a JSON string
 	 * 

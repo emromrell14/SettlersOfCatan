@@ -9,6 +9,12 @@ public class MessageLineJSON
 	private String message;
 	private String source;
 	
+	public MessageLineJSON(Message message) 
+	{
+		this.message = message.message();
+		this.source = message.playerName();
+	}
+
 	/**
 	 * Creates a MessageLine object from a JSON string
 	 * 
