@@ -922,7 +922,7 @@ public class Game implements IGame
 		player.addVictoryPoint(1);		
 	}
 
-	public boolean canOfferTrade(Index playerIndex, Index receiverIndex, ResourceList offer)
+	public boolean canOfferTrade(Index playerIndex, ResourceList offer)
 	{
 		Player player = this.getPlayer(playerIndex);
 		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
@@ -934,12 +934,15 @@ public class Game implements IGame
 			return false;
 		}
 		
-		// checking to see if player has all resources they are offering
-		for (ResourceType r : ResourceType.values())
+		if(offer != null)
 		{
-			if (player.resources().getResource(r) < (-1)*offer.getResource(r))
+			// checking to see if player has all resources they are offering
+			for (ResourceType r : ResourceType.values())
 			{
-				return false;
+				if (player.resources().getResource(r) < (-1)*offer.getResource(r))
+				{
+					return false;
+				}
 			}
 		}
 		return true;
@@ -947,7 +950,7 @@ public class Game implements IGame
 	@Override
 	public void offerTrade(Index playerIndex, Index receiverIndex, ResourceList offer) throws IllegalStateException
 	{
-		if(!this.canOfferTrade(playerIndex, receiverIndex, offer))
+		if(!this.canOfferTrade(playerIndex, offer))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
@@ -1162,32 +1165,32 @@ public class Game implements IGame
 		return rl;
 	}
 	
-	@Override
-	public boolean canOfferTrade(Index playerIndex) 
-	{
-		boolean playerHasCards = false;
-		boolean othersHaveCards = false;
-		for(Player p: mPlayers)
-		{
-			ResourceList temp = p.resources();
-			if(p.playerIndex().equals(playerIndex)) 
-			{
-				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
-				{
-					playerHasCards = true;
-				}
-			}
-			else
-			{
-				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
-				{
-					othersHaveCards = true;
-				}
-			}
-		}
-		
-		return playerHasCards && othersHaveCards;
-	}
+//	@Override
+//	public boolean canOfferTrade(Index playerIndex) 
+//	{
+//		boolean playerHasCards = false;
+//		boolean othersHaveCards = false;
+//		for(Player p: mPlayers)
+//		{
+//			ResourceList temp = p.resources();
+//			if(p.playerIndex().equals(playerIndex)) 
+//			{
+//				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
+//				{
+//					playerHasCards = true;
+//				}
+//			}
+//			else
+//			{
+//				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
+//				{
+//					othersHaveCards = true;
+//				}
+//			}
+//		}
+//		
+//		return playerHasCards && othersHaveCards;
+//	}
 
 	@Override
 	public List<Player> getRobbingVictims(HexLocation hexLoc) 

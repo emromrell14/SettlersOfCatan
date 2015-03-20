@@ -325,7 +325,7 @@ public class ModelManager extends Observable
 			return false;
 		}
 		*/
-		return mGameModel.canOfferTrade(playerIndex);
+		return mGameModel.canOfferTrade(playerIndex, null);
 	}
 
 	/**

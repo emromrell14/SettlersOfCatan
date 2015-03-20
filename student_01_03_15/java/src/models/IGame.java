@@ -139,7 +139,7 @@ public interface IGame
 	 * @param playerIndex
 	 * @return
 	 */
-	boolean canOfferTrade(Index playerIndex);
+	boolean canOfferTrade(Index playerIndex, ResourceList offer);
 
 	/**
 	 * Returns all the players who are residing on a specified hex location
