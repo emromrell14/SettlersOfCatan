@@ -105,7 +105,7 @@ public class Server implements IServer
 	@Override
 	public IGame getGame(int id) 
 	{
-		return null;
+		return games.get(id);
 	}
 
 	@Override
@@ -184,6 +184,12 @@ public class Server implements IServer
 		}
 		
 		return json;
+	}
+
+	@Override
+	public void updateVersion(int gameID) 
+	{
+		games.get(gameID).incrementVersion();
 	}
 	
 	

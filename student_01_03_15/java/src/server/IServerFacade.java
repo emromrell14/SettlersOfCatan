@@ -4,6 +4,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import models.IGame;
 import models.Index;
 import models.ResourceList;
 
@@ -183,4 +184,6 @@ public interface IServerFacade {
 	 * @param cards
 	 */
 	void executeDiscardCommand(Index playerIndex, ResourceList cards);
+
+	void parseBody(String requestURI, String body, IGame game);
 }

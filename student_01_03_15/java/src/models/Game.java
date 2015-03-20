@@ -1227,6 +1227,12 @@ public class Game implements IGame
 			contendingPlayer.addVictoryPoint(2);
 		}	
 	}
+
+	@Override
+	public void incrementVersion()
+	{
+		mVersion += 1;
+	}
 	
 	//END MISC FUNCTIONS
 

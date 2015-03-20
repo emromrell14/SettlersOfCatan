@@ -34,6 +34,13 @@ public class CreateGamesHandler  extends Handler
 		String body = req.getBody();
 		CreateGamesRequest gamesRequest = CreateGamesRequest.fromJSON(body);
 		gameName = gamesRequest.getName();	
+		int gameID = req.getCookie().getGameID();
+		int userID = req.getCookie().getPlayerID();
+		
+		if(gameID == -1 || userID == -1)
+		{
+			return new Response(400, "Failed - missing cookie");
+		}
 		
 		// This could lead to synchronization problems. Test creating 2 games at the same time
 		gameId = server.getGames().size();
@@ -41,7 +48,7 @@ public class CreateGamesHandler  extends Handler
 		// Check for games with same name
 		if(existsDuplicateName(gameName))
 		{
-			return new Response(400,"Game name already taken.");
+			return new Response(400,"Failed - Game name already taken.");
 		}
 		
 		String respBody = buildBody();

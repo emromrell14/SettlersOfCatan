@@ -35,6 +35,17 @@ public class JoinGamesHandler  extends Handler
 	{
 		String body = req.getBody();
 		Response resp = new Response();
+
+		int gameID = req.getCookie().getGameID();
+		int userID = req.getCookie().getPlayerID();
+		
+		if(gameID == -1 || userID == -1)
+		{
+			resp.setBody("Failed - missing cookie");
+			resp.setStatusCode(400);
+			return resp;
+		}
+		
 		JoinGamesRequest jgr = JoinGamesRequest.fromJSON(body);
 		int id = jgr.getId();
 		String color = jgr.getColor().toUpperCase();

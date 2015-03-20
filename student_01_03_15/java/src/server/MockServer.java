@@ -244,7 +244,14 @@ public class MockServer implements IServer
 	}
 
 	@Override
-	public void getGameModelJSON(int version,int gameID) {
+	public String getGameModelJSON(int version,int gameID) {
+		return mHost;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateVersion(int gameID) {
 		// TODO Auto-generated method stub
 		
 	}

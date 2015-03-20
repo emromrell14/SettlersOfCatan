@@ -309,4 +309,6 @@ public interface IGame
 	 * @param discardedCards
 	 */
 	public void discardCards(Index playerIndex, ResourceList discardedCards);
+	
+	void incrementVersion();
 }
