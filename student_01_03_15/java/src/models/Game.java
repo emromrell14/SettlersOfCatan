@@ -56,6 +56,7 @@ public class Game implements IGame
 		mTurnTracker = new TurnTracker();
 		mBank = new ResourceList();
 		mDevCards = new ArrayList<DevCard>();
+		mRobber = new Robber(mBoard.getDesertLocation());
 		for(int i=0; i<2; i++)
 		{
 			mDevCards.add(new Monopoly());

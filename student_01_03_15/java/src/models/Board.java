@@ -411,5 +411,18 @@ public class Board
 		}
 		return new Hex(loc, HexType.WATER, new TokenValue(-1));
 	}
+
+	public HexLocation getDesertLocation() 
+	{
+		for(int i = 0; i < mHexes.size(); ++i)
+		{
+			if(mHexes.get(i).resource() == HexType.DESERT)
+			{
+				return mHexes.get(i).getHexLocation();
+			}
+		}
+		
+		return null;
+	}
 	
 }
