@@ -1,5 +1,6 @@
 package server.JSON;
 
+import shared.locations.HexLocation;
 import JSONmodels.HexLocationJSON;
 
 import com.google.gson.Gson;
@@ -34,8 +35,8 @@ public class RobPlayerRequest {
 		this.victimIndex = victimIndex;
 	}
 
-	public HexLocationJSON getLocation() {
-		return location;
+	public HexLocation getLocation() {
+		return new HexLocation(location.getX(),location.getY());
 	}
 
 	public void setLocation(HexLocationJSON location) {
