@@ -12,6 +12,7 @@ import models.Game;
 import models.IGame;
 import models.Message;
 import server.handlers.*;
+import JSONmodels.ClientModelJSON;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -180,7 +181,7 @@ public class Server implements IServer
 		IGame game = games.get(gameID);
 		if(game.version() > version)
 		{
-//			json = 
+			ClientModelJSON model = new ClientModelJSON(game);
 		}
 		
 		return json;

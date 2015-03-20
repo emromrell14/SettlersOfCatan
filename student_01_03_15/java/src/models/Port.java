@@ -115,5 +115,17 @@ public class Port
 			////System.out.println("Should never get to this. Port.calculateVertices");
 		}
 	}
+	
+	public int calculateRatio()
+	{
+		if(this.mResource == PortType.THREE)
+		{
+			return 3;
+		}
+		else
+		{
+			return 2;
+		}
+	}
 }
 

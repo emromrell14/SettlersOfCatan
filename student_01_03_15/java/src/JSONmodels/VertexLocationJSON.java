@@ -1,5 +1,8 @@
 package JSONmodels;
 
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+
 import com.google.gson.Gson;
 
 public class VertexLocationJSON 
@@ -36,6 +39,13 @@ public class VertexLocationJSON
 		
 	}
 	
+	public VertexLocationJSON(VertexLocation location) 
+	{
+		this.x = location.getHexLoc().getX();
+		this.y = location.getHexLoc().getY();
+		this.direction = location.getDir().getShortenedDirection().toString();
+	}
+
 	/**
 	 * Creates a VertexObject object from a JSON string
 	 * 
@@ -46,5 +56,11 @@ public class VertexLocationJSON
 	{
 		Gson gson = new Gson();
 		return gson.fromJson(JSON, VertexLocationJSON.class);
+	}
+	
+	
+	public VertexLocation getModelVertexLocation()
+	{
+		return new VertexLocation(new shared.locations.HexLocation(x, y), VertexDirection.valueOf(direction));
 	}
 }

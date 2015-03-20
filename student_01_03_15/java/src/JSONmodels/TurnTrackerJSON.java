@@ -2,6 +2,7 @@ package JSONmodels;
 
 import models.Index;
 import models.Status;
+import models.TurnTracker;
 
 import com.google.gson.Gson;
 
@@ -12,6 +13,14 @@ public class TurnTrackerJSON
 	private int longestRoad; //The index of who has the longest road.
 	private int largestArmy; //The index of who has the largest army. (Has to be 3 or more).
 	
+	public TurnTrackerJSON(TurnTracker turnTracker) 
+	{
+		this.currentTurn = turnTracker.currentTurn().value();
+		this.status = turnTracker.status().toString();
+		this.longestRoad = turnTracker.longestRoad().value();
+		this.largestArmy = turnTracker.largestArmy().value();
+	}
+
 	/**
 	 * Creates a TurnTracker object from a JSON string
 	 * 

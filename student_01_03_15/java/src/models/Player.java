@@ -1185,5 +1185,29 @@ public class Player implements IPlayer
 			}
 		}
 	}
+
+	public List<DevCard> getNewDevCards() {
+		List<DevCard> result = new ArrayList<DevCard>();
+		for(DevCard d : this.mDevCards)
+		{
+			if(d.isNew())
+			{
+				result.add(d);
+			}
+		}
+		return result;
+	}
+	
+	public List<DevCard> getOldDevCards() {
+		List<DevCard> result = new ArrayList<DevCard>();
+		for(DevCard d : this.mDevCards)
+		{
+			if(!d.isNew())
+			{
+				result.add(d);
+			}
+		}
+		return result;
+	}
 	
 }

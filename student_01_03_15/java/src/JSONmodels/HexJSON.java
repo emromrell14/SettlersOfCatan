@@ -1,5 +1,6 @@
 package JSONmodels;
 
+import models.Hex;
 import models.TokenValue;
 import shared.definitions.HexType;
 
@@ -11,6 +12,13 @@ public class HexJSON
 	private String resource; //OPTIONAL. What resource this title gives- it's only here if the tile is not the desert.
 	private int number; //OPTIONAL. What number is on this tile. It's omitted if this is a desert hex.
 	
+	public HexJSON(Hex hex) 
+	{
+		this.location = new HexLocationJSON(hex.location());
+		this.resource = hex.resource().toString().toLowerCase();
+		this.number = hex.number().value();
+	}
+
 	/**
 	 * Creates a Hex object from a JSON string
 	 * 

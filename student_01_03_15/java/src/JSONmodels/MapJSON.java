@@ -1,6 +1,8 @@
 package JSONmodels;
 
+import shared.locations.HexLocation;
 import models.Board;
+
 import com.google.gson.Gson;
 
 public class MapJSON 
@@ -13,6 +15,42 @@ public class MapJSON
 	private int radius; //The radius of the map (it includes the center hex, and the ocean hexes; pass this into the hex grid constructor)
 	private HexLocationJSON robber; //The current location of the robber
 	
+	public MapJSON(Board board, HexLocation robberLocation) 
+	{
+		this.hexes = new HexJSON[board.hexes().size()];
+		for(int i=0; i < this.hexes.length; i++) 
+		{
+			this.hexes[i] = new HexJSON(board.hexes().get(i));
+		}
+		
+		this.ports = new PortJSON[board.ports().size()];
+		for(int i=0; i < this.ports.length; i++)
+		{
+			this.ports[i] = new PortJSON(board.ports().get(i));
+		}
+		
+		this.roads = new EdgeValueJSON[board.roads().size()];
+		for(int i=0; i < this.roads.length; i++)
+		{
+			this.roads[i] = new EdgeValueJSON(board.roads().get(i));
+		}
+		
+		this.settlements = new VertexObjectJSON[board.settlements().size()];
+		for(int i=0; i < this.settlements.length; i++)
+		{
+			this.settlements[i] = new VertexObjectJSON(board.settlements().get(i));
+		}
+		
+		this.cities = new VertexObjectJSON[board.cities().size()];
+		for(int i=0; i < this.cities.length; i++)
+		{
+			this.cities[i] = new VertexObjectJSON(board.settlements().get(i));
+		}
+		
+		this.radius = 3;
+		
+		this.robber = new HexLocationJSON(robberLocation);
+	}
 	/**
 	 * Creates a Map object from a JSON string
 	 * 

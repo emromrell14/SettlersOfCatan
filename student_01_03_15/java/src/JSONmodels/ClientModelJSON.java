@@ -3,6 +3,7 @@ package JSONmodels;
 import java.util.List;
 
 import models.Game;
+import models.IGame;
 import models.Message;
 
 import com.google.gson.Gson;
@@ -19,6 +20,25 @@ public class ClientModelJSON
 	private int version; //The version of the model. This is incremented whenever anyone makes a move.
 	private int winner; //This is -1 when nobody's won yet. When they have, it's their order index [0-3].
 	
+	public ClientModelJSON(IGame game) 
+	{
+		this.bank = new ResourceListJSON(game.bank());
+		this.chat = new MessageListJSON(game.chat());
+		this.log = new MessageListJSON(game.log());
+		this.map = new MapJSON(game.board(), game.robber().location());
+		
+		this.players = new PlayerJSON[game.players().size()];
+		for(int i=0; i < this.players.length; i++)
+		{
+			this.players[i] = new PlayerJSON(game.players().get(i));
+		}
+		
+		this.tradeOffer = new TradeOfferJSON(game.trade());
+		this.turnTracker = new TurnTrackerJSON(game.turnTracker());
+		this.version = game.version();
+		this.winner = game.winner().value();
+	}
+
 	/**
 	 * Creates a ClientModel object from a JSON string
 	 * 
