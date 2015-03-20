@@ -172,6 +172,16 @@ public class Server implements IServer
 		}
 		return null;
 	}
+
+	@Override
+	public String getGameModelJSON(int version, int gameID) 
+	{
+		String json = "";
+		IGame game = games.get(gameID);
+		
+		
+		return json;
+	}
 	
 	
 }

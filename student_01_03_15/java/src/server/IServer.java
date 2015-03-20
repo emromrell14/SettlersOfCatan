@@ -61,5 +61,6 @@ public interface IServer
 	public void setGames(Map<Integer, IGame> games);
 	void createGame(String name, int id, boolean randomTiles, boolean randomNumbers, boolean randomPorts);
 	public IUser getCurrentUser(String username);
+	void getGameModelJSON(int version, int gameID);
 	
 }

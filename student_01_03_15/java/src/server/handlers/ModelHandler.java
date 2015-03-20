@@ -20,9 +20,28 @@ public class ModelHandler  extends Handler
 	public Response processRequest(Request req)
 	{
 		Response res = new Response();
-		res.setBody("Failed - ModelHandler is not implemented yet");
-		res.setStatusCode(400);
+		int gameID = req.getCookie().getGameID();
+		
+		if(gameID == -1)
+		{
+			res.setBody("Failed - there is no game cookie");
+			res.setStatusCode(400);
+			return res;
+		}
+		
+		int version = parseVersion(req.getRequestURI());
+		server.getGameModelJSON(version,gameID);
+		
+		res.setStatusCode(200);
 		return res;
+	}
+
+	private int parseVersion(String requestURI) 
+	{
+		String[] parts = requestURI.split("?");
+		String version = parts[1].replace("version=", "");
+		version = version.trim();
+		return Integer.parseInt(version);
 	}
 
 }

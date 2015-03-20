@@ -242,4 +242,10 @@ public class MockServer implements IServer
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void getGameModelJSON(int version,int gameID) {
+		// TODO Auto-generated method stub
+		
+	}
 }

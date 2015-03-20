@@ -34,14 +34,6 @@ public class GameManager
 		response = mProxy.get(urlPath);
 		//////System.out.println("Game Manager JSON: " + response);
 		return (response.equals("\"true\"")) ? null : jsonToGame(response);
-		
-//		Hack for something paul did
-//		Game g = jsonToGame(response);
-//		if (g == null)
-//		{
-//			g = new Game();
-//		}
-//		return g;
 	}
 	
 	/**
