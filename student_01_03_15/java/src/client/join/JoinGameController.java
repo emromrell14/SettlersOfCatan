@@ -286,9 +286,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(!inGame)
 		{
 			//This is quite a hack. Just shut down any left over modals when the game is joined
-			if(this.getJoinGameView().isModalShowing()) {
+			/*if(this.getJoinGameView().isModalShowing()) {
 				this.getJoinGameView().closeModal();
-			}
+			}*/
 			System.out.println("UPDATING joinGameController.");
 			ModelManager manager = (ModelManager) o;
 			gameModel = manager.getCurrentModel();
