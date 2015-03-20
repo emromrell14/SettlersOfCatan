@@ -38,7 +38,7 @@ public class ModelHandler  extends Handler
 
 	private int parseVersion(String requestURI) 
 	{
-		String[] parts = requestURI.split("?");
+		String[] parts = requestURI.split("\\?");
 		String version = parts[1].replace("version=", "");
 		version = version.trim();
 		return Integer.parseInt(version);

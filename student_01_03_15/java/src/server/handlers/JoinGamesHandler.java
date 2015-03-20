@@ -39,7 +39,7 @@ public class JoinGamesHandler  extends Handler
 		int gameID = req.getCookie().getGameID();
 		int userID = req.getCookie().getPlayerID();
 		
-		if(gameID == -1 || userID == -1)
+		if(userID == -1)
 		{
 			resp.setBody("Failed - missing cookie");
 			resp.setStatusCode(400);

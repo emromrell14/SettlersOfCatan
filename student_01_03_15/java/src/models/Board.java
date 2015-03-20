@@ -42,6 +42,31 @@ public class Board
 		mSettlements = new ArrayList<Building>();
 		mCities = new ArrayList<Building>();
 	}
+
+	public Board(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
+	{
+		mHexes = new ArrayList<Hex>();
+		mPorts = new ArrayList<Port>();
+		mRoads = new ArrayList<Road>();
+		mSettlements = new ArrayList<Building>();
+		mCities = new ArrayList<Building>();
+	}
+	
+	private void createRandomTiles(boolean random)
+	{
+		
+	}
+	
+	private void createRandomNumber(boolean random)
+	{
+		
+	}
+	
+	private void createRandomPorts(boolean random)
+	{
+		
+	}
+	
 	/**
 	 * Gets list of settlements
 	 * @pre none

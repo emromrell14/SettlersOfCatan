@@ -24,6 +24,7 @@ public abstract class Handler implements HttpHandler
 		Response res;
 		
 		req = new Request(exchange);
+		System.out.println("requestURI:"+req.getRequestURI());
 		res = processRequest(req);
 		res.sendResponse(exchange);
 	}
