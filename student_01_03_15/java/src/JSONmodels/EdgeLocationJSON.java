@@ -2,6 +2,7 @@ package JSONmodels;
 
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
@@ -85,12 +86,17 @@ public class EdgeLocationJSON
 	public int getY() {
 		return y;
 	}
+	
+	public HexLocation getHexLocation()
+	{
+		return new HexLocation(x,y);
+	}
 
 	/**
 	 * @return the direction
 	 */
-	public String getDirection() {
-		return direction;
+	public EdgeDirection getDirection() {
+		return EdgeDirection.valueOf(direction);
 	}
 	
 	public EdgeLocation getModelEdgeLocation()
