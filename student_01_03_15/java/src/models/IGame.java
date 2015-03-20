@@ -168,7 +168,7 @@ public interface IGame
 	 * @param message
 	 * @param playerIndex
 	 */
-	void sendChat(String message, Index playerIndex) throws IllegalStateException;
+	void sendChat(Index playerIndex, String message) throws IllegalStateException;
 	
 	/**
 	 * Allocates resources and changes turn tracker status
@@ -184,7 +184,7 @@ public interface IGame
 	 * @param victimIndex
 	 * @param loc
 	 */
-	public void robPlayer(Index playerIndexInt, Index victimIndex, HexLocation loc) throws IllegalStateException;
+	public void robPlayer(Index playerIndex, Index victimIndex, HexLocation loc) throws IllegalStateException;
 
 	
 	/**
@@ -194,7 +194,7 @@ public interface IGame
 	 * 
 	 * @param playerIndex
 	 */
-	public void finishTurn(Index playerIndexInt) throws IllegalStateException;
+	public void finishTurn(Index playerIndex) throws IllegalStateException;
 
 	/**
 	 * Player gains a new card, if monument it will be old, new otherwise

@@ -1,13 +1,25 @@
 package commands;
 
+import shared.locations.VertexLocation;
+import models.IGame;
+import models.Index;
+
 public class BuildCityCommand implements ICommand 
 {
-
-	@Override
-	public void execute() 
+	private IGame game;
+	private Index playerIndex;
+	private VertexLocation vertexLocation;
+	
+	public BuildCityCommand(IGame game, Index playerIndex, VertexLocation vertexLocation)
 	{
-		// TODO Auto-generated method stub
-
+		this.game = game;
+		this.playerIndex = playerIndex;
+		this.vertexLocation = vertexLocation;
 	}
 
+	@Override
+	public void execute()
+	{
+		game.buildCity(playerIndex, vertexLocation);
+	}
 }

@@ -1,13 +1,25 @@
 package commands;
 
+import models.IGame;
+import models.Index;
+import models.ResourceList;
+
 public class DiscardCommand implements ICommand
 {
-
-	@Override
-	public void execute() 
+	private IGame game;
+	private Index playerIndex;
+	private ResourceList discardedCards;
+	
+	public DiscardCommand(IGame game, Index playerIndex, ResourceList discardedCards)
 	{
-		// TODO Auto-generated method stub
-
+		this.game = game;
+		this.playerIndex = playerIndex;
+		this.discardedCards = discardedCards;
 	}
 
+	@Override
+	public void execute()
+	{
+		game.discardCards(playerIndex, discardedCards);
+	}
 }

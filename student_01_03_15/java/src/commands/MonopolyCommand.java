@@ -1,13 +1,25 @@
 package commands;
 
+import shared.definitions.ResourceType;
+import models.IGame;
+import models.Index;
+
 public class MonopolyCommand implements ICommand
 {
-
-	@Override
-	public void execute() 
+	private IGame game;
+	private Index playerIndex;
+	private ResourceType resource;
+	
+	public MonopolyCommand(IGame game, Index playerIndex, ResourceType resource)
 	{
-		// TODO Auto-generated method stub
-
+		this.game = game;
+		this.playerIndex = playerIndex;
+		this.resource = resource;
 	}
 
+	@Override
+	public void execute()
+	{
+		game.playMonopoly(playerIndex, resource);
+	}
 }

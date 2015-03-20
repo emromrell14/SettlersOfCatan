@@ -332,7 +332,7 @@ public class Game implements IGame
 		return true;
 	}
 	@Override
-	public void sendChat(String message, Index playerIndex) throws IllegalStateException 
+	public void sendChat(Index playerIndex, String message) throws IllegalStateException 
 	{
 		if(!this.canSendChat())
 		{
