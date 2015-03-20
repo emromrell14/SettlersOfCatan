@@ -1,9 +1,11 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import shared.definitions.HexType;
+import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -45,26 +47,80 @@ public class Board
 
 	public Board(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
 	{
-		mHexes = new ArrayList<Hex>();
-		mPorts = new ArrayList<Port>();
+		mHexes = new ArrayList<Hex>(Arrays.asList(
+					new Hex(new HexLocation(0,-2), HexType.WOOD, new TokenValue(11)),
+					new Hex(new HexLocation(0,-1), HexType.ORE, new TokenValue(6)),
+					new Hex(new HexLocation(0,0), HexType.WHEAT, new TokenValue(11)),
+					new Hex(new HexLocation(0,1), HexType.SHEEP, new TokenValue(9)),
+					new Hex(new HexLocation(0,2), HexType.WOOD, new TokenValue(6)),
+					new Hex(new HexLocation(1,-2), HexType.SHEEP, new TokenValue(12)),
+					new Hex(new HexLocation(1,-1), HexType.BRICK, new TokenValue(5)),
+					new Hex(new HexLocation(1,0), HexType.WOOD, new TokenValue(4)),
+					new Hex(new HexLocation(1,1), HexType.ORE, new TokenValue(3)),
+					new Hex(new HexLocation(2,-2), HexType.WHEAT, new TokenValue(9)),
+					new Hex(new HexLocation(2,-1), HexType.SHEEP, new TokenValue(10)),
+					new Hex(new HexLocation(2,0), HexType.WHEAT, new TokenValue(8)),
+					new Hex(new HexLocation(-1,-1), HexType.BRICK, new TokenValue(4)),
+					new Hex(new HexLocation(-1,0), HexType.WOOD, new TokenValue(3)),
+					new Hex(new HexLocation(-1,1), HexType.SHEEP, new TokenValue(10)),
+					new Hex(new HexLocation(-1,2), HexType.WHEAT, new TokenValue(2)),
+					new Hex(new HexLocation(-2,0), HexType.DESERT, new TokenValue(0)),
+					new Hex(new HexLocation(-2,1), HexType.BRICK, new TokenValue(8)),
+					new Hex(new HexLocation(-2,2), HexType.ORE, new TokenValue(5))
+					));
+		mPorts = new ArrayList<Port>(Arrays.asList(
+					new Port(PortType.THREE, new HexLocation(0,-3), EdgeDirection.S),
+					new Port(PortType.SHEEP, new HexLocation(2,-3), EdgeDirection.SW),
+					new Port(PortType.THREE, new HexLocation(3,-2), EdgeDirection.SW),
+					new Port(PortType.THREE, new HexLocation(3,0), EdgeDirection.NW),
+					new Port(PortType.BRICK, new HexLocation(1,2), EdgeDirection.N),
+					new Port(PortType.WOOD, new HexLocation(-1,3), EdgeDirection.N),
+					new Port(PortType.THREE, new HexLocation(-3,3), EdgeDirection.NE),
+					new Port(PortType.WHEAT, new HexLocation(-3,1), EdgeDirection.SE),
+					new Port(PortType.ORE, new HexLocation(-2,-1), EdgeDirection.SE)
+					));
 		mRoads = new ArrayList<Road>();
 		mSettlements = new ArrayList<Building>();
 		mCities = new ArrayList<Building>();
 	}
 	
-	private void createRandomTiles(boolean random)
+	private void randomizeHexTypes()
 	{
-		
+		for(int i = 0; i < 100; ++i)
+		{
+			int index1 = (int) (Math.random() * (mHexes.size()-1));
+			int index2 = (int) (Math.random() * (mHexes.size()-1));
+			
+			HexType temp = mHexes.get(index1).resource();
+			mHexes.get(index1).setResource(mHexes.get(index2).resource());
+			mHexes.get(index2).setResource(temp);
+		}
 	}
 	
-	private void createRandomNumber(boolean random)
+	private void randomizePorts()
 	{
-		
+		for(int i = 0; i < 100; ++i)
+		{
+			int index1 = (int) (Math.random() * (mPorts.size()-1));
+			int index2 = (int) (Math.random() * (mPorts.size()-1));
+			
+			PortType temp = mPorts.get(index1).resource();
+			mPorts.get(index1).setPortType(mPorts.get(index2).resource());
+			mPorts.get(index2).setPortType(temp);
+		}
 	}
 	
-	private void createRandomPorts(boolean random)
+	private void randomizeTokenValues()
 	{
-		
+		for(int i = 0; i < 100; ++i)
+		{
+			int index1 = (int) (Math.random() * (mHexes.size()-1));
+			int index2 = (int) (Math.random() * (mHexes.size()-1));
+			
+			TokenValue temp = mHexes.get(index1).number();
+			mHexes.get(index1).setTokenValue(mHexes.get(index2).number());
+			mHexes.get(index2).setTokenValue(temp);
+		}
 	}
 	
 	/**

@@ -42,6 +42,11 @@ public class Port
 	{
 		return mResource;
 	}
+	
+	public void setPortType(PortType p)
+	{
+		mResource = p;
+	}
 	/**
 	 * Sets the type of the resource for which this port trades
 	 * 

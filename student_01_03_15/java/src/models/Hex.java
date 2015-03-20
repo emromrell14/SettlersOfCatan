@@ -42,6 +42,16 @@ public class Hex
 	{
 		return mLocation;
 	}
+	
+	public void setResource(HexType newType)
+	{
+		mResource = newType;
+	}
+	
+	public void setTokenValue(TokenValue t)
+	{
+		mNumber = t;
+	}
 	/** 
 	 * Gets hex resource type
 	 * @pre none
