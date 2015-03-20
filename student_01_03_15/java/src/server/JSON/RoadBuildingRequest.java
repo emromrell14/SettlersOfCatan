@@ -1,5 +1,6 @@
 package server.JSON;
 
+import shared.locations.EdgeLocation;
 import JSONmodels.EdgeLocationJSON;
 
 import com.google.gson.Gson;
@@ -26,16 +27,16 @@ public class RoadBuildingRequest {
 		this.playerIndex = playerIndex;
 	}
 
-	public EdgeLocationJSON getSpot1() {
-		return spot1;
+	public EdgeLocation getSpot1() {
+		return new EdgeLocation(spot1.getHexLocation(),spot1.getDirection());
 	}
 
 	public void setSpot1(EdgeLocationJSON spot1) {
 		this.spot1 = spot1;
 	}
 
-	public EdgeLocationJSON getSpot2() {
-		return spot2;
+	public EdgeLocation getSpot2() {
+		return new EdgeLocation(spot2.getHexLocation(),spot2.getDirection());
 	}
 
 	public void setSpot2(EdgeLocationJSON spot2) {
