@@ -178,7 +178,10 @@ public class Server implements IServer
 	{
 		String json = "";
 		IGame game = games.get(gameID);
-		
+		if(game.version() > version)
+		{
+//			json = 
+		}
 		
 		return json;
 	}
