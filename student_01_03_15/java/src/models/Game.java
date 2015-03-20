@@ -451,7 +451,7 @@ public class Game implements IGame
 	
 	public boolean canFinishTurn(Index playerIndex)
 	{
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -531,7 +531,7 @@ public class Game implements IGame
 
 	public boolean canPlayYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) 
 	{
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -636,7 +636,7 @@ public class Game implements IGame
 	
 	public boolean canPlaySoldier(Index playerIndex)
 	{
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -680,7 +680,7 @@ public class Game implements IGame
 	public boolean canPlayMonopoly(Index playerIndex)
 	{
 		Player player = this.getPlayer(playerIndex);
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -720,7 +720,7 @@ public class Game implements IGame
 	public boolean canPlayMonument(Index playerIndex)
 	{
 		Player player = this.getPlayer(playerIndex);
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -749,7 +749,7 @@ public class Game implements IGame
 	public boolean canBuildRoad(Index playerIndex, EdgeLocation roadLocation, boolean free)
 	{
 		Player player = this.getPlayer(playerIndex);
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -815,7 +815,7 @@ public class Game implements IGame
 	public boolean canBuildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free)
 	{
 		Player player = this.getPlayer(playerIndex);
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -875,7 +875,7 @@ public class Game implements IGame
 	public boolean canBuildCity(Index playerIndex, VertexLocation vertexLocation)
 	{
 		Player player = this.getPlayer(playerIndex);
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -925,7 +925,7 @@ public class Game implements IGame
 	public boolean canOfferTrade(Index playerIndex, Index receiverIndex, ResourceList offer)
 	{
 		Player player = this.getPlayer(playerIndex);
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -1002,7 +1002,7 @@ public class Game implements IGame
 	public boolean canMaritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource)
 	{
 		Player player = this.getPlayer(playerIndex);
-		if (this.mTurnTracker.currentTurn().equals(playerIndex))
+		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
 			return false;
 		}
@@ -1062,12 +1062,15 @@ public class Game implements IGame
 			return false;
 		}
 		
-		// Check that you have the cards you're trying to discard
-		for (ResourceType r : ResourceType.values())
+		if(discardedCards != null)
 		{
-			if (player.resources().getResource(r) < discardedCards.getResource(r))
+			// Check that you have the cards you're trying to discard
+			for (ResourceType r : ResourceType.values())
 			{
-				return false;
+				if (player.resources().getResource(r) < discardedCards.getResource(r))
+				{
+					return false;
+				}
 			}
 		}
 		

@@ -12,6 +12,7 @@ import models.Game;
 import models.Index;
 import models.Message;
 import models.Player;
+import models.ResourceList;
 import models.Status;
 
 public class ModelManager extends Observable
@@ -409,7 +410,7 @@ public class ModelManager extends Observable
 		return this.mGameModel.getPlayer(playerIndex).canDiscard()
 				&& mGameModel.turnTracker().status().equals(Status.DISCARDING);
 				*/
-		return this.canDiscard(playerIndex);
+		return this.mGameModel.canDiscardCards(playerIndex, null);
 	}
 
 	/**
