@@ -14,7 +14,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
-public class Player implements IPlayer
+public class Player //implements IPlayer
 {	
 	private CatanColor mColor; //The color of this player
 	private String mName;
@@ -35,6 +35,8 @@ public class Player implements IPlayer
 	private List<Building> mSettlements;
 	private List<Building> mCities;
 	private List<DevCard> mDevCards;
+	
+	public Player(){}
 	
 	/**
 	 * Constructs a player Object with few arguments
@@ -99,14 +101,51 @@ public class Player implements IPlayer
 		this.mHasPlayedDevCard = playedDevCard;
 	}
 	
-	
-	
-	public IUser getUser() {
-		return mUser;
-	}
-
-	public void setUser(IUser user) {
-		this.mUser = user;
+	/**
+	 * @param mColor
+	 * @param mName
+	 * @param mPlayerIndex
+	 * @param mPlayerID
+	 * @param mResources
+	 * @param mRoadCount
+	 * @param mSettlementCount
+	 * @param mCityCount
+	 * @param mSoldierCount
+	 * @param mVictoryPointCount
+	 * @param mDiscarded
+	 * @param mHasPlayedDevCard
+	 * @param mMonuments
+	 * @param mUser
+	 * @param mRoads
+	 * @param mSettlements
+	 * @param mCities
+	 * @param mDevCards
+	 */
+	public Player(CatanColor mColor, String mName, Index mPlayerIndex,
+			int mPlayerID, ResourceList mResources, int mRoadCount,
+			int mSettlementCount, int mCityCount, int mSoldierCount,
+			int mVictoryPointCount, boolean mDiscarded,
+			boolean mHasPlayedDevCard, int mMonuments, IUser mUser,
+			List<Road> mRoads, List<Building> mSettlements,
+			List<Building> mCities, List<DevCard> mDevCards) {
+		this.mColor = mColor;
+		this.mName = mName;
+		this.mPlayerIndex = mPlayerIndex;
+		this.mPlayerID = mPlayerID;
+		this.mResources = mResources;
+		this.mRoadCount = mRoadCount;
+		this.mSettlementCount = mSettlementCount;
+		this.mCityCount = mCityCount;
+		this.mSoldierCount = mSoldierCount;
+		this.mVictoryPointCount = mVictoryPointCount;
+		this.mDiscarded = mDiscarded;
+		this.mHasPlayedDevCard = mHasPlayedDevCard;
+		this.mMonuments = mMonuments;
+		this.mUser = mUser;
+		this.mRoads = mRoads;
+		this.mSettlements = mSettlements;
+		this.mCities = mCities;
+		this.mDevCards = mDevCards;
 	}
 
 	/**
@@ -155,22 +194,6 @@ public class Player implements IPlayer
 		}
 	}
 	
-	/**
-	 * Gets the number of soldiers this player has
-	 * @return the number of soldiers this player has
-	 */
-	public int soldierCount()
-	{
-		return mSoldierCount;
-	}
-	/**
-	 * Gets the number of victory points this player has
-	 * @return the number of victory points this player has
-	 */
-	public int victoryPointCount()
-	{
-		return mVictoryPointCount;
-	}
 	
 	/** 
 	 * Adds the specified number to the victory point count
@@ -181,14 +204,6 @@ public class Player implements IPlayer
 		this.mVictoryPointCount += num;
 	}
 	
-	/**
-	 * Gets the number of roads this player has left to build
-	 * @return the number of roads this player has left to build
-	 */
-	public int roadCount()
-	{
-		return mRoadCount;
-	}
 	
 	/**
 	 * adds(or subtracts) the number of roads to road count
@@ -199,14 +214,6 @@ public class Player implements IPlayer
 		this.mRoadCount += num;	
 	}
 	
-	/**
-	 * Gets the number of settlements this player has left to build
-	 * @return the number of settlements this player has left to build
-	 */
-	public int settlementCount()
-	{
-		return mSettlementCount;
-	}
 	
 	/**
 	 * Adds the number of settlements to our settlement count
@@ -217,14 +224,6 @@ public class Player implements IPlayer
 		this.mSettlementCount += num;
 	}
 	
-	/**
-	 * Gets the number of cities this player has left to build
-	 * @return the number of cities this player has left to build
-	 */
-	public int cityCount()
-	{
-		return mCityCount;
-	}
 	
 	/**
 	 * adds number of cities to city count
@@ -234,124 +233,6 @@ public class Player implements IPlayer
 	{
 		this.mCityCount += num;
 	}
-	
-	/**
-	 * Gets the color corresponding to this player
-	 * @return the color corresponding to this player
-	 */
-	public CatanColor color()
-	{
-		return mColor;
-	}
-	
-	/**
-	 * Checks to see if this player has discarded
-	 * @return true if the player has discarded, false otherwise
-	 */
-	public boolean hasDiscarded()
-	{
-		return mDiscarded;
-	}
-	
-	/**
-	 * Gets the number of monuments this player has
-	 * @return the number of monuments this player has
-	 */
-	public int monumentCount()
-	{
-		return mMonuments;
-	}
-	
-	/**
-	 * Gets the name associated with this player
-	 * @return the name associated with this player
-	 */
-	public String name()
-	{
-		return mName;
-	}
-	
-	/**
-	 * Gets this player's list of dev cards
-	 * @return the list of dev cards belonging to this player
-	 */
-	public List<DevCard> devCards()
-	{
-		return mDevCards;
-	}
-	
-	/**
-	 * Gets the Index (for turn taking purposes) corresponding to this player
-	 * @return the Index object corresponding to this player
-	 */
-	public Index playerIndex()
-	{
-		return mPlayerIndex;
-	}
-	
-	/**
-	 * Checks to see whether a player has already played a dev card this round
-	 * @return true if the player has already played a dev card this round, false otherwise
-	 */
-	public boolean hasPlayedDevCard()
-	{
-		return mHasPlayedDevCard;
-	}
-	
-	/**
-	 * sets that player has played Dev Card for this turn
-	 */
-	public void setHasPlayedDevCard(boolean hasPlayed) 
-	{
-		this.mHasPlayedDevCard = hasPlayed;	
-	}
-
-	
-	/**
-	 * Gets the unique id associated with a player
-	 * @return the unique id associated with this player
-	 */
-	public int playerID()
-	{
-		return mPlayerID;
-	}
-	
-	/**
-	 * Gets the resources belonging to this player
-	 * @return the list of resources belonging to this player
-	 */
-	public ResourceList resources()
-	{
-		return mResources;
-	}
-	
-	/**
-	 * Gets the list of roads belonging to this player (that have been built)
-	 * @return the list of road objects belonging to this player
-	 */
-	public List<Road> roads()
-	{
-		return mRoads;
-	}
-	
-	/**
-	 * Gets the list of settlements belonging to this player (that have been built)
-	 * @return the list of settlement objects belonging to this player
-	 */
-	public List<Building> settlements()
-	{
-		return mSettlements;
-	}
-	
-	/**
-	 * Gets the list of cities belonging to this player (that have been built)
-	 * @return the list of city objects belonging to this player
-	 */
-	public List<Building> cities()
-	{
-		return mCities;
-	}
-	
 	
 	
 	//Functions
@@ -1152,16 +1033,7 @@ public class Player implements IPlayer
 		return false;
 	}
 
-	public CatanColor getColor() 
-	{
-		return mColor;
-	}
-
-	public void setColor(CatanColor mColor) 
-	{
-		this.mColor = mColor;
-	}
-
+	
 	public List<ResourceType> getHand() 
 	{
 		List<ResourceType> cards = new ArrayList<ResourceType>();
@@ -1208,6 +1080,258 @@ public class Player implements IPlayer
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * @return the mColor
+	 */
+	public CatanColor color() {
+		return mColor;
+	}
+
+	/**
+	 * @param mColor the mColor to set
+	 */
+	public void setColor(CatanColor mColor) {
+		this.mColor = mColor;
+	}
+
+	/**
+	 * @return the mName
+	 */
+	public String name() {
+		return mName;
+	}
+
+	/**
+	 * @param mName the mName to set
+	 */
+	public void setName(String mName) {
+		this.mName = mName;
+	}
+
+	/**
+	 * @return the mPlayerIndex
+	 */
+	public Index playerIndex() {
+		return mPlayerIndex;
+	}
+
+	/**
+	 * @param mPlayerIndex the mPlayerIndex to set
+	 */
+	public void setPlayerIndex(Index mPlayerIndex) {
+		this.mPlayerIndex = mPlayerIndex;
+	}
+
+	/**
+	 * @return the mPlayerID
+	 */
+	public int playerID() {
+		return mPlayerID;
+	}
+
+	/**
+	 * @param mPlayerID the mPlayerID to set
+	 */
+	public void setPlayerID(int mPlayerID) {
+		this.mPlayerID = mPlayerID;
+	}
+
+	/**
+	 * @return the mResources
+	 */
+	public ResourceList resources() {
+		return mResources;
+	}
+
+	/**
+	 * @param mResources the mResources to set
+	 */
+	public void setResources(ResourceList mResources) {
+		this.mResources = mResources;
+	}
+
+	/**
+	 * @return the mRoadCount
+	 */
+	public int roadCount() {
+		return mRoadCount;
+	}
+
+	/**
+	 * @param mRoadCount the mRoadCount to set
+	 */
+	public void setRoadCount(int mRoadCount) {
+		this.mRoadCount = mRoadCount;
+	}
+
+	/**
+	 * @return the mSettlementCount
+	 */
+	public int settlementCount() {
+		return mSettlementCount;
+	}
+
+	/**
+	 * @param mSettlementCount the mSettlementCount to set
+	 */
+	public void setSettlementCount(int mSettlementCount) {
+		this.mSettlementCount = mSettlementCount;
+	}
+
+	/**
+	 * @return the mCityCount
+	 */
+	public int cityCount() {
+		return mCityCount;
+	}
+
+	/**
+	 * @param mCityCount the mCityCount to set
+	 */
+	public void setCityCount(int mCityCount) {
+		this.mCityCount = mCityCount;
+	}
+
+	/**
+	 * @return the mSoldierCount
+	 */
+	public int soldierCount() {
+		return mSoldierCount;
+	}
+
+	/**
+	 * @param mSoldierCount the mSoldierCount to set
+	 */
+	public void setSoldierCount(int mSoldierCount) {
+		this.mSoldierCount = mSoldierCount;
+	}
+
+	/**
+	 * @return the mVictoryPointCount
+	 */
+	public int victoryPointCount() {
+		return mVictoryPointCount;
+	}
+
+	/**
+	 * @param mVictoryPointCount the mVictoryPointCount to set
+	 */
+	public void setVictoryPointCount(int mVictoryPointCount) {
+		this.mVictoryPointCount = mVictoryPointCount;
+	}
+
+	/**
+	 * @return the mDiscarded
+	 */
+	public boolean hasDiscarded() {
+		return mDiscarded;
+	}
+
+	/**
+	 * @param mDiscarded the mDiscarded to set
+	 */
+	public void setHasDiscarded(boolean mDiscarded) {
+		this.mDiscarded = mDiscarded;
+	}
+
+	/**
+	 * @return the mHasPlayedDevCard
+	 */
+	public boolean hasPlayedDevCard() {
+		return mHasPlayedDevCard;
+	}
+
+	/**
+	 * @param mHasPlayedDevCard the mHasPlayedDevCard to set
+	 */
+	public void setHasPlayedDevCard(boolean mHasPlayedDevCard) {
+		this.mHasPlayedDevCard = mHasPlayedDevCard;
+	}
+
+	/**
+	 * @return the mMonuments
+	 */
+	public int monuments() {
+		return mMonuments;
+	}
+
+	/**
+	 * @param mMonuments the mMonuments to set
+	 */
+	public void setMonuments(int mMonuments) {
+		this.mMonuments = mMonuments;
+	}
+
+	/**
+	 * @return the mUser
+	 */
+	public IUser user() {
+		return mUser;
+	}
+
+	/**
+	 * @param mUser the mUser to set
+	 */
+	public void setUser(IUser mUser) {
+		this.mUser = mUser;
+	}
+
+	/**
+	 * @return the mRoads
+	 */
+	public List<Road> roads() {
+		return mRoads;
+	}
+
+	/**
+	 * @param mRoads the mRoads to set
+	 */
+	public void setRoads(List<Road> mRoads) {
+		this.mRoads = mRoads;
+	}
+
+	/**
+	 * @return the mSettlements
+	 */
+	public List<Building> settlements() {
+		return mSettlements;
+	}
+
+	/**
+	 * @param mSettlements the mSettlements to set
+	 */
+	public void setSettlements(List<Building> mSettlements) {
+		this.mSettlements = mSettlements;
+	}
+
+	/**
+	 * @return the mCities
+	 */
+	public List<Building> cities() {
+		return mCities;
+	}
+
+	/**
+	 * @param mCities the mCities to set
+	 */
+	public void setCities(List<Building> mCities) {
+		this.mCities = mCities;
+	}
+
+	/**
+	 * @return the mDevCards
+	 */
+	public List<DevCard> devCards() {
+		return mDevCards;
+	}
+
+	/**
+	 * @param mDevCards the mDevCards to set
+	 */
+	public void setDevCards(List<DevCard> mDevCards) {
+		this.mDevCards = mDevCards;
 	}
 	
 }

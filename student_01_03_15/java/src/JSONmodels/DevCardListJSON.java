@@ -14,22 +14,27 @@ public class DevCardListJSON
 	private int soldier;
 	private int yearOfPlenty;
 	
-	public DevCardListJSON(List<DevCard> newDevCards) 
+	public DevCardListJSON(List<DevCard> devCards) 
 	{
-		for(DevCard d : newDevCards)
+		for(DevCard d : devCards)
 		{
 			switch (d.type())
 			{
 				case MONOPOLY:
 					monopoly++;
+					break;
 				case MONUMENT:
-					monopoly++;
+					monument++;
+					break;
 				case ROAD_BUILD:
 					roadBuilding++;
+					break;
 				case SOLDIER:
 					soldier++;
+					break;
 				case YEAR_OF_PLENTY:
 					yearOfPlenty++;
+					break;
 			}
 		}
 	}

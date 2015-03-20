@@ -44,7 +44,7 @@ public class MapJSON
 		this.cities = new VertexObjectJSON[board.cities().size()];
 		for(int i=0; i < this.cities.length; i++)
 		{
-			this.cities[i] = new VertexObjectJSON(board.settlements().get(i));
+			this.cities[i] = new VertexObjectJSON(board.cities().get(i));
 		}
 		
 		this.radius = 3;

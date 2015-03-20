@@ -4,14 +4,18 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import models.*;
 
 import org.junit.Test;
 
+import server.User;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.PortType;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -28,10 +32,7 @@ public class SerializeJSONTester {
 		try
 		{
 			IGame game = new Game();
-			List<DevCard> newDevCards = new ArrayList<DevCard>();
-			List<DevCard> oldDevCards = new ArrayList<DevCard>();
-			Index index = new Index(2);
-			int id = 4;
+			
 			ResourceList rl = new ResourceList();
 			rl.addBrick(4);
 			rl.addOre(2);
@@ -39,12 +40,7 @@ public class SerializeJSONTester {
 			rl.addWheat(0);
 			rl.addWood(1);
 			
-			int soldiers = 3;
-			int victoryPoints = 7;
-			int numSettlements = 4;
-			int numCities = 1;
-			int numRoads = 8;
-			boolean playedDevCard = true;
+			
 			
 			ResourceList bank = new ResourceList();
 			bank.addBrick(20);
@@ -58,6 +54,8 @@ public class SerializeJSONTester {
 			board.addSettlement(new Building(new Index(3), new VertexLocation(new HexLocation(-1,3), VertexDirection.NorthWest)));
 			board.addRoad(new Road(new Index(3), new EdgeLocation(new HexLocation(2,-1), EdgeDirection.NorthWest)));
 			board.addPort(new Port(PortType.THREE, new HexLocation(0,1), EdgeDirection.NorthEast));
+			board.addHex(new Hex(new HexLocation(3,-2), HexType.ORE, new TokenValue(12)));
+			board.addHex(new Hex(new HexLocation(-1,2), HexType.SHEEP, new TokenValue(7)));
 			
 			List<Message> messageList = new ArrayList();
 			messageList.add(new Message("You can shut up!", "Eric"));
@@ -65,8 +63,8 @@ public class SerializeJSONTester {
 			messageList.add(new Message("Ok", "Paul"));
 			
 			List<Message> logList = new ArrayList();
-			messageList.add(new Message("Paul built a road", "Paul"));
-			messageList.add(new Message("Eric won the game", "Eric"));
+			logList.add(new Message("Paul built a road", "Paul"));
+			logList.add(new Message("Eric won the game", "Eric"));
 			
 			TurnTracker turnTracker = new TurnTracker();
 			turnTracker.setCurrentTurn(new Index(2));
@@ -82,8 +80,48 @@ public class SerializeJSONTester {
 			
 			Trade tradeObject = new Trade(new Index(0), new Index(1), offer);
 			
-			Player p = new Player(CatanColor.GREEN, false, 2, "Paul", 
-					newDevCards, oldDevCards, index, id, rl, soldiers, victoryPoints, numSettlements, numCities, numRoads, playedDevCard);
+			List<DevCard> playerDevCards = new ArrayList<DevCard>();
+			YearOfPlenty yop1 = new YearOfPlenty();
+			yop1.setNew(true);
+			YearOfPlenty yop2 = new YearOfPlenty();
+			yop2.setNew(true);
+			Monument monument = new Monument();
+			monument.setNew(false);
+			
+			playerDevCards.add(yop1);
+			playerDevCards.add(yop2);
+			playerDevCards.add(monument);
+			
+			Index index = new Index(2);
+			int id = 4;
+			
+			int soldiers = 3;
+			int victoryPoints = 7;
+			int monuments = 2;
+			int numSettlements = 4;
+			int numCities = 1;
+			int numRoads = 8;
+			boolean playedDevCard = true;
+			
+			Player p = new Player();
+			
+			//CatanColor.GREEN, "Paul", index, id, rl, numRoads, numSettlements, numCities, soldiers, victoryPoints, 
+			//false, playedDevCard, monuments, new User(id), null, null, null, playerDevCards
+			p.setColor(CatanColor.GREEN);
+			p.setName("Paul");
+			p.setPlayerIndex(index);	
+			p.setPlayerID(id);
+			p.setResources(rl);
+			p.setRoadCount(numRoads);
+			p.setSettlementCount(numSettlements);
+			p.setCityCount(numCities);
+			p.setSoldierCount(soldiers);
+			p.setVictoryPointCount(victoryPoints);
+			p.setHasPlayedDevCard(playedDevCard);
+			p.setHasDiscarded(false);
+			p.setMonuments(monuments);
+			p.setUser(new User(id));
+			p.setDevCards(playerDevCards);
 			
 			game.addPlayer(p);
 			game.setBank(bank);
@@ -103,9 +141,30 @@ public class SerializeJSONTester {
 			ClientModelJSON model = new ClientModelJSON(game);
 			String actualJson = model.toJSON();
 			
-			String expectedJson = "";
+			String expectedJson = "{\"bank\":{\"brick\":20,\"ore\":15,\"sheep\":10,\"wheat\":18,\"wood\":9000},"+
+			"\"chat\":{\"lines\":[{\"message\":\"You can shut up!\",\"source\":\"Eric\"},{\"message\":\"Buckwheat!\",\"source\":\"Eric\"},{\"message\":\"Ok\",\"source\":\"Paul\"}]},"+
+					"\"log\":{\"lines\":[{\"message\":\"Paul built a road\",\"source\":\"Paul\"},{\"message\":\"Eric won the game\",\"source\":\"Eric\"}]},"
+					+ "\"map\":{\"hexes\":[{\"location\":{\"x\":3,\"y\":-2},\"resource\":\"ore\",\"number\":12},{\"location\":{\"x\":-1,\"y\":2},\"resource\":\"sheep\",\"number\":7}],"
+					+ "\"ports\":[{\"resource\":\"three\",\"location\":{\"x\":0,\"y\":1},\"direction\":\"NE\",\"ratio\":3}],"
+					+ "\"roads\":[{\"owner\":3,\"location\":{\"x\":2,\"y\":-1,\"direction\":\"NW\"}}],"
+					+ "\"settlements\":[{\"owner\":3,\"location\":{\"x\":-1,\"y\":3,\"direction\":\"NW\"}}],"
+					+ "\"cities\":[{\"owner\":3,\"location\":{\"x\":2,\"y\":-1,\"direction\":\"E\"}}],"
+					+ "\"radius\":3,"
+					+ "\"robber\":{\"x\":0,\"y\":1}},"
+					+ "\"players\":[{\"color\":\"green\",\"discarded\":false,\"monuments\":2,\"name\":\"Paul\","
+					+ 		"\"newDevCards\":{\"monopoly\":0,\"monument\":0,\"roadBuilding\":0,\"soldier\":0,\"yearOfPlenty\":2},"
+					+ 		"\"oldDevCards\":{\"monopoly\":0,\"monument\":1,\"roadBuilding\":0,\"soldier\":0,\"yearOfPlenty\":0},"
+					+ 		"\"playerIndex\":2,\"playedDevCard\":true,\"playerID\":4,"
+					+ 		"\"resources\":{\"brick\":4,\"ore\":2,\"sheep\":5,\"wheat\":0,\"wood\":1},"
+					+ 		"\"roads\":8,\"settlements\":4,\"cities\":1,"
+					+ 		"\"soldiers\":3,\"victoryPoints\":7}],"
+					+ "\"tradeOffer\":{\"sender\":0,\"receiver\":1,\"offer\":{\"brick\":3,\"ore\":-4,\"sheep\":2,\"wheat\":-1,\"wood\":5}},"
+					+ "\"turnTracker\":{\"currentTurn\":2,\"status\":\"ROBBING\",\"longestRoad\":2,\"largestArmy\":3},\"version\":555,\"winner\":3}";
+			System.out.println(expectedJson);
+			System.out.println(actualJson);
 			
-			assert(actualJson.equals(expectedJson));
+			
+			assertTrue(actualJson.equals(expectedJson));
 			
 
 		}

@@ -9,6 +9,7 @@ import models.DevCard;
 import models.Index;
 import models.Player;
 import models.Road;
+import server.User;
 import shared.definitions.CatanColor;
 
 import com.google.gson.Gson;
@@ -36,7 +37,7 @@ public class PlayerJSON
 	{
 		this.color = player.color().toString().toLowerCase();
 		this.discarded = player.hasDiscarded();
-		this.monuments = player.monumentCount();
+		this.monuments = player.monuments();
 		this.name = player.name();
 		this.newDevCards = new DevCardListJSON(player.getNewDevCards());
 		this.oldDevCards = new DevCardListJSON(player.getOldDevCards());
@@ -62,6 +63,8 @@ public class PlayerJSON
 		
 		try 
 		{
+			//player = new Player(CatanColor.valueOf(color.toUpperCase()), this.name, new Index(playerIndex), playerID, resources.getModel(), this.roads, this.settlements, this.cities, this.soldiers, this.victoryPoints, 
+				//	discarded, this.playedDevCard, this.monuments, new User(playerID), boardRoads, boardSettlements, boardCities, oldList);
 			player = new models.Player(CatanColor.valueOf(color.toUpperCase()), discarded, victoryPoints, name, newList, oldList,
 										new Index(playerIndex), playerID, resources.getModel(),this.soldiers, this.victoryPoints,
 										this.settlements, this.cities, this.roads,this.playedDevCard);			
