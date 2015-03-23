@@ -207,7 +207,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		localPlayer.setColorCatan(color);
 		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
-//		//System.out.println("joinGameController RESPONSE: " + response);
+		System.out.println("joinGameController RESPONSE: " + response);
 		
 		// Check for failure...it won't fail if same color is chosen
 		if(response.equals("Success"))

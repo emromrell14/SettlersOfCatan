@@ -54,6 +54,7 @@ public class Game implements IGame
 		mBoard = new Board(randomTiles,randomNumbers,randomPorts);
 		mPlayers = new ArrayList<Player>();
 		mTurnTracker = new TurnTracker();
+		mTurnTracker.setStatus(Status.FIRSTROUND);
 		mBank = new ResourceList();
 		mDevCards = new ArrayList<DevCard>();
 		mRobber = new Robber(mBoard.getDesertLocation());
