@@ -88,6 +88,9 @@ public class Server implements IServer
 		
 		server.createContext("/util/changeLogLevel", new LogHandler(this));
 		
+		server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+		
 		server.start();
 	}
 
