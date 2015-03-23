@@ -1,4 +1,4 @@
-package commands;
+package server.commands;
 
 import shared.definitions.ResourceType;
 import models.IGame;

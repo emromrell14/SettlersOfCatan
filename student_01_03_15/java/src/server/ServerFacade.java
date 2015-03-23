@@ -1,10 +1,10 @@
 package server;
 
-import commands.ICommand;
 import models.Game;
 import models.IGame;
 import models.Index;
 import models.ResourceList;
+import server.commands.ICommand;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;

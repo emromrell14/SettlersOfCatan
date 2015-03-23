@@ -1,4 +1,4 @@
-package commands;
+package server.commands;
 
 import shared.locations.HexLocation;
 import models.IGame;
