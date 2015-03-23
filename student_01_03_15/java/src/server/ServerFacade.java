@@ -60,12 +60,14 @@ public class ServerFacade implements IServerFacade
 	public void executePlayMonopolyCommand(Index playerIndex, ResourceType resource)
 	{
 		MonopolyCommand command = new MonopolyCommand(game, playerIndex, resource);
+		command.execute();
 	}
 
 	@Override
 	public void executePlayMonumentCommand(Index playerIndex) 
 	{
 		MonumentCommand command = new MonumentCommand(game, playerIndex);
+		command.execute();
 	}
 
 	@Override
