@@ -1,15 +1,11 @@
 package server.handlers;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
 import models.Game;
 import server.IServer;
-import server.User;
 import server.JSON.CreateGamesRequest;
-import server.JSON.LoginRequest;
 
 public class CreateGamesHandler  extends Handler
 {

@@ -40,7 +40,7 @@ public interface IServerFacade {
 	 * @param victimIndex
 	 * @param location
 	 */
-	void executeRobPlayerCommand(Index playerIndex, int victimIndex, HexLocation location);
+	void executeRobPlayerCommand(Index playerIndex, Index victimIndex, HexLocation location);
 	
 	/**
 	 * Creates a command object, then executes the command
@@ -108,7 +108,7 @@ public interface IServerFacade {
 	 * @param victimIndex
 	 * @param loc
 	 */
-	void executePlaySoldierCommand(Index playerIndex, int victimIndex, HexLocation loc);
+	void executePlaySoldierCommand(Index playerIndex, Index victimIndex, HexLocation loc);
 
 	/**
 	 * Creates a command object, then executes the command
@@ -144,7 +144,7 @@ public interface IServerFacade {
 	 * @param loc
 	 * @param free
 	 */
-	void executeBuildCityCommand(Index playerIndex, VertexLocation loc, boolean free);
+	void executeBuildCityCommand(Index playerIndex, VertexLocation loc);
 	
 	/**
 	 * Creates a command object, then executes the command

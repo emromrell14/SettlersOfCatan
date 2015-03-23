@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import models.Game;
-import facade.IMasterManager;
 import facade.MasterManager;
 
 /** Poller class

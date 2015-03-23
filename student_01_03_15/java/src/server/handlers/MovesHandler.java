@@ -1,7 +1,5 @@
 package server.handlers;
 
-import JSONmodels.ResourceListJSON;
-import models.IGame;
 import models.Index;
 import server.IServer;
 import server.IServerFacade;
@@ -72,7 +70,7 @@ public class MovesHandler extends Handler
 			break;
 		case "moves/robPlayer":
 			RobPlayerRequest rp = RobPlayerRequest.fromJSON(jsonBody);
-			serverFacade.executeRobPlayerCommand(new Index(rp.getPlayerIndex()), rp.getVictimIndex(), rp.getLocation());
+			serverFacade.executeRobPlayerCommand(new Index(rp.getPlayerIndex()), new Index(rp.getVictimIndex()), rp.getLocation());
 			break;
 		case "moves/finishTurn":
 			FinishTurnRequest f = FinishTurnRequest.fromJSON(jsonBody);
@@ -92,7 +90,7 @@ public class MovesHandler extends Handler
 			break;
 		case "moves/Soldier":
 			SoldierRequest s = SoldierRequest.fromJSON(jsonBody);
-			serverFacade.executePlaySoldierCommand(new Index(s.getPlayerIndex()), s.getVictimIndex(), s.getLocation());
+			serverFacade.executePlaySoldierCommand(new Index(s.getPlayerIndex()), new Index(s.getVictimIndex()), s.getLocation());
 			break;
 		case "moves/Monopoly":
 			MonopolyRequest m = MonopolyRequest.fromJSON(jsonBody);
@@ -103,32 +101,32 @@ public class MovesHandler extends Handler
 			serverFacade.executePlayMonumentCommand(new Index(mr.getPlayerIndex()));
 			break;
 		case "moves/buildRoad":
-			BuildRoadRequest brr = new BuildRoadRequest().fromJSON(jsonBody);
+			BuildRoadRequest brr = BuildRoadRequest.fromJSON(jsonBody);
 			serverFacade.executeBuildRoadCommand(new Index(brr.getPlayerIndex()), brr.getRoadLocation().getModelEdgeLocation(), brr.isFree());
 			break;
 		case "moves/buildSettlement":
-			BuildSettlementRequest bsr = new BuildSettlementRequest().fromJSON(jsonBody);
+			BuildSettlementRequest bsr = BuildSettlementRequest.fromJSON(jsonBody);
 			serverFacade.executeBuildSettlementCommand(new Index(bsr.getPlayerIndex()), bsr.getVertexLocation().getModelVertexLocation(), bsr.isFree());
 			break;
 		case "moves/buildCity":
-			BuildCityRequest bcr = new BuildCityRequest().fromJSON(jsonBody);
-			serverFacade.executeBuildCityCommand(new Index(bcr.getPlayerIndex()), bcr.getVertexLocation().getModelVertexLocation(), false);
+			BuildCityRequest bcr = BuildCityRequest.fromJSON(jsonBody);
+			serverFacade.executeBuildCityCommand(new Index(bcr.getPlayerIndex()), bcr.getVertexLocation().getModelVertexLocation());
 			break;
 		case "moves/offerTrade":
-			OfferTradeRequest otr = new OfferTradeRequest().fromJSON(jsonBody);
+			OfferTradeRequest otr = OfferTradeRequest.fromJSON(jsonBody);
 			serverFacade.executeOfferTradeCommand(new Index(otr.getPlayerIndex()), new Index(otr.getReceiver()), otr.getOffer().getModelResourceList());
 			break;
 		case "moves/acceptTrade":
-			AcceptTradeRequest atr = new AcceptTradeRequest().fromJSON(jsonBody);
+			AcceptTradeRequest atr = AcceptTradeRequest.fromJSON(jsonBody);
 			serverFacade.executeAcceptTradeCommand(new Index(atr.getPlayerIndex()), atr.isWillAccept());
 			break;
 		case "moves/maritimeTrade":
-			MaritimeTradeRequest mtr = new MaritimeTradeRequest().fromJSON(jsonBody);
+			MaritimeTradeRequest mtr = MaritimeTradeRequest.fromJSON(jsonBody);
 			serverFacade.executeMaritimeTradeCommand(new Index(mtr.getPlayerIndex()), mtr.getRatio(), 
 					ResourceType.valueOf(mtr.getInputResource()), ResourceType.valueOf(mtr.getOutputResource()));
 			break;
 		case "moves/discardCards":
-			DiscardRequest dr = new DiscardRequest().fromJSON(jsonBody);
+			DiscardRequest dr = DiscardRequest.fromJSON(jsonBody);
 			serverFacade.executeDiscardCommand(new Index(dr.getPlayerIndex()), dr.getDiscardedCards().getModelResourceList());
 			break;
 		default:

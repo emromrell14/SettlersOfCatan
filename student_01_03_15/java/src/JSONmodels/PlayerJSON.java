@@ -9,7 +9,6 @@ import models.DevCard;
 import models.Index;
 import models.Player;
 import models.Road;
-import server.User;
 import shared.definitions.CatanColor;
 
 import com.google.gson.Gson;

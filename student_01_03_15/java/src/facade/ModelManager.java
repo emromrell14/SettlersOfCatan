@@ -12,7 +12,6 @@ import models.Game;
 import models.Index;
 import models.Message;
 import models.Player;
-import models.ResourceList;
 import models.Status;
 
 public class ModelManager extends Observable

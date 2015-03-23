@@ -1,7 +1,5 @@
 package server.handlers;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -9,9 +7,7 @@ import models.Game;
 import models.Index;
 import models.Player;
 import server.IServer;
-import server.User;
 import server.JSON.JoinGamesRequest;
-import server.JSON.RegisterRequest;
 import shared.definitions.CatanColor;
 
 public class JoinGamesHandler  extends Handler
