@@ -264,18 +264,6 @@ public class ModelManager extends Observable
 	
 	public boolean canBuyDevCard(Index playerIndex)
 	{
-		/*
-		Player p = mGameModel.getPlayer(playerIndex);
-		if (
-				!mGameModel.players().contains(p) || // Checks that this player is in this game
-				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
-				!mGameModel.turnTracker().status().equals(Status.PLAYING) || // Checks that the dice has been rolled
-				mGameModel.devCards().isEmpty() // Checks that there are still Dev Cards to buy
-		)
-		{
-			return false;
-		}
-		*/
 		return mGameModel.canBuyDevCard(playerIndex);
 	}
 
@@ -314,17 +302,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canOfferTrade(Index playerIndex) 
 	{
-		/*
-		Player p = mGameModel.getPlayer(playerIndex);
-		if (
-				!mGameModel.players().contains(p) || // Checks that this player is in this game
-				!mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it is this player's turn
-				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
-		)
-		{
-			return false;
-		}
-		*/
 		return mGameModel.canOfferTrade(playerIndex, null);
 	}
 
@@ -342,18 +319,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canAcceptTrade(Index playerIndex) 
 	{
-		/*
-		Player p = mGameModel.getPlayer(playerIndex);
-		if (
-				!mGameModel.players().contains(p) || // Checks that this player is in this game
-				mGameModel.turnTracker().currentTurn().equals(p.playerIndex()) || // Checks that it isn't this player's turn
-				!mGameModel.turnTracker().status().equals(Status.PLAYING) // Checks that the dice has been rolled
-		)
-		{
-			return false;
-		}
-		return p.canAcceptTrade(mGameModel.trade());
-		*/
 		return this.mGameModel.canAcceptTrade(playerIndex);
 	}
 
@@ -367,15 +332,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canMaritimeTrade(Index playerIndex) 
 	{
-		/*
-		Player player = mGameModel.getPlayer(playerIndex);
-		if (mGameModel.turnTracker().isPlayersTurn(player.playerIndex()) &&
-				mGameModel.turnTracker().status() == Status.PLAYING) 
-		{
-			return player.canMaritimeTrade(mGameModel.board().ports());
-		}
-		return false;
-		*/
 		return this.mGameModel.canMaritimeTrade(playerIndex, 0, null, null);
 	}
 
@@ -390,10 +346,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canRollDice(Index playerIndex) 
 	{
-		/*
-		return mGameModel.turnTracker().canRollDice(playerIndex)
-				&& mGameModel.turnTracker().status().equals(Status.ROLLING);
-				*/
 		return this.mGameModel.canRollDice(playerIndex, 0);
 	}
 
@@ -406,10 +358,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canDiscard(Index playerIndex) 
 	{
-		/*
-		return this.mGameModel.getPlayer(playerIndex).canDiscard()
-				&& mGameModel.turnTracker().status().equals(Status.DISCARDING);
-				*/
 		return this.mGameModel.canDiscardCards(playerIndex, null);
 	}
 
@@ -420,10 +368,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canFinishTurn(Index playerIndex) 
 	{
-		/*
-		 return this.mGameModel.turnTracker().status() == Status.PLAYING
-				&& mGameModel.turnTracker().isPlayersTurn(playerIndex);
-				*/
 		return this.mGameModel.canFinishTurn(playerIndex);
 	}
 
@@ -434,14 +378,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayYearOfPlenty(Index playerIndex) 
 	{
-		/*
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
-				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
-		{
-			return this.mGameModel.getPlayer(playerIndex).canPlayYearOfPlenty();
-		}
-		return false;
-		*/
 		return this.mGameModel.canPlayYearOfPlenty(playerIndex, null, null);
 	}
 
@@ -452,14 +388,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayRoadBuilder(Index playerIndex) 
 	{
-		/*
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
-				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
-		{
-			return this.mGameModel.getPlayer(playerIndex).canPlayRoadBuilder();
-		}
-		return false;
-		*/
 		return this.mGameModel.canPlayRoadBuilding(playerIndex, null, null);
 	}
 
@@ -470,14 +398,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlaySoldier(Index playerIndex) 
 	{
-		/*
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
-				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
-		{
-			return this.mGameModel.getPlayer(playerIndex).canPlaySoldier();
-		}
-		return false;
-		*/
 		return this.mGameModel.canPlaySoldier(playerIndex);
 	}
 
@@ -488,14 +408,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayMonopoly(Index playerIndex) 
 	{
-		/*
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
-				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
-		{
-			return this.mGameModel.getPlayer(playerIndex).canPlayMonopoly();
-		}
-		return false;
-		*/
 		return this.mGameModel.canPlayMonopoly(playerIndex);
 	}
 
@@ -506,14 +418,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlayMonument(Index playerIndex) 
 	{
-		/*
-		if(mGameModel.turnTracker().isPlayersTurn(playerIndex)
-				&& mGameModel.turnTracker().status().equals(Status.PLAYING))
-		{
-			return this.mGameModel.getPlayer(playerIndex).canPlayMonument();
-		}
-		return false;
-		*/
 		return this.mGameModel.canPlayMonument(playerIndex);
 	}
 
@@ -527,21 +431,6 @@ public class ModelManager extends Observable
 	 */
 	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
-		/*
-		if(mGameModel.turnTracker().status().equals(Status.ROBBING))
-		{
-			HexLocation currentRobberLocation = mGameModel.robber().location();
-			return!(currentRobberLocation.getX() == newRobberLocation.getX() 
-					&& currentRobberLocation.getY() == newRobberLocation.getY())
-					&& newRobberLocation.getX() < 3 && newRobberLocation.getX() > -3
-					&& newRobberLocation.getY() < 3 && newRobberLocation.getY() > -3
-			 		&& !(newRobberLocation.getX() == 1 && newRobberLocation.getY() == 2)
-			 		&& !(newRobberLocation.getX() == -1 && newRobberLocation.getY() == -2)
-			 		&& !(newRobberLocation.getX() == 2 && newRobberLocation.getY() == 1)
-			 		&& !(newRobberLocation.getX() == -2 && newRobberLocation.getY() == -1);
-		}
-		return false;
-		*/
 		return this.mGameModel.canRobPlayer(null, null, newRobberLocation);
 	}
 
