@@ -71,6 +71,14 @@ public class Game implements IGame
 		{
 			mDevCards.add(new Soldier());
 		}
+		try 
+		{
+			mCurrentTrade = new Trade(new Index(-1),new Index(-1),new ResourceList());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
 	//GETTERS AND SETTERS

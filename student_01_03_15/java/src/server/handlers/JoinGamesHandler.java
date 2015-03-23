@@ -61,27 +61,40 @@ public class JoinGamesHandler  extends Handler
 				{
 					break;
 				}
-				
+				boolean inGame = false;
 				// Check color isn't already taken by a different player
 				for(Player p : game.players())
 				{
-					System.out.println(p.color().name() + " " + color);
-					if(p.color().name().equals(color))
+//					System.out.println(p.color().name() + " " + color);
+					if(p.color().name().equals(color) && !p.name().equals(playerName))
 					{
-						// Check names if rejoin
-						if(p.name().equals(playerName))
-						{
-							game.setPlayersColor(playerName, color);
-							resp = setCookie(game, resp);
-							return resp;
-						}
-						else
-						{
-							return new Response(400,"The player could not be added to the specified game - color taken.");
-						}
+						return new Response(400,"The player could not be added to the specified game - color taken.");
+//						// Check names if rejoin
+//						if(p.name().equals(playerName))
+//						{
+//							game.setPlayersColor(playerName, color);
+//							resp = setCookie(game, resp);
+//							return resp;
+//						}
+//						else
+//						{
+//							return new Response(400,"The player could not be added to the specified game - color taken.");
+//						}
 						 
 					}
+					if(p.name().equals(playerName))
+					{
+						inGame = true;
+					}
 				}
+				
+				if(inGame)
+				{
+					game.setPlayersColor(playerName, color);
+					resp = setCookie(game, resp);
+					return resp;
+				}
+				
 				// If this point is reached, color was not taken and player is joining for first time
 				try 
 				{

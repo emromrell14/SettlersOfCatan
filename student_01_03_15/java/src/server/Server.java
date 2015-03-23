@@ -118,7 +118,7 @@ public class Server implements IServer
 	@Override
 	public synchronized void createGame(String name, int id, boolean randomTiles, boolean randomNumbers, boolean randomPorts) 
 	{
-		Game g = new Game();
+		Game g = new Game(randomTiles,randomNumbers,randomPorts);
 		g.setName(name);
 		g.setId(id);
 		g.setVersion(0);

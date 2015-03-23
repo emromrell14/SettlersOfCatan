@@ -30,7 +30,7 @@ public class ModelHandler  extends Handler
 		}
 		
 		int version = parseVersion(req.getRequestURI());
-		server.getGameModelJSON(version,gameID);
+		res.setBody(server.getGameModelJSON(version,gameID));
 		
 		res.setStatusCode(200);
 		return res;
