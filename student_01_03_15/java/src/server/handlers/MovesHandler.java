@@ -60,72 +60,72 @@ public class MovesHandler extends Handler
 	{
 		switch(url)
 		{
-		case "moves/rollNumber":
+		case "/moves/rollNumber":
 			RollNumberRequest rn = RollNumberRequest.fromJSON(jsonBody);
 			serverFacade.executeRollDiceCommand(new Index(rn.getPlayerIndex()), rn.getNumber());
 			break;
-		case "moves/sendChat":
+		case "/moves/sendChat":
 			SendChatRequest sc = SendChatRequest.fromJSON(jsonBody);
 			serverFacade.executeSendChatMessageCommand(new Index(sc.getPlayerIndex()), sc.getContent());
 			break;
-		case "moves/robPlayer":
+		case "/moves/robPlayer":
 			RobPlayerRequest rp = RobPlayerRequest.fromJSON(jsonBody);
 			serverFacade.executeRobPlayerCommand(new Index(rp.getPlayerIndex()), new Index(rp.getVictimIndex()), rp.getLocation());
 			break;
-		case "moves/finishTurn":
+		case "/moves/finishTurn":
 			FinishTurnRequest f = FinishTurnRequest.fromJSON(jsonBody);
 			serverFacade.executeFinishTurnCommand(new Index(f.getPlayerIndex()));
 			break;
-		case "moves/buyDevCard":
+		case "/moves/buyDevCard":
 			BuyDevCardRequest b = BuyDevCardRequest.fromJSON(jsonBody);
 			serverFacade.executeBuyDevCardCommand(new Index(b.getPlayerIndex()));
 			break;
-		case "moves/Year_of_Plenty":
+		case "/moves/Year_of_Plenty":
 			YearOfPlentyRequest y = YearOfPlentyRequest.fromJSON(jsonBody);
 			serverFacade.executePlayYearOfPlentyCommand(new Index(y.getPlayerIndex()), ResourceType.valueOf(y.getResource1().toUpperCase()), ResourceType.valueOf(y.getResource1().toUpperCase()));
 			break;
-		case "moves/Road_Building":
+		case "/moves/Road_Building":
 			RoadBuildingRequest rb = RoadBuildingRequest.fromJSON(jsonBody);
 			serverFacade.executePlayRoadBuildingCommand(new Index(rb.getPlayerIndex()), rb.getSpot1(), rb.getSpot2());
 			break;
-		case "moves/Soldier":
+		case "/moves/Soldier":
 			SoldierRequest s = SoldierRequest.fromJSON(jsonBody);
 			serverFacade.executePlaySoldierCommand(new Index(s.getPlayerIndex()), new Index(s.getVictimIndex()), s.getLocation());
 			break;
-		case "moves/Monopoly":
+		case "/moves/Monopoly":
 			MonopolyRequest m = MonopolyRequest.fromJSON(jsonBody);
 			serverFacade.executePlayMonopolyCommand(new Index(m.getPlayerIndex()), ResourceType.valueOf(m.getResource()));
 			break;
-		case "moves/Monument":
+		case "/moves/Monument":
 			MonumentRequest mr = MonumentRequest.fromJSON(jsonBody);
 			serverFacade.executePlayMonumentCommand(new Index(mr.getPlayerIndex()));
 			break;
-		case "moves/buildRoad":
+		case "/moves/buildRoad":
 			BuildRoadRequest brr = BuildRoadRequest.fromJSON(jsonBody);
 			serverFacade.executeBuildRoadCommand(new Index(brr.getPlayerIndex()), brr.getRoadLocation().getModelEdgeLocation(), brr.isFree());
 			break;
-		case "moves/buildSettlement":
+		case "/moves/buildSettlement":
 			BuildSettlementRequest bsr = BuildSettlementRequest.fromJSON(jsonBody);
 			serverFacade.executeBuildSettlementCommand(new Index(bsr.getPlayerIndex()), bsr.getVertexLocation().getModelVertexLocation(), bsr.isFree());
 			break;
-		case "moves/buildCity":
+		case "/moves/buildCity":
 			BuildCityRequest bcr = BuildCityRequest.fromJSON(jsonBody);
 			serverFacade.executeBuildCityCommand(new Index(bcr.getPlayerIndex()), bcr.getVertexLocation().getModelVertexLocation());
 			break;
-		case "moves/offerTrade":
+		case "/moves/offerTrade":
 			OfferTradeRequest otr = OfferTradeRequest.fromJSON(jsonBody);
 			serverFacade.executeOfferTradeCommand(new Index(otr.getPlayerIndex()), new Index(otr.getReceiver()), otr.getOffer().getModelResourceList());
 			break;
-		case "moves/acceptTrade":
+		case "/moves/acceptTrade":
 			AcceptTradeRequest atr = AcceptTradeRequest.fromJSON(jsonBody);
 			serverFacade.executeAcceptTradeCommand(new Index(atr.getPlayerIndex()), atr.isWillAccept());
 			break;
-		case "moves/maritimeTrade":
+		case "/moves/maritimeTrade":
 			MaritimeTradeRequest mtr = MaritimeTradeRequest.fromJSON(jsonBody);
 			serverFacade.executeMaritimeTradeCommand(new Index(mtr.getPlayerIndex()), mtr.getRatio(), 
-					ResourceType.valueOf(mtr.getInputResource()), ResourceType.valueOf(mtr.getOutputResource()));
+			ResourceType.valueOf(mtr.getInputResource()), ResourceType.valueOf(mtr.getOutputResource()));
 			break;
-		case "moves/discardCards":
+		case "/moves/discardCards":
 			DiscardRequest dr = DiscardRequest.fromJSON(jsonBody);
 			serverFacade.executeDiscardCommand(new Index(dr.getPlayerIndex()), dr.getDiscardedCards().getModelResourceList());
 			break;
