@@ -1050,7 +1050,7 @@ public class Game implements IGame
 			// must have requested resources
 			for (ResourceType r : ResourceType.values())
 			{
-				if (player.resources().getResource(r) < this.trade().offer().getResource(r))
+				if (player.resources().getResource(r) < (-1) * this.trade().offer().getResource(r))
 				{
 					return false;
 				}
