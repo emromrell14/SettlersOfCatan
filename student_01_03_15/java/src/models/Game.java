@@ -665,16 +665,22 @@ public class Game implements IGame
 		Player player = this.getPlayer(playerIndex);
 		if (spot1 != null && spot2 != null)
 		{
-			//Check if spot1 and spot2 are connected to your roads
-			if (!player.canPlaceRoad(spot1) || !player.canPlaceRoad(spot2))
+			//Check if spot1 is connected to your roads
+			if (!player.canPlaceRoad(spot1))
 			{
 				return false;
 			}
-			//Check if either of the roads are in the water
-			if (spot1.isInSea() || spot2.isInSea())
+			
+			//Temporarily add spot1
+			Road tempRoad = new Road(playerIndex, spot1);
+			player.addRoad(tempRoad);
+			if(!player.canPlaceRoad(spot2))
 			{
+				player.removeRoad(tempRoad);
 				return false;
 			}
+			//Remove temporary road
+			player.removeRoad(tempRoad);
 		}
 		// Check if player can play it
 		if (!player.canPlayRoadBuilder())
@@ -808,6 +814,7 @@ public class Game implements IGame
 			throw new IllegalStateException("Failed pre-conditions");
 		}
 		
+		this.getPlayer(playerIndex).removeDevCard(DevCardType.MONUMENT);
 		this.getPlayer(playerIndex).addVictoryPoint(1);
 	}
 

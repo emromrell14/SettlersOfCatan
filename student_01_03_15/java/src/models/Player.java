@@ -184,6 +184,11 @@ public class Player //implements IPlayer
 		mRoads.add(r);
 	}
 	
+
+	public void removeRoad(Road tempRoad) {
+		mRoads.remove(tempRoad);
+	}
+	
 	/**
 	 * Adds a city to the players list of cities
 	 * Pre: player is not null, player has joined a game
@@ -1080,6 +1085,8 @@ public class Player //implements IPlayer
 			if (d.type() == devCardType && !d.hasBeenPlayed() && !d.isNew())
 			{
 				d.setPlayed();
+				this.mDevCards.remove(d);
+				return;
 			}
 		}
 	}
