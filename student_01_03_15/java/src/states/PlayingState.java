@@ -125,7 +125,7 @@ public class PlayingState implements IState
 
 	@Override
 	public boolean canPlaceRobber(HexLocation newRobberLocation) {
-		// TODO Auto-generated method stub
+		System.out.println("trying to place robber in Playing State");
 		return false;
 	}
 

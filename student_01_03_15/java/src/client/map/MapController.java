@@ -39,6 +39,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private EdgeLocation road1 = null;
 	private EdgeLocation road2 = null;
 	public static boolean hasPlacedRobber = false;
+
 	
 	public MapController(IMapView view, IRobView robView) 
 	{
@@ -361,6 +362,7 @@ public class MapController extends Controller implements IMapController, Observe
 					}
 					break;
 				case PLAYING:
+					
 					state = new PlayingState();
 					break;
 				case DISCARDING:
@@ -377,6 +379,12 @@ public class MapController extends Controller implements IMapController, Observe
 					break;
 				default:
 					////System.out.println("MapController update() should never get here.");
+			}
+			
+			if (soldierRob)
+			{
+				master.getCurrentModel().turnTracker().setStatus(Status.ROBBING);
+				state = new RobbingState();
 			}
 			
 			// THIS IS FOR ROUNDS 1 AND 2------------------

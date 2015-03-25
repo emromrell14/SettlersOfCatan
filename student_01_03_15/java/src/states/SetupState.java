@@ -122,6 +122,8 @@ public class SetupState implements IState
 	@Override
 	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
+		System.out.println("trying to place robber in Setup State");
+
 		return false;
 	}
 
