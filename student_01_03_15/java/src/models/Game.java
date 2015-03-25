@@ -665,16 +665,22 @@ public class Game implements IGame
 		Player player = this.getPlayer(playerIndex);
 		if (spot1 != null && spot2 != null)
 		{
-			//Check if spot1 and spot2 are connected to your roads
-			if (!player.canPlaceRoad(spot1) || !player.canPlaceRoad(spot2))
+			//Check if spot1 is connected to your roads
+			if (!player.canPlaceRoad(spot1))
 			{
 				return false;
 			}
-			//Check if either of the roads are in the water
-			if (spot1.isInSea() || spot2.isInSea())
+			
+			//Temporarily add spot1
+			Road tempRoad = new Road(playerIndex, spot1);
+			player.addRoad(tempRoad);
+			if(!player.canPlaceRoad(spot2))
 			{
+				player.removeRoad(tempRoad);
 				return false;
 			}
+			//Remove temporary road
+			player.removeRoad(tempRoad);
 		}
 		// Check if player can play it
 		if (!player.canPlayRoadBuilder())
@@ -1067,7 +1073,7 @@ public class Game implements IGame
 			// must have requested resources
 			for (ResourceType r : ResourceType.values())
 			{
-				if (player.resources().getResource(r) < this.trade().offer().getResource(r))
+				if (player.resources().getResource(r) < (-1) * this.trade().offer().getResource(r))
 				{
 					return false;
 				}
@@ -1083,13 +1089,15 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
-		
-		Player acceptingPlayer = this.getPlayer(playerIndex);
-		Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
-		ResourceList offer = this.mCurrentTrade.offer();
-		acceptingPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
-		offeringPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
-		
+		if(willAccept)
+		{
+			Player acceptingPlayer = this.getPlayer(playerIndex);
+			Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
+			ResourceList offer = this.mCurrentTrade.offer();
+			// I am giving 6 wood for 1 brick means offer(6 wood, -1 brick)
+			offeringPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
+			acceptingPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
+		}
 		this.mCurrentTrade = null;
 	}
 

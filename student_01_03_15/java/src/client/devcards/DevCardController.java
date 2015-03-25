@@ -264,10 +264,10 @@ public class DevCardController extends Controller implements IDevCardController,
 			getPlayCardView().setCardAmount(DevCardType.MONUMENT, monument);
 			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, roadBuilding);
 			
-			if(p.hasPlayedDevCard())
-			{
-				this.disableAllDevCardButtons();
-			}
+//			if(p.hasPlayedDevCard())
+//			{
+//				this.disableAllDevCardButtons();
+//			}
 		}
 	}
 
