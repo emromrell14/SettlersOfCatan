@@ -58,6 +58,7 @@ public class MovesHandler extends Handler
 	
 	public void parseBody(String url, String jsonBody) throws Exception
 	{
+		server.addCommand(jsonBody);
 		switch(url)
 		{
 		case "/moves/rollNumber":
