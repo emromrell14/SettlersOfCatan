@@ -55,12 +55,6 @@ public class JoinGamesHandler  extends Handler
 			if(id == (int)pair.getKey())
 			{
 				Game game = (Game)pair.getValue();
-				
-				// Check game doesn't already have 4 players
-				if(game.players().size() >= MAX_PLAYERS)
-				{
-					break;
-				}
 				boolean inGame = false;
 				// Check color isn't already taken by a different player
 				for(Player p : game.players())
@@ -90,9 +84,16 @@ public class JoinGamesHandler  extends Handler
 				
 				if(inGame)
 				{
+					server.updateVersion(gameID);
 					game.setPlayersColor(playerName, color);
 					resp = setCookie(game, resp);
 					return resp;
+				}
+				
+				// Check game doesn't already have 4 players
+				if(game.players().size() >= MAX_PLAYERS)
+				{
+					break;
 				}
 				
 				// If this point is reached, color was not taken and player is joining for first time

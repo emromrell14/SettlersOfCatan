@@ -88,7 +88,7 @@ public class TurnTracker implements ITurnTracker
 		{
 			if(mCurrentTurn.value() == 3)
 			{
-				mCurrentTurn.setIndex(2);
+//				mCurrentTurn.setIndex(3);
 				mStatus = Status.SECONDROUND;
 			}
 			else

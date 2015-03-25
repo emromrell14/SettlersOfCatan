@@ -5,6 +5,7 @@ import java.util.List;
 
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -393,19 +394,23 @@ public class Game implements IGame
 		}
 		// if ratio, inputResource, and outputResource are all null don't even check the bank.  
 		// This is being called from the client to check if the button should be enabled				
-		if (number != 0)
-		{
-			ResourceList rl = this.getAllResourcesToBeGiven(number);
-			
-			// check if the bank has enough to give everyone their resources
-			for (ResourceType r : ResourceType.values())
-			{
-				if (this.mBank.getResource(r) < rl.getResource(r))
-				{
-					return false;
-				}
-			}
-		}
+		
+		
+		// I don't think that not having resouces in the bank should prevent a player from rolling
+		
+//		if (number != 0)
+//		{
+//			ResourceList rl = this.getAllResourcesToBeGiven(number);
+//			
+//			// check if the bank has enough to give everyone their resources
+//			for (ResourceType r : ResourceType.values())
+//			{
+//				if (this.mBank.getResource(r) < rl.getResource(r))
+//				{
+//					return false;
+//				}
+//			}
+//		}
 		return true;
 	}
 	@Override
@@ -425,16 +430,29 @@ public class Game implements IGame
 				giveResourcesToPlayers(h);
 			}
 		}
-		
+
+		this.mTurnTracker.setStatus(Status.PLAYING);
 		// Change Turn Tracker status
 		if (number == 7)
 		{
-			this.mTurnTracker.setStatus(Status.DISCARDING);
+			this.mTurnTracker.setStatus(Status.ROBBING);
+			for(Player p : mPlayers)
+			{
+				p.setHasDiscarded(false);
+				if(p.getHand().size() > 7)
+				{
+					this.mTurnTracker.setStatus(Status.DISCARDING);
+				}
+				else
+				{
+					p.setHasDiscarded(true);
+				}
+			}
 		}
-		else
-		{
-			this.mTurnTracker.setStatus(Status.PLAYING);
-		}
+//		else
+//		{
+//			this.mTurnTracker.setStatus(Status.PLAYING);
+//		}
 	}
 
 	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
@@ -491,7 +509,7 @@ public class Game implements IGame
 		{
 			return false;
 		}
-		if (!this.mTurnTracker.status().equals(Status.PLAYING))
+		if (!this.mTurnTracker.status().equals(Status.PLAYING) && !this.mTurnTracker.status().equals(Status.FIRSTROUND) && !this.mTurnTracker.status().equals(Status.SECONDROUND))
 		{
 			return false;
 		}
@@ -507,11 +525,18 @@ public class Game implements IGame
 		
 		Player player = this.getPlayer(playerIndex);
 		
+		
+		if(this.mTurnTracker.status() == Status.SECONDROUND && playerIndex.value() == 0)
+		{
+			this.giveResourcesToPlayersAfterSetup();
+		}
+		
 		// cycle turntracker
 		this.mTurnTracker.endTurn();
 		
 		// change status to rolling
-		this.mTurnTracker.setStatus(Status.ROLLING);
+		//ignore the previous comment because that was stupid
+//		this.mTurnTracker.setStatus(Status.ROLLING);
 
 		// set new dev cards to be old		
 		for (DevCard d : player.devCards())
@@ -802,7 +827,7 @@ public class Game implements IGame
 						{
 							return false;
 						}
-						if (!player.canPlaceRoad(roadLocation))
+						if (!player.canPlaceRoad(roadLocation) && !free)
 						{
 							return false;
 						}
@@ -830,9 +855,12 @@ public class Game implements IGame
 		
 		// resources are decremented and added to bank
 		Player player = this.getPlayer(playerIndex);
-		player.addResourcesToList(-1, 0, 0, 0, -1);
-		this.mBank.addBrick(1);
-		this.mBank.addWood(1);
+		if(!free)
+		{
+			player.addResourcesToList(-1, 0, 0, 0, -1);
+			this.mBank.addBrick(1);
+			this.mBank.addWood(1);
+		}
 		
 		// decrement number of roads player can build
 		player.addToRoadCount(-1);
@@ -864,7 +892,7 @@ public class Game implements IGame
 				{
 					return false;
 				}
-				if (!player.canPlaceSettlement(vertexLocation))
+				if (!player.canPlaceSettlement(vertexLocation) && !free)
 				{
 					return false;
 				}
@@ -874,7 +902,7 @@ public class Game implements IGame
 		}
 		
 		// Check if player can play it
-		if (!this.board().canPlaceSettlement(vertexLocation) || !player.canAffordSettlement() || !player.canPlaceSettlement(vertexLocation))
+		if (!this.board().canPlaceSettlement(vertexLocation) || !player.canAffordSettlement()|| !player.canPlaceSettlement(vertexLocation))
 		{
 			return false;
 		}
@@ -890,11 +918,14 @@ public class Game implements IGame
 		
 		// resources are decremented and added to bank
 		Player player = this.getPlayer(playerIndex);
-		player.addResourcesToList(-1, 0, -1, -1, -1);
-		this.mBank.addBrick(1);
-		this.mBank.addWood(1);
-		this.mBank.addSheep(1);
-		this.mBank.addWheat(1);
+		if(!free)
+		{
+			player.addResourcesToList(-1, 0, -1, -1, -1);
+			this.mBank.addBrick(1);
+			this.mBank.addWood(1);
+			this.mBank.addSheep(1);
+			this.mBank.addWheat(1);
+		}
 
 		// decrement number of settlements player can build
 		player.addToSettlementCount(-1);
@@ -1129,6 +1160,16 @@ public class Game implements IGame
 		{
 			player.resources().addResource(r, -discardedCards.getResource(r));
 		}
+		player.setHasDiscarded(true);
+		
+		for(Player p : mPlayers)
+		{
+			if(!p.hasDiscarded())
+			{
+				return;
+			}
+		}
+		mTurnTracker.setStatus(Status.ROBBING);
 	}
 	//END API FUNCTIONS
 	
@@ -1146,6 +1187,43 @@ public class Game implements IGame
 			}
 		}
 		mTurnTracker.endTurn();
+	}
+
+	private void giveResourcesToPlayersAfterSetup() {
+		for (Player p : mPlayers)
+		{
+			Building b = p.settlements().get(1);
+			for (Hex h : mBoard.hexes())
+			{
+				// give one resource for each settlement on this hex
+				if (b.isOnHex(h) && h.resource() != HexType.DESERT)
+				{
+					p.resources().addResource(h.resource().resourceType(), 1);
+					switch(h.resource())
+					{
+					case BRICK:
+						mBank.addBrick(-1);
+						break;
+					case ORE:
+						mBank.addOre(-1);
+						break;
+					case WHEAT:
+						mBank.addWheat(-1);
+						break;
+					case SHEEP:
+						mBank.addSheep(-1);
+						break;
+					case WOOD:
+						mBank.addWood(-1);
+						break;
+					case DESERT:
+						break;
+					default:
+						System.out.println("Game.giveResourcesToPlayersAfterSetup() should never get here");
+					}
+				}
+			}
+		}
 	}
 
 	private void giveResourcesToPlayers(Hex h) {
@@ -1262,6 +1340,15 @@ public class Game implements IGame
 	{
 		Player contendingPlayer = this.getPlayer(playerIndex);
 		Player longestRoadPlayer = this.getPlayer(this.getLongestRoadIndex());
+		if(longestRoadPlayer == null)
+		{
+			if(contendingPlayer.roads().size() > 4)
+			{
+				contendingPlayer.addVictoryPoint(2);
+				this.mTurnTracker.setLongestRoad(playerIndex);
+			}
+			return;
+		}
 		if (contendingPlayer.roads().size() > longestRoadPlayer.roads().size())
 		{
 			this.mTurnTracker.setLongestRoad(playerIndex);
