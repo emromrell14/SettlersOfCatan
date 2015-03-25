@@ -16,6 +16,7 @@ public class MaritimeTradeCommand implements ICommand
 	{
 		this.game = game;
 		this.playerIndex = playerIndex;
+		this.ratio = ratio;
 		this.inputResource = inputResource;
 		this.outputResource = outputResource;
 	}
