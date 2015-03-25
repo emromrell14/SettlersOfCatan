@@ -20,6 +20,9 @@ public class MonopolyCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " played a monopoly";
+		this.game.addActionToLog(playerIndex, message);
 		game.playMonopoly(playerIndex, resource);
 	}
 }

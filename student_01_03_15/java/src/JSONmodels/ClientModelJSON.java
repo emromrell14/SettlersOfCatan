@@ -32,8 +32,10 @@ public class ClientModelJSON
 		{
 			this.players[i] = new PlayerJSON(game.players().get(i));
 		}
-		
-		this.tradeOffer = new TradeOfferJSON(game.trade());
+		if(game.trade() != null)
+		{
+			this.tradeOffer = new TradeOfferJSON(game.trade());
+		}
 		this.turnTracker = new TurnTrackerJSON(game.turnTracker());
 		this.version = game.version();
 		this.winner = game.winner().value();

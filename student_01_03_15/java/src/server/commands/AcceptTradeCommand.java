@@ -19,6 +19,10 @@ public class AcceptTradeCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String accepted = (willAccept)? "accepted the trade":"refused the trade";
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " " + accepted;
+		this.game.addActionToLog(playerIndex, message);
 		game.acceptTrade(playerIndex, willAccept);
 	}
 }

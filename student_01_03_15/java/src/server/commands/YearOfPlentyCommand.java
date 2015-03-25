@@ -22,6 +22,9 @@ public class YearOfPlentyCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " played a year of plenty";
+		this.game.addActionToLog(playerIndex, message);
 		game.playYearOfPlenty(playerIndex, resource1, resource2);
 	}
 }

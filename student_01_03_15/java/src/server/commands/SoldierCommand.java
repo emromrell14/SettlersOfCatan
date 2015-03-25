@@ -22,6 +22,9 @@ public class SoldierCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " played a soldier";
+		this.game.addActionToLog(playerIndex, message);
 		game.playSoldier(playerIndex, victimIndex, hexLocation);
 	}
 }

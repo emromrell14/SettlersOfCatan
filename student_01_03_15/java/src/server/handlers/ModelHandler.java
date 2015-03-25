@@ -22,6 +22,11 @@ public class ModelHandler  extends Handler
 		Response res = new Response();
 		int gameID = req.getCookie().getGameID();
 		
+//		if(req.getCookie().getPlayerName().equals("aaa"))
+//		{
+//			System.out.println("here");
+//		}
+		
 		if(gameID == -1)
 		{
 			res.setBody("Failed - there is no game cookie");

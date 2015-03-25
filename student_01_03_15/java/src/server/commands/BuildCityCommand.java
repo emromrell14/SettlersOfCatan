@@ -20,6 +20,9 @@ public class BuildCityCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " built a city";
+		this.game.addActionToLog(playerIndex, message);
 		game.buildCity(playerIndex, vertexLocation);
 	}
 }

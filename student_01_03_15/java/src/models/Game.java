@@ -62,6 +62,12 @@ public class Game implements IGame
 		this.mChat = new ArrayList<Message>();
 		this.mLog = new ArrayList<Message>();
 
+		this.mBank.addBrick(19);
+		this.mBank.addWood(19);
+		this.mBank.addWheat(19);
+		this.mBank.addOre(19);
+		this.mBank.addSheep(19);
+		
 		for(int i=0; i<2; i++)
 		{
 			mDevCards.add(new Monopoly());
@@ -362,6 +368,18 @@ public class Game implements IGame
 		return mTurnTracker.longestRoad().value();
 	}
 	//END EXTENDED GETTERS AND SETTERS
+	
+	/**
+	 * Adds an action to the log lists
+	 * @param playerIndex
+	 * @param message
+	 */
+	public void addActionToLog(Index playerIndex, String message)
+	{
+		String name = this.getPlayer(playerIndex).name();
+		
+		this.mLog.add(new Message(message, name));
+	}
 	
 	//API FUNCTIONS
 	public boolean canSendChat() 

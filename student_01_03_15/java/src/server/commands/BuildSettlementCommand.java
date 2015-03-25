@@ -22,6 +22,9 @@ public class BuildSettlementCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " built a settlement";
+		this.game.addActionToLog(playerIndex, message);
 		game.buildSettlement(playerIndex, vertexLocation, free);
 	}
 }
