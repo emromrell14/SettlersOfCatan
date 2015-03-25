@@ -427,16 +427,29 @@ public class Game implements IGame
 				giveResourcesToPlayers(h);
 			}
 		}
-		
+
+		this.mTurnTracker.setStatus(Status.PLAYING);
 		// Change Turn Tracker status
 		if (number == 7)
 		{
-			this.mTurnTracker.setStatus(Status.DISCARDING);
+			this.mTurnTracker.setStatus(Status.ROBBING);
+			for(Player p : mPlayers)
+			{
+				p.setHasDiscarded(false);
+				if(p.getHand().size() > 7)
+				{
+					this.mTurnTracker.setStatus(Status.DISCARDING);
+				}
+				else
+				{
+					p.setHasDiscarded(true);
+				}
+			}
 		}
-		else
-		{
-			this.mTurnTracker.setStatus(Status.PLAYING);
-		}
+//		else
+//		{
+//			this.mTurnTracker.setStatus(Status.PLAYING);
+//		}
 	}
 
 	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
@@ -509,13 +522,14 @@ public class Game implements IGame
 		
 		Player player = this.getPlayer(playerIndex);
 		
-		// cycle turntracker
-		this.mTurnTracker.endTurn();
 		
 		if(this.mTurnTracker.status() == Status.SECONDROUND && playerIndex.value() == 0)
 		{
 			this.giveResourcesToPlayersAfterSetup();
 		}
+		
+		// cycle turntracker
+		this.mTurnTracker.endTurn();
 		
 		// change status to rolling
 		//ignore the previous comment because that was stupid
@@ -1143,6 +1157,16 @@ public class Game implements IGame
 		{
 			player.resources().addResource(r, -discardedCards.getResource(r));
 		}
+		player.setHasDiscarded(true);
+		
+		for(Player p : mPlayers)
+		{
+			if(!p.hasDiscarded())
+			{
+				return;
+			}
+		}
+		mTurnTracker.setStatus(Status.ROBBING);
 	}
 	//END API FUNCTIONS
 	
