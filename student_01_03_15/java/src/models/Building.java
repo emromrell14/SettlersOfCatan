@@ -1,9 +1,11 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.BuildingType;
 import shared.locations.EdgeDirection;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 /** Building class (for settlements or cities)
@@ -93,26 +95,55 @@ public class Building
 		return null;
 	}
 
-	public boolean isOnHex(Hex h) {
-		VertexLocation loc = this.mLocation.getNormalizedLocation();
-		switch (loc.getDir().getLengthenedDirection())
-		{
-		case NorthWest:
-		case NorthEast:
-			return h.getHexLocation().equals(loc.getHexLoc());
-			
-		case SouthWest:			
-		case SouthEast:
-			return h.getHexLocation().equals(loc.getHexLoc().getNeighborLoc(EdgeDirection.North));
-				
-		case West:
-			return h.getHexLocation().equals(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast));
+	public List<HexLocation> getAdjacentHexes() {
+		List<HexLocation> hexes = new ArrayList<HexLocation>();
+		VertexLocation buildingLocation = this.mLocation.getNormalizedLocation();
 		
-		case East:
-			return h.getHexLocation().equals(loc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest));
-			
-		default:
-			return false;
+		switch(buildingLocation.getDir().getLengthenedDirection())
+		{
+			case NorthWest:
+				hexes.add(buildingLocation.getHexLoc());
+				hexes.add(buildingLocation.getHexLoc().getNeighborLoc(EdgeDirection.North));
+				hexes.add(buildingLocation.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest));
+				break;
+			case NorthEast:
+				hexes.add(buildingLocation.getHexLoc());
+				hexes.add(buildingLocation.getHexLoc().getNeighborLoc(EdgeDirection.North));
+				hexes.add(buildingLocation.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast));
+				break;
+			default:
+				System.out.println("This is an issue. Tell Eric R about it");
+				return null;
 		}
+		
+		return hexes;
+	}
+	
+	
+	public boolean isOnHex(Hex h) {
+		VertexLocation buildingLocation = this.mLocation.getNormalizedLocation();
+		HexLocation loc1;
+		HexLocation loc2;
+		HexLocation loc3;
+		
+		switch(buildingLocation.getDir().getLengthenedDirection())
+		{
+			case NorthWest:
+				loc1 = buildingLocation.getHexLoc();
+				loc2 = loc1.getNeighborLoc(EdgeDirection.North);
+				loc3 = loc1.getNeighborLoc(EdgeDirection.NorthWest);
+				break;
+			case NorthEast:
+				loc1 = buildingLocation.getHexLoc();
+				loc2 = loc1.getNeighborLoc(EdgeDirection.North);
+				loc3 = loc1.getNeighborLoc(EdgeDirection.NorthEast);
+				break;
+			default:
+				System.out.println("This is an issue... Tell Eric R about it");
+				return false;
+		}
+		
+		HexLocation hexLocation = h.getHexLocation();
+		return hexLocation.equals(loc1) || hexLocation.equals(loc2) || hexLocation.equals(loc3);
 	}
 }
