@@ -210,6 +210,12 @@ public class Server implements IServer
 		//TODO: set other values found in clientModelJSON or the dejsonifying breaks client when poller grabs game
 		games.put(games.size(), g);
 	}
+	
+	public synchronized void loadGame(IGame game)
+	{
+		game.setId(games.size());
+		games.put(games.size(), game);
+	}
 
 	@Override
 	public synchronized void registerUser(User user)

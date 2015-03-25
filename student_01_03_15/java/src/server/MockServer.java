@@ -275,4 +275,10 @@ public class MockServer implements IServer
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void loadGame(IGame game) {
+		// TODO Auto-generated method stub
+		
+	}
 }
