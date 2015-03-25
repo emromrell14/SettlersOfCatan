@@ -49,7 +49,7 @@ public class Player //implements IPlayer
 			System.out.println(e);
 		}
 		this.mPlayerID = 0;
-		this.mResources = new ResourceList(20,20,0,0,0);//this needs to change
+		this.mResources = new ResourceList(100,100,100,100,100);//this needs to change
 		this.mSoldierCount = 0;
 		this.mVictoryPointCount = 0;
 		this.mRoadCount = 15;
@@ -1365,6 +1365,11 @@ public class Player //implements IPlayer
 	 */
 	public void setDevCards(List<DevCard> mDevCards) {
 		this.mDevCards = mDevCards;
+	}
+
+	public void addToSoldierCount(int num) 
+	{
+		this.mSoldierCount += num;
 	}
 	
 }
