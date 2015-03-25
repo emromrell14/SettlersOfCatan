@@ -318,7 +318,7 @@ public class ModelManager extends Observable
 	 */
 	public boolean canAcceptTrade(Index playerIndex) 
 	{
-		return this.mGameModel.canAcceptTrade(playerIndex);
+		return this.mGameModel.canAcceptTrade(playerIndex, false);
 	}
 
 	/**
