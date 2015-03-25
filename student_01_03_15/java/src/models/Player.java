@@ -36,7 +36,33 @@ public class Player //implements IPlayer
 	private List<Building> mCities;
 	private List<DevCard> mDevCards;
 	
-	public Player(){}
+	public Player()
+	{
+		this.mColor = CatanColor.BLUE;
+		this.mName = "name";
+		try
+		{
+			this.mPlayerIndex = new Index(0);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		this.mPlayerID = 0;
+		this.mResources = new ResourceList(100,100,100,100,100);
+		this.mSoldierCount = 0;
+		this.mVictoryPointCount = 0;
+		this.mRoadCount = 15;
+		this.mSettlementCount = 5;
+		this.mCityCount = 4;
+		this.mRoads = new ArrayList<Road>();
+		this.mSettlements = new ArrayList<Building>();
+		this.mCities = new ArrayList<Building>();
+		this.mDevCards = new ArrayList<DevCard>();
+		//this.mDevCards.addAll(new ArrayList<DevCard>());
+		//this.mDevCards.addAll(new ArrayList<DevCard>());
+		this.mHasPlayedDevCard = false;
+	}
 	
 	/**
 	 * Constructs a player Object with few arguments
