@@ -67,4 +67,6 @@ public interface IServer
 	public IUser getCurrentUser(String username);
 	String getGameModelJSON(int version, int gameID);
 	void updateVersion(int gameID);
+	
+	void loadGame(IGame game);
 }
