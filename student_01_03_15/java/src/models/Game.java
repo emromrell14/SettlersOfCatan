@@ -1073,13 +1073,14 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
-		
-		Player acceptingPlayer = this.getPlayer(playerIndex);
-		Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
-		ResourceList offer = this.mCurrentTrade.offer();
-		acceptingPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
-		offeringPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
-		
+		if(willAccept)
+		{
+			Player acceptingPlayer = this.getPlayer(playerIndex);
+			Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
+			ResourceList offer = this.mCurrentTrade.offer();
+			offeringPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
+			acceptingPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
+		}
 		this.mCurrentTrade = null;
 	}
 
