@@ -52,13 +52,16 @@ public class Game implements IGame
 	
 	public Game(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
 	{
-		mBoard = new Board(randomTiles,randomNumbers,randomPorts);
-		mPlayers = new ArrayList<Player>();
-		mTurnTracker = new TurnTracker();
-		mTurnTracker.setStatus(Status.FIRSTROUND);
-		mBank = new ResourceList();
-		mDevCards = new ArrayList<DevCard>();
-		mRobber = new Robber(mBoard.getDesertLocation());
+		this.mBoard = new Board(randomTiles,randomNumbers,randomPorts);
+		this.mPlayers = new ArrayList<Player>();
+		this.mTurnTracker = new TurnTracker();
+		this.mTurnTracker.setStatus(Status.FIRSTROUND);
+		this.mBank = new ResourceList();
+		this.mDevCards = new ArrayList<DevCard>();
+		this.mRobber = new Robber(mBoard.getDesertLocation());
+		this.mChat = new ArrayList<Message>();
+		this.mLog = new ArrayList<Message>();
+
 		for(int i=0; i<2; i++)
 		{
 			mDevCards.add(new Monopoly());
@@ -468,6 +471,11 @@ public class Game implements IGame
 		
 		// move robber
 		this.mRobber.setLocation(loc);
+		if(victim == null)
+		{
+			this.mTurnTracker.setStatus(Status.PLAYING);
+			return;
+		}
 		
 		// steal from victim
 		List<ResourceType> hand = victim.getHand();
@@ -984,7 +992,7 @@ public class Game implements IGame
 			// checking to see if player has all resources they are offering
 			for (ResourceType r : ResourceType.values())
 			{
-				if (player.resources().getResource(r) < (-1)*offer.getResource(r))
+				if (player.resources().getResource(r) < offer.getResource(r))// && offer.getResource(r) > 0)
 				{
 					return false;
 				}
