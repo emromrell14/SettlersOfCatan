@@ -158,6 +158,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			}
 			
 			// SETTING BUILD BUTTONS ENABLED OR NOT, DEPENDING ON IF PLAYER CAN AFFORD THEM
+			this.getView().setElementEnabled(ResourceBarElement.PLAY_CARD, isPlayersTurn);
 			this.getView().setElementEnabled(ResourceBarElement.ROAD, isPlayersTurn && state.canAffordRoad());
 			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, isPlayersTurn && state.canAffordSettlement());
 			this.getView().setElementEnabled(ResourceBarElement.CITY, isPlayersTurn && state.canAffordCity());

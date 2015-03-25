@@ -1057,7 +1057,7 @@ public class Game implements IGame
 			// must have requested resources
 			for (ResourceType r : ResourceType.values())
 			{
-				if (player.resources().getResource(r) < this.trade().offer().getResource(r))
+				if (player.resources().getResource(r) < (-1) * this.trade().offer().getResource(r))
 				{
 					return false;
 				}
@@ -1073,13 +1073,15 @@ public class Game implements IGame
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
-		
-		Player acceptingPlayer = this.getPlayer(playerIndex);
-		Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
-		ResourceList offer = this.mCurrentTrade.offer();
-		acceptingPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
-		offeringPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
-		
+		if(willAccept)
+		{
+			Player acceptingPlayer = this.getPlayer(playerIndex);
+			Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
+			ResourceList offer = this.mCurrentTrade.offer();
+			// I am giving 6 wood for 1 brick means offer(6 wood, -1 brick)
+			offeringPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
+			acceptingPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
+		}
 		this.mCurrentTrade = null;
 	}
 
