@@ -389,25 +389,6 @@ public class Game implements IGame
 		{
 			return false;
 		}
-		// if ratio, inputResource, and outputResource are all null don't even check the bank.  
-		// This is being called from the client to check if the button should be enabled				
-		
-		
-		// I don't think that not having resouces in the bank should prevent a player from rolling
-		
-//		if (number != 0)
-//		{
-//			ResourceList rl = this.getAllResourcesToBeGiven(number);
-//			
-//			// check if the bank has enough to give everyone their resources
-//			for (ResourceType r : ResourceType.values())
-//			{
-//				if (this.mBank.getResource(r) < rl.getResource(r))
-//				{
-//					return false;
-//				}
-//			}
-//		}
 		return true;
 	}
 	@Override
@@ -1195,28 +1176,36 @@ public class Game implements IGame
 		for (Player p : mPlayers)
 		{
 			Building b = p.settlements().get(1);
+			
+			List<HexLocation> adjacentHexes = b.getAdjacentHexes();
+			
 			for (Hex h : mBoard.hexes())
 			{
 				// give one resource for each settlement on this hex
-				if (b.isOnHex(h) && h.resource() != HexType.DESERT)
+				boolean result = adjacentHexes.contains(h.getHexLocation());
+				if (result && h.resource() != HexType.DESERT && h.resource() != HexType.WATER)
 				{
-					p.resources().addResource(h.resource().resourceType(), 1);
 					switch(h.resource())
 					{
 					case BRICK:
 						mBank.addBrick(-1);
+						p.resources().addBrick(1);
 						break;
 					case ORE:
 						mBank.addOre(-1);
+						p.resources().addOre(1);
 						break;
 					case WHEAT:
 						mBank.addWheat(-1);
+						p.resources().addWheat(1);
 						break;
 					case SHEEP:
 						mBank.addSheep(-1);
+						p.resources().addSheep(1);
 						break;
 					case WOOD:
 						mBank.addWood(-1);
+						p.resources().addWood(1);
 						break;
 					case DESERT:
 						break;
