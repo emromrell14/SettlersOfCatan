@@ -200,6 +200,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		if(game != null && master.hasJoinedGame)
 		{
 			disableAllDevCardButtons();
+			
 			int monopoly = 0;
 			boolean monopolyBool = false;
 			int soldier = 0;
@@ -261,6 +262,11 @@ public class DevCardController extends Controller implements IDevCardController,
 			getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldier);
 			getPlayCardView().setCardAmount(DevCardType.MONUMENT, monument);
 			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, roadBuilding);
+			
+			if(p.hasPlayedDevCard())
+			{
+				this.disableAllDevCardButtons();
+			}
 		}
 	}
 

@@ -1030,10 +1030,10 @@ public class Game implements IGame
 		this.setTrade(new Trade(playerIndex, receiverIndex, offer));		
 	}
 
-	public boolean canAcceptTrade(Index playerIndex)
+	public boolean canAcceptTrade(Index playerIndex, boolean willAccept)
 	{
 		// check if the trade offer is empty
-		if (this.trade().offer().isEmpty())
+		if (this.trade() == null || this.trade().offer().isEmpty())
 		{
 			return false;
 		}
@@ -1044,13 +1044,16 @@ public class Game implements IGame
 			return false;
 		}
 		
-		Player player = this.getPlayer(playerIndex);
-		// must have requested resources
-		for (ResourceType r : ResourceType.values())
+		if(willAccept)
 		{
-			if (player.resources().getResource(r) < this.trade().offer().getResource(r))
+			Player player = this.getPlayer(playerIndex);
+			// must have requested resources
+			for (ResourceType r : ResourceType.values())
 			{
-				return false;
+				if (player.resources().getResource(r) < this.trade().offer().getResource(r))
+				{
+					return false;
+				}
 			}
 		}
 		
@@ -1059,7 +1062,7 @@ public class Game implements IGame
 	@Override
 	public void acceptTrade(Index playerIndex, boolean willAccept) throws IllegalStateException
 	{
-		if(!this.canAcceptTrade(playerIndex))
+		if(!this.canAcceptTrade(playerIndex, willAccept))
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}

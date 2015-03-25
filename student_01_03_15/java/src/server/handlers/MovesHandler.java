@@ -95,7 +95,7 @@ public class MovesHandler extends Handler
 			break;
 		case "/moves/Monopoly":
 			MonopolyRequest m = MonopolyRequest.fromJSON(jsonBody);
-			serverFacade.executePlayMonopolyCommand(new Index(m.getPlayerIndex()), ResourceType.valueOf(m.getResource()));
+			serverFacade.executePlayMonopolyCommand(new Index(m.getPlayerIndex()), ResourceType.valueOf(m.getResource().toUpperCase()));
 			break;
 		case "/moves/Monument":
 			MonumentRequest mr = MonumentRequest.fromJSON(jsonBody);
@@ -124,7 +124,7 @@ public class MovesHandler extends Handler
 		case "/moves/maritimeTrade":
 			MaritimeTradeRequest mtr = MaritimeTradeRequest.fromJSON(jsonBody);
 			serverFacade.executeMaritimeTradeCommand(new Index(mtr.getPlayerIndex()), mtr.getRatio(), 
-			ResourceType.valueOf(mtr.getInputResource()), ResourceType.valueOf(mtr.getOutputResource()));
+			ResourceType.valueOf(mtr.getInputResource().toUpperCase()), ResourceType.valueOf(mtr.getOutputResource().toUpperCase()));
 			break;
 		case "/moves/discardCards":
 			DiscardRequest dr = DiscardRequest.fromJSON(jsonBody);
