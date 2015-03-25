@@ -1366,5 +1366,10 @@ public class Player //implements IPlayer
 	public void setDevCards(List<DevCard> mDevCards) {
 		this.mDevCards = mDevCards;
 	}
+
+	public void addToSoldierCount(int num) 
+	{
+		this.mSoldierCount += num;
+	}
 	
 }

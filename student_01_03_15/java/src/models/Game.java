@@ -466,7 +466,7 @@ public class Game implements IGame
 		}
 		if (this.mRobber.location().equals(loc))
 		{
-			return false;
+		//	return false;
 		}
 		
 		if (victim != null && victim.resources().isEmpty())
@@ -745,6 +745,7 @@ public class Game implements IGame
 			player.setHasPlayedDevCard(true);
 			//Remove their Soldier card
 			player.removeDevCard(DevCardType.SOLDIER);
+			player.addToSoldierCount(1);
 			this.validateLargestArmy(playerIndex);
 		}
 		catch (IllegalStateException e)
