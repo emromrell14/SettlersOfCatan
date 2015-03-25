@@ -8,8 +8,8 @@ import com.google.gson.Gson;
 
 public class TradeOfferJSON 
 {
-	private int sender; //The index of the person offering the trade.
-	private int receiver; //The index of the person the trade was offered to.
+	private int sender = -1; //The index of the person offering the trade.
+	private int receiver = -1; //The index of the person the trade was offered to.
 	private ResourceListJSON offer; //Positive numbers are resources being offered. Negative are resources being asked for.
 	
 	public TradeOfferJSON(Trade trade) 
@@ -17,6 +17,7 @@ public class TradeOfferJSON
 		this.sender = trade.sender().value();
 		this.receiver = trade.receiver().value();
 		this.offer = new ResourceListJSON(trade.offer());
+
 	}
 
 	/**
