@@ -26,6 +26,7 @@ public class Server implements IServer
 	private String host = "localhost";
 	private Map<Integer,IGame> games = new HashMap<Integer,IGame>();
 	private Map<Integer,IUser> users = new HashMap<Integer,IUser>();
+	private List<String> commands = new ArrayList<String>();
 	
 	public static void main(String[] args)
 	{
@@ -215,6 +216,14 @@ public class Server implements IServer
 	{
 		users.put(user.getID(), user);
 	}
+	
+	public synchronized Map<Integer, IGame> getGames() {
+		return games;
+	}
+
+	public synchronized void setGames(Map<Integer, IGame> games) {
+		this.games = games;
+	}
 
 	public synchronized Map<Integer, IUser> getUsers() {
 		return users;
@@ -224,12 +233,17 @@ public class Server implements IServer
 		this.users = users;
 	}
 
-	public synchronized Map<Integer, IGame> getGames() {
-		return games;
+	public List<String> getCommands() {
+		return commands;
 	}
 
-	public synchronized void setGames(Map<Integer, IGame> games) {
-		this.games = games;
+	public void setCommands(List<String> commands) {
+		this.commands = commands;
+	}
+	
+	public void addCommand(String url)
+	{
+		this.commands.add(url);
 	}
 
 	@Override

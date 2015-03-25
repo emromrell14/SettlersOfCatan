@@ -2,9 +2,11 @@ package server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.List;
 import java.util.Map;
 
 import models.IGame;
+
 
 
 
@@ -254,5 +256,23 @@ public class MockServer implements IServer
 	@Override
 	public void updateVersion(int gameID) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public List<String> getCommands() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCommands(List<String> commands) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addCommand(String command) {
+		// TODO Auto-generated method stub
+		
 	}
 }
