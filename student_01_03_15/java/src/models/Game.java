@@ -585,7 +585,7 @@ public class Game implements IGame
 		Player player = this.getPlayer(playerIndex);
 		
 		// Player gains a new card, if monument it will be old, new otherwise
-		DevCard d = this.mDevCards.get((int)(Math.random() * this.mDevCards.size()));
+		DevCard d = this.mDevCards.get((int)(Math.random() * (this.mDevCards.size()-1)));
 		this.mDevCards.remove(d);
 		player.addDevCard(d);
 		
