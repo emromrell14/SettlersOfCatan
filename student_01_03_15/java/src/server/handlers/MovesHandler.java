@@ -49,10 +49,10 @@ public class MovesHandler extends Handler
 			res.setStatusCode(400);
 			return res;
 		}
-		
+
+		server.updateVersion(gameID);
 		res.setStatusCode(200);
 		res.setBody(server.getGameModelJSON(0, gameID));
-		server.updateVersion(gameID);
 		return res;
 	}
 	
