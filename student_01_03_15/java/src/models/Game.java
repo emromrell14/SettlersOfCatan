@@ -52,13 +52,16 @@ public class Game implements IGame
 	
 	public Game(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
 	{
-		mBoard = new Board(randomTiles,randomNumbers,randomPorts);
-		mPlayers = new ArrayList<Player>();
-		mTurnTracker = new TurnTracker();
-		mTurnTracker.setStatus(Status.FIRSTROUND);
-		mBank = new ResourceList();
-		mDevCards = new ArrayList<DevCard>();
-		mRobber = new Robber(mBoard.getDesertLocation());
+		this.mBoard = new Board(randomTiles,randomNumbers,randomPorts);
+		this.mPlayers = new ArrayList<Player>();
+		this.mTurnTracker = new TurnTracker();
+		this.mTurnTracker.setStatus(Status.FIRSTROUND);
+		this.mBank = new ResourceList();
+		this.mDevCards = new ArrayList<DevCard>();
+		this.mRobber = new Robber(mBoard.getDesertLocation());
+		this.mChat = new ArrayList<Message>();
+		this.mLog = new ArrayList<Message>();
+
 		for(int i=0; i<2; i++)
 		{
 			mDevCards.add(new Monopoly());
