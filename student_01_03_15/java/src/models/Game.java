@@ -1078,6 +1078,7 @@ public class Game implements IGame
 			Player acceptingPlayer = this.getPlayer(playerIndex);
 			Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
 			ResourceList offer = this.mCurrentTrade.offer();
+			// I am giving 6 wood for 1 brick means offer(6 wood, -1 brick)
 			offeringPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
 			acceptingPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
 		}
