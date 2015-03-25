@@ -487,6 +487,11 @@ public class Game implements IGame
 		
 		// move robber
 		this.mRobber.setLocation(loc);
+		if(victim == null)
+		{
+			this.mTurnTracker.setStatus(Status.PLAYING);
+			return;
+		}
 		
 		// steal from victim
 		List<ResourceType> hand = victim.getHand();
@@ -1003,7 +1008,7 @@ public class Game implements IGame
 			// checking to see if player has all resources they are offering
 			for (ResourceType r : ResourceType.values())
 			{
-				if (player.resources().getResource(r) < (-1)*offer.getResource(r))
+				if (player.resources().getResource(r) < offer.getResource(r))// && offer.getResource(r) > 0)
 				{
 					return false;
 				}
