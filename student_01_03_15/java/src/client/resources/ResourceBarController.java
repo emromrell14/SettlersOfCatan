@@ -92,7 +92,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void playCard() 
 	{
-		if (state.canPlayDevCard())
+//		if (state.canPlayDevCard())
 		{
 			executeElementAction(ResourceBarElement.PLAY_CARD);
 		}
