@@ -22,6 +22,9 @@ public class RoadBuildingCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " played a road building card";
+		this.game.addActionToLog(playerIndex, message);
 		game.playRoadBuilding(playerIndex, spot1, spot2);
 	}
 }

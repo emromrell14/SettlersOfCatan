@@ -163,6 +163,8 @@ public interface IGame
 	 */
 	int getLongestRoadIndex();
 	
+	void addActionToLog(Index playerIndex, String message);
+	
 	/**
 	 * Adds a chat message to the message board
 	 * @param message

@@ -20,6 +20,9 @@ public class DiscardCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " discarded";
+		this.game.addActionToLog(playerIndex, message);
 		game.discardCards(playerIndex, discardedCards);
 	}
 }

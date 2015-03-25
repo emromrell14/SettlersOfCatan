@@ -17,6 +17,9 @@ public class MonumentCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " played a monument";
+		this.game.addActionToLog(playerIndex, message);
 		game.playMonument(playerIndex);
 	}
 }

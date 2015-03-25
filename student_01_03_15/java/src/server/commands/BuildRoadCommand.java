@@ -22,6 +22,9 @@ public class BuildRoadCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " built a road";
+		this.game.addActionToLog(playerIndex, message);
 		game.buildRoad(playerIndex, edgeLocation, free);
 	}
 }

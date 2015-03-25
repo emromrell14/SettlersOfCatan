@@ -17,6 +17,9 @@ public class BuyDevCardCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " bought a dev card";
+		this.game.addActionToLog(playerIndex, message);
 		game.buyDevCard(playerIndex);
 	}
 }

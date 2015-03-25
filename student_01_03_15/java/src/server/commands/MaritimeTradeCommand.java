@@ -23,6 +23,9 @@ public class MaritimeTradeCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + " maritime traded for " + outputResource.toLowerCaseString();
+		this.game.addActionToLog(playerIndex, message);
 		game.maritimeTrade(playerIndex, ratio, inputResource, outputResource);
 	}
 }

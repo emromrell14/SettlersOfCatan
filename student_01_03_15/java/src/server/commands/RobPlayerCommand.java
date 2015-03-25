@@ -22,6 +22,16 @@ public class RobPlayerCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message1 = playerName + " moved the robber";
+		this.game.addActionToLog(playerIndex, message1);
+		if (!victimIndex.equals(-1))
+		{
+			String victimName = game.getPlayer(victimIndex).name();
+			String message2 = playerName + " robbed " + victimName;
+			this.game.addActionToLog(playerIndex, message2);		
+		}
+		
 		game.robPlayer(playerIndex, victimIndex, hexLocation);
 	}
 }

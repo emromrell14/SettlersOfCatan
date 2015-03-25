@@ -22,6 +22,10 @@ public class OfferTradeCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String receiverName = game.getPlayer(receiverIndex).name();
+		String message = playerName + " offered a trade to " + receiverName;
+		this.game.addActionToLog(playerIndex, message);
 		game.offerTrade(playerIndex, receiverIndex, offer);
 	}
 }

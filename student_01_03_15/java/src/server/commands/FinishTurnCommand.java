@@ -17,6 +17,9 @@ public class FinishTurnCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		String playerName = game.getPlayer(playerIndex).name();
+		String message = playerName + "\'s turn just ended";
+		this.game.addActionToLog(playerIndex, message);
 		game.finishTurn(playerIndex);
 	}
 }
