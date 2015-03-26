@@ -337,6 +337,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 					//System.out.println("NULLLLLLLLLLLL PLAYERRRRRRRRRRRR (joinGameController)");
 				}
 			}
+			
+			if(selectColorView.getSelectedColor() != null)
+			{
+				getSelectColorView().setColorEnabled(selectColorView.getSelectedColor(), false);
+			}
 		}
 
 	}

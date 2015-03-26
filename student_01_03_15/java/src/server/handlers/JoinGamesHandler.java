@@ -72,7 +72,7 @@ public class JoinGamesHandler  extends Handler
 				
 				if(inGame)
 				{
-					server.updateVersion(gameID);
+					server.updateVersion(game.id());
 					game.setPlayersColor(playerName, color);
 					resp = setCookie(game, resp);
 					return resp;
