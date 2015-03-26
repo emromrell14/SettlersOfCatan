@@ -595,6 +595,7 @@ public class Game implements IGame
 	}
 	public void removeDevCardFromList(DevCard d)
 	{
+		//testing git
 		for (int i = 0; i < mDevCards.size(); i++)
 		{
 			if (d.type() == mDevCards.get(i).type())
