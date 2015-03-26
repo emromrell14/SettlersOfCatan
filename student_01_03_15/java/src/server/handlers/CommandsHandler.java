@@ -129,7 +129,9 @@ public class CommandsHandler extends Handler
 					serverFacade.executeDiscardCommand(new Index(dr.getPlayerIndex()), dr.getDiscardedCards().getModelResourceList());
 				}
 			}
-		} catch(Exception e) {
+		} 
+		catch(Exception e) 
+		{
 			return null;
 		}
 		return new Response(200, server.getGameModelJSON(0, gameID));

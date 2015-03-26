@@ -466,7 +466,7 @@ public class Game implements IGame
 		}
 		if (this.mRobber.location().equals(loc))
 		{
-		//	return false;
+			return false;
 		}
 		
 		if (victim != null && victim.resources().isEmpty())
