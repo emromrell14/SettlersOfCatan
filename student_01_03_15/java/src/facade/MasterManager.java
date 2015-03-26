@@ -26,6 +26,7 @@ public class MasterManager implements IMasterManager
 	public boolean hasJoinedGame = false;
 	private static MasterManager mInstance;
 	public boolean hasRolled = false;
+	public int pollerVersion = -1;
 	
 	/**
 	 * Facade to manage all other managers. 
@@ -107,6 +108,7 @@ public class MasterManager implements IMasterManager
 	
 	public Game getCurrentModel()
 	{
+		//System.out.println("master manager get currentModel() : " + mModelManager.getCurrentModel().version());
 		return mModelManager.getCurrentModel();
 	}
 
@@ -425,6 +427,12 @@ public class MasterManager implements IMasterManager
 	}
 
 	// Game Manager
+	
+	public int pollerGetGameModel(int version)
+	{
+		getGameModel(version);
+		return (getCurrentModel()== null) ? -1 : pollerVersion;
+	}
 	/**
 	 * Requests json String with game model info
 	 * @pre none
@@ -435,6 +443,8 @@ public class MasterManager implements IMasterManager
 		Game game = mGameManager.getGameModel(version);
 		if(game != null)
 		{
+			System.out.println(version + " -updating cached model- " + game.version());
+			pollerVersion = game.version();
 			mModelManager.updateModel(game);
 		}
 //		else
