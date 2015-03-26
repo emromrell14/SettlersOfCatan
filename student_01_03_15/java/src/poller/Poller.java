@@ -15,7 +15,7 @@ public class Poller implements Runnable
 {
 	private MasterManager mMasterManager;
 	private final int mSecondsBetweenPolls = 2;
-//	private int version = 0;
+	private int mVersion = 0;
 	private Timer timer;
 
 
@@ -33,7 +33,8 @@ public class Poller implements Runnable
 	public int getVersion()
 	{
 		Game game = mMasterManager.getCurrentModel();
-		return (game == null) ? -1 : game.version();
+//		System.out.println("POLLER getversion() -- " + game.version() + " " + game.id());
+		return (game == null) ? -1 : mVersion;//game.version();
 	}
 	
 	/**
@@ -53,12 +54,14 @@ public class Poller implements Runnable
 //	    		initialV = (mMasterManager.hasJoinedGame) ? mMasterManager.getCurrentModel().version() : -1;
 //	    	}
 	    	
+	    	System.out.println("Poller:" + getVersion());
 	    	
 	    	int version = getVersion();
 	    	// if they havent joined a game then switch version back to -1
 	    	version = (mMasterManager.hasJoinedGame) ? version : -1;
-			mMasterManager.getGameModel(version);
-//			////System.out.println("Poller version: " + version );
+//			mMasterManager.getGameModel(version);
+	    	mVersion = mMasterManager.pollerGetGameModel(version);
+			System.out.println("Poller version: " + mVersion );
 			
 			
 //			int finalV = -1;

@@ -123,6 +123,7 @@ public class RobbingState implements IState
 	@Override
 	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
+		System.out.println("trying to place robber in Robbing State");
 		return mMaster.canPlaceRobber(newRobberLocation);
 	}
 

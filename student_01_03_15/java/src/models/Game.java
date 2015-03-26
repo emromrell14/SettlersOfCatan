@@ -460,13 +460,13 @@ public class Game implements IGame
 		{
 			return false;
 		}
-		if (!this.mTurnTracker.status().equals(Status.ROBBING))
+		if (!this.mTurnTracker.status().equals(Status.ROBBING) && !this.mTurnTracker.status().equals(Status.PLAYING))
 		{
 			return false;
 		}
 		if (this.mRobber.location().equals(loc))
 		{
-			return false;
+		//	return false;
 		}
 		
 		if (victim != null && victim.resources().isEmpty())
@@ -702,8 +702,13 @@ public class Game implements IGame
 		this.buildRoad(playerIndex, spot1, true);
 		this.buildRoad(playerIndex, spot2, true);
 		
+		Player player = this.getPlayer(playerIndex);
+		
 		// setting played dev card to true
-		this.getPlayer(playerIndex).setHasPlayedDevCard(true);	}
+		player.setHasPlayedDevCard(true);
+		//Remove their Road Building card
+		player.removeDevCard(DevCardType.ROAD_BUILD);
+	}
 	
 	public boolean canPlaySoldier(Index playerIndex)
 	{
@@ -735,10 +740,12 @@ public class Game implements IGame
 		try
 		{
 			this.robPlayer(playerIndex, victimIndex, location);			
-			
+			Player player = this.getPlayer(playerIndex);
 			// setting played dev card to true
-			this.getPlayer(playerIndex).setHasPlayedDevCard(true);
-			
+			player.setHasPlayedDevCard(true);
+			//Remove their Soldier card
+			player.removeDevCard(DevCardType.SOLDIER);
+			player.addToSoldierCount(1);
 			this.validateLargestArmy(playerIndex);
 		}
 		catch (IllegalStateException e)
@@ -786,6 +793,11 @@ public class Game implements IGame
 				p.resources().addResource(resource, (-1)*toAdd);
 			}
 		}
+
+		// setting played dev card to true
+		currentPlayer.setHasPlayedDevCard(true);
+		//Remove their monopoly card
+		currentPlayer.removeDevCard(DevCardType.MONOPOLY);
 	}
 
 	public boolean canPlayMonument(Index playerIndex)
@@ -814,8 +826,13 @@ public class Game implements IGame
 			throw new IllegalStateException("Failed pre-conditions");
 		}
 		
-		this.getPlayer(playerIndex).removeDevCard(DevCardType.MONUMENT);
-		this.getPlayer(playerIndex).addVictoryPoint(1);
+		Player player = this.getPlayer(playerIndex);
+		
+		player.addVictoryPoint(1);
+		// setting played dev card to true
+		player.setHasPlayedDevCard(true);
+		//Remove their monument card
+		player.removeDevCard(DevCardType.MONUMENT);
 	}
 
 	public boolean canBuildRoad(Index playerIndex, EdgeLocation roadLocation, boolean free)
@@ -1078,6 +1095,7 @@ public class Game implements IGame
 			Player acceptingPlayer = this.getPlayer(playerIndex);
 			Player offeringPlayer = this.getPlayer(this.mCurrentTrade.sender());
 			ResourceList offer = this.mCurrentTrade.offer();
+			// I am giving 6 wood for 1 brick means offer(6 wood, -1 brick)
 			offeringPlayer.addResourcesToList(-offer.brick(), -offer.ore(), -offer.sheep(), -offer.wheat(), -offer.wood());
 			acceptingPlayer.addResourcesToList(offer.brick(), offer.ore(), offer.sheep(), offer.wheat(), offer.wood());
 		}
@@ -1350,11 +1368,25 @@ public class Game implements IGame
 	{
 		Player contendingPlayer = this.getPlayer(playerIndex);
 		Player largestArmyPlayer = this.getPlayer(this.getLargestArmyIndex());
-		if (contendingPlayer.soldierCount() > largestArmyPlayer.soldierCount())
+		if (contendingPlayer == null)
+		{
+			System.out.println("Contending player is null");
+		}
+		if (largestArmyPlayer == null)
+		{
+			System.out.println("largestArmy player is null");
+		}
+
+		if (largestArmyPlayer != null && 
+				contendingPlayer.soldierCount() > largestArmyPlayer.soldierCount())
 		{
 			this.mTurnTracker.setLargestArmy(playerIndex);
 			largestArmyPlayer.addVictoryPoint(-2);
 			contendingPlayer.addVictoryPoint(2);
+		}
+		else if (largestArmyPlayer == null && contendingPlayer.soldierCount() == 3)
+		{
+			this.mTurnTracker.setLargestArmy(playerIndex);
 		}
 		
 	}

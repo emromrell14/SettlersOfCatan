@@ -49,7 +49,7 @@ public class Player //implements IPlayer
 			System.out.println(e);
 		}
 		this.mPlayerID = 0;
-		this.mResources = new ResourceList(100,100,100,100,100);
+		this.mResources = new ResourceList(0,0,0,0,0);//this needs to change
 		this.mSoldierCount = 0;
 		this.mVictoryPointCount = 0;
 		this.mRoadCount = 15;
@@ -709,10 +709,10 @@ public class Player //implements IPlayer
 	 * Does nothing
 	 * @return returns true
 	 */
-	public boolean discard()		//what does this dooooooo
-	{
-		return true;
-	}
+//	public boolean discard()		//what does this dooooooo
+//	{
+//		return true;
+//	}
 	
 	/**
 	 * Checks if the player is eligible to play a Year of Plenty Card
@@ -1365,6 +1365,11 @@ public class Player //implements IPlayer
 	 */
 	public void setDevCards(List<DevCard> mDevCards) {
 		this.mDevCards = mDevCards;
+	}
+
+	public void addToSoldierCount(int num) 
+	{
+		this.mSoldierCount += num;
 	}
 	
 }
