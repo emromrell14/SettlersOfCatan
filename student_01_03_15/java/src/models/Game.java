@@ -34,17 +34,17 @@ public class Game implements IGame
 		mTurnTracker = new TurnTracker();
 		mBank = new ResourceList();
 		mDevCards = new ArrayList<DevCard>();
-		for(int i=0; i<2; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new Monopoly());
 			mDevCards.add(new Monument());
 			mDevCards.add(new YearOfPlenty());
 		}
-		for(int i=0; i<5; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new RoadBuild());
 		}
-		for(int i=0; i<14; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new Soldier());
 		}
@@ -68,17 +68,17 @@ public class Game implements IGame
 		this.mBank.addOre(19);
 		this.mBank.addSheep(19);
 		
-		for(int i=0; i<2; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new Monopoly());
 			mDevCards.add(new Monument());
 			mDevCards.add(new YearOfPlenty());
 		}
-		for(int i=0; i<5; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new RoadBuild());
 		}
-		for(int i=0; i<14; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new Soldier());
 		}
@@ -586,12 +586,23 @@ public class Game implements IGame
 		
 		// Player gains a new card, if monument it will be old, new otherwise
 		DevCard d = this.mDevCards.get((int)(Math.random() * (this.mDevCards.size()-1)));
-		this.mDevCards.remove(d);
+		removeDevCardFromList(d);
 		player.addDevCard(d);
 		
 		// Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
 		player.addResourcesToList(0, -1, -1, -1, 0);
 		
+	}
+	public void removeDevCardFromList(DevCard d)
+	{
+		for (int i = 0; i < mDevCards.size(); i++)
+		{
+			if (d.type() == mDevCards.get(i).type())
+			{
+				mDevCards.remove(i);
+				break;
+			}
+		}
 	}
 
 	public boolean canPlayYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) 
