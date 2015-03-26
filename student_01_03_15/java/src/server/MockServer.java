@@ -12,6 +12,9 @@ import models.IGame;
 
 
 
+
+
+
 //import server.handlers.AddAIHandler;
 //import server.handlers.CommandsHandler;
 //import server.handlers.CreateGamesHandler;
@@ -259,25 +262,37 @@ public class MockServer implements IServer
 	}
 
 	@Override
-	public List<String> getCommands() {
+	public void loadGame(IGame game) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCommands(Map<Integer, List<String>> commands) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addCommand(int gameID, String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<Integer, List<String>> getCommands() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setCommands(List<String> commands) {
+	public void resetCommands(int gameID) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addCommand(String command) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void loadGame(IGame game) {
+	public void checkForWinner(int gameID) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -400,7 +400,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
 		{
 			this.getTradeView().enableDomesticTrade(true);
-			if(this.waitOverlay.isModalShowing())
+			if(this.waitOverlay.isModalShowing() && master.getCurrentModel().trade() == null)
 			{
 				this.waitOverlay.closeModal();
 			}

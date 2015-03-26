@@ -19,7 +19,9 @@ public class ResetHandler extends Handler
 	@Override
 	public Response processRequest(Request req)
 	{
-		return null;
+		int gameID = req.getCookie().getGameID();
+		server.resetCommands(gameID);
+		return new Response(200, "Success");
 	}
 
 }

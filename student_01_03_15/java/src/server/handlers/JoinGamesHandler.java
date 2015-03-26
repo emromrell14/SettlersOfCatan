@@ -62,19 +62,7 @@ public class JoinGamesHandler  extends Handler
 //					System.out.println(p.color().name() + " " + color);
 					if(p.color().name().equals(color) && !p.name().equals(playerName))
 					{
-						return new Response(400,"The player could not be added to the specified game - color taken.");
-//						// Check names if rejoin
-//						if(p.name().equals(playerName))
-//						{
-//							game.setPlayersColor(playerName, color);
-//							resp = setCookie(game, resp);
-//							return resp;
-//						}
-//						else
-//						{
-//							return new Response(400,"The player could not be added to the specified game - color taken.");
-//						}
-						 
+						return new Response(400,"The player could not be added to the specified game - color taken.");						 
 					}
 					if(p.name().equals(playerName))
 					{
@@ -108,7 +96,7 @@ public class JoinGamesHandler  extends Handler
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				server.updateVersion(gameID);
+				server.updateVersion(game.id());
 				
 				return resp;
 			}
