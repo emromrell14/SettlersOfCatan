@@ -68,17 +68,17 @@ public class Game implements IGame
 		this.mBank.addOre(19);
 		this.mBank.addSheep(19);
 		
-		for(int i=0; i<1; i++)
+		for(int i=0; i<2; i++)
 		{
 			mDevCards.add(new Monopoly());
-			mDevCards.add(new Monument());
+			mDevCards.add(new RoadBuild());
 			mDevCards.add(new YearOfPlenty());
 		}
-		for(int i=0; i<1; i++)
+		for(int i=0; i<5; i++)
 		{
-			mDevCards.add(new RoadBuild());
+			mDevCards.add(new Monument());
 		}
-		for(int i=0; i<1; i++)
+		for(int i=0; i<14; i++)
 		{
 			mDevCards.add(new Soldier());
 		}
