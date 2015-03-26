@@ -1,7 +1,11 @@
 package client.devcards;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import models.DevCard;
 import models.Game;
@@ -27,6 +31,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IAction roadAction;
 	private MasterManager master;
 	private IMessageView error = new MessageView();
+	private ImageIcon devCardIcon = new ImageIcon("images" + File.separator + "building" + File.separator + "card.jpg");
 	
 	/**
 	 * DevCardController constructor
@@ -63,6 +68,10 @@ public class DevCardController extends Controller implements IDevCardController,
 		{
 			getBuyCardView().showModal();
 		}	
+		else
+		{
+			JOptionPane.showMessageDialog(null, "No more Development Cards in bank!", "Empty Bank!", JOptionPane.INFORMATION_MESSAGE, devCardIcon);
+		}
 	}
 
 	@Override
