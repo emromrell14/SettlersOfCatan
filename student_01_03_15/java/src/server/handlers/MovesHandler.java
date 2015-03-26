@@ -41,6 +41,7 @@ public class MovesHandler extends Handler
 		try 
 		{
 			parseBody(req.getRequestURI(), req.getBody());
+			server.checkForWinner(gameID);
 		} 
 		catch (Exception e) 
 		{

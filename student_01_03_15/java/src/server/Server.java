@@ -293,6 +293,20 @@ public class Server implements IServer
 	{
 		games.get(gameID).incrementVersion();
 	}
+
+	@Override
+	public synchronized void checkForWinner(int gameID) 
+	{
+		IGame g = games.get(gameID);
+		for(Player p : g.players())
+		{
+			if(p.victoryPointCount() >= 10)
+			{
+				g.setWinner(p.playerIndex().value());
+				break;
+			}
+		}
+	}
 	
 	
 }

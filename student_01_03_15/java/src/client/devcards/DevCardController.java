@@ -221,21 +221,21 @@ public class DevCardController extends Controller implements IDevCardController,
 					{
 						++monopoly;
 					}
-					monopolyBool = monopolyBool || (!d.isNew() && !d.hasBeenPlayed());
+					monopolyBool = monopolyBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
 					break;
 				case SOLDIER:
 					if(!d.hasBeenPlayed())
 					{
 						++soldier;
 					}
-					soldierBool = soldierBool || (!d.isNew() && !d.hasBeenPlayed());
+					soldierBool = soldierBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
 					break;
 				case YEAR_OF_PLENTY:
 					if(!d.hasBeenPlayed())
 					{
 						++yearOfPlenty;
 					}
-					yearBool = yearBool || (!d.isNew() && !d.hasBeenPlayed());
+					yearBool = yearBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
 					break;
 				case MONUMENT:
 					if(!d.hasBeenPlayed())
@@ -249,7 +249,7 @@ public class DevCardController extends Controller implements IDevCardController,
 					{
 						++roadBuilding;
 					}
-					roadBool = roadBool || (!d.isNew() && !d.hasBeenPlayed() && p.roadCount() > 1);
+					roadBool = roadBool || (!d.isNew() && !d.hasBeenPlayed() && p.roadCount() > 1 && p.canPlayDevCard());
 					break;
 				}
 			}

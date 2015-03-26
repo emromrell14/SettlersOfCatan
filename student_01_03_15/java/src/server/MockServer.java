@@ -281,4 +281,10 @@ public class MockServer implements IServer
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void checkForWinner(int gameID) {
+		// TODO Auto-generated method stub
+		
+	}
 }

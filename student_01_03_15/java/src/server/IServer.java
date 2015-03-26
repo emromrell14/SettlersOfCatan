@@ -69,4 +69,5 @@ public interface IServer
 	void updateVersion(int gameID);
 	
 	void loadGame(IGame game);
+	void checkForWinner(int gameID);
 }
