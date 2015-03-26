@@ -456,6 +456,18 @@ public class Game implements IGame
 
 	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
 	{
+		// check that this hex is not water
+		for (Hex h : this.mBoard.hexes())
+		{
+			if (h.getHexLocation().equals(loc))
+			{
+				if (h.resource().equals(HexType.WATER))
+				{
+					return false;
+				}
+			}
+		}
+		
 		if (player != null && !this.mTurnTracker.currentTurn().equals(player.playerIndex()))
 		{
 			return false;

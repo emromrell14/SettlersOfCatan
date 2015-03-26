@@ -1,7 +1,9 @@
 package states;
 
+import models.Hex;
 import facade.IMasterManager;
 import facade.MasterManager;
+import shared.definitions.HexType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -123,6 +125,17 @@ public class RobbingState implements IState
 	@Override
 	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
+		// check that this hex is not water
+		for (Hex h : this.mMaster.getCurrentModel().board().hexes())
+		{
+			if (h.getHexLocation().equals(newRobberLocation))
+			{
+				if (h.resource().equals(HexType.WATER))
+				{
+					return false;
+				}
+			}
+		}
 		System.out.println("trying to place robber in Robbing State");
 		return mMaster.canPlaceRobber(newRobberLocation);
 	}
