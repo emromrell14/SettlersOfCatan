@@ -1063,7 +1063,7 @@ public class Game implements IGame
 		}
 		
 		// check if the trade is for this player
-		if (!this.trade().receiver().equals(playerIndex))
+		if (this.trade().receiver().value() != playerIndex.value())
 		{
 			return false;
 		}
