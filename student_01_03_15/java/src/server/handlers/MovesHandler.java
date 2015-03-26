@@ -40,7 +40,7 @@ public class MovesHandler extends Handler
 		serverFacade.setGame(server.getGame(gameID));
 		try 
 		{
-			parseBody(req.getRequestURI(), req.getBody());
+			parseBody(gameID, req.getRequestURI(), req.getBody());
 			server.checkForWinner(gameID);
 		} 
 		catch (Exception e) 
@@ -57,9 +57,9 @@ public class MovesHandler extends Handler
 		return res;
 	}
 	
-	public void parseBody(String url, String jsonBody) throws Exception
+	public void parseBody(int gameID, String url, String jsonBody) throws Exception
 	{
-		server.addCommand(jsonBody);
+		server.addCommand(gameID, jsonBody);
 		switch(url)
 		{
 		case "/moves/rollNumber":
