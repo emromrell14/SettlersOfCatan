@@ -13,6 +13,7 @@ import models.IGame;
 import models.Index;
 import models.Message;
 import models.Player;
+import server.JSON.CommandList;
 import server.handlers.*;
 import shared.definitions.CatanColor;
 import JSONmodels.ClientModelJSON;
@@ -26,7 +27,7 @@ public class Server implements IServer
 	private String host = "localhost";
 	private Map<Integer,IGame> games = new HashMap<Integer,IGame>();
 	private Map<Integer,IUser> users = new HashMap<Integer,IUser>();
-	private List<String> commands = new ArrayList<String>();
+	private Map<Integer, List<String>> commands = new HashMap<Integer, List<String>>();
 	
 	public static void main(String[] args)
 	{
@@ -239,22 +240,31 @@ public class Server implements IServer
 		this.users = users;
 	}
 
-	public List<String> getCommands() {
-		return commands;
-	}
-
-	public void setCommands(List<String> commands) {
-		this.commands = commands;
+	public Map<Integer, List<String>> getCommands()
+	{
+		return this.commands;
 	}
 	
-	public void addCommand(String url)
+	public void setCommands(Map<Integer, List<String>> commands)
 	{
-		this.commands.add(url);
+		this.commands = commands;
 	}
 
+	public void resetCommands(int gameID)
+	{
+		this.commands.remove(gameID);
+	}
+	
+	public void addCommand(int gameID, String command)
+	{
+		if(!this.commands.containsKey(gameID)) {
+			this.commands.put(gameID, new ArrayList<String>());
+		}
+		this.commands.get(gameID).add(command);
+	}
+	
 	@Override
 	public synchronized void createGame() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -291,7 +301,5 @@ public class Server implements IServer
 	public synchronized void updateVersion(int gameID) 
 	{
 		games.get(gameID).incrementVersion();
-	}
-	
-	
+	}	
 }

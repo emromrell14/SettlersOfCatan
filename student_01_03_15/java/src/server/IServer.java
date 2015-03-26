@@ -3,6 +3,7 @@ package server;
 import java.util.List;
 import java.util.Map;
 
+import server.JSON.CommandList;
 import models.IGame;
 
 public interface IServer 
@@ -60,9 +61,10 @@ public interface IServer
 	public void setGames(Map<Integer, IGame> games);
 	public Map<Integer, IUser> getUsers();
 	public void setUsers(Map<Integer, IUser> users);
-	public List<String> getCommands();
-	public void setCommands(List<String> commands);
-	public void addCommand(String command);
+	public Map<Integer, List<String>> getCommands();
+	public void setCommands(Map<Integer, List<String>> commands);
+	public void resetCommands(int gameID);
+	public void addCommand(int gameID, String command);
 	void createGame(String name, int id, boolean randomTiles, boolean randomNumbers, boolean randomPorts);
 	public IUser getCurrentUser(String username);
 	String getGameModelJSON(int version, int gameID);
