@@ -108,7 +108,7 @@ public class JoinGamesHandler  extends Handler
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				server.updateVersion(gameID);
+				server.updateVersion(game.id());
 				
 				return resp;
 			}
