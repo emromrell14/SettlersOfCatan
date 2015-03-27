@@ -1,7 +1,11 @@
 package client.devcards;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import models.DevCard;
 import models.Game;
@@ -10,6 +14,7 @@ import models.ResourceList;
 import models.Status;
 import shared.definitions.ResourceType;
 import client.base.*;
+import client.map.MapController;
 import client.misc.IMessageView;
 import client.misc.MessageView;
 import facade.MasterManager;
@@ -26,6 +31,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IAction roadAction;
 	private MasterManager master;
 	private IMessageView error = new MessageView();
+	private ImageIcon devCardIcon = new ImageIcon("images" + File.separator + "building" + File.separator + "card.jpg");
 	
 	/**
 	 * DevCardController constructor
@@ -62,6 +68,10 @@ public class DevCardController extends Controller implements IDevCardController,
 		{
 			getBuyCardView().showModal();
 		}	
+		else
+		{
+			JOptionPane.showMessageDialog(null, "No more Development Cards in bank!", "Empty Bank!", JOptionPane.INFORMATION_MESSAGE, devCardIcon);
+		}
 	}
 
 	@Override
@@ -220,21 +230,21 @@ public class DevCardController extends Controller implements IDevCardController,
 					{
 						++monopoly;
 					}
-					monopolyBool = monopolyBool || (!d.isNew() && !d.hasBeenPlayed());
+					monopolyBool = monopolyBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
 					break;
 				case SOLDIER:
 					if(!d.hasBeenPlayed())
 					{
 						++soldier;
 					}
-					soldierBool = soldierBool || (!d.isNew() && !d.hasBeenPlayed());
+					soldierBool = soldierBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
 					break;
 				case YEAR_OF_PLENTY:
 					if(!d.hasBeenPlayed())
 					{
 						++yearOfPlenty;
 					}
-					yearBool = yearBool || (!d.isNew() && !d.hasBeenPlayed());
+					yearBool = yearBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
 					break;
 				case MONUMENT:
 					if(!d.hasBeenPlayed())
@@ -248,7 +258,7 @@ public class DevCardController extends Controller implements IDevCardController,
 					{
 						++roadBuilding;
 					}
-					roadBool = roadBool || (!d.isNew() && !d.hasBeenPlayed() && p.roadCount() > 1);
+					roadBool = roadBool || (!d.isNew() && !d.hasBeenPlayed() && p.roadCount() > 1 && p.canPlayDevCard());
 					break;
 				}
 			}

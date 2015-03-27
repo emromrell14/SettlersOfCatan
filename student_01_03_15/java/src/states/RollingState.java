@@ -130,6 +130,7 @@ public class RollingState implements IState
 	@Override
 	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
+		System.out.println("trying to place robber in Rolling State");
 		// TODO Auto-generated method stub
 		return false;
 	}

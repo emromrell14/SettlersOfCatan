@@ -25,7 +25,7 @@ public class RobPlayerCommand implements ICommand
 		String playerName = game.getPlayer(playerIndex).name();
 		String message1 = playerName + " moved the robber";
 		this.game.addActionToLog(playerIndex, message1);
-		if (!victimIndex.equals(-1))
+		if (victimIndex.value() != -1)
 		{
 			String victimName = game.getPlayer(victimIndex).name();
 			String message2 = playerName + " robbed " + victimName;

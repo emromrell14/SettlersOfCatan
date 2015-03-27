@@ -28,6 +28,7 @@ public class ModelManager extends Observable
 	public void updateModel(Game newGameModel) 
 	{
 		mGameModel = newGameModel;
+		System.out.println("ModelManager - " + mGameModel.version());
 		setModelChanged();
 		notifyObservers();
 	}
@@ -318,7 +319,7 @@ public class ModelManager extends Observable
 	 */
 	public boolean canAcceptTrade(Index playerIndex) 
 	{
-		return this.mGameModel.canAcceptTrade(playerIndex, false);
+		return this.mGameModel.canAcceptTrade(playerIndex, true);
 	}
 
 	/**

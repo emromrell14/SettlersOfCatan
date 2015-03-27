@@ -39,6 +39,7 @@ public class MapController extends Controller implements IMapController, Observe
 	private EdgeLocation road1 = null;
 	private EdgeLocation road2 = null;
 	public static boolean hasPlacedRobber = false;
+
 	
 	public MapController(IMapView view, IRobView robView) 
 	{
@@ -207,7 +208,9 @@ public class MapController extends Controller implements IMapController, Observe
 				if(road1 == null)
 				{
 					road1 = edgeLoc.getNormalizedLocation();
-					master.getPlayer().addRoad(new Road(playerIndex,road1));
+					Road r = new Road(playerIndex,road1);
+					master.getPlayer().addRoad(r);
+					master.getCurrentModel().board().addRoad(r);
 				}
 				else
 				{
@@ -287,7 +290,7 @@ public class MapController extends Controller implements IMapController, Observe
 	{
 		try 
 		{
-			getView().startDrop(pieceType, master.getPlayer().color(), state.isCancelAllowed());
+			getView().startDrop(pieceType, master.getPlayer().color(), roadBuilding? false : state.isCancelAllowed());
 		} 
 		catch (Exception e) 
 		{
@@ -309,13 +312,13 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void playRoadBuildingCard() 
-	{	
-		roadBuilding = true;
-		state = new PlayingState();
+	{		
 		int roadsLeft = master.getPlayer().roadCount();
-		startMove(PieceType.ROAD, true, false);	
 		if(roadsLeft > 1)
 		{
+			roadBuilding = true;
+			state = new PlayingState();
+			startMove(PieceType.ROAD, true, false);
 			startMove(PieceType.ROAD, true, false);	
 		}
 	}
@@ -361,6 +364,7 @@ public class MapController extends Controller implements IMapController, Observe
 					}
 					break;
 				case PLAYING:
+					
 					state = new PlayingState();
 					break;
 				case DISCARDING:
@@ -379,6 +383,12 @@ public class MapController extends Controller implements IMapController, Observe
 					////System.out.println("MapController update() should never get here.");
 			}
 			
+			if (soldierRob)
+			{
+				master.getCurrentModel().turnTracker().setStatus(Status.ROBBING);
+				state = new RobbingState();
+			}
+			
 			// THIS IS FOR ROUNDS 1 AND 2------------------
 			if (state.isPlayingFree())
 			{
@@ -387,6 +397,7 @@ public class MapController extends Controller implements IMapController, Observe
 				{
 					int roadsBuilt = p.roads().size();
 					int settlementsBuilt = p.settlements().size();
+					Status s = master.getCurrentModel().turnTracker().status();
 					
 					if (roadsBuilt == 1 && !FirstRoundDone)
 					{
@@ -401,7 +412,8 @@ public class MapController extends Controller implements IMapController, Observe
 						SecondRoundDone = true;
 						master.finishTurn(p.playerIndex());
 					}
-					else if ((roadsBuilt == 0 && settlementsBuilt == 0) || (roadsBuilt == 1 && settlementsBuilt == 1))
+					else if ((roadsBuilt == 0 && settlementsBuilt == 0 && s == Status.FIRSTROUND) || 
+							(roadsBuilt == 1 && settlementsBuilt == 1 && s == Status.SECONDROUND))
 					{
 						//Only let them build a settlement if they're not already doing it! (to avoid double fires)
 						if(!MapController.buildingSettlement)

@@ -26,7 +26,7 @@ public class Server implements IServer
 	private String host = "localhost";
 	private Map<Integer,IGame> games = new HashMap<Integer,IGame>();
 	private Map<Integer,IUser> users = new HashMap<Integer,IUser>();
-	private List<String> commands = new ArrayList<String>();
+	private Map<Integer, List<String>> commands = new HashMap<Integer, List<String>>();
 	
 	public static void main(String[] args)
 	{
@@ -101,18 +101,18 @@ public class Server implements IServer
 		
 		// HARD CODED USERS -------------------------------------------------------
 		User a = new User(0);
-		a.setUsername("aaa");
-		a.setPassword("aaa");
+		a.setUsername("a");
+		a.setPassword("a");
 		
 		User b = new User(1);
-		b.setUsername("bbb");
-		b.setPassword("bbb");
+		b.setUsername("b");
+		b.setPassword("b");
 		User c = new User(2);
-		c.setUsername("ccc");
-		c.setPassword("ccc");
+		c.setUsername("c");
+		c.setPassword("c");
 		User d = new User(3);
-		d.setUsername("ddd");
-		d.setPassword("ddd");
+		d.setUsername("d");
+		d.setPassword("d");
 		
 		users.put(0, a);
 		users.put(1, b);
@@ -127,25 +127,25 @@ public class Server implements IServer
 			p1.setColor(CatanColor.PUCE);
 			p1.setUser(a);
 			p1.setPlayerID(0);
-			p1.setName("aaa");
+			p1.setName("a");
 			p1.setPlayerIndex(new Index(0));
 			Player p2 = new Player();
 			p2.setColor(CatanColor.YELLOW);
 			p2.setUser(b);
 			p2.setPlayerID(1);
-			p2.setName("bbb");
+			p2.setName("b");
 			p2.setPlayerIndex(new Index(1));
 			Player p3 = new Player();
 			p3.setUser(c);
 			p3.setColor(CatanColor.BLUE);
-			p3.setName("ccc");
+			p3.setName("c");
 			p3.setPlayerID(2);
 			p3.setPlayerIndex(new Index(2));
 			Player p4 = new Player();
 			p4.setUser(d);
 			p4.setColor(CatanColor.GREEN);
 			p4.setPlayerID(3);
-			p4.setName("ddd");
+			p4.setName("d");
 			p4.setPlayerIndex(new Index(3));
 			
 			/*
@@ -162,7 +162,7 @@ public class Server implements IServer
 			g.addPlayer(p2);
 			g.addPlayer(p3);
 			g.addPlayer(p4);
-			
+//			g.turnTracker().setStatus(Status.ROLLING);
 		} 
 		catch (Exception e) 
 		{
@@ -239,22 +239,31 @@ public class Server implements IServer
 		this.users = users;
 	}
 
-	public List<String> getCommands() {
-		return commands;
-	}
-
-	public void setCommands(List<String> commands) {
-		this.commands = commands;
+	public Map<Integer, List<String>> getCommands()
+	{
+		return this.commands;
 	}
 	
-	public void addCommand(String url)
+	public void setCommands(Map<Integer, List<String>> commands)
 	{
-		this.commands.add(url);
+		this.commands = commands;
 	}
 
+	public void resetCommands(int gameID)
+	{
+		this.commands.remove(gameID);
+	}
+	
+	public void addCommand(int gameID, String command)
+	{
+		if(!this.commands.containsKey(gameID)) {
+			this.commands.put(gameID, new ArrayList<String>());
+		}
+		this.commands.get(gameID).add(command);
+	}
+	
 	@Override
 	public synchronized void createGame() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -292,6 +301,18 @@ public class Server implements IServer
 	{
 		games.get(gameID).incrementVersion();
 	}
-	
-	
+
+	@Override
+	public synchronized void checkForWinner(int gameID) 
+	{
+		IGame g = games.get(gameID);
+		for(Player p : g.players())
+		{
+			if(p.victoryPointCount() >= 10)
+			{
+				g.setWinner(p.playerIndex().value());
+				break;
+			}
+		}
+	}
 }

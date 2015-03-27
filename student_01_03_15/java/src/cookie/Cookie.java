@@ -105,13 +105,25 @@ public class Cookie
 	public void parseServerCookie(String encodedCookie)
 	{
 		String[] parts = encodedCookie.split(";");
-		String userCookie = parts[0].replace("catan.user=", "");
-		setCatanUser(userCookie.trim());
-		
-		if(parts.length > 1)
-		{
-			String gameCookie = parts[1].replace("catan.game=", "");
+		if(parts[0].contains("catan.user")) {
+			String userCookie = parts[0].replace("catan.user=", "");
+			setCatanUser(userCookie.trim());
+			
+			if(parts.length > 1)
+			{
+				String gameCookie = parts[1].replace("catan.game=", "");
+				setCatanGame(gameCookie.trim());
+			}
+		}
+		else if(parts[0].contains("catan.game")) {
+			String gameCookie = parts[0].replace("catan.game=", "");
 			setCatanGame(gameCookie.trim());
+			
+			if(parts.length > 1)
+			{
+				String userCookie = parts[1].replace("catan.user=", "");
+				setCatanUser(userCookie.trim());
+			}
 		}
 	}
 }
