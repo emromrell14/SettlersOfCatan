@@ -37,6 +37,23 @@ public class RegisterHandler extends Handler
 		String registerPassword = rr.getPassword();
 		int largestPlayerID = -1;
 		
+		//Check the length of the username
+		if(registerUsername.length() < 3 || registerUsername.length() > 7 || !registerUsername.matches("[a-zA-Z0-9_]+")) 
+		{
+			resp.setStatusCode(400);
+			resp.setBody("Failed to register - invalid username");
+			return resp;
+		}
+		
+		//Check the length of the password
+		if(registerPassword.length() < 5 || !registerPassword.matches("[a-zA-Z0-0_]+"))
+		{
+			resp.setStatusCode(400);
+			resp.setBody("Failed to register - invalid password");
+			return resp;
+		}
+		
+		//Check if this username already exists
 		Iterator it = server.getUsers().entrySet().iterator();
 		while(it.hasNext())
 		{
@@ -51,6 +68,7 @@ public class RegisterHandler extends Handler
 				return resp;
 			}
 		}
+		
 		User u = new User(largestPlayerID+1);
 		u.setPassword(registerPassword);
 		u.setUsername(registerUsername);
