@@ -135,7 +135,7 @@ public class DiscardingState implements IState
 	@Override
 	public boolean canPlaceRobber(HexLocation newRobberLocation) 
 	{
-		System.out.println("trying to place robber in Rolling State");
+//		System.out.println("trying to place robber in Rolling State");
 		return false;
 	}
 

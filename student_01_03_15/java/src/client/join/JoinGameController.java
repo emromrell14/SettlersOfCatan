@@ -144,7 +144,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(title.matches(".*\\w.*") && isAscii(title))
 		{
 			String response = master.createGame(randHexes, randNums, randPorts, title);
-			System.out.println("joinGameResponse:"+response);
+//			System.out.println("joinGameResponse:"+response);
 			GameInfoJSON newGame = new GameInfoJSON();
 			newGame = GameInfoJSON.fromJSON(response);
 
@@ -207,7 +207,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		localPlayer.setColorCatan(color);
 		String response = master.joinGame(localGame.getId(), color.toString().toLowerCase());
-		System.out.println("joinGameController RESPONSE: " + response);
+//		System.out.println("joinGameController RESPONSE: " + response);
 		
 		// Check for failure...it won't fail if same color is chosen
 		if(response.equals("Success"))
@@ -233,7 +233,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void generateGameList()
 	{
 		String JSON = master.getGameList();
-		System.out.println("JoinGameController json:" + JSON + ":");
+//		System.out.println("JoinGameController json:" + JSON + ":");
 		ArrayList<GameInfo> games = new ArrayList<GameInfo>();
 		//GameInfoJSON gameInfo = new GameInfoJSON();
 		GameInfoJSON[] gameInfoArray;
@@ -290,7 +290,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			/*if(this.getJoinGameView().isModalShowing()) {
 				this.getJoinGameView().closeModal();
 			}*/
-			System.out.println("UPDATING joinGameController.");
+//			System.out.println("UPDATING joinGameController.");
 			ModelManager manager = (ModelManager) o;
 			gameModel = manager.getCurrentModel();
 			
