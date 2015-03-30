@@ -34,17 +34,17 @@ public class Game implements IGame
 		mTurnTracker = new TurnTracker();
 		mBank = new ResourceList();
 		mDevCards = new ArrayList<DevCard>();
-		for(int i=0; i<2; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new Monopoly());
 			mDevCards.add(new Monument());
 			mDevCards.add(new YearOfPlenty());
 		}
-		for(int i=0; i<5; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new RoadBuild());
 		}
-		for(int i=0; i<14; i++)
+		for(int i=0; i<1; i++)
 		{
 			mDevCards.add(new Soldier());
 		}
@@ -71,12 +71,12 @@ public class Game implements IGame
 		for(int i=0; i<2; i++)
 		{
 			mDevCards.add(new Monopoly());
-			mDevCards.add(new Monument());
+			mDevCards.add(new RoadBuild());
 			mDevCards.add(new YearOfPlenty());
 		}
 		for(int i=0; i<5; i++)
 		{
-			mDevCards.add(new RoadBuild());
+			mDevCards.add(new Monument());
 		}
 		for(int i=0; i<14; i++)
 		{
@@ -456,6 +456,18 @@ public class Game implements IGame
 
 	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
 	{
+		// check that this hex is not water
+		for (Hex h : this.mBoard.hexes())
+		{
+			if (h.getHexLocation().equals(loc))
+			{
+				if (h.resource().equals(HexType.WATER))
+				{
+					return false;
+				}
+			}
+		}
+		
 		if (player != null && !this.mTurnTracker.currentTurn().equals(player.playerIndex()))
 		{
 			return false;
@@ -466,7 +478,7 @@ public class Game implements IGame
 		}
 		if (this.mRobber.location().equals(loc))
 		{
-		//	return false;
+			return false;
 		}
 		
 		if (victim != null && victim.resources().isEmpty())
@@ -586,12 +598,24 @@ public class Game implements IGame
 		
 		// Player gains a new card, if monument it will be old, new otherwise
 		DevCard d = this.mDevCards.get((int)(Math.random() * (this.mDevCards.size()-1)));
-		this.mDevCards.remove(d);
+		removeDevCardFromList(d);
 		player.addDevCard(d);
 		
 		// Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
 		player.addResourcesToList(0, -1, -1, -1, 0);
 		
+	}
+	public void removeDevCardFromList(DevCard d)
+	{
+		//testing git
+		for (int i = 0; i < mDevCards.size(); i++)
+		{
+			if (d.type() == mDevCards.get(i).type())
+			{
+				mDevCards.remove(i);
+				break;
+			}
+		}
 	}
 
 	public boolean canPlayYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) 
@@ -1063,7 +1087,7 @@ public class Game implements IGame
 		}
 		
 		// check if the trade is for this player
-		if (!this.trade().receiver().equals(playerIndex))
+		if (this.trade().receiver().value() != playerIndex.value())
 		{
 			return false;
 		}

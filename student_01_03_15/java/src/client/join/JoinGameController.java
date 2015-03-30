@@ -227,7 +227,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	
 	private boolean isAscii(String word) 
 	{
-		return (word.matches("[a-zA-Z0-9<,>.?/:;\"\'\\!@#$%^&*()_~`]+"));
+		return (word.matches("[a-zA-Z0-9<,>.?/:;\"\'\\!@#$%^&*()_~` ]+"));
 	}
 	
 	public void generateGameList()
@@ -336,6 +336,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				{
 					//System.out.println("NULLLLLLLLLLLL PLAYERRRRRRRRRRRR (joinGameController)");
 				}
+			}
+			
+			if(selectColorView.getSelectedColor() != null)
+			{
+				getSelectColorView().setColorEnabled(selectColorView.getSelectedColor(), false);
 			}
 		}
 
