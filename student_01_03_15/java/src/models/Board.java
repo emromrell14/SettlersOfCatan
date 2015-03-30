@@ -82,6 +82,19 @@ public class Board
 		mRoads = new ArrayList<Road>();
 		mSettlements = new ArrayList<Building>();
 		mCities = new ArrayList<Building>();
+		
+		if(randomTiles)
+		{
+			this.randomizeHexTypes();
+		}
+		if(randomNumbers)
+		{
+			this.randomizeTokenValues();
+		}
+		if(randomPorts)
+		{
+			this.randomizePorts();
+		}
 	}
 	
 	private void randomizeHexTypes()
