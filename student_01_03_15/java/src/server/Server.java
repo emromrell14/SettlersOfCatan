@@ -70,7 +70,7 @@ public class Server implements IServer
 		server.createContext("/game/addAI",new AddAIHandler(this));
 		server.createContext("/game/listAI",new ListAIHandler(this));
 		
-		//since all of the moves requests return the same thing, we only need one object for all of the differen requests
+		//since all of the moves requests return the same thing, we only need one object for all of the different requests
 		MovesHandler movesHandler = new MovesHandler(this);
 		server.createContext("/moves/sendChat", movesHandler);
 		server.createContext("/moves/rollNumber", movesHandler);
