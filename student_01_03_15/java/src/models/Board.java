@@ -437,5 +437,26 @@ public class Board
 		
 		return null;
 	}
+
+	public boolean checkForBuildingOfAnotherPlayer(Index playerIndex, VertexLocation location) {
+		location = location.getNormalizedLocation();
+		for(Building settlement : this.mSettlements)
+		{
+			VertexLocation buildingLocation = settlement.location().getNormalizedLocation();
+			if(buildingLocation.equals(location) && !settlement.owner().equals(playerIndex))
+			{
+				return true;
+			}
+		}
+		for(Building city : this.mCities)
+		{
+			VertexLocation buildingLocation = city.location().getNormalizedLocation();
+			if(buildingLocation.equals(location) && !city.owner().equals(playerIndex))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

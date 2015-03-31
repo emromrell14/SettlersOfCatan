@@ -7,8 +7,10 @@ import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class Game implements IGame
@@ -895,7 +897,85 @@ public class Game implements IGame
 		{
 			return false;
 		}
+		
+		// Check for the weird condition...
+		if(this.buildingThroughAnotherPlayer(player, roadLocation)) {
+			return false;
+		}
 		return true;
+	}
+	public boolean buildingThroughAnotherPlayer(Player player, EdgeLocation roadLocation) 
+	{
+		roadLocation = roadLocation.getNormalizedLocation();
+		HexLocation thisHex = roadLocation.getHexLoc();
+		switch(roadLocation.getDir().getLengthenedDirection()) 
+		{
+			case NorthWest:
+				HexLocation northwestHex = thisHex.getNeighborLoc(EdgeDirection.NorthWest);
+				if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.West)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.North)) || 
+							player.checkForRoad(new EdgeLocation(northwestHex, EdgeDirection.NorthEast)))
+					{
+						return false;
+					}
+					return true;
+				} 
+				else if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthWest)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.SouthWest)) ||
+							player.checkForRoad(new EdgeLocation(northwestHex, EdgeDirection.South)))
+					{
+						return false;
+					}
+					return true;
+				}
+				return false;
+			case North:
+				HexLocation northHex = thisHex.getNeighborLoc(EdgeDirection.North);
+				if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthWest)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.NorthEast)) ||
+							player.checkForRoad(new EdgeLocation(northHex, EdgeDirection.SouthEast)))
+					{
+						return false;
+					}
+					return true;
+				}
+				else if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthEast)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.NorthWest)) ||
+							player.checkForRoad(new EdgeLocation(northHex, EdgeDirection.SouthWest)))
+					{
+						return false;
+					}
+					return true;
+				}
+				return false;
+			case NorthEast:
+				HexLocation northeastHex = thisHex.getNeighborLoc(EdgeDirection.NorthEast);
+				if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.East)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.North)) || 
+							player.checkForRoad(new EdgeLocation(northeastHex, EdgeDirection.NorthWest)))
+					{
+						return false;
+					}
+					return true;
+				} 
+				else if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthEast)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.SouthEast)) ||
+							player.checkForRoad(new EdgeLocation(northeastHex, EdgeDirection.South)))
+					{
+						return false;
+					}
+					return true;
+				}
+				return false;
+			default:
+				return true;		
+		}
 	}
 	@Override
 	public void buildRoad(Index playerIndex, EdgeLocation roadLocation,	boolean free) throws IllegalStateException
