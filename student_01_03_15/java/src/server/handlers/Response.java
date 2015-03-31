@@ -70,7 +70,7 @@ public class Response
 		{
 			e.printStackTrace();
 		}
-		
+		exchange.close();
 	}
 	
 	public void setCookie (String key, String value)
