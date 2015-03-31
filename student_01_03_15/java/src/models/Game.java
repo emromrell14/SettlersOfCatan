@@ -399,7 +399,7 @@ public class Game implements IGame
 		String name = this.getPlayer(playerIndex).name();
 		
 		// add chat to message list
-		this.mChat.add(new Message(message,name));
+		this.mChat.add(new Message(message.substring(0, Math.min(message.length(), 200)), name));
 	}
 	
 	public boolean canRollDice(Index playerIndex, int number)

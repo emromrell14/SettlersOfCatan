@@ -14,7 +14,6 @@ import models.ResourceList;
 import models.Status;
 import shared.definitions.ResourceType;
 import client.base.*;
-import client.map.MapController;
 import client.misc.IMessageView;
 import client.misc.MessageView;
 import facade.MasterManager;
