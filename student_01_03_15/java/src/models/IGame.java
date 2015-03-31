@@ -204,7 +204,7 @@ public interface IGame
 	 * 
 	 * @param playerIndex
 	 */
-	public void buyDevCard(Index playerIndex);
+	public void buyDevCard(Index playerIndex) throws IllegalStateException;
 	
 	/**
 	 * Player will gain one of each of the specified cards types
@@ -214,7 +214,7 @@ public interface IGame
 	 * @param resource1
 	 * @param resource2
 	 */
-	public void playYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2);
+	public void playYearOfPlenty(Index playerIndex, ResourceType resource1, ResourceType resource2) throws IllegalStateException;
 	
 	/**
 	 * Plays two of the player's unused roads on the specified location
@@ -225,7 +225,7 @@ public interface IGame
 	 * @param spot1
 	 * @param spot2
 	 */
-	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2);
+	public void playRoadBuilding(Index playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws IllegalStateException;
 	
 	/**
 	 * Moves the robber, steals a resource from another player, removes soldier card, adds to soldier count, and check largest army
@@ -234,7 +234,7 @@ public interface IGame
 	 * @param victimIndex
 	 * @param location
 	 */
-	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location);
+	public void playSoldier(Index playerIndex, Index victimIndex, HexLocation location) throws IllegalStateException;
 	
 	/**
 	 * Removes monopoly card, steals all resources of specified types from players
@@ -242,14 +242,14 @@ public interface IGame
 	 * @param playerIndex
 	 * @param resource
 	 */
-	public void playMonopoly(Index playerIndex, ResourceType resource);
+	public void playMonopoly(Index playerIndex, ResourceType resource) throws IllegalStateException;
 	
 	/**
 	 * Removes monument card, gains one victory point
 	 * 
 	 * @param playerIndex
 	 */
-	public void playMonument(Index playerIndex);
+	public void playMonument(Index playerIndex) throws IllegalStateException;
 	
 	/**
 	 * Removes a road from player, adds a road to the board, removes resources from player (if not free), checks for longest road
@@ -258,7 +258,7 @@ public interface IGame
 	 * @param roadLocation
 	 * @param free
 	 */
-	public void buildRoad(Index playerIndex, EdgeLocation roadLocation, boolean free);
+	public void buildRoad(Index playerIndex, EdgeLocation roadLocation, boolean free) throws IllegalStateException;
 	
 	/**
 	 * Removes a settlement from player, adds a settlement to the board, removes resources from player (if not free), adds victory point
@@ -267,7 +267,7 @@ public interface IGame
 	 * @param vertexLocation
 	 * @param free
 	 */
-	public void buildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free);
+	public void buildSettlement(Index playerIndex, VertexLocation vertexLocation, boolean free) throws IllegalStateException;
 	
 	/**
 	 * Removes a city from player, removes a settlement from the board, adds a city to the board, removes resources from player, adds victory point
@@ -275,7 +275,7 @@ public interface IGame
 	 * @param playerIndex
 	 * @param vertexLocation
 	 */
-	public void buildCity(Index playerIndex, VertexLocation vertexLocation);
+	public void buildCity(Index playerIndex, VertexLocation vertexLocation) throws IllegalStateException;
 	
 	/**
 	 * Puts the trade in the turn tracker
@@ -284,7 +284,7 @@ public interface IGame
 	 * @param receiverIndex
 	 * @param offer
 	 */
-	public void offerTrade(Index playerIndex, Index receiverIndex, ResourceList offer);
+	public void offerTrade(Index playerIndex, Index receiverIndex, ResourceList offer) throws IllegalStateException;
 	
 	/**
 	 * Swaps the specified resources (if accepted), and trade offer is reset
@@ -292,7 +292,7 @@ public interface IGame
 	 * @param playerIndex
 	 * @param willAccept
 	 */
-	public void acceptTrade(Index playerIndex, boolean willAccept);
+	public void acceptTrade(Index playerIndex, boolean willAccept) throws IllegalStateException;
 	
 	/**
 	 * Gives up amount of input resources, and gets back one outputResource
@@ -302,7 +302,7 @@ public interface IGame
 	 * @param inputResource What the player is GIVING
 	 * @param outputResource What the player is GETTING
 	 */
-	public void maritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource);
+	public void maritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource) throws IllegalStateException;
 	
 	/**
 	 * Give up the discarded resources to the bank, and if you're the last one to discard- change to ROBBING state
@@ -310,7 +310,7 @@ public interface IGame
 	 * @param playerIndex
 	 * @param discardedCards
 	 */
-	public void discardCards(Index playerIndex, ResourceList discardedCards);
+	public void discardCards(Index playerIndex, ResourceList discardedCards) throws IllegalStateException;
 	
 	void incrementVersion();
 }
