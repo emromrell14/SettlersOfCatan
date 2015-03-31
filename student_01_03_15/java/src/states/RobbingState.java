@@ -128,7 +128,7 @@ public class RobbingState implements IState
 		// check that this hex is not water
 		for (Hex h : this.mMaster.getCurrentModel().board().hexes())
 		{
-			if (h.getHexLocation().equals(newRobberLocation))
+			if (h.location().equals(newRobberLocation))
 			{
 				if (h.resource().equals(HexType.WATER))
 				{

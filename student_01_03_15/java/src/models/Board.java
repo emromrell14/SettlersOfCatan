@@ -417,7 +417,7 @@ public class Board
 	{
 		for (Hex h : mHexes)
 		{
-			if (loc.getX() == h.getHexLocation().getX() && loc.getY() == h.getHexLocation().getY())
+			if (loc.getX() == h.location().getX() && loc.getY() == h.location().getY())
 			{
 				return h;
 			}
@@ -431,7 +431,7 @@ public class Board
 		{
 			if(mHexes.get(i).resource() == HexType.DESERT)
 			{
-				return mHexes.get(i).getHexLocation();
+				return mHexes.get(i).location();
 			}
 		}
 		

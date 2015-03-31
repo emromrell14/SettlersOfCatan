@@ -143,7 +143,7 @@ public class Building
 				return false;
 		}
 		
-		HexLocation hexLocation = h.getHexLocation();
+		HexLocation hexLocation = h.location();
 		return hexLocation.equals(loc1) || hexLocation.equals(loc2) || hexLocation.equals(loc3);
 	}
 }
