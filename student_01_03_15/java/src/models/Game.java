@@ -606,6 +606,10 @@ public class Game implements IGame
 		// Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
 		player.addResourcesToList(0, -1, -1, -1, 0);
 		
+		this.mBank.addWheat(1);
+		this.mBank.addOre(1);
+		this.mBank.addSheep(1);
+		
 	}
 	public void removeDevCardFromList(DevCard d)
 	{
@@ -1296,6 +1300,7 @@ public class Game implements IGame
 		for (ResourceType r : ResourceType.values())
 		{
 			player.resources().addResource(r, -discardedCards.getResource(r));
+			this.mBank.addResource(r, discardedCards.getResource(r));
 		}
 		player.setHasDiscarded(true);
 		
@@ -1381,6 +1386,7 @@ public class Game implements IGame
 				if (b.isOnHex(h) && !this.mRobber.location().equals(h.location()))
 				{
 					p.resources().addResource(h.resource().resourceType(), 1);
+					this.mBank.addResource(h.resource().resourceType(), -1);
 				}
 			}
 			for (Building b : p.cities())
@@ -1389,6 +1395,7 @@ public class Game implements IGame
 				if (b.isOnHex(h) && !this.mRobber.location().equals(h.location()))
 				{
 					p.resources().addResource(h.resource().resourceType(), 2);
+					this.mBank.addResource(h.resource().resourceType(), -2);
 				}
 			}
 		}
