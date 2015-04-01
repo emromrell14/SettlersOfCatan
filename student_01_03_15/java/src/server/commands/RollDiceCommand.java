@@ -19,9 +19,17 @@ public class RollDiceCommand implements ICommand
 	@Override
 	public void execute()
 	{
+		try
+		{
+			game.rollDice(playerIndex, number);
+		}
+		catch(IllegalStateException i)
+		{
+			i.printStackTrace();
+			return;
+		}
 		String playerName = game.getPlayer(playerIndex).name();
 		String message = playerName + " rolled a " + number;
 		this.game.addActionToLog(playerIndex, message);
-		game.rollDice(playerIndex, number);
 	}
 }

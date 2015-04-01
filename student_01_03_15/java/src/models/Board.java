@@ -107,6 +107,12 @@ public class Board
 			HexType temp = mHexes.get(index1).resource();
 			mHexes.get(index1).setResource(mHexes.get(index2).resource());
 			mHexes.get(index2).setResource(temp);
+			if(mHexes.get(index1).equals(HexType.DESERT) || mHexes.get(index2).equals(HexType.DESERT))
+			{
+				TokenValue t = mHexes.get(index1).number();
+				mHexes.get(index1).setTokenValue(mHexes.get(index2).number());
+				mHexes.get(index2).setTokenValue(t);
+			}
 		}
 	}
 	
