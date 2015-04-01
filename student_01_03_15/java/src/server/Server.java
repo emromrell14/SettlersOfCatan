@@ -8,13 +8,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import models.Building;
 import models.Game;
 import models.IGame;
 import models.Index;
 import models.Message;
 import models.Player;
+import models.Road;
+import models.Status;
 import server.handlers.*;
+import shared.definitions.BuildingType;
 import shared.definitions.CatanColor;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import JSONmodels.ClientModelJSON;
 
 import com.sun.net.httpserver.HttpServer;
@@ -122,6 +131,25 @@ public class Server implements IServer
 		
 		try 
 		{
+			Building settlement1 = new Building(new Index(0), new VertexLocation(new HexLocation(0,0), VertexDirection.NorthWest));
+			Building settlement2 = new Building(new Index(0), new VertexLocation(new HexLocation(1,0), VertexDirection.NorthEast));
+			Building settlement3 = new Building(new Index(1), new VertexLocation(new HexLocation(-1,1), VertexDirection.NorthWest));
+			Building settlement4 = new Building(new Index(1), new VertexLocation(new HexLocation(0,1), VertexDirection.NorthEast));
+			Building settlement5 = new Building(new Index(2), new VertexLocation(new HexLocation(0,-1), VertexDirection.NorthWest));
+			Building settlement6 = new Building(new Index(2), new VertexLocation(new HexLocation(2,-1), VertexDirection.East));
+			Building settlement7 = new Building(new Index(3), new VertexLocation(new HexLocation(0,2), VertexDirection.NorthEast));
+			Building settlement8 = new Building(new Index(3), new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthEast));
+
+			Road road1 = new Road(new Index(0), new EdgeLocation(new HexLocation(0,0), EdgeDirection.North));
+			Road road2 = new Road(new Index(0), new EdgeLocation(new HexLocation(1,0), EdgeDirection.North));
+			Road road3 = new Road(new Index(1), new EdgeLocation(new HexLocation(0,1), EdgeDirection.NorthEast));
+			Road road4 = new Road(new Index(1), new EdgeLocation(new HexLocation(-1,1), EdgeDirection.NorthWest));
+			Road road5 = new Road(new Index(2), new EdgeLocation(new HexLocation(0,-1), EdgeDirection.NorthWest));
+			Road road6 = new Road(new Index(2), new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest));
+			Road road7 = new Road(new Index(3), new EdgeLocation(new HexLocation(0,2), EdgeDirection.NorthEast));
+			Road road8 = new Road(new Index(3), new EdgeLocation(new HexLocation(1,-1), EdgeDirection.NorthEast));
+			
+			
 			//Game g = new Game(false,false,false);
 			Player p1 = new Player();
 			p1.setColor(CatanColor.PUCE);
@@ -129,24 +157,51 @@ public class Server implements IServer
 			p1.setPlayerID(0);
 			p1.setName("a");
 			p1.setPlayerIndex(new Index(0));
+			p1.addSettlement(settlement1);
+			p1.addSettlement(settlement2);
+			p1.addRoad(road1);
+			p1.addRoad(road2);
+			p1.setRoadCount(13);
+			p1.setSettlementCount(3);
+			
 			Player p2 = new Player();
 			p2.setColor(CatanColor.YELLOW);
 			p2.setUser(b);
 			p2.setPlayerID(1);
 			p2.setName("b");
 			p2.setPlayerIndex(new Index(1));
+			p2.addSettlement(settlement3);
+			p2.addSettlement(settlement4);
+			p2.addRoad(road3);
+			p2.addRoad(road4);
+			p2.setRoadCount(13);
+			p2.setSettlementCount(3);
+			
 			Player p3 = new Player();
 			p3.setUser(c);
 			p3.setColor(CatanColor.BLUE);
 			p3.setName("c");
 			p3.setPlayerID(2);
 			p3.setPlayerIndex(new Index(2));
+			p3.addSettlement(settlement5);
+			p3.addSettlement(settlement6);
+			p3.addRoad(road5);
+			p3.addRoad(road6);
+			p3.setRoadCount(13);
+			p3.setSettlementCount(3);
+			
 			Player p4 = new Player();
 			p4.setUser(d);
 			p4.setColor(CatanColor.GREEN);
 			p4.setPlayerID(3);
 			p4.setName("d");
 			p4.setPlayerIndex(new Index(3));
+			p4.addSettlement(settlement7);
+			p4.addSettlement(settlement8);
+			p4.addRoad(road7);
+			p4.addRoad(road8);
+			p4.setRoadCount(13);
+			p4.setSettlementCount(3);
 			
 			/*
 			g.setName("game 1");
@@ -158,11 +213,30 @@ public class Server implements IServer
 			*/
 			createGame("game 1", 0, false, false, false);
 			Game g = (Game)(games.get(0));
+			g.board().addRoad(road1);
+			g.board().addRoad(road2);
+			g.board().addRoad(road3);
+			g.board().addRoad(road4);
+			g.board().addRoad(road5);
+			g.board().addRoad(road6);
+			g.board().addRoad(road7);
+			g.board().addRoad(road8);
+
+			g.board().addSettlement(settlement1);
+			g.board().addSettlement(settlement2);
+			g.board().addSettlement(settlement3);
+			g.board().addSettlement(settlement4);
+			g.board().addSettlement(settlement5);
+			g.board().addSettlement(settlement6);
+			g.board().addSettlement(settlement7);
+			g.board().addSettlement(settlement8);
+
+			
 			g.addPlayer(p1);
 			g.addPlayer(p2);
 			g.addPlayer(p3);
 			g.addPlayer(p4);
-//			g.turnTracker().setStatus(Status.ROLLING);
+			g.turnTracker().setStatus(Status.ROLLING);
 		} 
 		catch (Exception e) 
 		{
@@ -274,7 +348,7 @@ public class Server implements IServer
 		{
 			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)it.next();
-			System.out.println(username + " " +((User)pair.getValue()).getUsername() );
+//			System.out.println(username + " " +((User)pair.getValue()).getUsername() );
 			if(username.equals(((User)pair.getValue()).getUsername()))
 			{
 				return (IUser)pair.getValue();

@@ -27,7 +27,7 @@ public class LoadGamesHandler extends Handler
 	@Override
 	public Response processRequest(Request req) 
 	{
-		System.out.println("server game size before:"+server.getGames().size());
+//		System.out.println("server game size before:"+server.getGames().size());
 		boolean success = true;
 		LoadGamesRequest l = LoadGamesRequest.fromJSON(req.getBody());
 		
@@ -38,7 +38,7 @@ public class LoadGamesHandler extends Handler
 			ClientModelJSON c = ClientModelJSON.fromJSON(gameJSON);
 			IGame g = c.getGameObject();
 			server.loadGame(g);
-			System.out.println("server game size after:"+server.getGames().size());
+//			System.out.println("server game size after:"+server.getGames().size());
 		} 
 		catch (FileNotFoundException e) 
 		{

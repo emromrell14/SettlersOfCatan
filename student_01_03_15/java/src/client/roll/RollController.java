@@ -1,7 +1,11 @@
 package client.roll;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.Timer;
 
 import models.Status;
 import states.DiscardingState;
@@ -12,6 +16,8 @@ import states.RollingState;
 import states.SetupState;
 import client.base.*;
 import facade.MasterManager;
+
+import javax.swing.Timer;
 
 
 /**
@@ -59,17 +65,12 @@ public class RollController extends Controller implements IRollController, Obser
 		int rollNum = die1 + die2;
 		this.resultView.setRollValue(rollNum);
 		
-		// HACK TO NEVER ROLL A 7
-//			if (rollNum == 7) rollNum++;
+//		 HACK TO NEVER ROLL A 7
+			if (rollNum == 7) rollNum++;
 //			System.out.println("HACK NEVER ROLL A 7");
 		// ---------------------
 		master.rollDice(master.getPlayerIndex(), rollNum);
 		getResultView().showModal();
-//		master.getCurrentModel().turnTracker().setStatus(Status.PLAYING);
-//		if (rollNum == 7)
-//		{
-//			master.getCurrentModel().turnTracker().setStatus(Status.DISCARDING);
-//		}
 	}
 
 	@Override
@@ -100,6 +101,7 @@ public class RollController extends Controller implements IRollController, Obser
 						if (!getRollView().isModalShowing() && !master.hasRolled)
 						{
 							getRollView().showModal();
+							goTimers();
 						}
 					}
 					state = new RollingState();
@@ -116,6 +118,45 @@ public class RollController extends Controller implements IRollController, Obser
 				////System.out.println("RollController update() should never get here.");
 		}
 	}
+	public void goTimers()
+	{
+//		Code for automatic rolls
+		getRollView().setMessage("three");
+		Timer timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  goTimer2();
+			}
+		});
+		timer.setRepeats(false);
+		timer.start();
+	}
+	public void goTimer2()
+	{
+		  getRollView().setMessage("two");
+		Timer timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  goTimer3();
+			}
+		});
+		timer.setRepeats(false);
+		timer.start();
+	}
+	public void goTimer3()
+	{
+		  getRollView().setMessage("one!");
+		Timer timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  if(!master.hasRolled)
+				  {
+					  getRollView().closeModal();
+					  rollDice();
+				  }
+			}
+		});
+		timer.setRepeats(false);
+		timer.start();
+	}
+	
 
 }
 

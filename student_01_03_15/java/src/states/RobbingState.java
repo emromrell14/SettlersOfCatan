@@ -136,7 +136,7 @@ public class RobbingState implements IState
 				}
 			}
 		}
-		System.out.println("trying to place robber in Robbing State");
+//		System.out.println("trying to place robber in Robbing State");
 		return mMaster.canPlaceRobber(newRobberLocation);
 	}
 

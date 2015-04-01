@@ -196,7 +196,6 @@ public class DevCardController extends Controller implements IDevCardController,
 		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, false);
 		getPlayCardView().setCardEnabled(DevCardType.SOLDIER, false);
 		getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, false);
-		getPlayCardView().setCardEnabled(DevCardType.MONUMENT, false);
 		getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, false);
 	}
 
@@ -226,7 +225,7 @@ public class DevCardController extends Controller implements IDevCardController,
 				}
 				amount.put(d.type(), amount.get(d.type()) + 1);
 			}
-			
+
 			for(DevCardType type : DevCardType.values())
 			{
 				this.getPlayCardView().setCardAmount(type, amount.get(type));
