@@ -49,7 +49,7 @@ public class Player //implements IPlayer
 			System.out.println(e);
 		}
 		this.mPlayerID = 0;
-		this.mResources = new ResourceList(90,90,90,90,90);//this needs to change
+		this.mResources = new ResourceList(0,0,0,0,0);//this needs to change
 		this.mSoldierCount = 0;
 		this.mVictoryPointCount = 0;
 		this.mRoadCount = 15;
