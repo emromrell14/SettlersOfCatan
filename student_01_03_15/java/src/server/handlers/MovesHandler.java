@@ -84,7 +84,7 @@ public class MovesHandler extends Handler
 			break;
 		case "/moves/Year_of_Plenty":
 			YearOfPlentyRequest y = YearOfPlentyRequest.fromJSON(jsonBody);
-			serverFacade.executePlayYearOfPlentyCommand(new Index(y.getPlayerIndex()), ResourceType.valueOf(y.getResource1().toUpperCase()), ResourceType.valueOf(y.getResource1().toUpperCase()));
+			serverFacade.executePlayYearOfPlentyCommand(new Index(y.getPlayerIndex()), ResourceType.valueOf(y.getResource1().toUpperCase()), ResourceType.valueOf(y.getResource2().toUpperCase()));
 			break;
 		case "/moves/Road_Building":
 			RoadBuildingRequest rb = RoadBuildingRequest.fromJSON(jsonBody);
