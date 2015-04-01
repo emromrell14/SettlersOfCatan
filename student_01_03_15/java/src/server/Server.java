@@ -269,9 +269,10 @@ public class Server implements IServer
 	
 	public synchronized IUser getCurrentUser(String username)
 	{
-		Iterator it = users.entrySet().iterator();
+		Iterator<?> it = users.entrySet().iterator();
 		while(it.hasNext())
 		{
+			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)it.next();
 //			System.out.println(username + " " +((User)pair.getValue()).getUsername() );
 			if(username.equals(((User)pair.getValue()).getUsername()))

@@ -32,9 +32,10 @@ public class LoginHandler extends Handler
 		String body = req.getBody();
 		LoginRequest loginRequest = LoginRequest.fromJSON(body);
 		
-		Iterator it = server.getUsers().entrySet().iterator();
+		Iterator<?> it = server.getUsers().entrySet().iterator();
 		while(it.hasNext())
 		{
+			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)it.next();
 			String loginUsername = loginRequest.getUsername();
 			String loginPassword = loginRequest.getPassword();

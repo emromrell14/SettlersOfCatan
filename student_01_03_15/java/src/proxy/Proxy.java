@@ -11,6 +11,7 @@ import cookie.Cookie;
 
 public class Proxy implements IProxy
 {
+	public static String port;
 	private HttpURLConnection mCon;
 	private Cookie mCookie;
 	
@@ -35,7 +36,7 @@ public class Proxy implements IProxy
 	
 	public synchronized String post(String requestPath, String json)
 	{
-		String url ="http://localhost:8081" + requestPath;
+		String url ="http://localhost:" + port + requestPath;
 		URL obj;
 		try 
 		{
@@ -97,7 +98,7 @@ public class Proxy implements IProxy
 	
 	public synchronized String get(String requestPath)
 	{
-		String url ="http://localhost:8081" + requestPath;
+		String url ="http://localhost:" + port + requestPath;
 		URL obj;
 		try 
 		{

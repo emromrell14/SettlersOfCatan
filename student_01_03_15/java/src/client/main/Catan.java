@@ -3,6 +3,7 @@ package client.main;
 import javax.swing.*;
 
 import poller.Poller;
+import proxy.Proxy;
 import client.catan.*;
 import client.login.*;
 import client.join.*;
@@ -63,6 +64,15 @@ public class Catan extends JFrame
 			{
 				new Catan();
 				
+				if(args.length < 1) 
+				{
+					Proxy.port = "8081";
+				}
+				else 
+				{
+					Proxy.port = args[0];
+				}
+					
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);
 				playerWaitingView.setController(playerWaitingController);

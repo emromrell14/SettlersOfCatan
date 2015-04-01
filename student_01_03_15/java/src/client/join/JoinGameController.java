@@ -300,18 +300,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				// Add colors the first time through, but not again
 				if(!takenColors.contains(p.color().name()) && takenColors.size() < NUMBER_OF_PLAYERS)
 					takenColors.add(p.color().name()); 
-				
-//				for(int k = 0; k < takenColors.size(); ++k)
-//				{
-//					//System.out.print(takenColors.get(k) + " " );
-//				}
+
 				// Check to replace a player's old color with their new one
 				if(takenColors.size() != 0 && i < takenColors.size())
 				{
-	//				//System.out.println(p.color().name() +"="+takenColors.get(i)+"--------------Taken colors" + takenColors.get(i) + " INDEX: " + i);
 					if(!takenColors.get(i).equals(p.color().name()))
 					{
-//						//System.out.println("$$$$$$$$$$$ enabling " + takenColors.get(i));
 						getSelectColorView().setColorEnabled(CatanColor.valueOf(takenColors.get(i)), true); 
 						takenColors.set(i, p.color().name());
 					}
@@ -341,6 +335,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			if(selectColorView.getSelectedColor() != null)
 			{
 				getSelectColorView().setColorEnabled(selectColorView.getSelectedColor(), false);
+			}
+		}
+		else {
+			//This is quite a hack. Just shut down any left over modals when the game is joined
+			if(this.getJoinGameView().isModalShowing()) {
+				this.getJoinGameView().closeModal();
 			}
 		}
 

@@ -1,7 +1,11 @@
 package client.roll;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.Timer;
 
 import models.Status;
 import states.DiscardingState;
@@ -12,6 +16,8 @@ import states.RollingState;
 import states.SetupState;
 import client.base.*;
 import facade.MasterManager;
+
+import javax.swing.Timer;
 
 
 /**
@@ -100,6 +106,15 @@ public class RollController extends Controller implements IRollController, Obser
 						if (!getRollView().isModalShowing() && !master.hasRolled)
 						{
 							getRollView().showModal();
+//							Code for automatic rolls
+							Timer timer = new Timer(3000, new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									  getRollView().closeModal();
+									  rollDice();
+								}
+								});
+								timer.setRepeats(false);
+								timer.start();
 						}
 					}
 					state = new RollingState();

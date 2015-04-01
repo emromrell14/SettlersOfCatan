@@ -7,8 +7,10 @@ import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 public class Game implements IGame
@@ -404,7 +406,7 @@ public class Game implements IGame
 		String name = this.getPlayer(playerIndex).name();
 		
 		// add chat to message list
-		this.mChat.add(new Message(message,name));
+		this.mChat.add(new Message(message.substring(0, Math.min(message.length(), 200)), name));
 	}
 	
 	public boolean canRollDice(Index playerIndex, int number)
@@ -466,7 +468,7 @@ public class Game implements IGame
 		// check that this hex is not water
 		for (Hex h : this.mBoard.hexes())
 		{
-			if (h.getHexLocation().equals(loc))
+			if (h.location().equals(loc))
 			{
 				if (h.resource().equals(HexType.WATER))
 				{
@@ -611,6 +613,10 @@ public class Game implements IGame
 		
 		// Decrement 1 Wheat, 1 Ore, 1 Sheep from player's resources
 		player.addResourcesToList(0, -1, -1, -1, 0);
+		
+		this.mBank.addWheat(1);
+		this.mBank.addOre(1);
+		this.mBank.addSheep(1);
 		
 	}
 	public void removeDevCardFromList(DevCard d)
@@ -903,7 +909,85 @@ public class Game implements IGame
 		{
 			return false;
 		}
+		
+		// Check for the weird condition...
+		if(this.buildingThroughAnotherPlayer(player, roadLocation)) {
+			return false;
+		}
 		return true;
+	}
+	public boolean buildingThroughAnotherPlayer(Player player, EdgeLocation roadLocation) 
+	{
+		roadLocation = roadLocation.getNormalizedLocation();
+		HexLocation thisHex = roadLocation.getHexLoc();
+		switch(roadLocation.getDir().getLengthenedDirection()) 
+		{
+			case NorthWest:
+				HexLocation northwestHex = thisHex.getNeighborLoc(EdgeDirection.NorthWest);
+				if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.West)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.North)) || 
+							player.checkForRoad(new EdgeLocation(northwestHex, EdgeDirection.NorthEast)))
+					{
+						return false;
+					}
+					return true;
+				} 
+				else if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthWest)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.SouthWest)) ||
+							player.checkForRoad(new EdgeLocation(northwestHex, EdgeDirection.South)))
+					{
+						return false;
+					}
+					return true;
+				}
+				return false;
+			case North:
+				HexLocation northHex = thisHex.getNeighborLoc(EdgeDirection.North);
+				if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthWest)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.NorthEast)) ||
+							player.checkForRoad(new EdgeLocation(northHex, EdgeDirection.SouthEast)))
+					{
+						return false;
+					}
+					return true;
+				}
+				else if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthEast)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.NorthWest)) ||
+							player.checkForRoad(new EdgeLocation(northHex, EdgeDirection.SouthWest)))
+					{
+						return false;
+					}
+					return true;
+				}
+				return false;
+			case NorthEast:
+				HexLocation northeastHex = thisHex.getNeighborLoc(EdgeDirection.NorthEast);
+				if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.East)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.North)) || 
+							player.checkForRoad(new EdgeLocation(northeastHex, EdgeDirection.NorthWest)))
+					{
+						return false;
+					}
+					return true;
+				} 
+				else if(this.board().checkForBuildingOfAnotherPlayer(player.playerIndex(), new VertexLocation(thisHex, VertexDirection.NorthEast)))
+				{
+					if(player.checkForRoad(new EdgeLocation(thisHex, EdgeDirection.SouthEast)) ||
+							player.checkForRoad(new EdgeLocation(northeastHex, EdgeDirection.South)))
+					{
+						return false;
+					}
+					return true;
+				}
+				return false;
+			default:
+				return true;		
+		}
 	}
 	@Override
 	public void buildRoad(Index playerIndex, EdgeLocation roadLocation,	boolean free) throws IllegalStateException
@@ -1224,6 +1308,7 @@ public class Game implements IGame
 		for (ResourceType r : ResourceType.values())
 		{
 			player.resources().addResource(r, -discardedCards.getResource(r));
+			this.mBank.addResource(r, discardedCards.getResource(r));
 		}
 		player.setHasDiscarded(true);
 		
@@ -1254,7 +1339,8 @@ public class Game implements IGame
 		mTurnTracker.endTurn();
 	}
 
-	private void giveResourcesToPlayersAfterSetup() {
+	private void giveResourcesToPlayersAfterSetup() 
+	{
 		for (Player p : mPlayers)
 		{
 			Building b = p.settlements().get(1);
@@ -1264,7 +1350,7 @@ public class Game implements IGame
 			for (Hex h : mBoard.hexes())
 			{
 				// give one resource for each settlement on this hex
-				boolean result = adjacentHexes.contains(h.getHexLocation());
+				boolean result = adjacentHexes.contains(h.location());
 				if (result && h.resource() != HexType.DESERT && h.resource() != HexType.WATER)
 				{
 					switch(h.resource())
@@ -1305,79 +1391,23 @@ public class Game implements IGame
 			for (Building b : p.settlements())
 			{
 				// give one resource for each settlement on this hex
-				if (b.isOnHex(h))
+				if (b.isOnHex(h) && !this.mRobber.location().equals(h.location()))
 				{
 					p.resources().addResource(h.resource().resourceType(), 1);
+					this.mBank.addResource(h.resource().resourceType(), -1);
 				}
 			}
 			for (Building b : p.cities())
 			{
 				// give two resources for each city on this hex		
-				if (b.isOnHex(h))
+				if (b.isOnHex(h) && !this.mRobber.location().equals(h.location()))
 				{
 					p.resources().addResource(h.resource().resourceType(), 2);
+					this.mBank.addResource(h.resource().resourceType(), -2);
 				}
 			}
 		}
 	}
-	
-	private ResourceList getAllResourcesToBeGiven(int number)
-	{
-		ResourceList rl = new ResourceList();
-		for (Hex h : mBoard.hexes())
-		{
-			if (h.number().value() == number)
-			{
-				for (Player p : mPlayers)
-				{
-					for (Building b : p.settlements())
-					{
-						// give one resource for each settlement on this hex
-						if (b.isOnHex(h))
-						{
-							rl.addResource(h.resource().resourceType(), 1);
-						}
-					}
-					for (Building b : p.cities())
-					{
-						// give two resources for each city on this hex		
-						if (b.isOnHex(h))
-						{
-							rl.addResource(h.resource().resourceType(), 2);
-						}
-					}
-				}
-			}
-		}
-		return rl;
-	}
-	
-//	@Override
-//	public boolean canOfferTrade(Index playerIndex) 
-//	{
-//		boolean playerHasCards = false;
-//		boolean othersHaveCards = false;
-//		for(Player p: mPlayers)
-//		{
-//			ResourceList temp = p.resources();
-//			if(p.playerIndex().equals(playerIndex)) 
-//			{
-//				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
-//				{
-//					playerHasCards = true;
-//				}
-//			}
-//			else
-//			{
-//				if(temp.brick() > 0 || temp.ore() > 0 || temp.wheat() > 0 || temp.wood() > 0 || temp.sheep() > 0)
-//				{
-//					othersHaveCards = true;
-//				}
-//			}
-//		}
-//		
-//		return playerHasCards && othersHaveCards;
-//	}
 
 	@Override
 	public List<Player> getRobbingVictims(HexLocation hexLoc) 
@@ -1400,14 +1430,6 @@ public class Game implements IGame
 	{
 		Player contendingPlayer = this.getPlayer(playerIndex);
 		Player largestArmyPlayer = this.getPlayer(this.getLargestArmyIndex());
-		if (contendingPlayer == null)
-		{
-			System.out.println("Contending player is null");
-		}
-		if (largestArmyPlayer == null)
-		{
-			System.out.println("largestArmy player is null");
-		}
 
 		if (largestArmyPlayer != null && 
 				contendingPlayer.soldierCount() > largestArmyPlayer.soldierCount())

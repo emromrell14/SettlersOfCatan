@@ -32,7 +32,7 @@ public class JoinGamesHandler  extends Handler
 		String body = req.getBody();
 		Response resp = new Response();
 
-		int gameID = req.getCookie().getGameID();
+		//int gameID = req.getCookie().getGameID();
 		int userID = req.getCookie().getPlayerID();
 		
 		if(userID == -1)
@@ -47,9 +47,10 @@ public class JoinGamesHandler  extends Handler
 		String color = jgr.getColor().toUpperCase();
 		String playerName = req.getCookie().getPlayerName();
 		
-		Iterator it = server.getGames().entrySet().iterator();
+		Iterator<?> it = server.getGames().entrySet().iterator();
 		while(it.hasNext())
 		{
+			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)it.next();
 			
 			if(id == (int)pair.getKey())

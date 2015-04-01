@@ -31,7 +31,7 @@ public class CreateGamesHandler  extends Handler
 		String body = req.getBody();
 		CreateGamesRequest gamesRequest = CreateGamesRequest.fromJSON(body);
 		gameName = gamesRequest.getName();	
-		int gameID = req.getCookie().getGameID();
+		//gameID = req.getCookie().getGameID();
 		int userID = req.getCookie().getPlayerID();
 		
 		if(userID == -1)
@@ -63,9 +63,10 @@ public class CreateGamesHandler  extends Handler
 
 	public boolean existsDuplicateName(String name)
 	{
-		Iterator it = server.getGames().entrySet().iterator();
+		Iterator<?> it = server.getGames().entrySet().iterator();
 		while(it.hasNext())
 		{
+			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)it.next();
 			if(name.equals(((Game) pair.getValue()).name()))
 			{
