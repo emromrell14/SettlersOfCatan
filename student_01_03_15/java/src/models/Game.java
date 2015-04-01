@@ -52,11 +52,11 @@ public class Game implements IGame
 		}
 
 
-		this.mBank.addBrick(190);
-		this.mBank.addWood(190);
-		this.mBank.addWheat(190);
-		this.mBank.addOre(190);
-		this.mBank.addSheep(190);
+		this.mBank.addBrick(19);
+		this.mBank.addWood(19);
+		this.mBank.addWheat(19);
+		this.mBank.addOre(19);
+		this.mBank.addSheep(19);
 	}
 	
 	public Game(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
@@ -71,11 +71,11 @@ public class Game implements IGame
 		this.mChat = new ArrayList<Message>();
 		this.mLog = new ArrayList<Message>();
 
-		this.mBank.addBrick(190);
-		this.mBank.addWood(190);
-		this.mBank.addWheat(190);
-		this.mBank.addOre(190);
-		this.mBank.addSheep(190);
+		this.mBank.addBrick(19);
+		this.mBank.addWood(19);
+		this.mBank.addWheat(19);
+		this.mBank.addOre(19);
+		this.mBank.addSheep(19);
 		
 		for(int i=0; i<2; i++)
 		{
