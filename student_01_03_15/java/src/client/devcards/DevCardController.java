@@ -1,6 +1,8 @@
 package client.devcards;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -103,7 +105,6 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playMonumentCard() {
-		disableAllDevCardButtons();
 		master.playMonument(master.getPlayerIndex());
 	}
 
@@ -111,7 +112,6 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void playRoadBuildCard() {
 		if(master.canPlayRoadBuilder(master.getPlayerIndex()))
 		{
-			disableAllDevCardButtons();
 			roadAction.execute();
 		}
 	}
@@ -120,7 +120,6 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void playSoldierCard() {
 		if(master.canPlaySoldier(master.getPlayerIndex()))
 		{
-			disableAllDevCardButtons();
 			master.getCurrentModel().turnTracker().setStatus(Status.ROBBING);
 			soldierAction.execute();
 		}
@@ -128,7 +127,6 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		disableAllDevCardButtons();
 		if(bankHasResources(resource1,resource2))
 		{
 			master.playYearOfPlenty(master.getPlayerIndex(), resource1, resource2);
@@ -210,74 +208,40 @@ public class DevCardController extends Controller implements IDevCardController,
 		{
 			disableAllDevCardButtons();
 			
-			int monopoly = 0;
-			boolean monopolyBool = false;
-			int soldier = 0;
-			boolean soldierBool = false;
-			int yearOfPlenty = 0;
-			boolean yearBool = false;
-			int monument = 0;
-			int roadBuilding = 0;
-			boolean roadBool = false;
 			Player p = master.getPlayer();
+			
+			Map<DevCardType, Boolean> visible = new HashMap<DevCardType, Boolean>();
+			Map<DevCardType, Integer> amount = new HashMap<DevCardType, Integer>();
+			for(DevCardType type : DevCardType.values())
+			{
+				visible.put(type, false);
+				amount.put(type, 0);
+			}
+				
 			for(DevCard d : p.devCards())
 			{
-				switch(d.type())
+				if(!d.isNew())
 				{
-				case MONOPOLY:
-					if(!d.hasBeenPlayed())
-					{
-						++monopoly;
-					}
-					monopolyBool = monopolyBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
-					break;
-				case SOLDIER:
-					if(!d.hasBeenPlayed())
-					{
-						++soldier;
-					}
-					soldierBool = soldierBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
-					break;
-				case YEAR_OF_PLENTY:
-					if(!d.hasBeenPlayed())
-					{
-						++yearOfPlenty;
-					}
-					yearBool = yearBool || (!d.isNew() && !d.hasBeenPlayed() && p.canPlayDevCard());
-					break;
-				case MONUMENT:
-					if(!d.hasBeenPlayed())
-					{
-						++monument;
-					}
-					getPlayCardView().setCardEnabled(DevCardType.MONUMENT, true);
-					break;
-				case ROAD_BUILD:
-					if(!d.hasBeenPlayed())
-					{
-						++roadBuilding;
-					}
-					roadBool = roadBool || (!d.isNew() && !d.hasBeenPlayed() && p.roadCount() > 1 && p.canPlayDevCard());
-					break;
+					visible.put(d.type(), true);
+				}
+				amount.put(d.type(), amount.get(d.type()) + 1);
+			}
+			
+			for(DevCardType type : DevCardType.values())
+			{
+				this.getPlayCardView().setCardAmount(type, amount.get(type));
+				
+				//Only set the monument's visibility if they have already played a dev card
+				if(!p.hasPlayedDevCard())
+				{
+					this.getPlayCardView().setCardEnabled(type, visible.get(type));
+				}
+				else
+				{
+					this.getPlayCardView().setCardEnabled(DevCardType.MONUMENT, visible.get(DevCardType.MONUMENT));
 				}
 			}
-			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, monopolyBool);
-			getPlayCardView().setCardEnabled(DevCardType.SOLDIER, soldierBool);
-			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, yearBool);
-			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, roadBool);
-			
-			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monopoly);
-			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, yearOfPlenty);
-			getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldier);
-			getPlayCardView().setCardAmount(DevCardType.MONUMENT, monument);
-			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, roadBuilding);
-			
-//			if(p.hasPlayedDevCard())
-//			{
-//				this.disableAllDevCardButtons();
-//			}
 		}
 	}
-
 }
 
