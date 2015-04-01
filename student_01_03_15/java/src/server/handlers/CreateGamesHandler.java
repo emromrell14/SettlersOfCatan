@@ -27,7 +27,7 @@ public class CreateGamesHandler  extends Handler
 	@Override
 	public Response processRequest(Request req) 
 	{
-		System.out.println("createGamesHandler processRequest");
+//		System.out.println("createGamesHandler processRequest");
 		String body = req.getBody();
 		CreateGamesRequest gamesRequest = CreateGamesRequest.fromJSON(body);
 		gameName = gamesRequest.getName();	

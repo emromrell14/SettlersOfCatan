@@ -116,7 +116,7 @@ public class TurnTracker implements ITurnTracker
 			}
 			mStatus = Status.ROLLING;
 		}
-		System.out.println("currentTurn Index:"+mCurrentTurn.value());
+//		System.out.println("currentTurn Index:"+mCurrentTurn.value());
 	}
 
 }

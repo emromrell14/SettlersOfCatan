@@ -29,8 +29,8 @@ public class SaveGamesHandler extends Handler
 	@Override
 	public Response processRequest(Request req)
 	{
-		System.out.println("Working Directory = " +
-            System.getProperty("user.dir"));
+//		System.out.println("Working Directory = " +
+//            System.getProperty("user.dir"));
 		boolean success = true;
 		String body = req.getBody();
 		SaveGamesRequest s = SaveGamesRequest.fromJSON(body);
