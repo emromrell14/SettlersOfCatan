@@ -91,7 +91,7 @@ public class JoinGamesHandler  extends Handler
 					game.addPlayer(new Player(CatanColor.valueOf(color), playerName, 
 							new Index(game.players().size()), server.getCurrentUser(playerName).getID()));
 					resp = setCookie(game, resp);
-					System.out.println("Player added to new game.");
+//					System.out.println("Player added to new game.");
 				} 
 				catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -102,7 +102,7 @@ public class JoinGamesHandler  extends Handler
 				return resp;
 			}
 		}
-		System.out.println("Player NOTTT added to game.");
+//		System.out.println("Player NOTTT added to game.");
 		// Set fail response
 		return new Response(400,"The player could not be added to the specified game.");
 	}

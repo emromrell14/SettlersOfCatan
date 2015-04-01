@@ -36,20 +36,27 @@ public class Game implements IGame
 		mTurnTracker = new TurnTracker();
 		mBank = new ResourceList();
 		mDevCards = new ArrayList<DevCard>();
-		for(int i=0; i<1; i++)
+		for(int i=0; i<2; i++)
 		{
 			mDevCards.add(new Monopoly());
-			mDevCards.add(new Monument());
+			mDevCards.add(new RoadBuild());
 			mDevCards.add(new YearOfPlenty());
 		}
-		for(int i=0; i<1; i++)
+		for(int i=0; i<5; i++)
 		{
-			mDevCards.add(new RoadBuild());
+			mDevCards.add(new Monument());
 		}
-		for(int i=0; i<1; i++)
+		for(int i=0; i<14; i++)
 		{
 			mDevCards.add(new Soldier());
 		}
+
+
+		this.mBank.addBrick(19);
+		this.mBank.addWood(19);
+		this.mBank.addWheat(19);
+		this.mBank.addOre(19);
+		this.mBank.addSheep(19);
 	}
 	
 	public Game(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
@@ -483,10 +490,11 @@ public class Game implements IGame
 			return false;
 		}
 		
-		if (victim != null && victim.resources().isEmpty())
+		if (victim != null && victim.resources().isEmpty() && player != null && victim.playerID() == player.playerID())
 		{
 			return false;
 		}
+		
 		return true;
 	}
 	@Override
@@ -1409,7 +1417,7 @@ public class Game implements IGame
 		{
 			if(p.playerIndex().value() != mTurnTracker.currentTurn().value())
 			{
-				if(p.isVictim(hexLoc))
+				if(p.isVictim(hexLoc) && p.resources().getTotal() > 0)
 				{
 					victims.add(p);
 				}

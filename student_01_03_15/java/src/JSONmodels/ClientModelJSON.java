@@ -142,7 +142,7 @@ public class ClientModelJSON
 		g.setTurnTracker(turnTracker.getModelTurnTracker());
 		g.setBank(bank.getModelResourceList());
 		g.setVersion(version);
-		System.out.println("IN CLIENTMODELjson version from server: " + version);
+//		System.out.println("IN CLIENTMODELjson version from server: " + version);
 		g.setWinner(winner);
 //		System.out.println("Index of winner coming from server: " + winner);
 		g.setRobber(map.getModelRobber());

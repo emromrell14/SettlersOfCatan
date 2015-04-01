@@ -348,7 +348,7 @@ public class Server implements IServer
 		{
 			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)it.next();
-			System.out.println(username + " " +((User)pair.getValue()).getUsername() );
+//			System.out.println(username + " " +((User)pair.getValue()).getUsername() );
 			if(username.equals(((User)pair.getValue()).getUsername()))
 			{
 				return (IUser)pair.getValue();

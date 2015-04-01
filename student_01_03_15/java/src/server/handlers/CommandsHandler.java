@@ -38,6 +38,14 @@ public class CommandsHandler extends Handler
 	@Override
 	public Response processRequest(Request req) 
 	{
+		int gameID = req.getCookie().getGameID();
+		int userID = req.getCookie().getPlayerID();
+		
+		if(userID == -1 || gameID == -1)
+		{
+			return new Response(400,"Failed - Missing user and/or game cookie");
+		}
+		
 		if(req.getMethod().equalsIgnoreCase("POST"))
 		{
 			return processPost(req);

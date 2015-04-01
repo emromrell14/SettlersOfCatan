@@ -443,7 +443,7 @@ public class MasterManager implements IMasterManager
 		Game game = mGameManager.getGameModel(version);
 		if(game != null)
 		{
-			System.out.println(version + " -updating cached model- " + game.version());
+//			System.out.println(version + " -updating cached model- " + game.version());
 			pollerVersion = game.version();
 			mModelManager.updateModel(game);
 		}
