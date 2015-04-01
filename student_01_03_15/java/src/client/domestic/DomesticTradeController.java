@@ -10,6 +10,7 @@ import java.util.Observer;
 import models.Index;
 import models.Player;
 import models.ResourceList;
+import models.Status;
 import models.Trade;
 import shared.definitions.*;
 import client.base.*;
@@ -397,7 +398,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		{
 			return;
 		}
-		if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value())
+		if (master.getCurrentModel().turnTracker().currentTurn().value() == master.getPlayerIndex().value() && master.getCurrentModel().turnTracker().status() == Status.PLAYING)
 		{
 			this.getTradeView().enableDomesticTrade(true);
 			if(this.waitOverlay.isModalShowing() && master.getCurrentModel().trade() == null)

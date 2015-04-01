@@ -1081,12 +1081,13 @@ public class Player //implements IPlayer
 
 	public void removeDevCard(DevCardType devCardType) 
 	{
-		for (DevCard d : this.mDevCards)
+		for(int i = 0; i < this.mDevCards.size(); ++i)// (DevCard d : this.mDevCards)
 		{
+			DevCard d = this.mDevCards.get(i);
 			if (d.type() == devCardType && !d.hasBeenPlayed() && !d.isNew())
 			{
 				d.setPlayed();
-				this.mDevCards.remove(d);
+				this.mDevCards.remove(i);
 				return;
 			}
 		}

@@ -50,11 +50,11 @@ public class Game implements IGame
 		}
 
 
-		this.mBank.addBrick(19);
-		this.mBank.addWood(19);
-		this.mBank.addWheat(19);
-		this.mBank.addOre(19);
-		this.mBank.addSheep(19);
+		this.mBank.addBrick(190);
+		this.mBank.addWood(190);
+		this.mBank.addWheat(190);
+		this.mBank.addOre(190);
+		this.mBank.addSheep(190);
 	}
 	
 	public Game(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
@@ -69,11 +69,11 @@ public class Game implements IGame
 		this.mChat = new ArrayList<Message>();
 		this.mLog = new ArrayList<Message>();
 
-		this.mBank.addBrick(19);
-		this.mBank.addWood(19);
-		this.mBank.addWheat(19);
-		this.mBank.addOre(19);
-		this.mBank.addSheep(19);
+		this.mBank.addBrick(190);
+		this.mBank.addWood(190);
+		this.mBank.addWheat(190);
+		this.mBank.addOre(190);
+		this.mBank.addSheep(190);
 		
 		for(int i=0; i<2; i++)
 		{
@@ -488,10 +488,11 @@ public class Game implements IGame
 			return false;
 		}
 		
-		if (victim != null && victim.resources().isEmpty())
+		if (victim != null && victim.resources().isEmpty() && player != null && victim.playerID() == player.playerID())
 		{
 			return false;
 		}
+		
 		return true;
 	}
 	@Override
@@ -1386,7 +1387,7 @@ public class Game implements IGame
 		{
 			if(p.playerIndex().value() != mTurnTracker.currentTurn().value())
 			{
-				if(p.isVictim(hexLoc))
+				if(p.isVictim(hexLoc) && p.resources().getTotal() > 0)
 				{
 					victims.add(p);
 				}
