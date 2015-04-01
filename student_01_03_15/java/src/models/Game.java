@@ -419,6 +419,10 @@ public class Game implements IGame
 		{
 			return false;
 		}
+		if(number < 2 || number > 12)
+		{
+			return false;
+		}
 		return true;
 	}
 	@Override
@@ -884,6 +888,14 @@ public class Game implements IGame
 		{
 			if (this.mTurnTracker.status().equals(Status.FIRSTROUND) || this.mTurnTracker.status().equals(Status.SECONDROUND))
 			{
+				if(this.mTurnTracker.status().equals(Status.FIRSTROUND) && player.roads().size() > 0)
+				{
+					return false;
+				}
+				if(this.mTurnTracker.status().equals(Status.SECONDROUND) && player.roads().size() > 1)
+				{
+					return false;
+				}
 				// if no settlements return false
 				for (Building b : player.settlements())
 				{
@@ -901,6 +913,11 @@ public class Game implements IGame
 					}
 				}
 			}
+			return false;
+		}
+		
+		if(free && !this.mTurnTracker.status().equals(Status.FIRSTROUND) && !this.mTurnTracker.status().equals(Status.SECONDROUND))
+		{
 			return false;
 		}
 		
@@ -1040,8 +1057,24 @@ public class Game implements IGame
 				{
 					return false;
 				}
+				
+				if(this.mTurnTracker.status().equals(Status.FIRSTROUND) && player.settlements().size() > 0)
+				{
+					return false;
+				}
+				
+				if(this.mTurnTracker.status().equals(Status.SECONDROUND) && player.settlements().size() > 1)
+				{
+					return false;
+				}
+				
 				return true;
 			}
+			return false;
+		}
+		
+		if(free && !this.mTurnTracker.status().equals(Status.FIRSTROUND) && !this.mTurnTracker.status().equals(Status.SECONDROUND))
+		{
 			return false;
 		}
 		
@@ -1135,6 +1168,8 @@ public class Game implements IGame
 
 	public boolean canOfferTrade(Index playerIndex, ResourceList offer)
 	{
+		boolean positive = false;
+		boolean negative = false;
 		Player player = this.getPlayer(playerIndex);
 		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
@@ -1154,14 +1189,22 @@ public class Game implements IGame
 				{
 					return false;
 				}
+				if(offer.getResource(r) > 0)
+				{
+					positive = true;
+				}
+				if(offer.getResource(r) < 0)
+				{
+					negative = true;
+				}
 			}
 		}
-		return true;
+		return positive && negative;
 	}
 	@Override
 	public void offerTrade(Index playerIndex, Index receiverIndex, ResourceList offer) throws IllegalStateException
 	{
-		if(!this.canOfferTrade(playerIndex, offer))
+		if(!this.canOfferTrade(playerIndex, offer) || receiverIndex.value() == playerIndex.value())
 		{
 			throw new IllegalStateException("Failed pre-conditions");
 		}
@@ -1286,7 +1329,7 @@ public class Game implements IGame
 			// Check that you have the cards you're trying to discard
 			for (ResourceType r : ResourceType.values())
 			{
-				if (player.resources().getResource(r) < discardedCards.getResource(r))
+				if (player.resources().getResource(r) < discardedCards.getResource(r) || discardedCards.getResource(r) < 0)
 				{
 					return false;
 				}
