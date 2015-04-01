@@ -472,12 +472,17 @@ public class Game implements IGame
 
 	public boolean canRobPlayer(Player player, Player victim, HexLocation loc)
 	{
+		if(this.getRobbingVictims(loc).size() > 0 && victim == null)
+		{
+			return false;
+		}
+		
 		// check that this hex is not water
 		for (Hex h : this.mBoard.hexes())
 		{
 			if (h.location().equals(loc))
 			{
-				if (h.resource().equals(HexType.WATER))
+				if (h.resource().toString().equalsIgnoreCase(HexType.WATER.toString()))
 				{
 					return false;
 				}
@@ -593,6 +598,10 @@ public class Game implements IGame
 		{
 			return false;
 		}
+//		if(this.trade() != null)
+//		{
+//			return false;
+//		}
 		if (this.devCards().isEmpty())
 		{
 			return false;
@@ -1266,6 +1275,11 @@ public class Game implements IGame
 
 	public boolean canMaritimeTrade(Index playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource)
 	{
+		if(ratio != 2 && ratio != 3 && ratio != 4)
+		{
+			return false;
+		}
+		
 		Player player = this.getPlayer(playerIndex);
 		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{

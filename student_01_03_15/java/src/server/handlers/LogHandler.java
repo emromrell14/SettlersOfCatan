@@ -1,6 +1,7 @@
 package server.handlers;
 
 import server.IServer;
+import server.JSON.ChangeLogLevelRequest;
 
 public class LogHandler  extends Handler
 {
@@ -19,7 +20,23 @@ public class LogHandler  extends Handler
 	@Override
 	public Response processRequest(Request req) 
 	{
-		return null;
+		ChangeLogLevelRequest c = ChangeLogLevelRequest.fromJSON(req.getBody());
+		String log = c.getLogLevel();
+		
+		if(log.equalsIgnoreCase("ALL") ||
+			log.equalsIgnoreCase("SEVERE") ||
+			log.equalsIgnoreCase("WARNING") ||
+			log.equalsIgnoreCase("INFO") ||
+			log.equalsIgnoreCase("CONFIG") ||
+			log.equalsIgnoreCase("FINE") ||
+			log.equalsIgnoreCase("FINER") ||
+			log.equalsIgnoreCase("FINEST") ||
+			log.equalsIgnoreCase("OFF"))
+		{
+			return new Response(200,"Success");
+		}
+		
+		return new Response(400,"Failed");
 	}
 
 }

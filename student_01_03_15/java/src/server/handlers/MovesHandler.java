@@ -1,5 +1,6 @@
 package server.handlers;
 
+import models.IGame;
 import models.Index;
 import server.IServer;
 import server.IServerFacade;
@@ -36,8 +37,13 @@ public class MovesHandler extends Handler
 			res.setStatusCode(400);
 			return res;
 		}
+		IGame game = server.getGame(gameID);
+		if(game.players().size() < 4)
+		{
+			return new Response(400,"Failed - not enough players have joined the game");
+		}
 		
-		serverFacade.setGame(server.getGame(gameID));
+		serverFacade.setGame(game);
 		try 
 		{
 			parseBody(gameID, req.getRequestURI(), req.getBody());
