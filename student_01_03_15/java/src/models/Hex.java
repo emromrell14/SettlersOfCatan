@@ -72,9 +72,4 @@ public class Hex
 	{
 		return mNumber;
 	}
-	
-	public HexLocation getHexLocation()
-	{
-		return mLocation;
-	}
 }

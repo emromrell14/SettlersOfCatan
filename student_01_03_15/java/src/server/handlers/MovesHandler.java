@@ -51,6 +51,7 @@ public class MovesHandler extends Handler
 			return res;
 		}
 
+		server.addCommand(gameID, req.getBody());
 		server.updateVersion(gameID);
 		res.setStatusCode(200);
 		res.setBody(server.getGameModelJSON(0, gameID));
@@ -59,7 +60,6 @@ public class MovesHandler extends Handler
 	
 	public void parseBody(int gameID, String url, String jsonBody) throws Exception
 	{
-		server.addCommand(gameID, jsonBody);
 		switch(url)
 		{
 		case "/moves/rollNumber":

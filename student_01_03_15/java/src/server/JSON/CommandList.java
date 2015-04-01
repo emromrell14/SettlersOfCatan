@@ -2,9 +2,6 @@ package server.JSON;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import JSONmodels.MapJSON;
-
 import com.google.gson.Gson;
 
 public class CommandList {

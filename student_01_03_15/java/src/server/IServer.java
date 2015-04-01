@@ -2,8 +2,6 @@ package server;
 
 import java.util.List;
 import java.util.Map;
-
-import server.JSON.CommandList;
 import models.IGame;
 
 public interface IServer 

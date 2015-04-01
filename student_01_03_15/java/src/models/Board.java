@@ -417,7 +417,7 @@ public class Board
 	{
 		for (Hex h : mHexes)
 		{
-			if (loc.getX() == h.getHexLocation().getX() && loc.getY() == h.getHexLocation().getY())
+			if (loc.getX() == h.location().getX() && loc.getY() == h.location().getY())
 			{
 				return h;
 			}
@@ -431,11 +431,32 @@ public class Board
 		{
 			if(mHexes.get(i).resource() == HexType.DESERT)
 			{
-				return mHexes.get(i).getHexLocation();
+				return mHexes.get(i).location();
 			}
 		}
 		
 		return null;
+	}
+
+	public boolean checkForBuildingOfAnotherPlayer(Index playerIndex, VertexLocation location) {
+		location = location.getNormalizedLocation();
+		for(Building settlement : this.mSettlements)
+		{
+			VertexLocation buildingLocation = settlement.location().getNormalizedLocation();
+			if(buildingLocation.equals(location) && !settlement.owner().equals(playerIndex))
+			{
+				return true;
+			}
+		}
+		for(Building city : this.mCities)
+		{
+			VertexLocation buildingLocation = city.location().getNormalizedLocation();
+			if(buildingLocation.equals(location) && !city.owner().equals(playerIndex))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

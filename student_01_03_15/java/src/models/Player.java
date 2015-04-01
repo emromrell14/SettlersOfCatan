@@ -362,7 +362,7 @@ public class Player //implements IPlayer
 	 * @param loc the edge location to check for an existing adjacent road by.
 	 * @return true if this location is next to one of the player's existing roads, false otherwise
 	 */
-	private boolean checkForRoad(EdgeLocation loc)
+	public boolean checkForRoad(EdgeLocation loc)
 	{
 		loc = loc.getNormalizedLocation();
 		for (Road road : this.roads())

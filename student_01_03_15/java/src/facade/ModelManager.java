@@ -114,11 +114,22 @@ public class ModelManager extends Observable
 		else
 		{
 			//This is a regular round, use the the regular function
-			if (p.canPlaceRoad(loc) && this.mGameModel.board().canPlaceRoad(loc))
+			if (!p.canPlaceRoad(loc))
 			{
-				return true;
+				return false;
 			}
-			return false;
+			
+			if(!this.mGameModel.board().canPlaceRoad(loc))
+			{
+				return false;
+			}
+			
+			// Check for the weird condition...
+			if(this.mGameModel.buildingThroughAnotherPlayer(p, loc)) {
+				return false;
+			}
+			
+			return true;
 		}
 	}
 
