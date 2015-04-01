@@ -1085,7 +1085,6 @@ public class Player //implements IPlayer
 		{
 			if (d.type() == devCardType && !d.hasBeenPlayed() && !d.isNew())
 			{
-				d.setPlayed();
 				this.mDevCards.remove(d);
 				return;
 			}
