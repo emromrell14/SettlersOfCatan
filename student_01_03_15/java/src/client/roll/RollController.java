@@ -65,12 +65,17 @@ public class RollController extends Controller implements IRollController, Obser
 		int rollNum = die1 + die2;
 		this.resultView.setRollValue(rollNum);
 		
+		System.out.println("ROLLING");
 //		 HACK TO NEVER ROLL A 7
 			if (rollNum == 7) rollNum++;
 //			System.out.println("HACK NEVER ROLL A 7");
 		// ---------------------
-		master.rollDice(master.getPlayerIndex(), rollNum);
-		getResultView().showModal();
+		if (master.getPlayer().playerIndex().value() == master.getCurrentModel().turnTracker().currentTurn().value())
+		{
+			System.out.println("ROLLING -- myturn");
+			master.rollDice(master.getPlayerIndex(), rollNum);
+			getResultView().showModal();
+		}
 	}
 
 	@Override

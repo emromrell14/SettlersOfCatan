@@ -137,9 +137,13 @@ public class Board
 			int index1 = (int) (Math.random() * (mHexes.size()-1));
 			int index2 = (int) (Math.random() * (mHexes.size()-1));
 			
-			TokenValue temp = mHexes.get(index1).number();
-			mHexes.get(index1).setTokenValue(mHexes.get(index2).number());
-			mHexes.get(index2).setTokenValue(temp);
+			if(!mHexes.get(index1).resource().toString().equalsIgnoreCase(HexType.DESERT.toString()) &&
+					!mHexes.get(index2).resource().toString().equalsIgnoreCase(HexType.DESERT.toString()))
+			{
+				TokenValue temp = mHexes.get(index1).number();
+				mHexes.get(index1).setTokenValue(mHexes.get(index2).number());
+				mHexes.get(index2).setTokenValue(temp);
+			}
 		}
 	}
 	

@@ -413,14 +413,17 @@ public class Game implements IGame
 	{
 		if (!this.mTurnTracker.currentTurn().equals(playerIndex))
 		{
+			System.out.println("pre 1:"+ playerIndex.value());
 			return false;
 		}
 		if (this.mTurnTracker.status() != Status.ROLLING)
 		{
+			System.out.println("pre 2");
 			return false;
 		}
 		if(number < 2 || number > 12)
 		{
+			System.out.println("pre 3");
 			return false;
 		}
 		return true;
