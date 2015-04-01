@@ -13,6 +13,7 @@ public class ProxyTester
 	public void testProxyPosts() 
 	{
 		IProxy mProxy = new Proxy();
+		Proxy.port = "8081";
 		////System.out.println("PROXY POST TESTS:\n");
 		String response = null;
 		
@@ -156,6 +157,7 @@ public class ProxyTester
 	public void testProxyGets()
 	{
 		IProxy mProxy = new Proxy();
+		Proxy.port = "8081";
 		////System.out.println("PROXY GET TESTS:\n");
 		String response = null;
 
