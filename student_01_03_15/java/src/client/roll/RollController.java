@@ -60,8 +60,8 @@ public class RollController extends Controller implements IRollController, Obser
 		this.resultView.setRollValue(rollNum);
 		
 		// HACK TO NEVER ROLL A 7
-//			if (rollNum == 7) rollNum++;
-//			System.out.println("HACK NEVER ROLL A 7");
+			if (rollNum == 7) rollNum++;
+			System.out.println("HACK NEVER ROLL A 7");
 		// ---------------------
 		master.rollDice(master.getPlayerIndex(), rollNum);
 		getResultView().showModal();
