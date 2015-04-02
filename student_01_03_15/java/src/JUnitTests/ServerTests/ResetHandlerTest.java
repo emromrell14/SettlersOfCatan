@@ -13,6 +13,8 @@ public class ResetHandlerTest {
 
 	@Test
 	public void test() {
+		System.out.print("Starting reset tests...");
+
 		Proxy.port = "8081";
 		proxy.post("/user/login", "{username: \"a\",password: \"a\"}");
 		proxy.post("/games/join", "{id: 0,color:\"white\"}");
@@ -20,6 +22,7 @@ public class ResetHandlerTest {
 		String response = proxy.post("/game/reset", "");
 		System.out.println(response);
 		assertTrue(response.equals("Success"));
+		System.out.println("Passed");
 	}
 
 }

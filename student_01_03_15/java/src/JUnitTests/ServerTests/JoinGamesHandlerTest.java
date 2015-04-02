@@ -19,6 +19,8 @@ public class JoinGamesHandlerTest {
 	
 	@Test
 	public void test() {
+		System.out.print("Starting joinGame tests...");
+
 		proxy.post("/user/login", "{username: \"a\",password: \"a\"}");
 		
 		String requestBody = "{id: 0,color:\"white\"}";
@@ -42,6 +44,7 @@ public class JoinGamesHandlerTest {
 		requestBody = "{id: 0,color:\"white\"}";
 		response = proxy.post("/games/join", requestBody);
 		assertTrue(response.startsWith("Failed"));
+		System.out.println("Passed");
 	}
 
 }

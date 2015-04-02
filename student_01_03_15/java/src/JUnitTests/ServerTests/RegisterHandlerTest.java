@@ -18,6 +18,8 @@ public class RegisterHandlerTest {
 	}
 	@Test
 	public void test() {
+		System.out.print("Starting register tests...");
+
 		String requestBody = "{username: \"string\",password: \"string\"}";
 		String response = proxy.post("/user/register", requestBody);
 		assertTrue(response.equals("Success"));
@@ -33,6 +35,7 @@ public class RegisterHandlerTest {
 		requestBody = "{username: \"aaaaaaaa\",password: \"aaaaaaaa\"}";
 		response = proxy.post("/user/register", requestBody);
 		assertTrue(response.startsWith("Failed"));
+		System.out.println("Passed");
 	}
 
 }

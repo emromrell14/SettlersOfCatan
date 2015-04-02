@@ -10,6 +10,8 @@ public class JSONTester {
 
 	@Test
 	public void test() {
+		System.out.print("Starting JSON tests...");
+		
 		//ClientModel
 		String JSONClientModel = "{\"bank\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"chat\":{\"lines\":[{\"message\":\"string\",\"source\":\"string\"}]},\"log\":{\"lines\":[{\"message\":\"string\",\"source\":\"string\"}]},\"map\":{\"hexes\":[{\"location\":{\"x\":0,\"y\":0},\"resource\":\"wood\",\"number\":0}],\"ports\":[{\"resource\":\"brick\",\"location\":{\"x\":0,\"y\":0},\"direction\":\"SE\",\"ratio\":2}],\"roads\":[{\"owner\":1,\"location\":{\"x\":0,\"y\":0,\"direction\":\"S\"}}],\"settlements\":[{\"owner\":1,\"location\":{\"x\":0,\"y\":0,\"direction\":\"SW\"}}],\"cities\":[{\"owner\":2,\"location\":{\"x\":0,\"y\":0,\"direction\":\"NE\"}}],\"radius\":5,\"robber\":{\"x\":0,\"y\":0}},\"players\":[{\"color\":\"blue\",\"discarded\":true,\"monuments\":4,\"name\":\"Eric\",\"newDevCards\":{\"monopoly\":1,\"monument\":0,\"roadBuilding\":0,\"soldier\":2,\"yearOfPlenty\":0},\"oldDevCards\":{\"monopoly\":0,\"monument\":0,\"roadBuilding\":0,\"soldier\":3,\"yearOfPlenty\":0},\"playerIndex\":2,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"roads\":2,\"settlements\":0,\"cities\":3,\"soldiers\":0,\"victoryPoints\":0}],\"tradeOffer\":{\"sender\":0,\"receiver\":0,\"offer\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0}},\"turnTracker\":{\"currentTurn\":2,\"status\":\"PLAYING\",\"longestRoad\":3,\"largestArmy\":2},\"version\":644,\"winner\":-1}";
 		ClientModelJSON clientModel = ClientModelJSON.fromJSON(JSONClientModel);
@@ -109,6 +111,7 @@ public class JSONTester {
 		assertTrue(vertexObject.getOwner() == 2);
 		assertTrue(vertexObject.getLocation().getY() == 0);
 		assertTrue(vertexObject.toJSON().equals(JSONVertexObject));
+		System.out.println("Passed");
 	}
 
 }

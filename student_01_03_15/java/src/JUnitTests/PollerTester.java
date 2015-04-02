@@ -31,9 +31,9 @@ public class PollerTester
 		{
 		    Thread.currentThread().interrupt();
 		}
-		////System.out.println("Awake, version: " + poller.getVersion());
+		System.out.println("Awake, version: " + poller.getVersion());
 		//assertTrue(poller.getVersion() != beforeVersion);
-		////System.out.println("Poller's getGameModel() query passed.");
+		System.out.println("Poller's getGameModel() query passed.");
 		poller.interrupt();	
 	}
 

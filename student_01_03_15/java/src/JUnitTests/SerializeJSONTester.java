@@ -25,6 +25,8 @@ public class SerializeJSONTester {
 	@Test
 	public void test1() {
 		//ClientModel Test 1
+		System.out.print("Starting Serialization tests...");
+
 		
 		try
 		{
@@ -153,12 +155,12 @@ public class SerializeJSONTester {
 					+ 		"\"soldiers\":3,\"victoryPoints\":7}],"
 					+ "\"tradeOffer\":{\"sender\":0,\"receiver\":1,\"offer\":{\"brick\":3,\"ore\":-4,\"sheep\":2,\"wheat\":-1,\"wood\":5}},"
 					+ "\"turnTracker\":{\"currentTurn\":2,\"status\":\"ROBBING\",\"longestRoad\":2,\"largestArmy\":3},\"version\":555,\"winner\":3}";
-			System.out.println(expectedJson);
-			System.out.println(actualJson);
+			//System.out.println(expectedJson);
+			//System.out.println(actualJson);
 			
 			
 			assertTrue(actualJson.equals(expectedJson));
-			
+			System.out.println("Passed");
 
 		}
 		catch (Exception e)
