@@ -20,6 +20,9 @@ public class CreateGamesHandlerTest {
 	
 	@Test
 	public void test() {
+		System.out.println("Testing Create Games Handler");
+
+		
 		String requestBody = "{randomTiles: true,randomNumbers:true,randomPorts:true,name:\"allrandomgame\"}";
 		String response = proxy.post("/games/create", requestBody);
 		assertTrue(response.equals("{\"title\": \"allrandomgame\", \"id\": 1, \"players\": [ {}, {}, {}, {} ] }"));
@@ -28,6 +31,8 @@ public class CreateGamesHandlerTest {
 		response = proxy.post("/games/create", requestBody);
 		assertTrue(response.startsWith("Failed"));
 		
+		System.out.println("Passed Create Game Handler Tests");
+
 	}
 
 }
