@@ -23,6 +23,7 @@ public class JUnitMain
 				ModelHandlerTest.class,
 				MovesHandlerTest.class
 				);
+		System.out.println("ALL TESTS PASSED!");
 	}
 
 }

@@ -22,6 +22,7 @@ public class ResetHandlerTest {
 		String response = proxy.post("/game/reset", "");
 		System.out.println(response);
 		assertTrue(response.equals("Success"));
+
 		System.out.println("Passed");
 	}
 

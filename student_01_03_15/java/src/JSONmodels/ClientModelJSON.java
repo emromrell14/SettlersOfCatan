@@ -19,6 +19,7 @@ public class ClientModelJSON
 	private TurnTrackerJSON turnTracker; //This tracks whose turn it is and what action's being done.
 	private int version; //The version of the model. This is incremented whenever anyone makes a move.
 	private int winner; //This is -1 when nobody's won yet. When they have, it's their order index [0-3].
+	private String name;
 	
 	public ClientModelJSON(IGame game) 
 	{
@@ -26,6 +27,7 @@ public class ClientModelJSON
 		this.chat = new MessageListJSON(game.chat());
 		this.log = new MessageListJSON(game.log());
 		this.map = new MapJSON(game.board(), game.robber().location());
+		this.name = game.name();
 		
 		this.players = new PlayerJSON[game.players().size()];
 		for(int i=0; i < this.players.length; i++)
@@ -149,6 +151,7 @@ public class ClientModelJSON
 		g.setBoard(map.getModelBoard());
 		g.setChat(this.getModelChat());
 		g.setLog(this.getModelLog());
+		g.setName(name);
 		if(tradeOffer != null)
 		{
 			g.setTrade(tradeOffer.getModel());

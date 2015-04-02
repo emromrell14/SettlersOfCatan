@@ -45,6 +45,7 @@ public class JoinGamesHandlerTest {
 		response = proxy.post("/games/join", requestBody);
 		assertTrue(response.startsWith("Failed"));
 		System.out.println("Passed");
+
 	}
 
 }

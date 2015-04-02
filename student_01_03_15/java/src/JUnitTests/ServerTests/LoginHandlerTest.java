@@ -15,6 +15,7 @@ public class LoginHandlerTest {
 		System.out.print("Starting login tests...");
 
 		Proxy.port = "8081";
+		
 		String requestBody = "{username: \"a\",password: \"a\"}";
 		String response = proxy.post("/user/login", requestBody);
 		assertTrue(response.equals("Success"));
@@ -22,6 +23,7 @@ public class LoginHandlerTest {
 		requestBody = "{username: \"doesnt\",password: \"exist\"}";
 		response = proxy.post("/user/login", requestBody);
 		assertTrue(response.startsWith("Failed"));
+
 		System.out.print("Passed");
 	}
 }
